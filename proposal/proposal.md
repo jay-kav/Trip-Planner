@@ -1,5 +1,6 @@
 # School of Computing CA326 Year 3 Project Proposal Form
-### Project Title: Trip Planner Web Application
+### Project Title
+Trip Planner Web Application
 ### Student 1
 Name: Ethan Kavanagh
 ID Number: 21344873 
@@ -24,43 +25,43 @@ Acknowledging that travel is often a shared experience, our app allows users to 
 
 ## Division of Work
 ### Ethan
-Weekly blog posts
-Algorithm Design
-Technical Specification 
-Creating functional requirements
-Deploy the app to the web using Docker and Azure/AWS
-Frontend Design of the web app (HTML/CSS)
-Finding and setting up appropriate APIs
-Final Presentation
+- Weekly blog posts
+- Algorithm Design
+- Technical Specification 
+- Creating functional requirements
+- Deploy the app to the web using Docker and Azure/AWS
+- Frontend Design of the web app (HTML/CSS)
+- Finding and setting up appropriate APIs
+- Final Presentation
 ### Jamie
-Algorithm Design
-Database to store profiles and associated trip information
-Finding and setting up appropriate APIs
-Creating functional requirements
-User Manual
-Technical Specification 
-Recording video walkthrough
-Weekly blog posts
-Final Presentation
+- Algorithm Design
+- Database to store profiles and associated trip information
+- Finding and setting up appropriate APIs
+- Creating functional requirements
+- User Manual
+- Technical Specification 
+- Recording video walkthrough
+- Weekly blog posts
+- Final Presentation
 
 ## Programming languages
 ### Backend
-Python
-SQL
+- Python
+- SQL
 ### Frontend
-JavaScript
-HTML
-CSS
+- JavaScript
+- HTML
+- CSS
 
 ## Programming tools
-VS Code
-Docker
-Django (Backend)
-React (Frontend)
+- VS Code
+- Docker
+- Django (Backend)
+- React (Frontend)
 
 ## Learning Challenges
-Finding a usable API to supply the data we need for the web app and upon finding an API, learning how to use it efficiently for a smooth user experience.
-Learn how to use React effectively as well as necessary CSS and component libraries.
+- Finding a usable API to supply the data we need for the web app and upon finding an API, learning how to use it efficiently for a smooth user experience.
+- Learn how to use React effectively as well as necessary CSS and component libraries.
 
 ## Hardware/software platform
 Developed using WSL on a Windows PC. Runs on Linux but will be deployed as a web app using Docker. 
