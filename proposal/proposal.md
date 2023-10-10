@@ -2,11 +2,11 @@
 ### Project Title
 Trip Planner Web Application
 ### Student 1
-Name: Ethan Kavanagh
-ID Number: 21344873 
+- **Name:** Ethan Kavanagh
+- **ID Number:** 21344873 
 ### Student 2
-Name: Jamie Kavanagh
-ID Number: 21403382
+- **Name:** Jamie Kavanagh
+- **ID Number:** 21403382
 ### Staff Member Consulted
 Michael Scriney 
 
