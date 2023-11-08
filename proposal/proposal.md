@@ -11,15 +11,15 @@ Trip Planner Web Application
 Michael Scriney 
 
 ## Project Description:
-Our innovative web application is designed to revolutionize the way people plan and experience their trips. Whether you are either a solo traveler or organizing a group holiday, our platform will provide you with a smooth and personalized trip-planning experience.
-Creating and Managing Trips
-When logging into the app, users have the option to create a new trip from scratch or access their ongoing or past trips. When creating a new trip, users specify the destination along with a start and end date. The trip's creator is automatically assigned as the 'trip leader,' which gives them exclusive control to manually adjust the itinerary.
+Our web application is designed to aid in planning activities for user when visiting unfamiliar cities/countries. Wether you're travelling solo or on a group holiday, this app takes away a massive part of the planning.
+### Creating and Managing Trips
+When logging into the app, users have the option to create a new trip from scratch or access their ongoing or past trips. When creating a new trip, users specify the destination and date along with a start and end time. The trip's creator is automatically assigned as the 'trip leader,' which gives them exclusive control to manually adjust the itinerary.
 ### Smart Itinerary Generation
-One of the standout features of our app is its intelligent schedule generation. Using an algorithm, the app creates a day-by-day schedule filled with exciting activities and attractions based on the chosen location. Users can filter activities by time frame and preference, ensuring that the itinerary perfectly aligns with their interests.
-### API-Powered Recommendations
-Our app will integrate effortlessly with APIs to fetch a wide array of activities and attractions available in the chosen area. The algorithm carefully selects a set of activities that can be accommodated within the user's desired schedule, ensuring an enjoyable trip.
+After the user specifies their preferences (such as activities they do/don't want to do, or distance to travel), we will retrieve the relevant information stored in our PostgreSQL database. This data will be from a once-off Google Maps API request. Due to the limited timeframe for this project, we will assume users only form of transport is walking only (this is ideal for many European cities) as adding in public transport etc, would make the scope of the project too big.
+We will use PostGIS (an extension of PostgreSQL), to store geographical information of activities, which will allow us to calculate distance/time between activities.
+The API will provide activity imformation only. Our algorithm will construct potential daily itineraries, based on things to do, users preferences and the space/travel time between activities. The user will be given an option 2 or 3 different itineraries. The algorithm will attempt to give the user unique itineraries based on their preferences and previous days activities.
 ### Technology Stack
-The web app will use Python, Django, and SQL for the backend. On the front end, we employ JavaScript, React, and CSS Frameworks to deliver a sleek and user-friendly interface. We will then use Docker and Azure/AWS to deploy the web app.
+The web app will use Python, Django, and PostgreSQL for the backend. On the front end, we employ JavaScript, React, and CSS Frameworks to deliver a sleek and user-friendly interface. We will then use Docker and AWS to deploy the web app.
 ### Collaborative Travel Planning
 Acknowledging that travel is often a shared experience, our app allows users to invite others to join their trip. This collaborative feature enables sharing of the itinerary, making group travel a breeze.
 
@@ -56,6 +56,7 @@ Acknowledging that travel is often a shared experience, our app allows users to 
 ## Programming tools
 - VS Code
 - Docker
+- PostgreSQL
 - Django (Backend)
 - React (Frontend)
 
