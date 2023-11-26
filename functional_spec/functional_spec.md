@@ -25,7 +25,7 @@ Users can create group trip itineraries and invite others to view. The group cre
 
 This is the possible business context of our project once deployed 
 
-#### Sponsorship and Revenue Model
+#### Revenue Model
 
 This project is a stand-alone program whose main goal is to offer an online trip planner that is easy to use. The primary component of the revenue strategy is advertisement, which is intended to be monetized through sponsored internal adverts that users encounter when creating itineraries. 
 
@@ -56,12 +56,64 @@ For the purpose of this project, "travel distance" specifically denotes the dist
 Describes the general functionality of the system / product.
 
 ### 2.2 User Characteristics and Objectives
-Describes the features of the user community, including their expected expertise with software systems and the application domain. Explain the objectives and requirements for the system from the user's perspective. It may include a "wish list" of desirable characteristics, along with more feasible solutions that are in line with the business objectives.
+
+#### User Characteristics:
+
+- **Accessibility:** The system will be hosted online, ensuring accessibility for anyone with a computer and an internet connection, catering to a broad user base.
+
+- **Targeted Audience:** People in the age range of 18 to 40, incorporating both male and female users, comprise the targeted demographic. It is assumed that people in this age range travel frequently and are accustomed to using internet interfaces.
+
+- **Group Holiday Planners:** Additionally, the system aims to attract users interested in planning group holidays, accommodating their need for collaborative itinerary creation and coordination among multiple passengers.
+
+#### User Objectives and Requirements:
+
+- **User-Friendly Interface:** The primary objective is to provide an intuitive and user-friendly interface to accommodate users with varying levels of internet proficiency. Although some consumers may already be familiar with online technologies, the system design will not assume prior expertise, ensuring usability for all.
+
+- **Targeted User Profile:** The ideal user profile consists of individuals who travel frequently, including those exploring new destinations regularly and those interested in planning group holidays. The system aims to cater to both individual and collaborative itinerary planning needs.
+
+#### System Goals:
+
+- **Ease of Use:** We prioritize making the system as user-friendly as possible in order to accommodate users with varying levels of technical proficiency and facilitate smooth interaction and navigation.
+
+- **Accessibility and Appeal:** The system aims to be user-friendly and inclusive, drawing in users who may not be very familiar with the Internet but are interested in efficient travel scheduling. Apart from serving solo travelers, the online platform also helps group vacation planners by offering sharing functionalities.
+
 
 ### 2.3 Operational Scenarios
-This section should describe a set of scenarios that illustrate, from the user's perspective, what will be experienced when utilizing the system under various situations.
-In the article Inquiry-Based Requirements Analysis (IEEE Software, March 1994), scenarios are defined as follows:
-In the broad sense, a scenario is simply a proposed specific use of the system. More specifically, a scenario is a description of one or more end-to-end transactions involving the required system and its environment. Scenarios can be documented in different ways, depending up on the level of detail needed. The simplest form is a use case, which consists merely of a short description with a number attached. More detailed forms are called scripts. 
+
+This section presents a series of scenarios illustrating user interactions and experiences within the system:
+
+#### Unregistered User:
+
+- An unregistered user browsing for solutions will visit the landing page and encounter prompts to either sign up or log in.
+- Signing up leads them to a form where they can add their email, create a username, and set a password, adding their details to the Django database.
+
+#### Registered User Login:
+
+- Registered users, upon entering correct credentials, gain access to the system. Incorrect login attempts prompt an error message to re-enter the details.
+
+#### Creating an Itinerary:
+
+- On the homepage, the user will be prompted with a form to enter in the information regarding their trip. Not all boxes will be required to be filled out only the ones with a ‘*’ present. Once the necessary fields have been filled in the user will click the generate button and be prompted with three itineraries to choose from. The user will be able to name the itinerary.
+
+#### Adding Members:
+
+-  On a created itinerary there will be a ‘+’ symbol reading add member. The user will then be given a form below the symbol to enter the member's username to invite them to see the itinerary.
+
+#### Removing Members:
+- Removing members involves hovering over a member's name, triggering a delete option. Confirmation is required for this action via a message pop up. If done on a group itinerary only the group leaders hold exclusive removal rights.
+
+#### Viewing Existing Itineraries:
+
+- Users can access their created itineraries through a navbar option. once clicked they will be redirected to a page where they can see the listings of all their created itineraries.
+
+#### Deleting Itineraries:
+- Deleting an itinerary involves hovering over it, clicking a delete icon, and confirming the deletion. For group trips Group leaders' deletions affect all members; otherwise, only the individual's access is removed.
+
+#### Logging Out:
+
+- Users can log out by clicking their profile icon, triggering a pop-up displaying account information and featuring a logout button at the bottom.
+
+ 
 
 ### 2.4 Constraints
 Lists general constraints placed upon the design team, including speed requirements, industry protocols, hardware platforms, and so forth.
