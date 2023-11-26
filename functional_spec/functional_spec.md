@@ -4,12 +4,52 @@ A table of contents with pages numbers indicated for all sections / headings sho
 
 ## 1. Introduction
 ### 1.1 Overview
-Provides a brief overview of the system / product to be developed. It should include a description of the need for the system, briefly describe its functions and explain how it will work with other systems (if appropriate).
+
+#### Purpose and Function of the project:
+The product is an online trip planner, providing a user-friendly platform for crafting itineraries, catering to the needs of frequent travelers. It targets time-pressed professionals who travel extensively for work and tourists seeking convenient scheduling in unfamiliar locations.
+
+To utilize the system, users must create an account. The system requires location, date, time, and travel distance information to generate an itinerary. Upon successful input, the user will be presented with three distinct itineraries to choose from.
+
+#### Additional features:
+
+Users can create group trip itineraries and invite others to view. The group creator assumes the role of group lead, maintaining control over the itineraries. Additionally, users can apply filters to their inputs, specifying preferred and disliked activity categories.
+
+#### Collaborations:
+
+- **Google API Integration:** The system leverages Google's API to gather comprehensive information about specified locations and define various activity categories crucial for itinerary generation.
+
+- **Database Compatibility:** The system seamlessly integrates with either PostgreSQL or MongoDB databases. It stores extensive information obtained from Google's API, facilitating efficient storage and geolocation data querying associated with a diverse range of activities, thereby enhancing itinerary precision.
+
 
 ### 1.2 Business Context
-Provides an overview of the business organization sponsoring the development of this system / product or in which the system / product will / could be deployed. Note - may not be applicable to all projects
-1.3 Glossary
-Define and technical terms used in this document. Only include those with which the reader may not be familiar.
+
+This is the possible business context of our project once deployed 
+
+#### Sponsorship and Revenue Model
+
+This project is a stand-alone program whose main goal is to offer an online trip planner that is easy to use. The primary component of the revenue strategy is advertisement, which is intended to be monetized through sponsored internal adverts that users encounter when creating itineraries. 
+
+**Tiered Access Model:**
+
+- **Free Tier:** Users will have access to all functionalities detailed in this document. However, they may encounter internal advertisements during itinerary generation.
+  
+- **Paid Tier:** In the paid tier, users will be exempt from internal advertisements. Future additional functionalities, exclusive to the paid tier, might be introduced to enhance the system's capabilities.
+
+#### Growth and Potential Integration
+
+Although direct selling of the product is not the primary goal at this point, corporate acquisitions or partnerships are still possibilities. Businesses seeking to expand their range of offers may choose to discuss incorporating this trip-planning system into their current products, which might result in an acquisition or collaborative partnership.
+
+
+### 1.3 Glossary
+
+- **API:**  
+Stands for Application Programming Interface. In the context of this document, it refers to a set of rules, protocols, and tools that allow different software applications to communicate and interact with each other.
+
+- **Itinerary:**  
+An itinerary refers to a detailed plan or schedule of activities, events, or places to be visited during a trip or journey.
+
+- **Travel Distance:**  
+For the purpose of this project, "travel distance" specifically denotes the distance calculated for walking purposes. It refers to the distance that a person could walk between locations.
 
 ## 2. General Description
 ### 2.1 Product / System Functions
