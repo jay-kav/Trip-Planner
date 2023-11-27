@@ -53,7 +53,26 @@ For the purpose of this project, "travel distance" specifically denotes the dist
 
 ## 2. General Description
 ### 2.1 Product / System Functions
-Describes the general functionality of the system / product.
+
+The system offers an array of functions aimed at providing users with comprehensive itinerary planning capabilities, facilitating easy and efficient trip organization:
+
+#### Itinerary Generation:
+   - Users can input trip details such as location, date, time, and preferred activities into a user-friendly form on the platform's homepage.
+   - Upon submitting this information, the system generates three distinct itineraries tailored to the user's preferences, aiding in decision-making for daily schedules.
+
+#### User Account Management:
+   - Registration and login functionality enable users to create accounts, manage personal details, and access their itineraries securely.
+   - Registered users gain access to personalized itinerary management, allowing the creation, viewing, and deletion of itineraries.
+
+#### Collaborative Group Planning:
+   - Users interested in planning group trips can create collaborative itineraries and invite other members via a seamless 'add member' functionality.
+   - Group leaders possess exclusive rights to manage membership and itinerary modifications, ensuring coordination among multiple travelers.
+
+#### Intuitive Interface and Navigation:
+   - The system prioritizes ease of use and accessibility, featuring an intuitive interface suitable for users with varying levels of technical expertise.
+   - Navigation elements, such as a navbar and interactive icons, simplify actions like viewing itineraries, adding or removing members, and logging out.
+
+With the addition of these features, the system hopes to meet the various demands of frequent travelers, those seeking to enjoy a user-friendly and effective itinerary planning experience, and those interested in group travel planning.
 
 ### 2.2 User Characteristics and Objectives
 
@@ -116,7 +135,25 @@ This section presents a series of scenarios illustrating user interactions and e
  
 
 ### 2.4 Constraints
-Lists general constraints placed upon the design team, including speed requirements, industry protocols, hardware platforms, and so forth.
+
+This section outlines the constraints that the development team will encounter during the project:
+
+#### Time Constraints
+
+The project's deadline set at the end of February 2024 imposes a tight schedule for implementation, testing, and feedback integration. This limited timeframe necessitates efficient task prioritization and may affect the depth of testing and iteration cycles.
+
+#### Ethical Approval
+
+While obtaining ethical approval isn't a constraint in itself, the time required to secure this approval is a critical factor. A delay in receiving approval could make it more difficult to start user testing, which would affect project deadlines and milestones.
+
+#### Meeting User Requirements
+
+There is a question about the full satisfaction of user needs in light of the shortened testing period. Ensuring all user needs are met and addressing potential issues within this restricted period poses a challenge.
+
+#### Financial Constraints
+
+As a student project, financial constraints limit full access to the Google API. Access is restricted to acquiring essential data for only one to two locations for system testing purposes. This limitation may affect the breadth of functionalities tested and the comprehensiveness of data integration.
+
 
 ## 3. Functional Requirements
 This section lists the functional requirements in ranked order. Functional requirements describes the possible effects of a software system, in other words, what the system must accomplish. Other kinds of requirements (such as interface requirements, performance requirements, or reliability requirements) describe how the system accomplishes its functional requirements.
