@@ -228,5 +228,11 @@ This section provides an initial version of the project plan, including the majo
 The project plan should be accompanied by one or more PERT or GANTT charts.
 
 ## 7. Appendices
-Specifies other useful information for understanding the requirements. 
- 
+- Similar Sites
+  - [Trip Planner AI](https://tripplanner.ai/) 
+  - [Kayak](https://www.kayak.ie/trips)
+  - [Wanderlog](https://wanderlog.com/)
+- Research Tool
+  - []()
+  - []()
+## 8. References
