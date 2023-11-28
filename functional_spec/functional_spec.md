@@ -233,6 +233,9 @@ The project plan should be accompanied by one or more PERT or GANTT charts.
   - [Kayak](https://www.kayak.ie/trips)
   - [Wanderlog](https://wanderlog.com/)
 - Research Tool
-  - []()
+  - [w3schools](https://www.w3schools.com/)
+  - [Google API Doc](https://developers.google.com/docs/api/reference/rest)
+  - [SQL Course](https://www.sqlcourse.com/)
+  - [Mongo DB](https://www.mongodb.com/docs/)
   - []()
 ## 8. References
