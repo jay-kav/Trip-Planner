@@ -6,7 +6,7 @@ A table of contents with pages numbers indicated for all sections / headings sho
 ### 1.1 Overview
 
 #### Purpose and Function of the project:
-The product is an online trip planner, providing a user-friendly platform for crafting itineraries, catering to the needs of frequent travelers. It targets time-pressed professionals who travel extensively for work and tourists seeking convenient scheduling in unfamiliar locations.
+The application is an online trip planner, providing a user-friendly platform for crafting itineraries, catering to the needs of frequent travelers. It targets time-pressed professionals who travel extensively for work and tourists seeking convenient scheduling in unfamiliar locations.
 
 To utilize the system, users must create an account. The system requires location, date, time, and travel distance information to generate an itinerary. Upon successful input, the user will be presented with three distinct itineraries to choose from.
 
@@ -154,18 +154,38 @@ There is a question about the full satisfaction of user needs in light of the sh
 
 As a student project, financial constraints limit full access to the Google API. Access is restricted to acquiring essential data for only one to two locations for system testing purposes. This limitation may affect the breadth of functionalities tested and the comprehensiveness of data integration.
 
-
 ## 3. Functional Requirements
-This section lists the functional requirements in ranked order. Functional requirements describes the possible effects of a software system, in other words, what the system must accomplish. Other kinds of requirements (such as interface requirements, performance requirements, or reliability requirements) describe how the system accomplishes its functional requirements.
-As an example, each functional requirement could be specified in a format similar to the following:
-
-Description - A full description of the requirement.
-Criticality - Describes how essential this requirement is to the overall system.
-Technical issues - Describes any design or implementation issues involved in satisfying this requirement.
-Dependencies with other requirements - Describes interactions with other requirements.
-Others as appropriate
+### 3.1 Sign Up/Register
+- **Description:** Upon a users first visit to the site the will be prompted to register an account. The user will be asked to enter their first name, lastname, email and create a password to associate with their account. The user will then gain access to the site.
+- **Criticality:** This step is essential if the user would like to save trips that they create and associate the trip with themselves and other group members. This will ensure of the collaborative aspect of the application.
+- **Technical Issues:** The registration form itself will be designed in HTML and will fit in with the overall site layout. We will handle the form inputs themselves using JavaScript functions, which will create a new User object in thr MYSQL database inside of the Django backend.
+- **Dependencies:** None
+### 3.2 Log In
+- **Description:** This function prompts the user to enter an email and password. If the information entered matches information that is associated with a registered user then the user is granted access to the site.
+- **Criticality:** This user is critical to the application as the user must be logged in to save and access information regarding their planned trips.
+- **Technical Issues:** This will require some security measures to be put in place so that user information is safe and there is no unauthorized access to the site.
+- **Dependencies:** Depends on registration of user.
+### 3.3 Create New Trip
+- **Description:** The user is able to create new trips, by providing a location and times so that the applicatio can generate an itinerary for them. There are a number of filter available so that the user can customize the itinerary they receive.
+- **Criticality:** This is one of the primary function of the application, meaning it hold great importance.
+- **Technical Issues:** This feature will require us to write a somewhat complicated algorithm to generate the itinerary using the information pulled from the API.
+- **Dependencies:** Depends on the user being registered and logged in.
+### 3.4 Add Members To Trip
+- **Description:** This allows users to share their itinerary with other users.
+- **Criticality:** While this feature is not necessary for solo travelers, it can come in handy for groups of users travelling together.
+- **Technical Issues:** Trips will need the feature of associating them with multiple users.
+- **Dependencies:** This is dependant on a user being registered, logged in and having created a trip.
+### 3.5 View Ongoing Trips
+- **Description:** This is a simple screen displaying the ongoing trips of a user. The users will have the option to select a specific trip to view it in more detail.
+- **Criticality:** This is an important feature as it will allow users to view the itinerary that has been generated for them throughout the day. It will also allow the user to make minors changes such as adding additional group members.
+- **Technical Issues:** None.
+- **Dependencies:** This is dependant on a user being registered, logged in and having created a trip or being invited to a trip.
+### 3.6 View Past Trips
+- **Description:** This will allow users to view trips that they have been on in the past. This can be useful if a user is returning to an area they have been to in the past.
+- **Criticality:** This feature is more of a 'nice to have' and is not critical to the functionality of the application.
+- **Technical Issues:** None.
+- **Dependencies:** This is dependant on a user being registered, logged in and having created a trip or being invited to a trip.
 ## 4. System Architecture
-This section describes a high-level overview of the anticipated system architecture showing the distribution functions across (potential) system modules. Architectural components that are reused or 3rd party should be highlighted.
 ## 5. High-Level Design
 This section should set out the high-level design of the system. It should include one or more system models showing the relationship between system components and the systems and its environment. These might be object-models, DFD, etc.
 ## 6. Preliminary Schedule
