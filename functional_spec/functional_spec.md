@@ -19,7 +19,7 @@ Users can create group trip itineraries and invite others to view. The group cre
 The system leverages Google's API to gather comprehensive information about specified locations and define various activity categories crucial for itinerary generation.
 
 - **Database Compatibility:**  
-The system seamlessly integrates with either PostgreSQL or MongoDB databases. It stores extensive information obtained from Google's API, facilitating efficient storage and geolocation data querying associated with a diverse range of activities, thereby enhancing itinerary precision.
+The system seamlessly integrates with either MongoDB databases. It stores extensive information obtained from Google's API, facilitating efficient storage and geolocation data querying associated with a diverse range of activities, thereby enhancing itinerary precision.
 
 ### 1.2 Business Context
 
