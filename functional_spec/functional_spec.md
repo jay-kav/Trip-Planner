@@ -206,6 +206,12 @@ As a student project, financial constraints limit full access to the Google API.
 - **Technical Issues:** None.
 - **Dependencies:** This is dependant on a user being registered and logged in.
 ## 4. System Architecture
+### 4.1 System Architecture Diagram
+### 4.2 Web Site
+### 4.3 Django Server
+### 4.4 MySQL Database
+### 4.5 MongoDB Database
+### 4.6 Google API
 ## 5. High-Level Design
 This section should set out the high-level design of the system. It should include one or more system models showing the relationship between system components and the systems and its environment. These might be object-models, DFD, etc.
 ## 6. Preliminary Schedule
