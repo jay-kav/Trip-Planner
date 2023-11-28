@@ -207,12 +207,21 @@ As a student project, financial constraints limit full access to the Google API.
 - **Dependencies:** This is dependant on a user being registered and logged in.
 ## 4. System Architecture
 ### 4.1 System Architecture Diagram
+![System Architecture Diagram](/functional_spec/images/SystemArchitictureDiagram.png)\
+**Fig 4.1** above illustrates the architecture of the product. As the above diagram shows there are five main sections to the architecture. The first is the website (Front end. What the users see. Built using JavaScript/React). The website communicates with a Django server (which queries the local MySQL database and the MongoDB database).
 ### 4.2 Web Site
+The front end of this website is what the user will see and engage with in order to access the applications other functions. This will be the least technical component of the product because its main purpose is to allow users to interact with the website's features in a visually appealing manner. This will guarantee that the Django server will handle the majority of the workload.
 ### 4.3 Django Server
+The Django server will do most of the heavy lifting of the application stack. It communicates with both databases as well as the front end React app. The Django application takes care of the itinerary generation along with all other functionalities of the system.
 ### 4.4 MySQL Database
+The MySQL Database is integrated with the Django server. This is used to store user information, and trip data.
 ### 4.5 MongoDB Database
+The MongoDB database is where we will store the data that we pulled from Google Maps API for 1 or 2 major cities. This will communicate solely with Django server.
 ### 4.6 Google API
+For the purposes of the this project we will do a once off pull of information from Google Maps API and store in MongoDB database. However, for a production model, we will do a direct pull from Google Maps API, upon each request.
 ## 5. High-Level Design
+### 5.1 High-Level Design Diagram
+### 5.2 High-Level Design Description
 This section should set out the high-level design of the system. It should include one or more system models showing the relationship between system components and the systems and its environment. These might be object-models, DFD, etc.
 ## 6. Preliminary Schedule
 This section provides an initial version of the project plan, including the major tasks to be accomplished, their interdependencies, and their tentative start/stop dates. The plan also includes information on hardware, software, and wetware resource requirements.
