@@ -175,16 +175,36 @@ As a student project, financial constraints limit full access to the Google API.
 - **Criticality:** While this feature is not necessary for solo travelers, it can come in handy for groups of users travelling together.
 - **Technical Issues:** Trips will need the feature of associating them with multiple users.
 - **Dependencies:** This is dependant on a user being registered, logged in and having created a trip.
-### 3.5 View Ongoing Trips
+### 3.5 Remove Members From Trip
+- **Description:** This allows the trip leader to remove other users from the trip.
+- **Criticality:** This user is only required in the scenario that someone needs to be remove from the trip.
+- **Technical Issues:** Overwriting a trip members data in database.
+- **Dependencies:** User being registered and logged in, and a trip being created and a user being a member of the trip.
+### 3.6 View Ongoing Trips
 - **Description:** This is a simple screen displaying the ongoing trips of a user. The users will have the option to select a specific trip to view it in more detail.
 - **Criticality:** This is an important feature as it will allow users to view the itinerary that has been generated for them throughout the day. It will also allow the user to make minors changes such as adding additional group members.
 - **Technical Issues:** None.
 - **Dependencies:** This is dependant on a user being registered, logged in and having created a trip or being invited to a trip.
-### 3.6 View Past Trips
+### 3.7 View Past Trips
 - **Description:** This will allow users to view trips that they have been on in the past. This can be useful if a user is returning to an area they have been to in the past.
 - **Criticality:** This feature is more of a 'nice to have' and is not critical to the functionality of the application.
 - **Technical Issues:** None.
 - **Dependencies:** This is dependant on a user being registered, logged in and having created a trip or being invited to a trip.
+### 3.8 Leave Trip
+- **Description:** This will allow users to leave a trip that they are a member of.
+- **Criticality:** This feature is equivalent to the remove group members function. Is only required in scenario that a member wants to leave the trip.
+- **Technical Issues:** Overwriting a trip members data in database.
+- **Dependencies:** This is dependant on a user being registered, logged in and having created a trip or being invited to a trip.
+### 3.9 Delete Trip
+- **Description:** This will allow users to delete a previously made trip.
+- **Criticality:** This feature is more of a 'nice to have' and is not critical to the functionality of the application.
+- **Technical Issues:** None.
+- **Dependencies:** This is dependant on a user being registered, logged in and having created a trip or being invited to a trip.
+### 3.10 Log Out
+- **Description:** Allow users to log out out of their account to ensure greater security of their account.
+- **Criticality:** This feature is important for user account security.
+- **Technical Issues:** None.
+- **Dependencies:** This is dependant on a user being registered and logged in.
 ## 4. System Architecture
 ## 5. High-Level Design
 This section should set out the high-level design of the system. It should include one or more system models showing the relationship between system components and the systems and its environment. These might be object-models, DFD, etc.
