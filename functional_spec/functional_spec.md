@@ -221,8 +221,17 @@ The MongoDB database is where we will store the data that we pulled from Google 
 For the purposes of the this project we will do a once off pull of information from Google Maps API and store in MongoDB database. However, for a production model, we will do a direct pull from Google Maps API, upon each request.
 ## 5. High-Level Design
 ### 5.1 High-Level Design Diagram
+![High-Level Design Diagram](/functional_spec/images/HighLevelDesignDiagram.png)\
+**Fig 5.1**
 ### 5.2 High-Level Design Description
-This section should set out the high-level design of the system. It should include one or more system models showing the relationship between system components and the systems and its environment. These might be object-models, DFD, etc.
+**Fig 5.1** is explained below.
+- **Step 1 - Register/Sign Up:** Provide a first name, last name, email and password to create an account.
+- **Step 2 - Log In:** Log into your account by entering the email and password associated with the account.
+- **Step 3 - Create New Trip:** Users will provide various information such as location, times and other filters to generate their desired itinerary.
+- **Step 4 - Add/Remove Members From Trip:** Trip leader will be able to add additional members to the trip or remove existing members.
+- **Step 5 - View Ongoing Trip:** Users can view information regarding the trip they are currently on.
+- **Step 6 - View Past Trips:** Users can view information regarding any trips that they have been on in the past.
+- **Step 7 - Log Out:** Once you have finished using the various features of the site, you can then log out.
 ## 6. Preliminary Schedule
 This section provides an initial version of the project plan, including the major tasks to be accomplished, their interdependencies, and their tentative start/stop dates. The plan also includes information on hardware, software, and wetware resource requirements.
 The project plan should be accompanied by one or more PERT or GANTT charts.
