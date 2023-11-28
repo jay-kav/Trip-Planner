@@ -15,11 +15,11 @@ To utilize the system, users must create an account. The system requires locatio
 Users can create group trip itineraries and invite others to view. The group creator assumes the role of group lead, maintaining control over the itineraries. Additionally, users can apply filters to their inputs, specifying preferred and disliked activity categories.
 
 #### Collaborations:
+- **Google API Integration:**  
+The system leverages Google's API to gather comprehensive information about specified locations and define various activity categories crucial for itinerary generation.
 
-- **Google API Integration:** The system leverages Google's API to gather comprehensive information about specified locations and define various activity categories crucial for itinerary generation.
-
-- **Database Compatibility:** The system seamlessly integrates with either PostgreSQL or MongoDB databases. It stores extensive information obtained from Google's API, facilitating efficient storage and geolocation data querying associated with a diverse range of activities, thereby enhancing itinerary precision.
-
+- **Database Compatibility:**  
+The system seamlessly integrates with either PostgreSQL or MongoDB databases. It stores extensive information obtained from Google's API, facilitating efficient storage and geolocation data querying associated with a diverse range of activities, thereby enhancing itinerary precision.
 
 ### 1.2 Business Context
 
@@ -29,11 +29,6 @@ This is the possible business context of our project once deployed
 
 This project is a stand-alone program whose main goal is to offer an online trip planner that is easy to use. The primary component of the revenue strategy is advertisement, which is intended to be monetized through sponsored internal adverts that users encounter when creating itineraries. 
 
-**Tiered Access Model:**
-
-- **Free Tier:** Users will have access to all functionalities detailed in this document. However, they may encounter internal advertisements during itinerary generation.
-  
-- **Paid Tier:** In the paid tier, users will be exempt from internal advertisements. Future additional functionalities, exclusive to the paid tier, might be introduced to enhance the system's capabilities.
 
 #### Growth and Potential Integration
 
@@ -78,24 +73,30 @@ With the addition of these features, the system hopes to meet the various demand
 
 #### User Characteristics:
 
-- **Accessibility:** The system will be hosted online, ensuring accessibility for anyone with a computer and an internet connection, catering to a broad user base.
+- **Accessibility:**  
+The system will be hosted online, ensuring accessibility for anyone with a computer and an internet connection, catering to a broad user base.
 
-- **Targeted Audience:** People in the age range of 18 to 40, incorporating both male and female users, comprise the targeted demographic. It is assumed that people in this age range travel frequently and are accustomed to using internet interfaces.
+- **Targeted Audience:**  
+People in the age range of 18 to 40, incorporating both male and female users, comprise the targeted demographic. It is assumed that people in this age range travel frequently and are accustomed to using internet interfaces.
 
-- **Group Holiday Planners:** Additionally, the system aims to attract users interested in planning group holidays, accommodating their need for collaborative itinerary creation and coordination among multiple passengers.
+- **Group Holiday Planners:**  
+Additionally, the system aims to attract users interested in planning group holidays, accommodating their need for collaborative itinerary creation and coordination among multiple passengers.
 
 #### User Objectives and Requirements:
 
-- **User-Friendly Interface:** The primary objective is to provide an intuitive and user-friendly interface to accommodate users with varying levels of internet proficiency. Although some consumers may already be familiar with online technologies, the system design will not assume prior expertise, ensuring usability for all.
+- **User-Friendly Interface:**  
+The primary objective is to provide an intuitive and user-friendly interface to accommodate users with varying levels of internet proficiency. Although some consumers may already be familiar with online technologies, the system design will not assume prior expertise, ensuring usability for all.
 
-- **Targeted User Profile:** The ideal user profile consists of individuals who travel frequently, including those exploring new destinations regularly and those interested in planning group holidays. The system aims to cater to both individual and collaborative itinerary planning needs.
+- **Targeted User Profile:**  
+The ideal user profile consists of individuals who travel frequently, including those exploring new destinations regularly and those interested in planning group holidays. The system aims to cater to both individual and collaborative itinerary planning needs.
 
 #### System Goals:
 
-- **Ease of Use:** We prioritize making the system as user-friendly as possible in order to accommodate users with varying levels of technical proficiency and facilitate smooth interaction and navigation.
+- **Ease of Use:**  
+We prioritize making the system as user-friendly as possible in order to accommodate users with varying levels of technical proficiency and facilitate smooth interaction and navigation.
 
-- **Accessibility and Appeal:** The system aims to be user-friendly and inclusive, drawing in users who may not be very familiar with the Internet but are interested in efficient travel scheduling. Apart from serving solo travelers, the online platform also helps group vacation planners by offering sharing functionalities.
-
+- **Accessibility and Appeal:**  
+The system aims to be user-friendly and inclusive, drawing in users who may not be very familiar with the Internet but are interested in efficient travel scheduling. Apart from serving solo travelers, the online platform also helps group vacation planners by offering sharing functionalities.
 
 ### 2.3 Operational Scenarios
 
@@ -225,13 +226,28 @@ For the purposes of the this project we will do a once off pull of information f
 **Fig 5.1**
 ### 5.2 High-Level Design Description
 **Fig 5.1** is explained below.
-- **Step 1 - Register/Sign Up:** Provide a first name, last name, email and password to create an account.
-- **Step 2 - Log In:** Log into your account by entering the email and password associated with the account.
-- **Step 3 - Create New Trip:** Users will provide various information such as location, times and other filters to generate their desired itinerary.
-- **Step 4 - Add/Remove Members From Trip:** Trip leader will be able to add additional members to the trip or remove existing members.
-- **Step 5 - View Ongoing Trip:** Users can view information regarding the trip they are currently on.
-- **Step 6 - View Past Trips:** Users can view information regarding any trips that they have been on in the past.
-- **Step 7 - Log Out:** Once you have finished using the various features of the site, you can then log out.
+
+- **Step 1 - Register/Sign Up:**  
+Provide a first name, last name, email and password to create an account.
+
+- **Step 2 - Log In:**  
+Log into your account by entering the email and password associated with the account.
+
+- **Step 3 - Create New Trip:**  
+Users will provide various information such as location, times and other filters to generate their desired itinerary.
+
+- **Step 4 - Add/Remove Members From Trip:**  
+Trip leader will be able to add additional members to the trip or remove existing members.
+
+- **Step 5 - View Ongoing Trip:**  
+Users can view information regarding the trip they are currently on.
+
+- **Step 6 - View Past Trips:**  
+Users can view information regarding any trips that they have been on in the past.
+
+- **Step 7 - Log Out:**  
+Once you have finished using the various features of the site, you can then log out.
+
 ## 6. Preliminary Schedule
 This section provides an initial version of the project plan, including the major tasks to be accomplished, their interdependencies, and their tentative start/stop dates. The plan also includes information on hardware, software, and wetware resource requirements.
 The project plan should be accompanied by one or more PERT or GANTT charts.
@@ -246,5 +262,7 @@ The project plan should be accompanied by one or more PERT or GANTT charts.
   - [Google API Doc](https://developers.google.com/docs/api/reference/rest)
   - [SQL Course](https://www.sqlcourse.com/)
   - [Mongo DB](https://www.mongodb.com/docs/)
-  - []()
+  - [Django Doc](https://docs.djangoproject.com/en/4.2/)
+  - [React Doc](https://legacy.reactjs.org/docs/getting-started.html)
+  - [Javascript Doc](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 ## 8. References
