@@ -122,6 +122,9 @@ This section presents a series of scenarios illustrating user interactions and e
 #### Removing Members:
 - Removing members involves hovering over a member's name, triggering a delete option. Confirmation is required for this action via a message pop up. If done on a group itinerary only the group leaders hold exclusive removal rights.
 
+#### Leaving Groups:
+- A members wishing to leave a group involves hovering over the leave button, triggering a delete option. Confirmation is required for this action via a message pop up.
+
 #### Viewing Existing Itineraries:
 
 - Users can access their created itineraries through a navbar option. once clicked they will be redirected to a page where they can see the listings of all their created itineraries.
