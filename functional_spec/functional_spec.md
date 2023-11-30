@@ -252,15 +252,45 @@ Users can view information regarding any trips that they have been on in the pas
 Once you have finished using the various features of the site, you can then log out.
 
 ## 6. Preliminary Schedule
-This section provides an initial version of the project plan, including the major tasks to be accomplished, their interdependencies, and their tentative start/stop dates. The plan also includes information on hardware, software, and wetware resource requirements.
-The project plan should be accompanied by one or more PERT or GANTT charts.
+### 6.1 Overview
+In Figure 6.2, there is a comprehensive list of tasks, including task names, durations, start and finish dates, and the designated team members responsible for each task. Figure 6.3 illustrates the plan outlining when and how these tasks are slated for completion.
+The task list chart/table details essential information, presenting a clear overview of task specifics and team assignments. Meanwhile, the Gantt chart offers a visual representation of the same data, using bars or lines to depict each task and its interdependencies with preceding tasks. For instance, the completion of task A may or may not be a prerequisite for the commencement of task B, illustrating the sequential relationships within the project.
+### 6.2 Task listings
+|Task Name|Duration|Start|Finish|
+|---|---|---|---|
+|Project Proposal|7 days|06/10/23|13/10/23|
+|Functional Spec|14 days|16/11/23|01/12/23|
+|Set Up Project Infastructure|15 days|20/11/23|05/12/23|
+|User Login and Out Functionality|4 days|03/12/23|07/12/23|
+|Pull from Google API add to Mongo BD|3 days|03/12/23|06/12/23|
+|Get Ethical Approval|TBC|TBC|TBC|
+|Design Object Classes|2 days|19/01/24|21/01/24|
+|Create Models|3 days|21/01/24|24/01/24|
+|Set Up Rest Framework|10 days|24/01/24|04/02/24|
+|Create Itinerary Function Implementation|14 days|24/01/24|07/02/24|
+|View created Itinerarys Function|7 days|31/01/24|07/02/24|
+|Delete Itineraries Function|7 days|31/01/24|07/02/24|
+|Add & Remove Members Functions|7 days|31/01/24|07/02/24|
+|Leave Itineraries Function|7 days|31/01/24|07/02/24|
+|Basic UI Implementation|6 days|01/2/24|07/02/24|
+|Full UI Implementation|7 days|05/02/24|12/02/24|
+|User testing|12 days|09/02/24|21/02/24|
+|Deploy Application|1 day|09/02/24|09/02/24|
+|Write User manual|12 days|11/02/24|23/02/24|
+|Technical Specification|12 days|11/02/24|23/02/24|
+|Video Walk Through|3 days|20/02/24|23/02/24|
+
+
+**Fig 6.2**
+### 6.3 Gannt Chart
+**Fig 6.3**
 
 ## 7. Appendices
 - Similar Sites
   - [Trip Planner AI](https://tripplanner.ai/) 
   - [Kayak](https://www.kayak.ie/trips)
   - [Wanderlog](https://wanderlog.com/)
-- Research Tool
+- Research Tools
   - [w3schools](https://www.w3schools.com/)
   - [Google API Doc](https://developers.google.com/docs/api/reference/rest)
   - [SQL Course](https://www.sqlcourse.com/)
