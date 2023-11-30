@@ -283,6 +283,7 @@ The task list chart/table details essential information, presenting a clear over
 
 **Fig 6.2**
 ### 6.3 Gannt Chart
+![Gantt Diagram](/functional_spec/images/GanttDiagram.png)\
 **Fig 6.3**
 
 ## 7. Appendices
