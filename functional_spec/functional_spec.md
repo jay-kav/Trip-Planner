@@ -329,42 +329,6 @@ The first diagram outlines the process where a user submits itinerary requiremen
 
 The second diagram demonstrates the interaction flow when a user accesses an itinerary. Initially, the website retrieves the itinerary from the Django DB and presents it to the user. Upon the user's request to add a member for itinerary viewing, the website sends the member details to be added to the Django DB. Once completed, the DB provides the updated itinerary back to the website for the member's viewing.
 
-### 5.5 High Level Design Diagram 
-
-### 5.6 High Level Design Diagram Description 
-**Fig 5.5** is explained below.
-
-
-- **Step 1 - Register/Sign Up:**  
-Provide a first name, last name, email and password to create an account.
-
-
-- **Step 2 - Log In:**  
-Log into your account by entering the email and password associated with the account.
-
-
-- **Step 3 - Create New Trip:**  
-Users will provide various information such as location, times and other filters to generate their desired itinerary.
-
-
-- **Step 4 - Add/Remove Members From Trip:**  
-Trip leaders will be able to add additional members to the trip or remove existing members.
-
-
-- **Step 5 - View Ongoing Trip:**  
-Users can view information regarding the trip they are currently on.
-
-
-- **Step 6 - View Past Trips:**  
-Users can view information regarding any trips that they have been on in the past.
-
-
-- **Step 7 - Log Out:**  
-Once you have finished using the various features of the site, you can then log out.
-
-
-
-
 ## 6. Preliminary Schedule
 ### 6.1 Overview
 In Figure 6.2, there is a comprehensive list of tasks, including task names, durations, start and finish dates, and the designated team members responsible for each task. Figure 6.3 illustrates the plan outlining when and how these tasks are slated for completion.
