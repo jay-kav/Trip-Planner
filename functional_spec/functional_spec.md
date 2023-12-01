@@ -230,7 +230,7 @@ The MongoDB database is where we will store the data that we pulled from Google 
 For the purposes of the this project we will do a once off pull of information from Google Maps API and store in MongoDB database. However, for a production model, we will do a direct pull from Google Maps API, upon each request.
 ## 5. High-Level Design
 ### 5.1 Data Flow Diagram
-![Data Flow Diagram](/functional_spec/images/DataFlowDiagram.png)\
+![Data Flow Diagram](/functional_spec/images/DFD.png)\
 **Fig 5.1**
 
 ### 5.2 Data Flow Description
