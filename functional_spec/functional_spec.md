@@ -1,6 +1,5 @@
 # Function Specification
 
-
 ## 1. Introduction
 ### 1.1 Overview
 
@@ -311,8 +310,17 @@ As a brief overview of some scenarios the user sends an interaction to the Djang
 
 
 ### 5.3 Sequence Diagrams
+#### 5.3.1 Create Itinerary
 ![Create Itinerary](/functional_spec/images/SequenceDiagramCI.png)\
+- User enters relevant information to website.
+- Website communicates with Django database.
+- Django app generates itinerary by pulling information from MongoDB
+- It then saves it against the user in the database
+#### 5.3.2 Add User To Itinerary
 ![Add User To Itinerary](/functional_spec/images/SequenceDiagramAU.png)\
+- Trip leader selects another user to add as a member to the trip.
+- The website communicates this with the Django application, which overwrites the record of that trip in the database.
+- The updated information is now available for all users.\
 **Fig 5.3**
 ### 5.4 Sequence Diagram Description
 **Fig 5.3** is explained below.
