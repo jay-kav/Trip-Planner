@@ -229,6 +229,7 @@ The MongoDB database is where we will store the data that we pulled from Google 
 ### 4.6 Google API
 For the purposes of the this project we will do a once off pull of information from Google Maps API and store in MongoDB database. However, for a production model, we will do a direct pull from Google Maps API, upon each request.
 ## 5. High-Level Design
+
 ### 5.1 Data Flow Diagram
 ![Data Flow Diagram](/functional_spec/images/DFD.png)\
 **Fig 5.1**
@@ -240,10 +241,10 @@ between these process and the data stores.
 
 As a brief overview of some scenarios the user sends an interation to the Django website thus creating different processes. Some being creating an itinerary by fetching data from the MongoBd then creating the Itineraty on the site and storing it in the Django DB or Adding another user to view the Itinerary by fetching the itinerary and the users ID from the Django DB and granting them access to view.
 
-### 5.3 Sequence Diagram
+### 5.3 High Level Design Diagram
 ![High-Level Design Diagram](/functional_spec/images/HighLevelDesignDiagram.png)\
 **Fig 5.3**
-### 5.4 Sequence Diagram Description
+### 5.4 High Level Design Diagram Description
 **Fig 5.3** is explained below.
 
 - **Step 1 - Register/Sign Up:**  
@@ -267,6 +268,13 @@ Users can view information regarding any trips that they have been on in the pas
 - **Step 7 - Log Out:**  
 Once you have finished using the various features of the site, you can then log out.
 
+### 5.5 Sequence Diagram Create User
+![High-Level Design Diagram](/functional_spec/images/SequenceDiagramCI.png)\
+**Fig 5.5**
+
+### 5.6 Sequence Diagram Add User
+![High-Level Design Diagram](/functional_spec/images/SequenceDiagramAU.png)\
+**Fig 5.6**
 
 ## 6. Preliminary Schedule
 ### 6.1 Overview
@@ -316,4 +324,3 @@ The task list chart/table details essential information, presenting a clear over
   - [Django Doc](https://docs.djangoproject.com/en/4.2/)
   - [React Doc](https://legacy.reactjs.org/docs/getting-started.html)
   - [Javascript Doc](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-## 8. References
