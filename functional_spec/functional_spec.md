@@ -310,8 +310,9 @@ between these processes and the data stores.
 As a brief overview of some scenarios the user sends an interaction to the Django website thus creating different processes. Some being creating an itinerary by fetching data from the MongoBd then creating the Itinerary on the site and storing it in the Django DB or Adding another user to view the Itinerary by fetching the itinerary and the users ID from the Django DB and granting them access to view.
 
 
-### 5.3 Sequence Diagram
-![High-Level Design Diagram](/functional_spec/images/HighLevelDesignDiagram.png)\
+### 5.3 Sequence Diagrams
+![Create Itinerary](/functional_spec/images/SequenceDiagramCI.png)\
+![Add User To Itinerary](/functional_spec/images/SequenceDiagramAU.png)\
 **Fig 5.3**
 ### 5.4 Sequence Diagram Description
 **Fig 5.3** is explained below.
