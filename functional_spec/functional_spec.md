@@ -46,6 +46,10 @@ An itinerary refers to a detailed plan or schedule of activities, events, or pla
 - **Travel Distance:**  
 For the purpose of this project, "travel distance" specifically denotes the distance calculated for walking purposes. It refers to the distance that a person could walk between locations.
 
+- **DB:**  
+Used in this document as short hand for Database.
+
+
 ## 2. General Description
 ### 2.1 Product / System Functions
 
@@ -81,6 +85,7 @@ People in the age range of 18 to 40, incorporating both male and female users, c
 
 - **Group Holiday Planners:**  
 Additionally, the system aims to attract users interested in planning group holidays, accommodating their need for collaborative itinerary creation and coordination among multiple passengers.
+
 
 #### User Objectives and Requirements:
 
@@ -224,11 +229,22 @@ The MongoDB database is where we will store the data that we pulled from Google 
 ### 4.6 Google API
 For the purposes of the this project we will do a once off pull of information from Google Maps API and store in MongoDB database. However, for a production model, we will do a direct pull from Google Maps API, upon each request.
 ## 5. High-Level Design
-### 5.1 High-Level Design Diagram
-![High-Level Design Diagram](/functional_spec/images/HighLevelDesignDiagram.png)\
+### 5.1 Data Flow Diagram
+![Data Flow Diagram](/functional_spec/images/DataFlowDiagram.png)\
 **Fig 5.1**
-### 5.2 High-Level Design Description
-**Fig 5.1** is explained below.
+
+### 5.2 Data Flow Description
+The Data Flow Diagram is used to provide the data movements of the system and show the functionality of
+the system. We supply the process of the system, its external entities (Users) ,the flow of data
+between these process and the data stores. 
+
+As a brief overview of some scenarios the user sends an interation to the Django website thus creating different processes. Some being creating an itinerary by fetching data from the MongoBd then creating the Itineraty on the site and storing it in the Django DB or Adding another user to view the Itinerary by fetching the itinerary and the users ID from the Django DB and granting them access to view.
+
+### 5.3 Sequence Diagram
+![High-Level Design Diagram](/functional_spec/images/HighLevelDesignDiagram.png)\
+**Fig 5.3**
+### 5.4 Sequence Diagram Description
+**Fig 5.3** is explained below.
 
 - **Step 1 - Register/Sign Up:**  
 Provide a first name, last name, email and password to create an account.
@@ -250,6 +266,7 @@ Users can view information regarding any trips that they have been on in the pas
 
 - **Step 7 - Log Out:**  
 Once you have finished using the various features of the site, you can then log out.
+
 
 ## 6. Preliminary Schedule
 ### 6.1 Overview
