@@ -323,7 +323,16 @@ As a brief overview of some scenarios the user sends an interaction to the Djang
 - The updated information is now available for all users.\
 **Fig 5.3**
 ### 5.4 Sequence Diagram Description
-**Fig 5.3** is explained below.
+The two diagrams provided above illustrate different interactions within the system.
+
+The first diagram outlines the process where a user submits itinerary requirements to the website. Subsequently, the website forwards this information to MongoDB for processing. MongoDB then retrieves the relevant data, enabling the website to create the itinerary and store it in the Django DB. Simultaneously, the website displays the created itinerary to the user.
+
+The second diagram demonstrates the interaction flow when a user accesses an itinerary. Initially, the website retrieves the itinerary from the Django DB and presents it to the user. Upon the user's request to add a member for itinerary viewing, the website sends the member details to be added to the Django DB. Once completed, the DB provides the updated itinerary back to the website for the member's viewing.
+
+### 5.5 High Level Design Diagram 
+
+### 5.6 High Level Design Diagram Description 
+**Fig 5.5** is explained below.
 
 
 - **Step 1 - Register/Sign Up:**  
@@ -407,7 +416,6 @@ The task list chart/table details essential information, presenting a clear over
   - [Django Doc](https://docs.djangoproject.com/en/4.2/)
   - [React Doc](https://legacy.reactjs.org/docs/getting-started.html)
   - [Javascript Doc](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-## 8. References
 
 
 
