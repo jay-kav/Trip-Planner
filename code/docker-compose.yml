@@ -7,6 +7,8 @@ services:
       - "8000:8000"
     networks:
       - django-network
+    env_file:
+    - .env
   nginx:
     build: ./frontend
     restart: always
