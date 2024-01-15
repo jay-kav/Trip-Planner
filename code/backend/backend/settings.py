@@ -16,7 +16,7 @@ def get_env_value(env_variable):
 SECRET_KEY = get_env_value('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_env_value('DEBUG')
 
 ALLOWED_HOSTS = []
 
