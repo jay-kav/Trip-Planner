@@ -121,16 +121,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-    ]
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-CORS_ORIGIN_ALLOW_ALL = True;
 
-ALLOWED_HOSTS = [
-    "127.0.0.1:3000",
-    "localhost:3000",
-];
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # node on port 3000
+    "http://127.0.0.1:3000"  # node on port 3000
+]
