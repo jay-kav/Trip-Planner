@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 function Users() {
-  const url = "http://127.0.0.1:8000/api/"
+  const url = "http://127.0.0.1:8000/"
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
@@ -14,7 +14,7 @@ function Users() {
 
   useEffect(() => {
     if (users.length === 0) {
-        fetch(url + "user/")
+        fetch(url + "users/")
         .then((response) => response.json())
         .then((data) => {
             setUsers(data);
