@@ -20,7 +20,7 @@ def get_env_value(env_variable):
 SECRET_KEY = get_env_value('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_env_value('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -90,11 +90,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tripplanner_db',
-        'USER': 'postgres',
-        'PASSWORD': 'D1c2u3!?',
-        'HOST': 'tripplanner.checisucm4bg.eu-north-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'NAME': get_env_value('NAME'),
+        'USER': get_env_value('USER'),
+        'PASSWORD': get_env_value('PASSWORD'),
+        'HOST': get_env_value('HOST'),
+        'PORT': get_env_value('PORT'),
     }
 }
 
