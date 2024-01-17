@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_api',
     'rest_framework',
-    'corsheader',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
