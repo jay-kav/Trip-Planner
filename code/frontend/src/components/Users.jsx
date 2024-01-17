@@ -7,14 +7,15 @@ function Users() {
   const getUsers = () => {
     return users.map(user => (
       <div key={user.id}>
-        <h3>{user.id} - {user.email}</h3>
+          <h3>ID: {user.id} - {user.username}</h3>
+          <p>{user.email}</p>
       </div>
     ));
   };  
 
   useEffect(() => {
     if (users.length === 0) {
-        fetch(url + "users/")
+        fetch(url + "api/users/")
         .then((response) => response.json())
         .then((data) => {
             setUsers(data);

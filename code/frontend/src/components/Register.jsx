@@ -12,18 +12,18 @@ function Register() {
     const newData = {...data};
     newData[e.target.id] = e.target.value;
     setData(newData);
-    //console.log(newData);
+    console.log(newData);
   }
 
   function submitForm(e) {
     e.preventDefault();
-    fetch(`${url}register/`, {
+    fetch(`${url}api/users/`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: {
-        username: data.username,
-        email: data.email,
-        password: data.password
+        'username': data.username,
+        'email': data.email,
+        'password': data.password
       }
     })
     .then((response) => {
@@ -32,11 +32,10 @@ function Register() {
     })
     .then((responseData) => {
       console.log(responseData);
-      window.location.reload();
+      //window.location.reload();
     })
     .catch((err) => console.error("Error:", err));
   }
-  
 
   return (
     <div>
