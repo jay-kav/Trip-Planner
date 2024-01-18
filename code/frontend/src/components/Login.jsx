@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 function Login() {
-  const url = "http://127.0.0.1:8000/api/"
+  const url = "http://127.0.0.1:8000/";
   const [data, setData] = useState({
-    email: "",
+    username: "",
     password: ""
-  })
+  });
 
   function handle (e) {
     const newData = {...data};
@@ -15,23 +15,31 @@ function Login() {
   }
 
   function submitForm (e) {
-    console.log(url + "user?email='" + data.email + "'&password'" + data.password + "'}");
     e.preventDefault();
-    fetch(url + "user?email='" + data.email + "'&password'" + data.password + "'}", {
-        headers: { "Content-type": "application/json" }
+    fetch(`${url}login/`, {
+        method: 'POST',
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          "username": data.username,
+          "password": data.password
+        })
     })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+    .then((response) => {
+      console.log(response); // Log the entire response
+      return response.json();
     })
-    .catch(err => console.log(err))
+    .then((responseData) => {
+      console.log(responseData);
+      window.location.href = '/';
+    })
+    .catch((err) => console.error("Error:", err));
   };
 
   return (
     <div>
       <form onSubmit={(e) => submitForm(e)}>
-        <label>Email </label>
-        <input onChange={(e) => handle(e)} value={data.email} id="email" type='email'></input>
+        <label>Username </label>
+        <input onChange={(e) => handle(e)} value={data.username} id="username" type='username'></input>
         <br />
         <label>Password </label>
         <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>

@@ -4,9 +4,11 @@ from .models import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, logout, login
 
 @csrf_exempt
-def register(request):
+def registerView(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -22,13 +24,30 @@ def register(request):
             return JsonResponse({'detail': 'Failed to create new user'})
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
-def login(request):
+def loginView(request):
     if request.method == 'POST':
-        pass
+        try:
+            data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                return JsonResponse({'detail': 'Successfully logged in'})
+            return JsonResponse({'detail': 'Log in failed'})
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def logoutView(request):
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({'detail': 'Successfully logged out'})
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer

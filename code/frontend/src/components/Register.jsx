@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 function Register() {
-  const url = "http://127.0.0.1:8000/"
+  const url = "http://127.0.0.1:8000/";
   const [data, setData] = useState({
     username: "",
     email: "",
     password: ""
-  })
+  });
 
   function handle (e) {
     const newData = {...data};
@@ -16,7 +16,6 @@ function Register() {
   }
 
   function submitForm(e) {
-    console.log(data)
     e.preventDefault();
     fetch(`${url}register/`, {
       method: "POST",
