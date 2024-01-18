@@ -16,15 +16,16 @@ function Register() {
   }
 
   function submitForm(e) {
+    console.log(data)
     e.preventDefault();
-    fetch(`${url}api/users/`, {
+    fetch(`${url}register/`, {
       method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: {
+      body: JSON.stringify({
         'username': data.username,
         'email': data.email,
-        'password': data.password
-      }
+        'password': data.password  // Include the password field
+      }),
+      headers: { "Content-type": "application/json" },
     })
     .then((response) => {
       console.log(response); // Log the entire response
@@ -32,10 +33,11 @@ function Register() {
     })
     .then((responseData) => {
       console.log(responseData);
-      //window.location.reload();
+      window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));
   }
+  
 
   return (
     <div>
