@@ -6,11 +6,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 		model = User
 		fields = ['id', 'url', 'username', 'email', 'password']
 
-class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
-	class Meta:
-		model = UserProfile
-		fields = ['userID_id']
-
 class TripSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Trip

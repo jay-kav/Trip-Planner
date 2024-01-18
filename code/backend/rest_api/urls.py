@@ -5,7 +5,6 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('trips', TripViewset)
 router.register('itineraries', ItineraryViewset)
-router.register('userprofiles', UserProfileViewset)
 router.register('users', UserViewset)
 
 urlpatterns = [
