@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class Itinerary(models.Model):
     id = models.AutoField(primary_key=True)
+    Date = models.DateField()
     Start = models.TimeField()
     End = models.TimeField()
     Activities = ArrayField(models.CharField(max_length=255)) # Array of string arrays for activities
