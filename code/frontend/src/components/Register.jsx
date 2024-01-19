@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 function Register() {
-  const url = "http://127.0.0.1:8000/"
+  const url = "http://127.0.0.1:8000/";
   const [data, setData] = useState({
     username: "",
     email: "",
     password: ""
-  })
+  });
 
   function handle (e) {
     const newData = {...data};
@@ -17,14 +17,14 @@ function Register() {
 
   function submitForm(e) {
     e.preventDefault();
-    fetch(`${url}api/users/`, {
+    fetch(`${url}register/`, {
       method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: {
+      body: JSON.stringify({
         'username': data.username,
         'email': data.email,
-        'password': data.password
-      }
+        'password': data.password  // Include the password field
+      }),
+      headers: { "Content-type": "application/json" },
     })
     .then((response) => {
       console.log(response); // Log the entire response
@@ -32,10 +32,11 @@ function Register() {
     })
     .then((responseData) => {
       console.log(responseData);
-      //window.location.reload();
+      window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));
   }
+  
 
   return (
     <div>
