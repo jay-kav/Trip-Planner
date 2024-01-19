@@ -8,6 +8,7 @@ router.register('itineraries', views.ItineraryViewset)
 router.register('users', views.UserViewset)
 
 urlpatterns = [
+    #path('', index, name="index"),
     path('register/', views.registerView, name='register'),
     path('login/', views.loginView, name='login'),
     path('logout/', views.logoutView, name='logout'),
