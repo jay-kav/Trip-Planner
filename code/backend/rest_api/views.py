@@ -34,10 +34,10 @@ def loginView(request):
             username = data.get('username')
             password = data.get('password')
             user = authenticate(request, username=username, password=password)
-            if user:
+            if user is not None:
                 login(request, user)
-                return JsonResponse({'detail': 'Successfully logged in'})
-            return JsonResponse({'detail': 'Log in failed'})
+                return JsonResponse({'detail': 'Successfully logged in'}, status=200)
+            return JsonResponse({'detail': 'Log in failed'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
