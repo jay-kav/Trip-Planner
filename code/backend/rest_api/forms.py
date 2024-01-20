@@ -5,7 +5,7 @@ from .models import Itinerary
 class ItineraryForm(forms.ModelForm):
     class Meta:
         model = Itinerary
-        fields = ['Date', 'Start', 'End', 'Activities']
+        fields = ['date', 'start', 'end', 'activities']
 
     # You can add custom validation or widgets here if needed
 

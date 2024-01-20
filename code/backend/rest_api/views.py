@@ -110,10 +110,10 @@ def testPull(request):
     
     if request.method == 'POST':
         form_data = {
-            'Date': default_date,
-            'Start': default_start_time,
-            'End': default_end_time,
-            'Activities': data,
+            'date': default_date,
+            'start': default_start_time,
+            'end': default_end_time,
+            'activities': data,
         }
         
         form = ItineraryForm(data=form_data)
