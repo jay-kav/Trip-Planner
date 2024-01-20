@@ -1,3 +1,4 @@
+from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
@@ -6,9 +7,28 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
-from django.shortcuts import render, redirect
-from .forms import ItineraryForm
+from .forms import *
 from pymongo import MongoClient
+
+
+def index(request):
+    if request.method == 'POST':
+        form = TestPullForm(request.POST)
+        if form.is_valid():
+            # Check the value of the hidden field to identify the button click
+            if form.cleaned_data['submit_button'] == 'test_pull':
+                # Call your testPull function or logic here
+                testPull(request)
+                # Redirect to the index page or another page
+                return redirect('index')
+
+    else:
+        form = TestPullForm()
+
+    return render(request, 'index.html', {'form': form})
+
+def successPage (request):
+    return render(request, 'success.html')
 
 @csrf_exempt
 def registerView(request):
@@ -66,6 +86,8 @@ class ItineraryViewset(viewsets.ModelViewSet):
     
     
 def testPull(request):
+    print("testPull function is running!")
+    ADMIN_URL = 'mongodb+srv://ProjectUser:cuWavbgDnQN0Abki@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
     client = MongoClient(ADMIN_URL)
     db = client['Belgium']
     collection = db['Brussels']
@@ -103,4 +125,4 @@ def testPull(request):
     else:
         form = ItineraryForm()
         
-    return render(request, 'your_template.html', {'form': form})
+    return render(request, 'success.html', {'form': form})

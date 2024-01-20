@@ -8,3 +8,7 @@ class ItineraryForm(forms.ModelForm):
         fields = ['Date', 'Start', 'End', 'Activities']
 
     # You can add custom validation or widgets here if needed
+
+
+class TestPullForm(forms.Form):
+    submit_button = forms.CharField(widget=forms.HiddenInput(), initial='test_pull')
