@@ -30,7 +30,6 @@ function Login() {
     })
     .then((responseData) => {
       console.log(responseData);
-      window.location.href = '/';
     })
     .catch((err) => console.error("Error:", err));
   };

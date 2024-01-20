@@ -57,10 +57,10 @@ def loginView(request):
             username = data.get('username')
             password = data.get('password')
             user = authenticate(request, username=username, password=password)
-            if user:
+            if user is not None:
                 login(request, user)
-                return JsonResponse({'detail': 'Successfully logged in'})
-            return JsonResponse({'detail': 'Log in failed'})
+                return JsonResponse({'detail': 'Successfully logged in'}, status=200)
+            return JsonResponse({'detail': 'Log in failed'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -110,10 +110,10 @@ def testPull(request):
     
     if request.method == 'POST':
         form_data = {
-            'Date': default_date,
-            'Start': default_start_time,
-            'End': default_end_time,
-            'Activities': data,
+            'date': default_date,
+            'start': default_start_time,
+            'end': default_end_time,
+            'activities': data,
         }
         
         form = ItineraryForm(data=form_data)

@@ -5,19 +5,19 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class Itinerary(models.Model):
     id = models.AutoField(primary_key=True)
-    Date = models.DateField()
-    Start = models.TimeField()
-    End = models.TimeField()
-    Activities = ArrayField(models.CharField(max_length=255)) # Array of string arrays for activities
+    date = models.DateField()
+    start = models.TimeField()
+    end = models.TimeField()
+    activities = ArrayField(models.CharField(max_length=255)) # Array of string arrays for activities
 
 class Trip(models.Model):
     id = models.AutoField(primary_key=True)
-    Owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
-    Tripname = models.CharField(max_length=255) 
-    Location = models.CharField(max_length=255)
-    StartDate = models.DateField()
-    EndDate = models.DateField() 
-    Itineraries = models.ManyToManyField(Itinerary)
-    Members = models.ManyToManyField(User, related_name='members')
-    Created = models.DateTimeField(auto_now_add=True)
-    Activities = ArrayField(models.CharField(max_length=255))  # Array of strings for Activities done s
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
+    tripname = models.CharField(max_length=255) 
+    location = models.CharField(max_length=255)
+    startDate = models.DateField()
+    endDate = models.DateField() 
+    itineraries = models.ManyToManyField(Itinerary)
+    members = models.ManyToManyField(User, related_name='members')
+    created = models.DateTimeField(auto_now_add=True)
+    activities = ArrayField(models.CharField(max_length=255))  # Array of strings for Activities done s

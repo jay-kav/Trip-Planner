@@ -15,6 +15,7 @@ urlpatterns = [
     path('register/', views.registerView, name='register'),
     path('login/', views.loginView, name='login'),
     path('logout/', views.logoutView, name='logout'),
+    #path('createtrip/', views., name='createtrip'),
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
 ]
