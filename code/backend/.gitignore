@@ -5,6 +5,7 @@
 __pycache__
 backend/__pycache__
 rest_api/__pycache__
+rest_api/migrations
 db.sqlite3
 media
 
