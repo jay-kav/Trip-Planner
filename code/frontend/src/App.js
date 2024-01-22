@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
 import Users from './components/Users';
-import CreateTrip from './components/CreateTrip';
+import ViewTrips from './components/ViewTrips';
 import { Routes, Route, useLocation } from "react-router-dom";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/" element={<CreateTrip />}></Route>
+        <Route path="/" element={<ViewTrips />}></Route>
       </Routes>
     </div>
   );

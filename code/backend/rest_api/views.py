@@ -18,7 +18,7 @@ def index(request):
             # Check the value of the hidden field to identify the button click
             if form.cleaned_data['submit_button'] == 'test_pull':
                 # Call your testPull function or logic here
-                testPull(request)
+                createItinerary(request)
                 # Redirect to the index page or another page
                 return redirect('index')
 
@@ -85,7 +85,7 @@ class ItineraryViewset(viewsets.ModelViewSet):
     queryset = Itinerary.objects.all()
     
     
-def testPull(request):
+def createItinerary(request):
     print("testPull function is running!")
     ADMIN_URL = 'mongodb+srv://ProjectUser:cuWavbgDnQN0Abki@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
     client = MongoClient(ADMIN_URL)

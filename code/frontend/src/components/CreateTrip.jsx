@@ -18,7 +18,7 @@ function CreateTrip() {
   
     function submitForm (e) {
       e.preventDefault();
-      fetch(`${url}createtrip/`, {
+      fetch(`${url}create-trip/`, {
           method: 'POST',
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({
