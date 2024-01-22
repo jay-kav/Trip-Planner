@@ -2,9 +2,9 @@ import './App.css';
 import Navbar from './Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
-import Users from './components/Users';
 import ViewTrips from './components/ViewTrips';
 import { Routes, Route, useLocation } from "react-router-dom";
+import GetSession from './components/GetSession';
 
 function App() {
   return (
@@ -20,10 +20,3 @@ function App() {
 }
 
 export default App;
-
-
-<div className="App">
-      <Navbar />
-      <Users />
-      <Register />
-    </div>
