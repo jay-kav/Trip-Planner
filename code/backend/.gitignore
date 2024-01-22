@@ -5,7 +5,11 @@
 __pycache__
 backend/__pycache__
 rest_api/__pycache__
+<<<<<<< HEAD
 migrations
+=======
+rest_api/migrations
+>>>>>>> 063b260efb0a174501e3426c7cbf7536ff920904
 db.sqlite3
 media
 
