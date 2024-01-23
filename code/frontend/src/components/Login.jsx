@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import url from './url';
 
 function Login() {
-  const url = "http://127.0.0.1:8000/";
   const [data, setData] = useState({
     username: "",
     password: ""
@@ -39,10 +39,10 @@ function Login() {
   return (
     <div>
       <form onSubmit={(e) => submitForm(e)}>
-        <label for="username">Username </label>
+        <label htmlFor="username">Username </label>
         <input onChange={(e) => handle(e)} value={data.username} id="username" type='username'></input>
         <br />
-        <label for="password">Password </label>
+        <label htmlFor="password">Password </label>
         <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
         <br />
         <button type='submit'>Login</button>

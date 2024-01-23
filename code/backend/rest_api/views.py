@@ -83,23 +83,22 @@ def createTrip(request):
             start_date = data.get('startDate')
             end_date = data.get('endDate')
             members = data.get('members')
-            form_data = {
+            """form_data = {
                 'owner': owner_id,
                 'tripname': "urmum",
                 'location': "urmum",
                 'startDate': datetime.strptime("10/01/2024", "%d/%m/%Y").date(),
                 'endDate': datetime.strptime("29/01/2024", "%d/%m/%Y").date(),
                 'members': [owner_id]
-            }
-            """form_data = {
+            }"""
+            form_data = {
                 'owner': owner_id,
                 'tripname': trip_name,
                 'location': location,
                 'startDate': start_date,
                 'endDate': end_date,
-                'members': members,
-                'activities': activities
-            }"""
+                'members': members
+            }
             
             form = TripForm(data=form_data)
             if form.is_valid():

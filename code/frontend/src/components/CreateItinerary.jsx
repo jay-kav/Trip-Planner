@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
+import url from './url';
 
 function CreateItinerary() {
-    const url = "http://127.0.0.1:8000/";
     const [data, setData] = useState({
       date: "",
       startTime: "",
@@ -40,13 +40,13 @@ function CreateItinerary() {
         <div>
             <h1>Add Itinerary</h1>
             <form onSubmit={(e) => submitForm(e)}>
-                <label for="date">Date </label>
+                <label htmlFor="date">Date </label>
                 <input onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>
                 <br />
-                <label for="startTime">Start Time </label>
+                <label htmlFor="startTime">Start Time </label>
                 <input onChange={(e) => handle(e)} value={data.startTime} id="startTime" type='time'></input>
                 <br />
-                <label for="endTime">End Time </label>
+                <label htmlFor="endTime">End Time </label>
                 <input onChange={(e) => handle(e)} value={data.endTime} id="endTime" type='time'></input>
                 <br />
                 <button type='submit'>Create Itinerary</button>
