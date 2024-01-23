@@ -39,10 +39,10 @@ function Login() {
   return (
     <div>
       <form onSubmit={(e) => submitForm(e)}>
-        <label>Username </label>
+        <label for="username">Username </label>
         <input onChange={(e) => handle(e)} value={data.username} id="username" type='username'></input>
         <br />
-        <label>Password </label>
+        <label for="password">Password </label>
         <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
         <br />
         <button type='submit'>Login</button>
