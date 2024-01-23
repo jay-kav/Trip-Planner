@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
+from datetime import datetime
 
 # User Authentication
 @csrf_exempt
@@ -86,10 +87,10 @@ def createTrip(request):
                 'owner': 3,
                 'tripname': "urmum",
                 'location': "urmum",
-                'startDate': "10/01/2024",
-                'endDate': "29/01/2024",
+                'startDate': datetime.strptime("10/01/2024", "%d/%m/%Y").date(),
+                'endDate': datetime.strptime("29/01/2024", "%d/%m/%Y").date(),
                 'members': [1, 2, 3],
-                'activities': [1, 2, 3]
+                'activities': []
             }
             """form_data = {
                 'owner': owner_id,
