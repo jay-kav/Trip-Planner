@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import url from './url';
 
 function Register() {
-  const url = "http://127.0.0.1:8000/";
   const [data, setData] = useState({
     username: "",
     email: "",
@@ -41,13 +41,13 @@ function Register() {
   return (
     <div>
       <form onSubmit={(e) => submitForm(e)}>
-        <label for="username">Username </label>
+        <label htmlFor="username">Username </label>
         <input onChange={(e) => handle(e)} value={data.username} id="username" type='text'></input>
         <br />
-        <label for="email">Email </label>
+        <label htmlFor="email">Email </label>
         <input onChange={(e) => handle(e)} value={data.email} id="email" type='email'></input>
         <br />
-        <label for="password">Password </label>
+        <label htmlFor="password">Password </label>
         <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
         <br />
         <button type='submit'>Register</button>

@@ -104,10 +104,14 @@ def createTrip(request):
             form = TripForm(data=form_data)
             if form.is_valid():
                 if form.save():
+<<<<<<< HEAD
                     return JsonResponse({'detail': 'Successfully created new trip'})
                 return JsonResponse({'error': 'Failed to create trip'}, status=400)
             else:
                 print(form.errors)
+=======
+                    return JsonResponse({'detail': 'Successfully created new trip'}, status=200)
+>>>>>>> Ethan
             return JsonResponse({'error': 'Failed to create trip'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)

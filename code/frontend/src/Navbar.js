@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 export default function Navbar(props) {
-  const url = "http://127.0.0.1:8000/";
+  const url = localStorage.getItem('url');
   
   const logout = (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ export default function Navbar(props) {
     })
     .then((responseData) => {
       console.log(responseData);
-      localStorage.clear();
+      localStorage.clear('sessionID');
       window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));

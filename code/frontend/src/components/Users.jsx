@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import url from './url';
 
 function Users() {
-  const url = "http://127.0.0.1:8000/"
   const [users, setUsers] = useState([]);
 
   const getUsers = () => {
