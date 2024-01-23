@@ -41,13 +41,13 @@ function Register() {
   return (
     <div>
       <form onSubmit={(e) => submitForm(e)}>
-        <label>Username </label>
+        <label for="username">Username </label>
         <input onChange={(e) => handle(e)} value={data.username} id="username" type='text'></input>
         <br />
-        <label>Email </label>
+        <label for="email">Email </label>
         <input onChange={(e) => handle(e)} value={data.email} id="email" type='email'></input>
         <br />
-        <label>Password </label>
+        <label for="password">Password </label>
         <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
         <br />
         <button type='submit'>Register</button>
