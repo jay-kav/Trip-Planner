@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import url from './url';
 
 function CreateTrip() {
-    const url = "http://127.0.0.1:8000/";
     const [users, setUsers] = useState([]);
     const [data, setData] = useState({
       tripname: "",
@@ -61,19 +61,19 @@ function CreateTrip() {
       <div>
         <h1>New Trip</h1>
         <form onSubmit={(e) => submitForm(e)}>
-          <label for="tripname">Trip Name </label>
+          <label htmlFor="tripname">Trip Name </label>
           <input onChange={(e) => handle(e)} value={data.tripname} id="tripname" type='text'></input>
           <br />
-          <label for="location">Location </label>
+          <label htmlFor="location">Location </label>
           <input onChange={(e) => handle(e)} value={data.location} id="location" type='text'></input>
           <br />
-          <label for="startDate">Start Date </label>
+          <label htmlFor="startDate">Start Date </label>
           <input onChange={(e) => handle(e)} value={data.startDate} id="startDate" type='date'></input>
           <br />
-          <label for="endDate">End Date </label>
+          <label htmlFor="endDate">End Date </label>
           <input onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
           <br />
-          <label for="members">Members </label>
+          <label htmlFor="members">Members </label>
           <select id="members">
             {getUsers()}
           </select>

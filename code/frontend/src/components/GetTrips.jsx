@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CreateTrip from './CreateTrip';
 import CreateItinerary from './CreateItinerary';
+import url from './url';
 
 function GetTrips() {
-    const url = "http://127.0.0.1:8000/"
     const [trips, setTrips] = useState([]);
     //const [createTrip, setCreateTrip] = useState(false);
   
@@ -17,7 +17,7 @@ function GetTrips() {
     };  
   
     useEffect(() => {
-        fetch(url + "api/trips/")
+        fetch(`${url}api/trips/`)
         .then((response) => response.json())
         .then((data) => {
             setTrips(data);
