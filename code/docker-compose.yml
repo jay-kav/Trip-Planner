@@ -5,10 +5,8 @@ services:
     command: python /code/manage.py runserver 0.0.0.0:8000
     ports:
       - "8000:8000"
-    networks:
-      - django-network
     env_file:
-    - .env
+    - ./backend/.env
   nginx:
     build: ./frontend
     restart: always
@@ -16,8 +14,3 @@ services:
       - "80:80"
     depends_on:
       - backend
-    networks:
-        - django-network
-networks:
-  django-network:
-    name: django-network

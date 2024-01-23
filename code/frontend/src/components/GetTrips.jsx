@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import CreateTrip from './CreateTrip';
-import CreateItinerary from './CreateItinerary';
 import url from './url';
+import ViewTrip from './ViewTrip';
+import CreateTrip from './CreateTrip';
 
 function GetTrips() {
     const [trips, setTrips] = useState([]);
-    //const [createTrip, setCreateTrip] = useState(false);
-  
+    const [selected, setSelected] = useState(null);
+    const [newTrip, setNewTrip] = useState(false);
+    const [check, setCheck] = useState(false);
+
     const getTrips = () => {
       return trips.map(trip => (
         <div key={trip.id}>
             <h3>{trip.id} - {trip.tripname}</h3>
             <p>{trip.location}</p>
-            <button>View</button>
+            <button onClick={() => {setSelected(trip.id)}}>View</button>
         </div>
       ));
     };  
-  
+
     useEffect(() => {
-        fetch(`${url}api/trips/`)
-        .then((response) => response.json())
-        .then((data) => {
-            setTrips(data);
-        })
-        .catch(err => console.log(err))
-    }, []);
-  
+        if (trips == "") {
+            fetch(`${url}api/trips/`)
+            .then((response) => response.json())
+            .then((data) => {
+                setTrips(data);
+            })
+            .catch(err => console.log(err))
+        }
+    });
+
+    if (newTrip) {
+        return (
+            <CreateTrip />
+        )
+    }
+    if (selected) {
+        return (
+            <ViewTrip trip={selected} />
+        )
+    }
     return (
         <div>
-            <h1>My Trips</h1>
+            <h1>All Trips</h1>
+            <br />
+            <button onClick={() => setNewTrip(true)}>New Trip</button>
             <div>
                 {getTrips()}
             </div>
