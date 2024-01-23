@@ -61,20 +61,20 @@ function CreateTrip() {
       <div>
         <h1>New Trip</h1>
         <form onSubmit={(e) => submitForm(e)}>
-          <label>Trip Name </label>
+          <label for="tripname">Trip Name </label>
           <input onChange={(e) => handle(e)} value={data.tripname} id="tripname" type='text'></input>
           <br />
-          <label>Location </label>
+          <label for="location">Location </label>
           <input onChange={(e) => handle(e)} value={data.location} id="location" type='text'></input>
           <br />
-          <label>Start Date </label>
+          <label for="startDate">Start Date </label>
           <input onChange={(e) => handle(e)} value={data.startDate} id="startDate" type='date'></input>
           <br />
-          <label>End Date </label>
+          <label for="endDate">End Date </label>
           <input onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
           <br />
-          <label>Members </label>
-          <select>
+          <label for="members">Members </label>
+          <select id="members">
             {getUsers()}
           </select>
           <br />
