@@ -79,12 +79,26 @@ def createTrip(request):
             location = data.get('location')
             start_date = data.get('startDate')
             end_date = data.get('endDate')
+            members = data.get('members')
+            form_data = {
+                'owner': owner_id,
+                'tripname': trip_name,
+                'location': location,
+                'startDate': start_date,
+                'endDate': end_date,
+                'members': members,
+                'activities': []
+            }
+            
+            form = TripForm(data=form_data)
+            if form.is_valid():
+                form.save()
+            
             return JsonResponse({'detail': 'Successfully created new trip'})
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
     
 def createItinerary(request):
-    print("testPull function is running!")
     client = MongoClient(ADMIN_URL)
     db = client['Belgium']
     collection = db['Brussels']
