@@ -12,7 +12,7 @@ class Trip(models.Model):
     endDate = models.DateField() 
     members = models.ManyToManyField(User, related_name='members')
     created = models.DateTimeField(auto_now_add=True)
-    activities = ArrayField(models.CharField(max_length=255))  # Array of strings for Activities done s
+    activities = ArrayField(models.CharField(max_length=255), default=list)  # Array of strings for Activities done s
 
     def __str__(self):
         return f"({self.id}) {self.tripname} - {self.owner.username}"

@@ -84,13 +84,12 @@ def createTrip(request):
             end_date = data.get('endDate')
             members = data.get('members')
             form_data = {
-                'owner': 3,
+                'owner': owner_id,
                 'tripname': "urmum",
                 'location': "urmum",
                 'startDate': datetime.strptime("10/01/2024", "%d/%m/%Y").date(),
                 'endDate': datetime.strptime("29/01/2024", "%d/%m/%Y").date(),
-                'members': [1, 2, 3],
-                'activities': []
+                'members': [owner_id]
             }
             """form_data = {
                 'owner': owner_id,
@@ -106,6 +105,9 @@ def createTrip(request):
             if form.is_valid():
                 if form.save():
                     return JsonResponse({'detail': 'Successfully created new trip'})
+                return JsonResponse({'error': 'Failed to create trip'}, status=400)
+            else:
+                print(form.errors)
             return JsonResponse({'error': 'Failed to create trip'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
