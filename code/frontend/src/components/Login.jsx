@@ -29,7 +29,9 @@ function Login() {
       return response.json();
     })
     .then((responseData) => {
-      console.log(responseData);
+      console.log(responseData.detail);
+      localStorage.setItem("sessionID", responseData.uid);
+      window.location.href = '/';
     })
     .catch((err) => console.error("Error:", err));
   };

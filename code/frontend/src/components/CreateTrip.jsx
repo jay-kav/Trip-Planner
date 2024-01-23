@@ -22,6 +22,7 @@ function CreateTrip() {
           method: 'POST',
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({
+              'ownerID': localStorage.getItem('sessionID'),
               'tripname': data.tripname,
               'location': data.location,
               'startDate': data.startDate,
