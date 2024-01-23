@@ -85,7 +85,6 @@ def createTrip(request):
     
 def createItinerary(request):
     print("testPull function is running!")
-    ADMIN_URL = 'mongodb+srv://ProjectUser:cuWavbgDnQN0Abki@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
     client = MongoClient(ADMIN_URL)
     db = client['Belgium']
     collection = db['Brussels']

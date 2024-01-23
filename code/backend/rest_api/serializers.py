@@ -14,4 +14,4 @@ class TripSerializer(serializers.HyperlinkedModelSerializer):
 class ItinerarySerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Itinerary
-		fields = ['id', 'start', 'end', 'activities']
+		fields = ['id', 'date', 'start', 'end', 'activities']
