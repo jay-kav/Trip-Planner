@@ -10,26 +10,7 @@ from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
 
-
-def index(request):
-    if request.method == 'POST':
-        form = TestPullForm(request.POST)
-        if form.is_valid():
-            # Check the value of the hidden field to identify the button click
-            if form.cleaned_data['submit_button'] == 'test_pull':
-                # Call your testPull function or logic here
-                testPull(request)
-                # Redirect to the index page or another page
-                return redirect('index')
-
-    else:
-        form = TestPullForm()
-
-    return render(request, 'index.html', {'form': form})
-
-def successPage (request):
-    return render(request, 'success.html')
-
+# User Authentication
 @csrf_exempt
 def registerView(request):
     if request.method == 'POST':
@@ -72,20 +53,38 @@ def logoutView(request):
         return JsonResponse({'detail': 'Successfully logged out'})
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-class UserViewset(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
+def index(request):
+    if request.method == 'POST':
+        form = TestPullForm(request.POST)
+        if form.is_valid():
+            # Check the value of the hidden field to identify the button click
+            if form.cleaned_data['submit_button'] == 'test_pull':
+                # Call your testPull function or logic here
+                createItinerary(request)
+                # Redirect to the index page or another page
+                return redirect('index')
 
-class TripViewset(viewsets.ModelViewSet):
-    serializer_class = TripSerializer
-    queryset = Trip.objects.all()
+    else:
+        form = TestPullForm()
 
-class ItineraryViewset(viewsets.ModelViewSet):
-    serializer_class = ItinerarySerializer
-    queryset = Itinerary.objects.all()
+    return render(request, 'index.html', {'form': form})
+
+def successPage (request):
+    return render(request, 'success.html')
+
+def createTrip(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            trip_name = data.get('tripname')
+            location = data.get('location')
+            start_date = data.get('startDate')
+            end_date = data.get('endDate')
+            return JsonResponse({'detail': 'Successfully created new trip'})
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
     
-    
-def testPull(request):
+def createItinerary(request):
     print("testPull function is running!")
     client = MongoClient(ADMIN_URL)
     db = client['Belgium']
@@ -108,10 +107,14 @@ def testPull(request):
     default_end_time = '18:00'
     
     if request.method == 'POST':
+        data = json.loads(request.body)
+        date = data.get('date')
+        start_time = data.get('startTime')
+        end_time = data.get('endTime')
         form_data = {
-            'date': default_date,
-            'start': default_start_time,
-            'end': default_end_time,
+            'date': date,
+            'start': start_time,
+            'end': end_time,
             'activities': data,
         }
         
@@ -125,3 +128,16 @@ def testPull(request):
         form = ItineraryForm()
         
     return render(request, 'success.html', {'form': form})
+
+# Viewsets
+class UserViewset(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+class TripViewset(viewsets.ModelViewSet):
+    serializer_class = TripSerializer
+    queryset = Trip.objects.all()
+
+class ItineraryViewset(viewsets.ModelViewSet):
+    serializer_class = ItinerarySerializer
+    queryset = Itinerary.objects.all()

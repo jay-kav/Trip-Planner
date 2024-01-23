@@ -2,9 +2,9 @@ import './App.css';
 import Navbar from './Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
-import Users from './components/Users';
-import CreateTrip from './components/CreateTrip';
+import ViewTrips from './components/ViewTrips';
 import { Routes, Route, useLocation } from "react-router-dom";
+import GetSession from './components/GetSession';
 
 function App() {
   return (
@@ -13,17 +13,10 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/" element={<CreateTrip />}></Route>
+        <Route path="/" element={<ViewTrips />}></Route>
       </Routes>
     </div>
   );
 }
 
 export default App;
-
-
-<div className="App">
-      <Navbar />
-      <Users />
-      <Register />
-    </div>
