@@ -1,39 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import CreateTrip from './CreateTrip';
 import CreateItinerary from './CreateItinerary';
 import url from './url';
-
-function GetTrips() {
-    const [trips, setTrips] = useState([]);
-    //const [createTrip, setCreateTrip] = useState(false);
+function ViewTrip() {
+    const [trip, setTrip] = useState("");
+    const [createItinerary, setCreateItinerary] = useState(True);
   
-    const getTrips = () => {
-      return trips.map(trip => (
+    const getTrip = () => {
+      return (
         <div key={trip.id}>
             <h3>{trip.id} - {trip.tripname}</h3>
             <p>{trip.location}</p>
-            <button>View</button>
         </div>
-      ));
+      );
     };  
   
     useEffect(() => {
-        fetch(`${url}api/trips/`)
+        fetch(`${url}api/trips/${props.trip}`)
         .then((response) => response.json())
         .then((data) => {
-            setTrips(data);
+            setTrip(data);
         })
         .catch(err => console.log(err))
     }, []);
   
     return (
         <div>
-            <h1>My Trips</h1>
-            <div>
-                {getTrips()}
-            </div>
+            {getTrip()}
+            {createItinerary ? <CreateItinerary /> : ""}
         </div>
     )
 }
 
-export default GetTrips
+export default ViewTrip

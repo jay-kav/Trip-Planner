@@ -4,10 +4,9 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import url from './components/url';
 
-export default function Navbar(props) {
-  const url = localStorage.getItem('url');
-  
+export default function Navbar(props) {  
   const logout = (e) => {
     e.preventDefault();
     fetch(`${url}logout/`, {
@@ -20,7 +19,7 @@ export default function Navbar(props) {
     })
     .then((responseData) => {
       console.log(responseData);
-      localStorage.clear('sessionID');
+      localStorage.clear();
       window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));
@@ -34,7 +33,8 @@ export default function Navbar(props) {
           {
             props.pathname === "/register" ? <Button color="inherit" href='/login'>Login</Button>
             : props.pathname === "/login" ? <Button color="inherit" href='/register'>Register</Button>
-            : <div><Button color="inherit">New Trip</Button><Button color="inherit" onClick={(e) => logout(e)}>Logout</Button></div>
+            : props.pathname === "/newtrip" ? <Button color="inherit" onClick={(e) => logout(e)}>Logout</Button>
+            : <div><Button color="inherit" href='/newtrip'>New Trip</Button><Button color="inherit" onClick={(e) => logout(e)}>Logout</Button></div>
           }
         </Toolbar>
       </AppBar>

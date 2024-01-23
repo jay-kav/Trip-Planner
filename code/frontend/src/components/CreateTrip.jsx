@@ -3,16 +3,18 @@ import url from './url';
 
 function CreateTrip() {
     const [users, setUsers] = useState([]);
+    const [selectedMembers, setSelectedMembers] = useState([]);
     const [data, setData] = useState({
       tripname: "",
       location: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      members: ""
     });
 
     const getUsers = () => {
       return users.map(user => (
-        <option key={user.id}>{user.username}</option>
+        <option key={user.id} value={user.id}>{user.username}</option>
       ));
     };  
 
@@ -33,9 +35,22 @@ function CreateTrip() {
       setData(newData);
       console.log(newData);
     }
+
+    function handleMemberSelection(e) {
+      const userID = parseInt(e.target.value, 10);
+      setSelectedMembers(prevMembers => [...prevMembers, userID]);
+    }
   
     function submitForm (e) {
       e.preventDefault();
+      console.log({
+        'ownerID': localStorage.getItem('sessionID'),
+        'tripname': data.tripname,
+        'location': data.location,
+        'startDate': data.startDate,
+        'endDate': data.endDate,
+        'members': selectedMembers
+    });
       fetch(`${url}create-trip/`, {
           method: 'POST',
           headers: { "Content-type": "application/json" },
@@ -44,7 +59,8 @@ function CreateTrip() {
               'tripname': data.tripname,
               'location': data.location,
               'startDate': data.startDate,
-              'endDate': data.endDate
+              'endDate': data.endDate,
+              'members': selectedMembers
           })
       })
       .then((response) => {
@@ -53,6 +69,7 @@ function CreateTrip() {
       })
       .then((responseData) => {
         console.log(responseData);
+        window.location.href = "/";
       })
       .catch((err) => console.error("Error:", err));
     };
@@ -74,7 +91,7 @@ function CreateTrip() {
           <input onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
           <br />
           <label htmlFor="members">Members </label>
-          <select id="members">
+          <select onChange={(e) => handle(e)} multiple id="members">
             {getUsers()}
           </select>
           <br />
