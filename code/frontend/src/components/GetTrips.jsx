@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import CreateTrip from './CreateTrip';
 import CreateItinerary from './CreateItinerary';
 
-function ViewTrips() {
+function GetTrips() {
     const url = "http://127.0.0.1:8000/"
     const [trips, setTrips] = useState([]);
-    const [createTrip, setCreateTrip] = useState(false);
+    //const [createTrip, setCreateTrip] = useState(false);
   
     const getTrips = () => {
       return trips.map(trip => (
@@ -17,20 +17,17 @@ function ViewTrips() {
     };  
   
     useEffect(() => {
-      if (trips.length === 0) {
-          fetch(url + "api/trips/")
-          .then((response) => response.json())
-          .then((data) => {
-              setTrips(data);
-          })
-          .catch(err => console.log(err))
-      }
-    });
+        fetch(url + "api/trips/")
+        .then((response) => response.json())
+        .then((data) => {
+            setTrips(data);
+        })
+        .catch(err => console.log(err))
+    }, []);
   
     return (
         <div>
             <h1>My Trips</h1>
-            <button>Add New Trip</button>
             <CreateTrip />
             <CreateItinerary />
             <div>
@@ -40,4 +37,4 @@ function ViewTrips() {
     )
 }
 
-export default ViewTrips
+export default GetTrips

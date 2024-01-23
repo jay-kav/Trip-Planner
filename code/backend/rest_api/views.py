@@ -22,10 +22,8 @@ def registerView(request):
 
             user = User.objects.create_user(username=username, email=email, password=password)
             if user:
-                print('Successfully created new user')
                 return JsonResponse({'detail': 'Successfully created new user'})
-            print('Failed to create new user')
-            return JsonResponse({'detail': 'Failed to create new user'})
+            return JsonResponse({'error': 'Failed to create new user'})
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -40,8 +38,8 @@ def loginView(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return JsonResponse({'detail': 'Successfully logged in'}, status=200)
-            return JsonResponse({'detail': 'Log in failed'}, status=400)
+                return JsonResponse({'detail': 'Successfully logged in', 'uid': user.pk}, status=200)   
+            return JsonResponse({'error': 'Log in failed'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -76,6 +74,7 @@ def createTrip(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+            owner_id = data.get('ownerID')
             trip_name = data.get('tripname')
             location = data.get('location')
             start_date = data.get('startDate')
@@ -107,10 +106,10 @@ def createItinerary(request):
     default_end_time = '18:00'
     
     if request.method == 'POST':
-        data = json.loads(request.body)
-        date = data.get('date')
-        start_time = data.get('startTime')
-        end_time = data.get('endTime')
+        json_data = json.loads(request.body)
+        date = json_data.get('date')
+        start_time = json_data.get('startTime')
+        end_time = json_data.get('endTime')
         form_data = {
             'date': date,
             'start': start_time,
