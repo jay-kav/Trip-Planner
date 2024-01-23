@@ -9,7 +9,7 @@ function CreateTrip() {
       location: "",
       startDate: "",
       endDate: "",
-      members: ""
+      members: []
     });
 
     const getUsers = () => {
@@ -29,16 +29,11 @@ function CreateTrip() {
       }
     });
   
-    function handle (e) {
-      const newData = {...data};
+    function handle(e) {
+      const newData = { ...data };
       newData[e.target.id] = e.target.value;
       setData(newData);
       console.log(newData);
-    }
-
-    function handleMemberSelection(e) {
-      const userID = parseInt(e.target.value, 10);
-      setSelectedMembers(prevMembers => [...prevMembers, userID]);
     }
   
     function submitForm (e) {
@@ -91,7 +86,7 @@ function CreateTrip() {
           <input onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
           <br />
           <label htmlFor="members">Members </label>
-          <select onChange={(e) => handle(e)} multiple id="members">
+          <select onChange={e => setSelectedMembers(e.options)} multiple id="members">
             {getUsers()}
           </select>
           <br />
