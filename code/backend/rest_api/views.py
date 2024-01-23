@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
+from load_env_var import get_env_value
 
 # User Authentication
 @csrf_exempt
@@ -99,7 +100,12 @@ def createTrip(request):
             return JsonResponse({'error': 'Invalid request method'}, status=405)
     
 def createItinerary(request):
+<<<<<<< Updated upstream
     client = MongoClient(ADMIN_URL)
+=======
+    print("testPull function is running!")
+    client = MongoClient(get_env_value('ADMIN_URL'))
+>>>>>>> Stashed changes
     db = client['Belgium']
     collection = db['Brussels']
     

@@ -1,17 +1,8 @@
 from pathlib import Path
-import os
-from django.core.exceptions import ImproperlyConfigured
+from load_env_var import get_env_value
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Loading environment variables using dotenv https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1
-def get_env_value(env_variable):
-    try:
-        return os.getenv(env_variable)
-    except KeyError:
-        error_msg = 'Set the {} environment variable'.format(env_variable)
-        raise ImproperlyConfigured(error_msg)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/

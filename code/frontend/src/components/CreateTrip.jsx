@@ -1,12 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function CreateTrip() {
     const url = "http://127.0.0.1:8000/";
+    const [users, setUsers] = useState([]);
     const [data, setData] = useState({
       tripname: "",
       location: "",
       startDate: "",
       endDate: ""
+    });
+
+    const getUsers = () => {
+      return users.map(user => (
+        <option key={user.id}>{user.username}</option>
+      ));
+    };  
+
+    useEffect(() => {
+      if (users.length === 0) {
+          fetch(url + "api/users/?is_staff=false")
+          .then((response) => response.json())
+          .then((data) => {
+              setUsers(data);
+          })
+          .catch(err => console.log(err))
+      }
     });
   
     function handle (e) {
@@ -54,6 +72,11 @@ function CreateTrip() {
           <br />
           <label>End Date </label>
           <input onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
+          <br />
+          <label>Members </label>
+          <select>
+            {getUsers()}
+          </select>
           <br />
           <button type='submit'>Create Trip</button>
         </form>
