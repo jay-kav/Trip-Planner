@@ -19,7 +19,7 @@ class TestPullForm(forms.Form):
 class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
-        fields = ['tripname', 'location', 'startDate', 'endDate', 'members']
+        fields = ['owner', 'tripname', 'location', 'startDate', 'endDate', 'members', 'activities']
         
         widgets = {
             'startDate': SelectDateWidget(),

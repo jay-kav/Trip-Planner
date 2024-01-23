@@ -71,6 +71,7 @@ def index(request):
 def successPage (request):
     return render(request, 'success.html')
 
+@csrf_exempt
 def createTrip(request):
     if request.method == 'POST':
         try:
@@ -82,30 +83,36 @@ def createTrip(request):
             end_date = data.get('endDate')
             members = data.get('members')
             form_data = {
+                'owner': 3,
+                'tripname': "urmum",
+                'location': "urmum",
+                'startDate': "10/01/2024",
+                'endDate': "29/01/2024",
+                'members': [1, 2, 3],
+                'activities': [1, 2, 3]
+            }
+            """form_data = {
                 'owner': owner_id,
                 'tripname': trip_name,
                 'location': location,
                 'startDate': start_date,
                 'endDate': end_date,
                 'members': members,
-                'activities': []
-            }
+                'activities': activities
+            }"""
             
             form = TripForm(data=form_data)
             if form.is_valid():
-                form.save()
-            
-            return JsonResponse({'detail': 'Successfully created new trip'})
+                if form.save():
+                    return JsonResponse({'detail': 'Successfully created new trip'})
+            return JsonResponse({'error': 'Failed to create trip'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
-    
+
+@csrf_exempt
 def createItinerary(request):
-<<<<<<< Updated upstream
-    client = MongoClient(ADMIN_URL)
-=======
     print("testPull function is running!")
     client = MongoClient(get_env_value('ADMIN_URL'))
->>>>>>> Stashed changes
     db = client['Belgium']
     collection = db['Brussels']
     
