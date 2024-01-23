@@ -20,6 +20,7 @@ export default function Navbar(props) {
     })
     .then((responseData) => {
       console.log(responseData);
+      localStorage.clear();
       window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));
@@ -33,7 +34,7 @@ export default function Navbar(props) {
           {
             props.pathname === "/register" ? <Button color="inherit" href='/login'>Login</Button>
             : props.pathname === "/login" ? <Button color="inherit" href='/register'>Register</Button>
-            : <Button color="inherit" onClick={(e) => logout(e)}>Logout</Button>
+            : <div><Button color="inherit">New Trip</Button><Button color="inherit" onClick={(e) => logout(e)}>Logout</Button></div>
           }
         </Toolbar>
       </AppBar>
