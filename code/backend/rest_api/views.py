@@ -10,7 +10,6 @@ from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
-from datetime import datetime
 
 # User Authentication
 @csrf_exempt
@@ -83,14 +82,6 @@ def createTrip(request):
             start_date = data.get('startDate')
             end_date = data.get('endDate')
             members = data.get('members')
-            """form_data = {
-                'owner': owner_id,
-                'tripname': "urmum",
-                'location': "urmum",
-                'startDate': datetime.strptime("10/01/2024", "%d/%m/%Y").date(),
-                'endDate': datetime.strptime("29/01/2024", "%d/%m/%Y").date(),
-                'members': [owner_id]
-            }"""
             form_data = {
                 'owner': owner_id,
                 'tripname': trip_name,
@@ -113,7 +104,6 @@ def createTrip(request):
 
 @csrf_exempt
 def createItinerary(request):
-    print("testPull function is running!")
     client = MongoClient(get_env_value('ADMIN_URL'))
     db = client['Belgium']
     collection = db['Brussels']
@@ -128,11 +118,6 @@ def createItinerary(request):
         result = product_id + ";" + opening_times
         
         data.append(result)
-    
-    # Assuming 11/12/24 as the date, 8 am as start time, and 6 pm as end time
-    default_date = '11/12/24'
-    default_start_time = '08:00'
-    default_end_time = '18:00'
     
     if request.method == 'POST':
         json_data = json.loads(request.body)

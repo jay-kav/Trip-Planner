@@ -3,7 +3,6 @@ import url from './url';
 
 function CreateTrip() {
     const [users, setUsers] = useState([]);
-    const [selectedMembers, setSelectedMembers] = useState([]);
     const [data, setData] = useState({
       tripname: "",
       location: "",
@@ -31,21 +30,22 @@ function CreateTrip() {
   
     function handle(e) {
       const newData = { ...data };
-      newData[e.target.id] = e.target.value;
+    
+      if (e.target.id === "members") {
+        // If the event target is the "members" select element
+        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+        newData.members = selectedOptions;
+      } else {
+        // For other input fields
+        newData[e.target.id] = e.target.value;
+      }
       setData(newData);
-      console.log(newData);
+      //console.log("newdata", newData);
     }
+    
   
     function submitForm (e) {
       e.preventDefault();
-      console.log({
-        'ownerID': localStorage.getItem('sessionID'),
-        'tripname': data.tripname,
-        'location': data.location,
-        'startDate': data.startDate,
-        'endDate': data.endDate,
-        'members': selectedMembers
-    });
       fetch(`${url}create-trip/`, {
           method: 'POST',
           headers: { "Content-type": "application/json" },
@@ -55,7 +55,7 @@ function CreateTrip() {
               'location': data.location,
               'startDate': data.startDate,
               'endDate': data.endDate,
-              'members': selectedMembers
+              'members': data.members
           })
       })
       .then((response) => {
@@ -64,7 +64,7 @@ function CreateTrip() {
       })
       .then((responseData) => {
         console.log(responseData);
-        window.location.href = "/";
+        //window.location.href = "/";
       })
       .catch((err) => console.error("Error:", err));
     };
@@ -86,7 +86,7 @@ function CreateTrip() {
           <input onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
           <br />
           <label htmlFor="members">Members </label>
-          <select onChange={e => setSelectedMembers(e.options)} multiple id="members">
+          <select onChange={(e) => handle(e)} multiple id="members">
             {getUsers()}
           </select>
           <br />
