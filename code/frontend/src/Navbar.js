@@ -34,7 +34,7 @@ export default function Navbar(props) {
             props.pathname === "/register" ? <Button color="inherit" href='/login'>Login</Button>
             : props.pathname === "/login" ? <Button color="inherit" href='/register'>Register</Button>
             : props.pathname === "/newtrip" ? <Button color="inherit" onClick={(e) => logout(e)}>Logout</Button>
-            : <div><Button color="inherit" href='/newtrip'>New Trip</Button><Button color="inherit" onClick={(e) => logout(e)}>Logout</Button></div>
+            : <Button color="inherit" onClick={(e) => logout(e)}>Logout</Button>
           }
         </Toolbar>
       </AppBar>
