@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -104,43 +105,67 @@ def createTrip(request):
 
 @csrf_exempt
 def createItinerary(request):
-    client = MongoClient(get_env_value('ADMIN_URL'))
-    db = client['Belgium']
-    collection = db['Brussels']
-    
-    cursor = collection.find().limit(5)
-    
-    data = []
-    for document in cursor:
-        product_id = str(document.get("place_id"))
-        opening_times = str(document.get("cleaned_times", [])[0])
-        
-        result = product_id + ";" + opening_times
-        
-        data.append(result)
-    
     if request.method == 'POST':
-        json_data = json.loads(request.body)
-        date = json_data.get('date')
-        start_time = json_data.get('startTime')
-        end_time = json_data.get('endTime')
-        form_data = {
-            'date': date,
-            'start': start_time,
-            'end': end_time,
-            'activities': data,
-        }
+        try:
+            data = json.loads(request.body)
+            print(data)
+            trip_id = data.get('tripID')
+            date = data.get('date')
+            start = data.get('startTime')
+            end = data.get('endTime')
+            #filters = data.get('filters', [])
+            #country = data.get('country')
+            #city = data.get('city')
+            #hotel = data.get('hotel')
+            
+            client = MongoClient(get_env_value('MONGO_URL'))
+            db = client['Belgium']
+            collection = db['Brussels']
+            
+            cursor = collection.find().limit(5)
+    
+            activities = []
+            trip = []
+            for document in cursor:
+                product_id = str(document.get("place_id"))
+                opening_times = str(document.get("cleaned_times", [])[0])
+                
+                result = product_id + ";" + opening_times
+                
+                trip.append(product_id)
+                activities.append(result)
+                
+            form_data = {
+                'trip_id': trip_id,
+                'date': date,
+                'start': start,
+                'end': end,
+                'activities': activities,
+            }
         
-        form = ItineraryForm(data=form_data)
-        
-        if form.is_valid():
-            form.save()
-            # Redirect to a success page or do something else
-            return redirect('success_page')
+            form = ItineraryForm(data=form_data)
+            
+            if form.is_valid():
+                if form.save():
+                    add_activities(trip_id, trip)
+                    return JsonResponse({'detail': 'Successfully created new itnerary'})
+                return JsonResponse({'error': 'Failed to create itinerary'}, status=400)
+            else:
+                print(form.errors)
+            return JsonResponse({'error': 'Failed to create itinerary'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+            
+def add_activities(trip_id, activities_to_add):
+    trip = get_object_or_404(Trip, id=trip_id)
+
+        # Update the activities field with multiple activities
+    if activities_to_add:
+        trip.activities.extend(activities_to_add)
+        trip.save()
+        return JsonResponse({'detail': 'Successfully added activities'})
     else:
-        form = ItineraryForm()
-        
-    return render(request, 'success.html', {'form': form})
+        return JsonResponse({'error': 'Invalid activities data'}, status=400)
 
 # Viewsets
 class UserViewset(viewsets.ModelViewSet):
