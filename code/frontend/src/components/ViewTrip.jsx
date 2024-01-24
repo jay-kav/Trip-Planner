@@ -19,7 +19,7 @@ function ViewTrip(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-                <li key={member.id}>{member.username}</li>
+                <li key={member.id}>{member.username} {localStorage.getItem('sessionID') == tripOwner.id ? <button>Remove</button> : ""}</li>
         ));
     };
     
@@ -39,35 +39,36 @@ function ViewTrip(props) {
   
     useEffect(() => {
         if (tripOwner.length === 0) {
-            fetch(`${url}api/users/${trip.owner.split("/").pop()}`)
+            fetch(`${url}api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
             .then((response) => response.json())
             .then((ownerData) => {
-                setTripOwner(ownerData.pop());
+                setTripOwner(ownerData);
             })
             .catch(err => console.log(err))
         }
         if (itineraries == "") {
-            fetch(`${url}api/itineraries/`)
+            fetch(`${url}api/itineraries/?trip_id='${url}${trip.id}/'`)
             .then((response) => response.json())
-            .then((itineraryData) => {
-                setItineraries(itineraryData);
+            .then((itinerariesData) => {
+                setItineraries(itinerariesData);
             })
             .catch(err => console.log(err))
         }
         if (tripMembers == "") {
             Promise.all(trip.members.map(member =>
-                fetch(`${url}api/users/${member.split("/").pop()}`)
+                fetch(`${url}api/users/${member.split("/").slice(-2).slice(0, -1)}`)
                     .then(response => response.json())
             ))
             .then(memberData => {
-                setTripMembers(memberData.pop());
+                setTripMembers(memberData);
             })
             .catch(err => console.log(err));
         }
-        });
+    });
 
     return (
         <div>
+            <button onClick={() => window.location.reload()}>Back</button>
             {getTrip()}
             <div>
                 {getItineraries()}
