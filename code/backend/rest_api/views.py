@@ -104,7 +104,7 @@ def createTrip(request):
 
 @csrf_exempt
 def createItinerary(request):
-    client = MongoClient(get_env_value('ADMIN_URL'))
+    client = MongoClient(get_env_value('MONGO_URL'))
     db = client['Belgium']
     collection = db['Brussels']
     
