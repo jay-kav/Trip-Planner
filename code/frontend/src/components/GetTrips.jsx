@@ -7,21 +7,20 @@ function GetTrips() {
     const [trips, setTrips] = useState([]);
     const [selected, setSelected] = useState(null);
     const [newTrip, setNewTrip] = useState(false);
-    const [check, setCheck] = useState(false);
 
     const getTrips = () => {
       return trips.map(trip => (
         <div key={trip.id}>
             <h3>{trip.id} - {trip.tripname}</h3>
             <p>{trip.location}</p>
-            <button onClick={() => {setSelected(trip.id)}}>View</button>
+            <button onClick={() => {setSelected(trip)}}>View</button>
         </div>
       ));
     };  
 
     useEffect(() => {
         if (trips == "") {
-            fetch(`${url}api/trips/`)
+            fetch(`${url}api/trips/?members=${url}${localStorage.getItem('sessionID')}/`)
             .then((response) => response.json())
             .then((data) => {
                 setTrips(data);

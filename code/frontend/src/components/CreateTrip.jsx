@@ -64,7 +64,7 @@ function CreateTrip() {
       })
       .then((responseData) => {
         console.log(responseData);
-        //window.location.href = "/";
+        window.location.href = "/";
       })
       .catch((err) => console.error("Error:", err));
     };
