@@ -166,13 +166,21 @@ def add_activities(trip_id, activities_to_add):
         return JsonResponse({'detail': 'Successfully added activities'})
     else:
         return JsonResponse({'error': 'Invalid activities data'}, status=400)
-    
+
 @csrf_exempt
-def removeMember():
+def addMember(request):
+    pass    
+
+@csrf_exempt
+def removeMember(request):
     pass
 
 @csrf_exempt
-def deleteItinerary():
+def deleteTrip(request):
+    pass
+
+@csrf_exempt
+def deleteItinerary(request):
     pass
 
 # Viewsets
