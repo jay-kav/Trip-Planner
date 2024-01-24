@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import url from './url';
 
-function CreateItinerary() {
+function CreateItinerary(props) {
     const [data, setData] = useState({
       date: "",
       startTime: "",
@@ -21,6 +21,7 @@ function CreateItinerary() {
           method: 'POST',
           headers: { "Content-type": "application/json" },
           body: JSON.stringify({
+              'tripID': props.tripID,
               'date': data.date,
               'startTime': data.startTime,
               'endTime': data.endTime
