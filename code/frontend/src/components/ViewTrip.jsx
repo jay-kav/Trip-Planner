@@ -11,7 +11,10 @@ function ViewTrip(props) {
     const getItineraries = () => {
         return itineraries.map(itinerary => (
             <div key={itinerary.id}>
-                <h3>{itinerary.id}</h3>
+                <h3>{itinerary.date}</h3>
+                <p>{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
+                {localStorage.getItem('sessionID') == tripOwner.id ? <button>Delete</button> : ""}
+                {}
             </div>
           ));
     }
