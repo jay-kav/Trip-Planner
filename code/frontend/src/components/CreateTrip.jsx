@@ -71,6 +71,7 @@ function CreateTrip() {
   
     return (
       <div>
+        <button onClick={() => window.location.reload()}>Back</button>
         <h1>New Trip</h1>
         <form onSubmit={(e) => submitForm(e)}>
           <label htmlFor="tripname">Trip Name </label>

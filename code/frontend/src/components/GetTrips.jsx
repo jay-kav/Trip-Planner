@@ -20,7 +20,7 @@ function GetTrips() {
 
     useEffect(() => {
         if (trips == "") {
-            fetch(`${url}api/trips/?members=${url}${localStorage.getItem('sessionID')}/`)
+            fetch(`${url}api/trips/?owner=${localStorage.getItem('sessionID')}/`)
             .then((response) => response.json())
             .then((data) => {
                 setTrips(data);
