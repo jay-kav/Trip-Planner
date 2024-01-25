@@ -1,16 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import CreateItinerary from './CreateItinerary';
 import url from './url';
 
 function ViewTrip(props) {
     let trip = props.trip;
-    const [create, setCreate] = useState(false);
     const [tripOwner, setTripOwner] = useState("");
     const [tripMembers, setTripMembers] = useState([]);
     const [itineraries, setItineraries] = useState([]);
 
-    const deleteItinerary = (e, itinerary, tripID) => {
-        e.preventDefault();
+    const deleteItinerary = (itinerary, tripID) => {
         fetch(`${url}delete-itinerary/`, {
             method: 'POST',
             headers: { "Content-type": "application/json" },
@@ -33,15 +32,13 @@ function ViewTrip(props) {
 
     const getItineraries = () => {
         return itineraries.map(itinerary => (
-            <div key={itinerary.id} className="card" style={{margin: '10px'}}>
-                <div className="card-body">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}} className="card-title">
-                        <h5>{itinerary.date}</h5>
-                        {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)}>Delete</button> : ""}
-                    </div>
-                    <p className="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
-                </div>
+            <div key={itinerary.id} class="card" style={{width: '18rem', margin: '10px'}}>
+            <div class="card-body">
+              <h5 class="card-title">{itinerary.id} - {itinerary.date}</h5>
+              <p class="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
+              {localStorage.getItem('sessionID') == tripOwner.id ? <button class="btn btn-secondary" onClick={deleteItinerary(itinerary, trip.id)}>Delete</button> : ""}
             </div>
+          </div>
           ));
     }
 
@@ -61,37 +58,31 @@ function ViewTrip(props) {
         })
         .then((responseData) => {
           console.log(responseData);
-          window.location.href = "/";
+        //   window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
     }
 
+
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.id}>
-                {member.username}
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
-            </li>
+                <li key={member.id}>
+                    {member.username} {localStorage.getItem('sessionID') == tripOwner.id ? 
+                    <button className="btn btn-secondary" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
+                </li>
         ));
     };
     
     const getTrip = () => {
       return (
-        <div>
-            <h1 style={{textAlign: 'center'}}>{trip.tripname}</h1>
-            <br />
-            <div key={trip.id} style={{display: 'flex', width: '100%'}}>
-                <div style={{width: '50%'}}>
-                    <p>Owner: {tripOwner.username}</p>
-                    <p>Trip Location: {trip.location}</p>
-                    <p>Start Date: {trip.startDate}</p>
-                    <p>End Date: {trip.endDate}</p>
-                </div>
-                <ul style={{width: '50%'}} className="list-group">
-                    <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}><strong>Trip Members</strong> <button className='btn btn-secondary'>Add Member</button></li>
-                    {getTripMembers()}
-                </ul>
-            </div>
+        <div key={trip.id}>
+            <h1>{trip.tripname}</h1>
+            <p>Owner: {tripOwner.username}</p>
+            <p>Trip Location: {trip.location}</p>
+            <p>Start Date: {trip.startDate}</p>
+            <p>End Date: {trip.endDate}</p>
+            <p>Trip Members:</p>
+            <ul>{getTripMembers()}</ul>
         </div>
       );
     };
@@ -124,21 +115,14 @@ function ViewTrip(props) {
             .catch(err => console.log(err));
         }
     });
-    
-    const newItinerary = (e) => {
-        e.preventDefault();
-        setCreate(!create);
-    }
 
     return (
         <div>
-            <button className="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
+            <button class="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
             {getTrip()}
-            <br />
-            <h3>Itineraries {!create ? <button className='btn btn-primary' onClick={(e) => newItinerary(e)}>Add Itinerary</button> : <button onClick={(e) => newItinerary(e)} className='btn btn-secondary'>Cancel</button>}</h3>
-            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+            <div>
                 {getItineraries()}
-                {create ? <CreateItinerary tripID={trip.id} /> : ""}
+                <CreateItinerary tripID={trip.id} />
             </div>
         </div>
     )
