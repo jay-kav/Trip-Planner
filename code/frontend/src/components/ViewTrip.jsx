@@ -32,13 +32,13 @@ function ViewTrip(props) {
 
     const getItineraries = () => {
         return itineraries.map(itinerary => (
-            <div key={itinerary.id} class="card" style={{width: '18rem', margin: '10px', minHeight: '30rem'}}>
-                <div class="card-body">
-                    <h5 class="card-title">
+            <div key={itinerary.id} className="card" style={{width: '18rem', margin: '10px', minHeight: '30rem'}}>
+                <div className="card-body">
+                    <h5 className="card-title">
                         {itinerary.date}
-                        {localStorage.getItem('sessionID') == tripOwner.id ? <button class="btn btn-secondary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)}>Delete</button> : ""}
+                        {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)}>Delete</button> : ""}
                     </h5>
-                    <p class="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
+                    <p className="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
                 </div>
             </div>
           ));
@@ -67,9 +67,9 @@ function ViewTrip(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            <li class="list-group-item" key={member.id}>
+            <li className="list-group-item" key={member.id}>
                 {member.username}
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button class="btn btn-secondary" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
+                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
             </li>
         ));
     };
@@ -82,8 +82,8 @@ function ViewTrip(props) {
             <p>Trip Location: {trip.location}</p>
             <p>Start Date: {trip.startDate}</p>
             <p>End Date: {trip.endDate}</p>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Trip Members</strong></li>
+            <ul className="list-group">
+                <li className="list-group-item"><strong>Trip Members</strong></li>
                 {getTripMembers()}
             </ul>
         </div>
