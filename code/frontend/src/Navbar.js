@@ -4,6 +4,7 @@ import url from './components/url';
 export default function Navbar(props) {  
   const logout = (e) => {
     e.preventDefault();
+    localStorage.clear();
     fetch(`${url}logout/`, {
         method: 'POST',
         headers: { "Content-type": "application/json" }
@@ -14,7 +15,6 @@ export default function Navbar(props) {
     })
     .then((responseData) => {
       console.log(responseData);
-      localStorage.clear();
       window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));

@@ -156,14 +156,17 @@ function ViewTrip(props) {
             })
             .catch(err => console.log(err))
         }
-        if (itineraries == "") {
-            fetch(`${url}api/itineraries/?trip_id='${url}${trip.id}/'`)
+        if (!itineraries.length) {
+            fetch(`${url}api/itineraries/?trip_id=${trip.id}`)
             .then((response) => response.json())
             .then((itinerariesData) => {
-                setItineraries(itinerariesData);
+                if (itinerariesData.length) {
+                    setItineraries(itinerariesData);
+                }
             })
             .catch(err => console.log(err))
         }
+        
         if (tripMembers == "") {
             Promise.all(trip.members.map(member =>
                 fetch(`${url}api/users/${member.split("/").slice(-2).slice(0, -1)}`)
