@@ -181,8 +181,23 @@ def deleteTrip(request):
 
 @csrf_exempt
 def deleteItinerary(request):
-    pass
+    if request.method == 'POST' :
+        try:
+            data = json.loads(request.body)
+            print(data)
+            itinerary_id = data.get('itineraryID')
+            activities = data.get('activities')
+            #trip_id = data.get('tripID')
+            #result = [item.split(";")[0] for item in activities]
+            itinerary = get_object_or_404(Itinerary, id=itinerary_id)
+            if itinerary.delete():
+                #delete_activities(trip_id, result)
+                return JsonResponse({'detail': 'Successfully deleted itinerary'})
+            else:
+                return JsonResponse({'error': 'Unable to delete itinerary'})
 
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
 # Viewsets
 class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer
