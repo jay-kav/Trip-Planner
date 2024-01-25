@@ -48,7 +48,7 @@ function GetTrips() {
             <button className="btn btn-primary" onClick={() => setNewTrip(true)}>New Trip +</button>
             <br />
             <br />
-            <div>
+            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
                 {getTrips()}
             </div>
         </div>
