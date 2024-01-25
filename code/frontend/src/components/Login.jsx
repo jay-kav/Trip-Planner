@@ -38,14 +38,14 @@ function Login() {
 
   return (
     <div>
-      <form onSubmit={(e) => submitForm(e)}>
+      <form className="form-group" onSubmit={(e) => submitForm(e)}>
         <label htmlFor="username">Username </label>
-        <input onChange={(e) => handle(e)} value={data.username} id="username" type='username'></input>
+        <input className="form-control" onChange={(e) => handle(e)} value={data.username} id="username" type='username'></input>
         <br />
         <label htmlFor="password">Password </label>
-        <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
+        <input className="form-control" onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
         <br />
-        <button type='submit'>Login</button>
+        <button className="btn btn-primary" type='submit'>Login</button>
       </form>
     </div>
   );
