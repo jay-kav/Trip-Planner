@@ -40,17 +40,17 @@ function Register() {
 
   return (
     <div>
-      <form onSubmit={(e) => submitForm(e)}>
+      <form className="form-group" onSubmit={(e) => submitForm(e)}>
         <label htmlFor="username">Username </label>
-        <input onChange={(e) => handle(e)} value={data.username} id="username" type='text'></input>
+        <input className="form-control" onChange={(e) => handle(e)} value={data.username} id="username" type='text'></input>
         <br />
         <label htmlFor="email">Email </label>
-        <input onChange={(e) => handle(e)} value={data.email} id="email" type='email'></input>
+        <input className="form-control" onChange={(e) => handle(e)} value={data.email} id="email" type='email'></input>
         <br />
         <label htmlFor="password">Password </label>
-        <input onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
+        <input className="form-control" onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
         <br />
-        <button type='submit'>Register</button>
+        <button className="btn btn-primary" type='submit'>Register</button>
       </form>
     </div>
   );
