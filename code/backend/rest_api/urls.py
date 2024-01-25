@@ -8,7 +8,6 @@ router.register('itineraries', views.ItineraryViewset)
 router.register('users', views.UserViewset)
 
 urlpatterns = [
-    path('', views.index, name="index"),
     path('create-itinerary/', views.createItinerary, name='create_itinerary'),
     path('create-trip/', views.createTrip, name='create_trip'),
     path('add-members/', views.add_members, name='add_members'),

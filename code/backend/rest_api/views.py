@@ -54,25 +54,6 @@ def logoutView(request):
         return JsonResponse({'detail': 'Successfully logged out'})
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-def index(request):
-    if request.method == 'POST':
-        form = TestPullForm(request.POST)
-        if form.is_valid():
-            # Check the value of the hidden field to identify the button click
-            if form.cleaned_data['submit_button'] == 'test_pull':
-                # Call your testPull function or logic here
-                createItinerary(request)
-                # Redirect to the index page or another page
-                return redirect('index')
-
-    else:
-        form = TestPullForm()
-
-    return render(request, 'index.html', {'form': form})
-
-def successPage (request):
-    return render(request, 'success.html')
-
 @csrf_exempt
 def createTrip(request):
     if request.method == 'POST':
