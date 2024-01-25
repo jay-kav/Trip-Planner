@@ -20,14 +20,19 @@ export default function Navbar(props) {
     .catch((err) => console.error("Error:", err));
   }
 
+  const redirect = (e, url) => {
+    e.preventDefault();
+    window.location.href = url;
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <h3 className="navbar-brand" style={{paddingLeft: '30px'}}>Trip Planner</h3>
       <div className="collapse navbar-collapse"  id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
         {
-            props.pathname === "/register" ? <button className="btn btn-dark" color="inherit" href='/login'>Login</button>
-            : props.pathname === "/login" ? <button className="btn btn-dark" color="inherit" href='/register'>Register</button>
+            props.pathname === "/register" ? <button className="btn btn-dark" color="inherit" onClick={(e) => redirect(e, "/login")}>Login</button>
+            : props.pathname === "/login" ? <button className="btn btn-dark" color="inherit" onClick={(e) => redirect(e, "/register")}>Register</button>
             : props.pathname === "/newtrip" ? <button className="btn btn-dark" color="inherit" onClick={(e) => logout(e)}>Logout</button>
             : <button className="btn btn-dark" color="inherit" onClick={(e) => logout(e)}>Logout</button>
           }
