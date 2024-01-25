@@ -21,15 +21,17 @@ function GetTrips() {
     };  
 
     useEffect(() => {
-        if (trips == "") {
-            fetch(`${url}api/trips/?owner=${localStorage.getItem('sessionID')}/`)
+        if (!trips.length) {
+            fetch(`${url}api/trips/?owner=${localStorage.getItem('sessionID')}`)
             .then((response) => response.json())
             .then((data) => {
-                setTrips(data);
+                if (data.length) {
+                    setTrips(data);
+                }
             })
             .catch(err => console.log(err))
         }
-    });
+    }, [trips]);
 
     if (newTrip) {
         return (
