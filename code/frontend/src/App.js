@@ -11,12 +11,14 @@ function App() {
   return (
     <div className='app'>
       <Navbar pathname={useLocation().pathname} />
-      <Routes>
-        <Route path="/register" element={isAuthenticated() ? <Navigate to="/" /> : <Register />}></Route>
-        <Route path="/login" element={isAuthenticated() ? <Navigate to="/" /> : <Login />}></Route>
-        <Route path='/newtrip' element={isAuthenticated() ? <CreateTrip /> : <Navigate to="/" />}></Route>
-        <Route path="/" element={isAuthenticated() ? <GetTrips /> : <Navigate to="/login" />}></Route>
-      </Routes>
+      <div style={{margin: '30px'}}>
+        <Routes>
+          <Route path="/register" element={isAuthenticated() ? <Navigate to="/" /> : <Register />}></Route>
+          <Route path="/login" element={isAuthenticated() ? <Navigate to="/" /> : <Login />}></Route>
+          <Route path='/newtrip' element={isAuthenticated() ? <CreateTrip /> : <Navigate to="/" />}></Route>
+          <Route path="/" element={isAuthenticated() ? <GetTrips /> : <Navigate to="/login" />}></Route>
+        </Routes>
+      </div>
     </div>
   );
 }

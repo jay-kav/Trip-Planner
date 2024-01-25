@@ -40,7 +40,7 @@ function CreateTrip() {
         newData[e.target.id] = e.target.value;
       }
       setData(newData);
-      //console.log("newdata", newData);
+      console.log("newdata", newData);
     }
     
   
@@ -87,7 +87,7 @@ function CreateTrip() {
           <input className="form-control" onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
           <br />
           <label htmlFor="members">Members </label>
-          <select className="form-control" onChange={(e) => handle(e)} multiple id="members">
+          <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
             {getUsers()}
           </select>
           <br />
