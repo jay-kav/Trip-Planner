@@ -185,10 +185,10 @@ def deleteItinerary(request):
         try:
             data = json.loads(request.body)
             print(data)
-            itinerary_id = data.get('id')
+            itinerary_id = data.get('itineraryID')
             activities = data.get('activities')
-            trip_id = data.get('trip_id')
-            result = [item.split(";")[0] for item in activities]
+            #trip_id = data.get('tripID')
+            #result = [item.split(";")[0] for item in activities]
             itinerary = get_object_or_404(Itinerary, id=itinerary_id)
             if itinerary.delete():
                 #delete_activities(trip_id, result)
