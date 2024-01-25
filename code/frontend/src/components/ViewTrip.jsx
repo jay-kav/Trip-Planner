@@ -33,7 +33,7 @@ function ViewTrip(props) {
 
     const getItineraries = () => {
         return itineraries.map(itinerary => (
-            <div key={itinerary.id} className="card" style={{margin: '10px', minHeight: '30rem'}}>
+            <div key={itinerary.id} className="card" style={{margin: '10px'}}>
                 <div className="card-body">
                     <div style={{display: 'flex', justifyContent: 'space-between'}} className="card-title">
                         <h5>{itinerary.date}</h5>
@@ -136,7 +136,7 @@ function ViewTrip(props) {
             {getTrip()}
             <br />
             <h3>Itineraries {!create ? <button className='btn btn-primary' onClick={(e) => newItinerary(e)}>Add Itinerary</button> : <button onClick={(e) => newItinerary(e)} className='btn btn-secondary'>Cancel</button>}</h3>
-            <div style={{display: 'flex', width: '100%'}}>
+            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
                 {getItineraries()}
                 {create ? <CreateItinerary tripID={trip.id} /> : ""}
             </div>
