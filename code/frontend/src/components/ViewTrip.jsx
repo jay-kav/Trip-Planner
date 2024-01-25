@@ -7,22 +7,50 @@ function ViewTrip(props) {
     const [tripOwner, setTripOwner] = useState("");
     const [tripMembers, setTripMembers] = useState([]);
     const [itineraries, setItineraries] = useState([]);
-  
+
+    const deleteItinerary = (itinerary, tripID) => {
+        fetch(`${url}delete-itinerary/`, {
+            method: 'POST',
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                'itineraryID': itinerary.id,
+                'activities': itinerary.activities,
+                'tripID': tripID
+            })
+        })
+        .then((response) => {
+          console.log(response); // Log the entire response
+          return response.json();
+        })
+        .then((responseData) => {
+          console.log(responseData);
+          window.location.href = "/";
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
     const getItineraries = () => {
         return itineraries.map(itinerary => (
-            <div key={itinerary.id}>
-                <h3>{itinerary.date}</h3>
-                <p>{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button>Delete</button> : ""}
-                {}
+            <div key={itinerary.id} class="card" style={{width: '18rem', margin: '10px'}}>
+            <div class="card-body">
+              <h5 class="card-title">{itinerary.id} - {itinerary.date}</h5>
+              <p class="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
+              {localStorage.getItem('sessionID') == tripOwner.id ? <button class="btn btn-secondary" onClick={deleteItinerary(itinerary, trip.id)}>Delete</button> : ""}
             </div>
+          </div>
           ));
     }
 
+    const removeMember = (member) => {
+        
+    }
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-                <li key={member.id}>{member.username} {localStorage.getItem('sessionID') == tripOwner.id ? <button>Remove</button> : ""}</li>
+                <li key={member.id}>
+                    {member.username} {localStorage.getItem('sessionID') == tripOwner.id ? 
+                    <button class="btn btn-secondary" onClick={removeMember(member)}>Remove</button> : ""}
+                </li>
         ));
     };
     
@@ -71,7 +99,7 @@ function ViewTrip(props) {
 
     return (
         <div>
-            <button onClick={() => window.location.reload()}>Back</button>
+            <button class="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
             {getTrip()}
             <div>
                 {getItineraries()}
