@@ -168,16 +168,64 @@ def add_activities(trip_id, activities_to_add):
         return JsonResponse({'error': 'Invalid activities data'}, status=400)
 
 @csrf_exempt
-def addMember(request):
-    pass    
+def add_members(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print(data)
+            trip_id = data.get('tripID')
+            member_id = data.get('memberID')
+
+            trip = get_object_or_404(Trip, id=trip_id)
+
+            if member_id:
+                member_to_add = get_object_or_404(User, id=member_id)
+                if member_to_add not in trip.members.all():
+                    trip.members.append(member_to_add)
+                    return JsonResponse({'detail': 'Successfully added a member'})
+                else:
+                    return JsonResponse({'error': 'Member already in the trip members list'}, status=400)
+            else:
+                return JsonResponse({'error': 'Invalid member data'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 def removeMember(request):
-    pass
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            print(data)
+            trip_id = data.get('tripID')
+            member_id = data.get('memberID')
+
+            trip = get_object_or_404(Trip, id=trip_id)
+
+            if member_id:
+                member_to_remove = get_object_or_404(User, id=member_id)
+                if member_to_remove in trip.members.all():
+                    trip.members.remove(member_to_remove)
+                    return JsonResponse({'detail': 'Successfully removed member'})
+                else:
+                    return JsonResponse({'error': 'Member not found in the trip members list'}, status=400)
+            else:
+                return JsonResponse({'error': 'Invalid member data'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 def deleteTrip(request):
-    pass
+    if request.method == 'POST' :
+        try:
+            data = json.loads(request.body)
+            trip_id = data.get('tripID')
+            trip = get_object_or_404(Trip, id=trip_id)
+            if trip.delete():
+                return JsonResponse({'detail': 'Successfully deleted Trip'})
+            else:
+                return JsonResponse({'error': 'Could not delete Trip'})
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 def deleteItinerary(request):
@@ -187,17 +235,32 @@ def deleteItinerary(request):
             print(data)
             itinerary_id = data.get('itineraryID')
             activities = data.get('activities')
-            #trip_id = data.get('tripID')
-            #result = [item.split(";")[0] for item in activities]
+            trip_id = data.get('tripID')
+            result = [item.split(";")[0] for item in activities]
             itinerary = get_object_or_404(Itinerary, id=itinerary_id)
             if itinerary.delete():
-                #delete_activities(trip_id, result)
+                delete_activities(trip_id, result)
                 return JsonResponse({'detail': 'Successfully deleted itinerary'})
             else:
                 return JsonResponse({'error': 'Unable to delete itinerary'})
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
+def delete_activities(trip_id, remove = []):
+    trip = get_object_or_404(Trip, id=trip_id)
+
+    if trip:
+        if remove:
+            trip.activities = [activity for activity in trip.activities if activity not in remove]
+            if trip.save():
+                return JsonResponse({'detail': 'Successfully deleted activities'})
+        else:
+            return JsonResponse({'detail': 'Successful without deletion'})
+        return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)        
+
+
+
 # Viewsets
 class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer
