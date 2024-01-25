@@ -10,9 +10,6 @@ class ItineraryForm(forms.ModelForm):
         model = Itinerary
         fields = ['date', 'trip_id', 'start', 'end', 'activities']
 
-    # You can add custom validation or widgets here if needed
-
-
 class TestPullForm(forms.Form):
     submit_button = forms.CharField(widget=forms.HiddenInput(), initial='test_pull')
     #
