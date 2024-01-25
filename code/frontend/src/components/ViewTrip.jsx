@@ -5,6 +5,9 @@ import url from './url';
 function ViewTrip(props) {
     let trip = props.trip;
     const [create, setCreate] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [addMember, setAddMember] = useState(false);
+    const [addedMembers, setAddedMembers] = useState([]);
     const [tripOwner, setTripOwner] = useState("");
     const [tripMembers, setTripMembers] = useState([]);
     const [itineraries, setItineraries] = useState([]);
@@ -73,6 +76,40 @@ function ViewTrip(props) {
         ));
     };
     
+    const getUsers = () => {
+        return users.map(user => (
+          <option key={user.id} value={user.id}>{user.username}</option>
+        ));
+    };
+
+    function handle(e) {
+        const newData = { ...addedMembers };
+        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
+        newData.members = selectedOptions;
+        setAddedMembers(newData);
+        console.log("newdata", newData);
+      }
+
+    const addMembers = (e) => {
+      e.preventDefault();
+      fetch(`${url}add-members/`, {
+          method: 'POST',
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+                'tripID': trip.id,
+                'memberIDs': addedMembers.members
+          })
+      })
+      .then((response) => {
+        console.log(response); // Log the entire response
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log(responseData);
+      })
+      .catch((err) => console.error("Error:", err));
+    };
+
     const getTrip = () => {
       return (
         <div>
@@ -86,7 +123,15 @@ function ViewTrip(props) {
                     <p>End Date: {trip.endDate}</p>
                 </div>
                 <ul style={{width: '50%'}} className="list-group">
-                    <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}><strong>Trip Members</strong> {localStorage.getItem('sessionID') == tripOwner.id ? <button className='btn btn-secondary'>Add Member</button> : ""}</li>
+                    <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <strong>Trip Members</strong>
+                        {localStorage.getItem('sessionID') == tripOwner.id && !addMember ? <button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Add Member</button> : ""}
+                        {addMember && <form className="form-group" onSubmit={(e) => addMembers(e)}>
+                            <select className="form-control" onChange={(e) => handle(e)} id="members" multiple> {getUsers()} </select>
+                            <br />
+                            <div style={{display: 'flex', gap: '10px'}}><button className='btn btn-primary' type='submit'>Add Members</button><button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Cancel</button></div>
+                        </form>}
+                    </li>
                     {getTripMembers()}
                 </ul>
             </div>
@@ -95,6 +140,14 @@ function ViewTrip(props) {
     };
   
     useEffect(() => {
+        if (users.length === 0) {
+            fetch(url + "api/users/?is_staff=false")
+            .then((response) => response.json())
+            .then((data) => {
+                setUsers(data);
+            })
+            .catch(err => console.log(err))
+        }
         if (tripOwner.length === 0) {
             fetch(`${url}api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
             .then((response) => response.json())
@@ -142,11 +195,6 @@ function ViewTrip(props) {
         })
         .catch((err) => console.error("Error:", err));
     }
-    
-    const newItinerary = (e) => {
-        e.preventDefault();
-        setCreate(!create);
-    }
 
     return (
         <div>
@@ -154,8 +202,8 @@ function ViewTrip(props) {
             {getTrip()}
             <br />
             <h3>Itineraries 
-                {localStorage.getItem('sessionID') == tripOwner.id && !create ? <button className='btn btn-secondary' onClick={(e) => newItinerary(e)}>Add Itinerary</button> 
-                : localStorage.getItem('sessionID') == tripOwner.id && create ? <button onClick={(e) => newItinerary(e)} className='btn btn-secondary'>Cancel</button>
+                {localStorage.getItem('sessionID') == tripOwner.id && !create ? <button className='btn btn-secondary' onClick={() => setCreate(!create)}>Add Itinerary</button> 
+                : localStorage.getItem('sessionID') == tripOwner.id && create ? <button onClick={() => setCreate(!create)} className='btn btn-secondary'>Cancel</button>
                 : ""
                 }</h3>
             <div style={{display: 'flex', gap: '20px'}}>
@@ -164,6 +212,7 @@ function ViewTrip(props) {
                 </div>
                 {create ? <CreateItinerary tripID={trip.id} /> : ""}
             </div>
+            <br />
             <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>
         </div>
     )
