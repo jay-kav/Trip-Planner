@@ -10,11 +10,11 @@ function GetTrips() {
 
     const getTrips = () => {
       return trips.map(trip => (
-        <div key={trip.id} class="card" style={{width: '18rem', margin: '10px'}}>
-          <div class="card-body">
-            <h5 class="card-title">{trip.id} - {trip.tripname}</h5>
-            <p class="card-text">{trip.location}</p>
-            <button class="btn btn-secondary" onClick={() => {setSelected(trip)}}>View</button>
+        <div key={trip.id} className="card" style={{width: '18rem', margin: '10px'}}>
+          <div className="card-body">
+            <h5 className="card-title">{trip.id} - {trip.tripname}</h5>
+            <p className="card-text">{trip.location}</p>
+            <button className="btn btn-secondary" onClick={() => {setSelected(trip)}}>View</button>
           </div>
         </div>
       ));
@@ -45,7 +45,7 @@ function GetTrips() {
         <div>
             <h1>All Trips</h1>
             <br />
-            <button class="btn btn-primary" onClick={() => setNewTrip(true)}>New Trip +</button>
+            <button className="btn btn-primary" onClick={() => setNewTrip(true)}>New Trip +</button>
             <br />
             <br />
             <div>

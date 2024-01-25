@@ -40,17 +40,17 @@ function CreateItinerary(props) {
     return (
         <div>
             <h1>Add Itinerary</h1>
-            <form onSubmit={(e) => submitForm(e)}>
+            <form className="form-group" onSubmit={(e) => submitForm(e)}>
                 <label htmlFor="date">Date </label>
-                <input onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>
+                <input className="form-control" onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>
                 <br />
                 <label htmlFor="startTime">Start Time </label>
-                <input onChange={(e) => handle(e)} value={data.startTime} id="startTime" type='time'></input>
+                <input className="form-control" onChange={(e) => handle(e)} value={data.startTime} id="startTime" type='time'></input>
                 <br />
                 <label htmlFor="endTime">End Time </label>
-                <input onChange={(e) => handle(e)} value={data.endTime} id="endTime" type='time'></input>
+                <input className="form-control" onChange={(e) => handle(e)} value={data.endTime} id="endTime" type='time'></input>
                 <br />
-                <button type='submit'>Create Itinerary</button>
+                <button className="btn btn-primary" type='submit'>Create Itinerary</button>
             </form>
         </div>
     )
