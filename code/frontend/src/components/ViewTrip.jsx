@@ -26,18 +26,17 @@ function ViewTrip(props) {
         })
         .then((responseData) => {
           console.log(responseData);
-          window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
     }
 
     const getItineraries = () => {
         return itineraries.map(itinerary => (
-            <div key={itinerary.id} className="card" style={{margin: '10px'}}>
+            <div key={itinerary.id} className="card" style={{margin: '10px', width: '18rem', minHeight: '20rem'}}>
                 <div className="card-body">
                     <div style={{display: 'flex', justifyContent: 'space-between'}} className="card-title">
                         <h5>{itinerary.date}</h5>
-                        {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)}>Delete</button> : ""}
+                        {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => deleteItinerary(e, itinerary, trip.id)}>Delete</button> : ""}
                     </div>
                     <p className="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
                 </div>
@@ -61,7 +60,6 @@ function ViewTrip(props) {
         })
         .then((responseData) => {
           console.log(responseData);
-          window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
     }
@@ -70,7 +68,7 @@ function ViewTrip(props) {
         return tripMembers.map(member => (
             <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.id}>
                 {member.username}
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
+                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
             </li>
         ));
     };
@@ -88,7 +86,7 @@ function ViewTrip(props) {
                     <p>End Date: {trip.endDate}</p>
                 </div>
                 <ul style={{width: '50%'}} className="list-group">
-                    <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}><strong>Trip Members</strong> <button className='btn btn-secondary'>Add Member</button></li>
+                    <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}><strong>Trip Members</strong> {localStorage.getItem('sessionID') == tripOwner.id ? <button className='btn btn-secondary'>Add Member</button> : ""}</li>
                     {getTripMembers()}
                 </ul>
             </div>
@@ -124,6 +122,26 @@ function ViewTrip(props) {
             .catch(err => console.log(err));
         }
     });
+
+    const deleteTrip = (e) => {
+        e.preventDefault();
+        fetch(`${url}delete-trip/`, {
+            method: 'POST',
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                'tripID': trip.id
+            })
+        })
+        .then((response) => {
+          console.log(response); // Log the entire response
+          return response.json();
+        })
+        .then((responseData) => {
+          console.log(responseData);
+          window.location.href = "/";
+        })
+        .catch((err) => console.error("Error:", err));
+    }
     
     const newItinerary = (e) => {
         e.preventDefault();
@@ -135,11 +153,18 @@ function ViewTrip(props) {
             <button className="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
             {getTrip()}
             <br />
-            <h3>Itineraries {!create ? <button className='btn btn-primary' onClick={(e) => newItinerary(e)}>Add Itinerary</button> : <button onClick={(e) => newItinerary(e)} className='btn btn-secondary'>Cancel</button>}</h3>
-            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
-                {getItineraries()}
+            <h3>Itineraries 
+                {localStorage.getItem('sessionID') == tripOwner.id && !create ? <button className='btn btn-secondary' onClick={(e) => newItinerary(e)}>Add Itinerary</button> 
+                : localStorage.getItem('sessionID') == tripOwner.id && create ? <button onClick={(e) => newItinerary(e)} className='btn btn-secondary'>Cancel</button>
+                : ""
+                }</h3>
+            <div style={{display: 'flex', gap: '20px'}}>
+                <div style={{display: 'flex', gap: '20px', overflowX: 'scroll'}}>
+                    {getItineraries()}
+                </div>
                 {create ? <CreateItinerary tripID={trip.id} /> : ""}
             </div>
+            <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>
         </div>
     )
 }

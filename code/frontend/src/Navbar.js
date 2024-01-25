@@ -26,9 +26,8 @@ export default function Navbar(props) {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <h3 className="navbar-brand" style={{paddingLeft: '30px'}}>Trip Planner</h3>
-      <div className="collapse navbar-collapse"  id="navbarSupportedContent">
+    <nav className="navbar navbar-dark bg-dark">
+      <a className="navbar-brand" style={{paddingLeft: '30px'}} href='/'>Trip Planner</a>
         <ul className="navbar-nav mr-auto">
         {
             props.pathname === "/register" ? <button className="btn btn-dark" color="inherit" onClick={(e) => redirect(e, "/login")}>Login</button>
@@ -37,7 +36,6 @@ export default function Navbar(props) {
             : <button className="btn btn-dark" color="inherit" onClick={(e) => logout(e)}>Logout</button>
           }
         </ul>
-      </div>
     </nav>
     
   );
