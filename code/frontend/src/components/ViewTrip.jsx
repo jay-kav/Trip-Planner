@@ -1,15 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
 import CreateItinerary from './CreateItinerary';
 import url from './url';
 
 function ViewTrip(props) {
     let trip = props.trip;
+    const [create, setCreate] = useState(false);
     const [tripOwner, setTripOwner] = useState("");
     const [tripMembers, setTripMembers] = useState([]);
     const [itineraries, setItineraries] = useState([]);
 
-    const deleteItinerary = (itinerary, tripID) => {
+    const deleteItinerary = (e, itinerary, tripID) => {
+        e.preventDefault();
         fetch(`${url}delete-itinerary/`, {
             method: 'POST',
             headers: { "Content-type": "application/json" },
@@ -62,7 +63,6 @@ function ViewTrip(props) {
         })
         .catch((err) => console.error("Error:", err));
     }
-
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
@@ -150,7 +150,7 @@ function ViewTrip(props) {
 
     return (
         <div>
-            <button class="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
+            <button className="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
             {getTrip()}
             <br />
             <h3>Itineraries 

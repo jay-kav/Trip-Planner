@@ -218,11 +218,7 @@ def deleteTrip(request):
     if request.method == 'POST' :
         try:
             data = json.loads(request.body)
-            trip_id = data.get('')
-            #itineraries = data.get('', [])
-            #for itinerary in itineraries:
-                #obj = get_object_or_404(Itinerary, id=itinerary)
-                #obj.delete()
+            trip_id = data.get('tripID')
             trip = get_object_or_404(Trip, id=trip_id)
             if trip.delete():
                 return JsonResponse({'detail': 'Successfully deleted Trip'})
