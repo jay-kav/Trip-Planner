@@ -41,15 +41,31 @@ function ViewTrip(props) {
           ));
     }
 
-    const removeMember = (member) => {
-        
+    const removeMember = (member, tripID) => {
+        fetch(`${url}delete-itinerary/`, {
+            method: 'POST',
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                'memberID': member.id,
+                'tripID': tripID
+            })
+        })
+        .then((response) => {
+          console.log(response); // Log the entire response
+          return response.json();
+        })
+        .then((responseData) => {
+          console.log(responseData);
+          window.location.href = "/";
+        })
+        .catch((err) => console.error("Error:", err));
     }
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
                 <li key={member.id}>
                     {member.username} {localStorage.getItem('sessionID') == tripOwner.id ? 
-                    <button class="btn btn-secondary" onClick={removeMember(member)}>Remove</button> : ""}
+                    <button class="btn btn-secondary" onClick={removeMember(member, trip.id)}>Remove</button> : ""}
                 </li>
         ));
     };
