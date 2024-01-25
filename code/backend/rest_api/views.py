@@ -174,19 +174,20 @@ def add_members(request):
             data = json.loads(request.body)
             print(data)
             trip_id = data.get('tripID')
-            member_id = data.get('memberID')
+            member_ids = data.get('memberIDs')
 
             trip = get_object_or_404(Trip, id=trip_id)
 
-            if member_id:
-                member_to_add = get_object_or_404(User, id=member_id)
-                if member_to_add not in trip.members.all():
-                    trip.members.append(member_to_add)
-                    return JsonResponse({'detail': 'Successfully added a member'})
+            for member_id in member_ids:
+                if member_id:
+                    member_to_add = get_object_or_404(User, id=member_id)
+                    if member_to_add not in trip.members.all():
+                        trip.members.append(member_to_add)
+                        return JsonResponse({'detail': 'Successfully added a member'})
+                    else:
+                        return JsonResponse({'error': 'Member already in the trip members list'}, status=400)
                 else:
-                    return JsonResponse({'error': 'Member already in the trip members list'}, status=400)
-            else:
-                return JsonResponse({'error': 'Invalid member data'}, status=400)
+                    return JsonResponse({'error': 'Invalid member data'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 
