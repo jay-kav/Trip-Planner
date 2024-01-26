@@ -55,7 +55,6 @@ def logoutView(request):
         return JsonResponse({'detail': 'Successfully logged out'})
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-<<<<<<< HEAD
 def index(request):
     if request.method == 'POST':
         form = TestPullForm(request.POST)
@@ -77,8 +76,6 @@ def successPage (request):
 
     """ ------------------------- Trip Functions ------------------------- """
 
-=======
->>>>>>> newbran
 @csrf_exempt
 def createTrip(request):
     if request.method == 'POST':
