@@ -106,6 +106,7 @@ function ViewTrip(props) {
       })
       .then((responseData) => {
         console.log(responseData);
+        setAddMember(false);
       })
       .catch((err) => console.error("Error:", err));
     };
