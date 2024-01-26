@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from .serializers import *
 from .models import *
@@ -54,6 +55,7 @@ def logoutView(request):
         return JsonResponse({'detail': 'Successfully logged out'})
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+<<<<<<< HEAD
 def index(request):
     if request.method == 'POST':
         form = TestPullForm(request.POST)
@@ -75,6 +77,8 @@ def successPage (request):
 
     """ ------------------------- Trip Functions ------------------------- """
 
+=======
+>>>>>>> newbran
 @csrf_exempt
 def createTrip(request):
     if request.method == 'POST':
@@ -283,8 +287,12 @@ class UserViewset(viewsets.ModelViewSet):
 
 class TripViewset(viewsets.ModelViewSet):
     serializer_class = TripSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ['owner']
     queryset = Trip.objects.all()
 
 class ItineraryViewset(viewsets.ModelViewSet):
     serializer_class = ItinerarySerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ['trip_id']
     queryset = Itinerary.objects.all()
