@@ -71,7 +71,7 @@ function CreateTrip() {
   
     return (
       <div>
-        <button className="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
+        <button className="btn btn-secondary" onClick={() => window.location.href='/'}>Back</button>
         <h1>New Trip</h1>
         <form className="form-group" onSubmit={(e) => submitForm(e)}>
           <label htmlFor="tripname">Trip Name </label>

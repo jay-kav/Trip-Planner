@@ -7,6 +7,7 @@ import GetTrips from './components/GetTrips';
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import CreateTrip from './components/CreateTrip';
 
+
 function App() {
   return (
     <div className='app'>
@@ -15,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/register" element={isAuthenticated() ? <Navigate to="/" /> : <Register />}></Route>
           <Route path="/login" element={isAuthenticated() ? <Navigate to="/" /> : <Login />}></Route>
-          <Route path='/newtrip' element={isAuthenticated() ? <CreateTrip /> : <Navigate to="/" />}></Route>
+          <Route path='/createtrip' element={isAuthenticated() ? <CreateTrip /> : <Navigate to="/" />}></Route>
           <Route path="/" element={isAuthenticated() ? <GetTrips /> : <Navigate to="/login" />}></Route>
         </Routes>
       </div>

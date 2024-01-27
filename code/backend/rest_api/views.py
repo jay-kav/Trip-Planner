@@ -12,73 +12,8 @@ from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
+from django.db.models import Q
 
-<<<<<<< HEAD
-=======
-""" ------------------------- User Authentication ------------------------- """
-    
-@csrf_exempt
-def registerView(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            username = data.get('username')
-            email = data.get('email')
-            password = data.get('password')
-
-            user = User.objects.create_user(username=username, email=email, password=password)
-            if user:
-                return JsonResponse({'detail': 'Successfully created new user'})
-            return JsonResponse({'error': 'Failed to create new user'})
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-@csrf_exempt
-def loginView(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            username = data.get('username')
-            password = data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return JsonResponse({'detail': 'Successfully logged in', 'uid': user.pk}, status=200)   
-            return JsonResponse({'error': 'Log in failed'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-@csrf_exempt
-def logoutView(request):
-    if request.method == 'POST':
-        logout(request)
-        return JsonResponse({'detail': 'Successfully logged out'})
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-def index(request):
-    if request.method == 'POST':
-        form = TestPullForm(request.POST)
-        if form.is_valid():
-            # Check the value of the hidden field to identify the button click
-            if form.cleaned_data['submit_button'] == 'test_pull':
-                # Call your testPull function or logic here
-                createItinerary(request)
-                # Redirect to the index page or another page
-                return redirect('index')
-
-    else:
-        form = TestPullForm()
-
-    return render(request, 'index.html', {'form': form})
-
-def successPage (request):
-    return render(request, 'success.html')
-
-    """ ------------------------- Trip Functions ------------------------- """
-
->>>>>>> newBranch
 @csrf_exempt
 def createTrip(request):
     if request.method == 'POST':
@@ -253,7 +188,6 @@ def removeMember(request):
             
     """ ------------------------- Activity Functions ------------------------- """
 
-<<<<<<< HEAD
 @csrf_exempt
 def deleteTrip(request):
     if request.method == 'POST':
@@ -287,7 +221,6 @@ def deleteItinerary(request):
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
-=======
 def add_activities(trip_id, activities_to_add):
     trip = get_object_or_404(Trip, id=trip_id)
 
@@ -299,7 +232,6 @@ def add_activities(trip_id, activities_to_add):
     else:
         return JsonResponse({'error': 'Invalid activities data'}, status=400)
  
->>>>>>> newBranch
         
 def delete_activities(trip_id, remove = []):
     trip = get_object_or_404(Trip, id=trip_id)
@@ -313,7 +245,7 @@ def delete_activities(trip_id, remove = []):
             return JsonResponse({'detail': 'Successful without deletion'})
         return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)        
 
-# User Authentication
+    """ ------------------------- User Authentication ------------------------- """
 
 # Function to create a new User instance
 @csrf_exempt
@@ -362,13 +294,24 @@ def logoutView(request):
    
 class UserViewset(viewsets.ModelViewSet):
     serializer_class = UserSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ['is_staff', 'id']
     queryset = User.objects.all()
 
 class TripViewset(viewsets.ModelViewSet):
     serializer_class = TripSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ['owner']
     queryset = Trip.objects.all()
+
+    def get_queryset(self):
+        session_id = self.request.GET.get('sessionID')  # Assuming 'sessionID' is the user ID
+        if session_id:
+            # Use Q objects to construct a query that matches either owner or members
+            queryset = Trip.objects.filter(Q(owner=session_id) | Q(members__in=[session_id]))
+        else:
+            queryset = Trip.objects.all()
+
+        return queryset
 
 class ItineraryViewset(viewsets.ModelViewSet):
     serializer_class = ItinerarySerializer

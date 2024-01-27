@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import url from './url';
-import ViewTrip from './ViewTrip';
-import CreateTrip from './CreateTrip';
+import ViewTrip from './ViewTrip'; 
 
 function GetTrips() {
     const [trips, setTrips] = useState([]);
     const [selected, setSelected] = useState(null);
-    const [newTrip, setNewTrip] = useState(false);
 
     const getTrips = () => {
       return trips.map(trip => (
@@ -22,7 +20,7 @@ function GetTrips() {
 
     useEffect(() => {
         if (!trips.length) {
-            fetch(`${url}api/trips/?owner=${localStorage.getItem('sessionID')}`)
+            fetch(`${url}api/trips/?sessionID=${localStorage.getItem('sessionID')}`)
             .then((response) => response.json())
             .then((data) => {
                 if (data.length) {
@@ -33,11 +31,6 @@ function GetTrips() {
         }
     }, [trips]);
 
-    if (newTrip) {
-        return (
-            <CreateTrip />
-        )
-    }
     if (selected) {
         return (
             <ViewTrip trip={selected} />
@@ -47,7 +40,7 @@ function GetTrips() {
         <div>
             <h1>All Trips</h1>
             <br />
-            <button className="btn btn-primary" onClick={() => setNewTrip(true)}>New Trip +</button>
+            <button className="btn btn-primary" onClick={() => window.location.href='/createtrip'}>New Trip +</button>
             <br />
             <br />
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
