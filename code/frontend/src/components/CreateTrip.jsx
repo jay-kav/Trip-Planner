@@ -12,7 +12,8 @@ function CreateTrip() {
     });
 
     const getUsers = () => {
-      return users.map(user => (
+      let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
+      return notOwner.map(user => (
         <option key={user.id} value={user.id}>{user.username}</option>
       ));
     };  
@@ -43,30 +44,46 @@ function CreateTrip() {
       console.log("newdata", newData);
     }
     
+    const getDate = (date) => {
+      let num = date.split("-");
+      return parseInt(num[0]) + parseInt(num[1]) * 30 + parseInt(num[2]) * 365;
+    }
   
     function submitForm (e) {
       e.preventDefault();
-      fetch(`${url}create-trip/`, {
-          method: 'POST',
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({
-              'ownerID': localStorage.getItem('sessionID'),
-              'tripname': data.tripname,
-              'location': data.location,
-              'startDate': data.startDate,
-              'endDate': data.endDate,
-              'members': data.members
-          })
-      })
-      .then((response) => {
-        console.log(response); // Log the entire response
-        return response.json();
-      })
-      .then((responseData) => {
-        console.log(responseData);
-        window.location.href = "/";
-      })
-      .catch((err) => console.error("Error:", err));
+      if (data.tripname === "") {
+        alert("Please enter a trip name");
+      } else if (data.location === "") {
+        alert("Please enter a location");
+      } else if (data.startDate === "") {
+        alert("Please enter a start date");
+      } else if (data.endDate === "") {
+        alert("Please enter an end date");
+      } else if (getDate(data.startDate) > getDate(data.endDate)) {
+        alert("End date must be after start date");
+      } else {
+        fetch(`${url}create-trip/`, {
+            method: 'POST',
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({
+                'ownerID': localStorage.getItem('sessionID'),
+                'tripname': data.tripname,
+                'location': data.location,
+                'startDate': data.startDate,
+                'endDate': data.endDate,
+                'members': data.members.push(localStorage.getItem('sessionID'))
+            })
+        })
+        .then((response) => {
+          console.log(response); // Log the entire response
+          return response.json();
+        })
+        .then((responseData) => {
+          console.log(responseData);
+          //window.location.href = "/";
+        })
+        .catch((err) => console.error("Error:", err));
+      }
     };
   
     return (

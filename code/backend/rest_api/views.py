@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from django_filters import rest_framework as filters
 from rest_framework import viewsets
 from .serializers import *
@@ -12,7 +11,7 @@ from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
-from django.db.models import Q
+import os
 
 @csrf_exempt
 def createTrip(request):
@@ -33,11 +32,13 @@ def createTrip(request):
                 'endDate': end_date,
                 'members': members
             }
+            print(form_data)
             
             form = TripForm(data=form_data)
             if form.is_valid():
                 if form.save():
                     return JsonResponse({'detail': 'Successfully created new trip'})
+                print(form.errors)
                 return JsonResponse({'error': 'Failed to create trip'}, status=400)
             else:
                 print(form.errors)
@@ -221,6 +222,7 @@ def deleteItinerary(request):
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
+@csrf_exempt
 def add_activities(trip_id, activities_to_add):
     trip = get_object_or_404(Trip, id=trip_id)
 
@@ -232,7 +234,7 @@ def add_activities(trip_id, activities_to_add):
     else:
         return JsonResponse({'error': 'Invalid activities data'}, status=400)
  
-        
+@csrf_exempt
 def delete_activities(trip_id, remove = []):
     trip = get_object_or_404(Trip, id=trip_id)
 
@@ -243,7 +245,44 @@ def delete_activities(trip_id, remove = []):
                 return JsonResponse({'detail': 'Successfully deleted activities'})
         else:
             return JsonResponse({'detail': 'Successful without deletion'})
-        return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)        
+        return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+    
+@csrf_exempt
+def getActivities(request):
+    if request.method == 'POST':
+        try:
+            MONGO_URL = os.getenv('MONGO_URL')
+            client = MongoClient(MONGO_URL)
+            db = client['Belgium']
+            collection = db['Brussels']
+
+            data = json.loads(request.body)
+            activities = data.get('activities')
+
+            def getID(activity):
+                return activity.split(";")[0]
+
+            place_ids = list(map(getID, activities))
+
+            places = collection.find({"place_id": {"$in": place_ids}})
+
+            activities = []
+            for place in places:
+                id = place.get("place_id", "")
+                photos = place.get("photos", [])
+                address = place.get("formatted_address", "")
+                name = place.get("name", "")
+                rating = place.get("rating", "")
+                activities.append({
+                    'id': id,
+                    'name': name,
+                    'address': address,
+                    'rating': rating,
+                    'photos': photos
+                })
+            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities}, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
 
     """ ------------------------- User Authentication ------------------------- """
 
@@ -301,17 +340,8 @@ class UserViewset(viewsets.ModelViewSet):
 class TripViewset(viewsets.ModelViewSet):
     serializer_class = TripSerializer
     filter_backends = (filters.DjangoFilterBackend,)
+    filterset_fields = ['members']
     queryset = Trip.objects.all()
-
-    def get_queryset(self):
-        session_id = self.request.GET.get('sessionID')  # Assuming 'sessionID' is the user ID
-        if session_id:
-            # Use Q objects to construct a query that matches either owner or members
-            queryset = Trip.objects.filter(Q(owner=session_id) | Q(members__in=[session_id]))
-        else:
-            queryset = Trip.objects.all()
-
-        return queryset
 
 class ItineraryViewset(viewsets.ModelViewSet):
     serializer_class = ItinerarySerializer
