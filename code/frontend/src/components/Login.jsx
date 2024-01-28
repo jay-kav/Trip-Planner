@@ -16,24 +16,30 @@ function Login() {
 
   function submitForm (e) {
     e.preventDefault();
-    fetch(`${url}login/`, {
-        method: 'POST',
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          "username": data.username,
-          "password": data.password
-        })
-    })
-    .then((response) => {
-      console.log(response); // Log the entire response
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log(responseData.detail);
-      localStorage.setItem("sessionID", responseData.uid);
-      window.location.href = '/';
-    })
-    .catch((err) => console.error("Error:", err));
+    if (data.username === "") {
+      alert("Please enter a username");
+    } else if (data.password === "") {
+      alert("Please enter a password");
+    } else {
+      fetch(`${url}login/`, {
+          method: 'POST',
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            "username": data.username,
+            "password": data.password
+          })
+      })
+      .then((response) => {
+        console.log(response); // Log the entire response
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log(responseData.detail);
+        localStorage.setItem("sessionID", responseData.uid);
+        window.location.href = '/';
+      })
+      .catch((err) => console.error("Error:", err));
+    }
   };
 
   return (

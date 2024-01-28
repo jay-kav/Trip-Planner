@@ -38,7 +38,7 @@ function CreateItinerary(props) {
     };
 
     return (
-        <div style={{minHeight: '20rem'}}>
+        <div style={{minHeight: '20rem', borderLeft: 'solid 1px grey', paddingLeft: '30px'}}>
             <form className="form-group" onSubmit={(e) => submitForm(e)}>
                 <label htmlFor="date">Date </label>
                 <input className="form-control" onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>

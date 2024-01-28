@@ -17,24 +17,32 @@ function Register() {
 
   function submitForm(e) {
     e.preventDefault();
-    fetch(`${url}register/`, {
-      method: "POST",
-      body: JSON.stringify({
-        'username': data.username,
-        'email': data.email,
-        'password': data.password  // Include the password field
-      }),
-      headers: { "Content-type": "application/json" },
-    })
-    .then((response) => {
-      console.log(response); // Log the entire response
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log(responseData);
-      window.location.href = '/login';
-    })
-    .catch((err) => console.error("Error:", err));
+    if (data.username === "") {
+      alert("Please enter a username");
+    } else if (data.email === "") {
+      alert("Please enter an email");
+    } else if (data.password === "") {
+      alert("Please enter a password");
+    } else {
+      fetch(`${url}register/`, {
+        method: "POST",
+        body: JSON.stringify({
+          'username': data.username,
+          'email': data.email,
+          'password': data.password  // Include the password field
+        }),
+        headers: { "Content-type": "application/json" },
+      })
+      .then((response) => {
+        console.log(response); // Log the entire response
+        return response.json();
+      })
+      .then((responseData) => {
+        console.log(responseData);
+        window.location.href = '/login';
+      })
+      .catch((err) => console.error("Error:", err));
+    }
   }
   
 
