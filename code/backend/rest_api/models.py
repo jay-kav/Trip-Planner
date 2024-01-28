@@ -10,7 +10,7 @@ class Trip(models.Model):
     location = models.CharField(max_length=255)
     startDate = models.DateField()
     endDate = models.DateField() 
-    members = models.ManyToManyField(User, related_name='members')
+    members = models.ManyToManyField(User, related_name='members', default=None)
     created = models.DateTimeField(auto_now_add=True)
     activities = ArrayField(models.CharField(max_length=255), default=list)  # Array of strings for Activities done s
 
