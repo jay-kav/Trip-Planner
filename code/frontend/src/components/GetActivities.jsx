@@ -13,7 +13,7 @@ function GetActivities (props) {
             setActivities(res.data.activities);
         })
         .catch(err => console.log(err));
-    }, []);
+    });
 
     return (
         <ul className='list-group'>

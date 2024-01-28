@@ -1,12 +1,22 @@
-version: '3.8'
+version: '3.9'
 services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
   backend:
     build: ./backend
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
     ports:
       - "8000:8000"
-    env_file:
-    - ./backend/.env
+    depends_on:
+      - db
   nginx:
     build: ./frontend
     restart: always
