@@ -279,7 +279,6 @@ def getActivities(request):
                     # Convert binary image data to base64
 
                     encoded_image = base64.b64encode(image_data).decode('utf-8')
-                    print("Successful")
                 else:
                     encoded_image = None
                 address = place.get("formatted_address", "")

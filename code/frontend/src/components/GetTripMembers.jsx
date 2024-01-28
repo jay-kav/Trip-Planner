@@ -61,7 +61,7 @@ function GetTripMembers(props) {
         } else {
             axios.post(`add-members/`, {
                 'tripID': trip.id,
-                'memberIDs': addedMembers.members
+                'memberIDs': addedMembers
             })
             .then((response) => {
               console.log(response);
