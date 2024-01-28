@@ -13,6 +13,8 @@ from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
 import struct
+from bson.binary import Binary
+import base64
 
 @csrf_exempt
 def createTrip(request):
@@ -270,6 +272,16 @@ def getActivities(request):
             activities = []
             for place in places:
                 id = place.get("place_id", "")
+                image_data = place.get("image_data", None)
+
+                # Check if image data is available
+                if image_data:
+                    # Convert binary image data to base64
+
+                    encoded_image = base64.b64encode(image_data).decode('utf-8')
+                    print("Successful")
+                else:
+                    encoded_image = None
                 address = place.get("formatted_address", "")
                 name = place.get("name", "")
                 rating = place.get("rating", "")
@@ -278,6 +290,7 @@ def getActivities(request):
                     'name': name,
                     'address': address,
                     'rating': rating,
+                    'image_data': encoded_image
                 })
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities}, status=200)
         except json.JSONDecodeError:
