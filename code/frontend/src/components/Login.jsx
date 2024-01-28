@@ -1,5 +1,5 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import url from './url';
 
 function Login() {
   const [data, setData] = useState({
@@ -21,21 +21,13 @@ function Login() {
     } else if (data.password === "") {
       alert("Please enter a password");
     } else {
-      fetch(`${url}login/`, {
-          method: 'POST',
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({
-            "username": data.username,
-            "password": data.password
-          })
+      axios.post(`login/`, {
+        "username": data.username,
+        "password": data.password
       })
       .then((response) => {
-        console.log(response); // Log the entire response
-        return response.json();
-      })
-      .then((responseData) => {
-        console.log(responseData.detail);
-        localStorage.setItem("sessionID", responseData.uid);
+        console.log(response);
+        localStorage.setItem("sessionID", response.data.uid);
         window.location.href = '/';
       })
       .catch((err) => console.error("Error:", err));

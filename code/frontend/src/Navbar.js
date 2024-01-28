@@ -1,14 +1,11 @@
+import axios from 'axios';
 import * as React from 'react';
-import url from './components/url';
 
 export default function Navbar(props) {  
   const logout = (e) => {
     e.preventDefault();
     localStorage.clear();
-    fetch(`${url}logout/`, {
-        method: 'POST',
-        headers: { "Content-type": "application/json" }
-    })
+    axios.post(`logout/`)
     .then((response) => {
       console.log(response); // Log the entire response
       return response.json();

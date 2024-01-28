@@ -1,26 +1,19 @@
-import React, { useState } from 'react';
-import url from './url';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function GetActivities (props) {
     const [activities, setActivities] = useState([]);
-    if (!activities.length) {
-        fetch(`${url}get-activities/`, {
-            method: 'POST',
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-                'activities': props.ids
-            })
+
+    useEffect(() => {
+        axios.post(`get-activities/`, {
+            'activities': props.ids
         })
-        .then((response) => {
-          console.log(response);
-          return response.json();
+        .then(res => {
+            console.log(res.data);
+            setActivities(res.data.activities);
         })
-        .then((responseData) => {
-            console.log(responseData);
-            setActivities(responseData.activities);
-        })
-        .catch((err) => console.error("Error:", err));
-    }
+        .catch(err => console.log(err));
+    }, []);
 
     return (
         <ul className='list-group'>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import url from './url';
 import GetActivities from './GetActivities';
+import axios from 'axios';
 
 function GetItineraries(props) {
     let tripOwner = props.tripOwner;
@@ -17,12 +17,10 @@ function GetItineraries(props) {
     // Fetch requests
     useEffect(() => {
         if (!itineraries.length) {
-            fetch(`${url}api/itineraries/?trip_id=${trip.id}`)
-            .then((response) => response.json())
-            .then((itinerariesData) => {
-                if (itinerariesData.length) {
-                    setItineraries(itinerariesData);
-                }
+            axios.get(`api/itineraries/?trip_id=${trip.id}`)
+            .then((response) => {
+              console.log(response);
+              setItineraries(response.data);
             })
             .catch(err => console.log(err))
         }
@@ -40,22 +38,15 @@ function GetItineraries(props) {
 
     const submitForm = (e) => {
       e.preventDefault();
-      fetch(`${url}create-itinerary/`, {
-          method: 'POST',
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({
-              'tripID': trip.id,
-              'date': data.date,
-              'startTime': data.startTime,
-              'endTime': data.endTime
-          })
+      axios.post(`create-itinerary/`, {
+        'tripID': trip.id,
+        'date': data.date,
+        'startTime': data.startTime,
+        'endTime': data.endTime
       })
       .then((response) => {
         console.log(response);
-        return response.json();
-      })
-      .then((responseData) => {
-        console.log(responseData);
+        window.location.reload();
       })
       .catch((err) => console.error("Error:", err));
     };
@@ -84,28 +75,21 @@ function GetItineraries(props) {
     // Delete Itinerary
     const deleteItinerary = (e, itinerary, tripID) => {
         e.preventDefault();
-        fetch(`${url}delete-itinerary/`, {
-            method: 'POST',
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-                'itineraryID': itinerary.id,
-                'activities': itinerary.activities,
-                'tripID': tripID
-            })
+        axios.post(`delete-itinerary/`, {
+            'itineraryID': itinerary.id,
+            'activities': itinerary.activities,
+            'tripID': tripID
         })
         .then((response) => {
           console.log(response); // Log the entire response
-          return response.json();
-        })
-        .then((responseData) => {
-          console.log(responseData);
-            window.location.reload();
+          window.location.reload();
         })
         .catch((err) => console.error("Error:", err));
     }
 
     // Get Itineraries
     const getItineraries = () => {
+        console.log(itineraries);
         return itineraries.map(itinerary => (
             <div key={itinerary.id} className="card" style={{margin: '10px', minWidth: '28rem'}}>
                 <div className="card-body">

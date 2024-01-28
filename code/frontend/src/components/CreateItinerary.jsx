@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import url from './url';
+import axios from 'axios';
 
 function CreateItinerary(props) {
     const [data, setData] = useState({
@@ -17,15 +18,11 @@ function CreateItinerary(props) {
   
     function submitForm (e) {
       e.preventDefault();
-      fetch(`${url}create-itinerary/`, {
-          method: 'POST',
-          headers: { "Content-type": "application/json" },
-          body: JSON.stringify({
-              'tripID': props.tripID,
-              'date': data.date,
-              'startTime': data.startTime,
-              'endTime': data.endTime
-          })
+      axios.post(`create-itinerary/`, {
+        'tripID': props.tripID,
+        'date': data.date,
+        'startTime': data.startTime,
+        'endTime': data.endTime
       })
       .then((response) => {
         console.log(response); // Log the entire response
