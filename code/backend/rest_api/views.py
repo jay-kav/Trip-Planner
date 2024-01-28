@@ -12,6 +12,7 @@ from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
+import struct
 
 @csrf_exempt
 def createTrip(request):
@@ -269,7 +270,6 @@ def getActivities(request):
             activities = []
             for place in places:
                 id = place.get("place_id", "")
-                photos = place.get("photos", [])
                 address = place.get("formatted_address", "")
                 name = place.get("name", "")
                 rating = place.get("rating", "")
@@ -278,7 +278,6 @@ def getActivities(request):
                     'name': name,
                     'address': address,
                     'rating': rating,
-                    'photos': photos
                 })
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities}, status=200)
         except json.JSONDecodeError:

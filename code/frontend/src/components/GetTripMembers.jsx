@@ -4,6 +4,7 @@ import url from './url';
 function GetTripMembers(props) {
     let tripOwner = props.tripOwner;
     let trip = props.trip;
+    let nonMembers;
     
     const [addMember, setAddMember] = useState(false);
     const [addedMembers, setAddedMembers] = useState([]);
@@ -44,13 +45,13 @@ function GetTripMembers(props) {
         console.log("newdata", newData);
     }
 
-    const getUsers = () => {
-        let notOwner = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
-        if (notOwner.length == 0) {
+    const getNonMembers = () => {
+        nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
+        if (nonMembers.length == 0) {
             return <option>No users to add</option>
         }
         return <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
-            {notOwner.map(user => (
+            {nonMembers.map(user => (
             <option key={user.id} value={user.id}>{user.username}</option>
         ))}
         </select>
@@ -117,9 +118,9 @@ function GetTripMembers(props) {
               <strong>Trip Members</strong>
               {localStorage.getItem('sessionID') == tripOwner.id && !addMember ? <button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Add Member</button> : ""}
               {addMember && <form className="form-group" onSubmit={(e) => addMembers(e)}>
-                  {getUsers()}
+                  {getNonMembers()}
                   <br />
-                  <div style={{display: 'flex', gap: '10px'}}><button className='btn btn-primary' type='submit'>Add Members</button><button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Cancel</button></div>
+                  <div style={{display: 'flex', gap: '10px'}}>{nonMembers.length > 0 && <button className='btn btn-primary' type='submit'>Add Members</button>}<button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Cancel</button></div>
               </form>}
           </li>
           <li className="list-group-item">{tripOwner.username} (Owner)</li>

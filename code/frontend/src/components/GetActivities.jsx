@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import url from './url';
 
 function GetActivities (props) {
@@ -32,7 +32,10 @@ function GetActivities (props) {
                         <p>{activity.address}</p>
                         <p>{activity.rating}/5</p>
                     </div>
-                    <img src={`https://maps.googleapis.com/maps/api/place/photo?parameters=${activity.photos[0].photo_reference}`} style={{marginLeft: '10px', objectFit: 'contain'}} alt={activity.name}/>
+                    <img
+                        style={{height: '160px', width: '160px', objectFit: 'cover', marginLeft: '20px'}}
+                        //src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=${activity.photos[0].width}&photo_reference=${activity.photos[0].photo_reference}&key=AIzaSyAudMNmJ-wUGoZKtx61S3mh6GhvzBMCbHM`}
+                        alt={activity.name}/>
                 </li>
             ))}
         </ul>
