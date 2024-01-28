@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import url from './url';
-import ViewTrip from './ViewTrip'; 
+import ViewTrip from './ViewTrip';
+import axios from 'axios';
 
 function GetTrips() {
     const [trips, setTrips] = useState([]);
@@ -19,17 +19,13 @@ function GetTrips() {
     };  
 
     useEffect(() => {
-        if (!trips.length) {
-            fetch(`${url}api/trips/?sessionID=${localStorage.getItem('sessionID')}`)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.length) {
-                    setTrips(data);
-                }
-            })
-            .catch(err => console.log(err))
-        }
-    }, [trips]);
+        axios.get(`api/trips/?sessionID=${localStorage.getItem('sessionID')}`)
+        .then((response) => {
+            console.log(response);
+            setTrips(response.data);
+        })
+        .catch(err => console.log(err))
+    }, []);
 
     if (selected) {
         return (

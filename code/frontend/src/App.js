@@ -6,7 +6,9 @@ import Login from './components/Login';
 import GetTrips from './components/GetTrips';
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import CreateTrip from './components/CreateTrip';
+import axios from 'axios';
 
+axios.defaults.baseURL = 'http://localhost:8000/';
 
 function App() {
   return (
