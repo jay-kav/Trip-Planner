@@ -9,7 +9,7 @@ function ViewTrip(props) {
 
     // Fetch requests
     useEffect(() => {
-        if (tripOwner.length == 0) {
+        if (tripOwner.length === 0) {
             axios.get(`api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
             .then((response) => {
                 console.log(response);

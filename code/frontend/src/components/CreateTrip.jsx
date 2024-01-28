@@ -12,7 +12,7 @@ function CreateTrip() {
     });
 
     const getUsers = () => {
-      let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
+      let notOwner = users.filter(user => user.id !== localStorage.getItem('sessionID'));
       return notOwner.map(user => (
         <option key={user.id} value={user.id}>{user.username}</option>
       ));
@@ -71,12 +71,8 @@ function CreateTrip() {
           'members': data.members.push(localStorage.getItem('sessionID'))
         })
         .then((response) => {
-          console.log(response); // Log the entire response
-          return response.json();
-        })
-        .then((responseData) => {
-          console.log(responseData);
-          //window.location.href = "/";
+          console.log(response);
+          window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
       }

@@ -12,8 +12,6 @@ from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
-import struct
-from bson.binary import Binary
 import base64
 
 @csrf_exempt

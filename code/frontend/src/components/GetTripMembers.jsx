@@ -22,7 +22,7 @@ function GetTripMembers(props) {
             })
             .catch(err => console.log(err));
         }
-        if (users.length == 0) {
+        if (users.length === 0) {
             axios.get("api/users/?is_staff=false")
             .then((response) => {
                 if (response.data.length) {
@@ -44,7 +44,7 @@ function GetTripMembers(props) {
 
     const getNonMembers = () => {
         nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
-        if (nonMembers.length == 0) {
+        if (nonMembers.length === 0) {
             return <option>No users to add</option>
         }
         return <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
@@ -56,7 +56,7 @@ function GetTripMembers(props) {
 
     const addMembers = (e) => {
       e.preventDefault();
-        if (addedMembers.length == 0) {
+        if (addedMembers.length === 0) {
             alert("Please select members to add.");
         } else {
             axios.post(`add-members/`, {

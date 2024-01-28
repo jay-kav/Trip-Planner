@@ -7,11 +7,7 @@ export default function Navbar(props) {
     localStorage.clear();
     axios.post(`logout/`)
     .then((response) => {
-      console.log(response); // Log the entire response
-      return response.json();
-    })
-    .then((responseData) => {
-      console.log(responseData);
+      console.log(response);
       window.location.href = '/login';
     })
     .catch((err) => console.error("Error:", err));

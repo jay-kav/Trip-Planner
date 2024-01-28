@@ -12,7 +12,7 @@ function Register() {
     const newData = {...data};
     newData[e.target.id] = e.target.value;
     setData(newData);
-    console.log(newData);
+    //console.log(newData);
   }
 
   function submitForm(e) {
@@ -24,7 +24,7 @@ function Register() {
     } else if (data.password === "") {
       alert("Please enter a password");
     } else {
-      axios.get(`register/`, {
+      axios.post(`register/`, {
         'username': data.username,
         'email': data.email,
         'password': data.password  // Include the pass

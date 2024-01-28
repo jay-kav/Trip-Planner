@@ -5,5 +5,3 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
-# expose 8000 port
-EXPOSE 8000
