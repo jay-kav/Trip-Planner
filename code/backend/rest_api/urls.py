@@ -10,6 +10,7 @@ router.register('users', views.UserViewset)
 urlpatterns = [
     path('create-itinerary/', views.createItinerary, name='create_itinerary'),
     path('create-trip/', views.createTrip, name='create_trip'),
+    path('get-activities/', views.getActivities, name='get_activities'),
     path('add-members/', views.add_members, name='add_members'),
     path('remove-member/', views.removeMember, name='remove_member'),
     path('delete-trip/', views.deleteTrip, name='delete_trip'),
