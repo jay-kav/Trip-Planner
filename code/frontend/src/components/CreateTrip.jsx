@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import url from './url';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function CreateTrip() {
     const [users, setUsers] = useState([]);
@@ -20,10 +20,9 @@ function CreateTrip() {
 
     useEffect(() => {
       if (users.length === 0) {
-          fetch(url + "api/users/?is_staff=false")
-          .then((response) => response.json())
-          .then((data) => {
-              setUsers(data);
+          axios.get("api/users/?is_staff=false")
+          .then((response) => {
+              setUsers(response.data);
           })
           .catch(err => console.log(err))
       }
@@ -46,7 +45,7 @@ function CreateTrip() {
     
     const getDate = (date) => {
       let num = date.split("-");
-      return parseInt(num[0]) + parseInt(num[1]) * 30 + parseInt(num[2]) * 365;
+      return parseInt(num[2]) + parseInt(num[1]) * 30 + parseInt(num[0]) * 365;
     }
   
     function submitForm (e) {
@@ -62,25 +61,17 @@ function CreateTrip() {
       } else if (getDate(data.startDate) > getDate(data.endDate)) {
         alert("End date must be after start date");
       } else {
-        fetch(`${url}create-trip/`, {
-            method: 'POST',
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-                'ownerID': localStorage.getItem('sessionID'),
-                'tripname': data.tripname,
-                'location': data.location,
-                'startDate': data.startDate,
-                'endDate': data.endDate,
-                'members': data.members.push(localStorage.getItem('sessionID'))
-            })
+        axios.post(`create-trip/`, {
+          'ownerID': localStorage.getItem('sessionID'),
+          'tripname': data.tripname,
+          'location': data.location,
+          'startDate': data.startDate,
+          'endDate': data.endDate,
+          'members': data.members
         })
         .then((response) => {
-          console.log(response); // Log the entire response
-          return response.json();
-        })
-        .then((responseData) => {
-          console.log(responseData);
-          //window.location.href = "/";
+          console.log(response);
+          window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
       }

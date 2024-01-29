@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import url from './url';
+import axios from 'axios';
 
 function Register() {
   const [data, setData] = useState({
@@ -12,7 +12,7 @@ function Register() {
     const newData = {...data};
     newData[e.target.id] = e.target.value;
     setData(newData);
-    console.log(newData);
+    //console.log(newData);
   }
 
   function submitForm(e) {
@@ -24,21 +24,13 @@ function Register() {
     } else if (data.password === "") {
       alert("Please enter a password");
     } else {
-      fetch(`${url}register/`, {
-        method: "POST",
-        body: JSON.stringify({
-          'username': data.username,
-          'email': data.email,
-          'password': data.password  // Include the password field
-        }),
-        headers: { "Content-type": "application/json" },
+      axios.post(`register/`, {
+        'username': data.username,
+        'email': data.email,
+        'password': data.password  // Include the pass
       })
       .then((response) => {
-        console.log(response); // Log the entire response
-        return response.json();
-      })
-      .then((responseData) => {
-        console.log(responseData);
+        console.log(response);
         window.location.href = '/login';
       })
       .catch((err) => console.error("Error:", err));

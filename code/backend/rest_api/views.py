@@ -12,8 +12,6 @@ from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
-import struct
-from bson.binary import Binary
 import base64
 
 @csrf_exempt
@@ -33,7 +31,7 @@ def createTrip(request):
                 'location': location,
                 'startDate': start_date,
                 'endDate': end_date,
-                'members': members
+                'members': [members]
             }
             print(form_data)
             

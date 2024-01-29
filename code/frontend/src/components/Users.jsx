@@ -1,5 +1,5 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import url from './url';
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -15,7 +15,7 @@ function Users() {
 
   useEffect(() => {
     if (users.length === 0) {
-        fetch(url + "api/users/")
+        axios.get("api/users/")
         .then((response) => response.json())
         .then((data) => {
             setUsers(data);

@@ -1,5 +1,5 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import url from './url';
 
 function GetTripMembers(props) {
     let tripOwner = props.tripOwner;
@@ -14,22 +14,19 @@ function GetTripMembers(props) {
     useEffect(() => {
         if (!tripMembers.length) {
             Promise.all(trip.members.map(member =>
-                fetch(`${url}api/users/${member.split("/").slice(-2).slice(0, -1)}`)
-                    .then(response => response.json())
+                axios.get(`api/users/${member.split("/").slice(-2).slice(0, -1)}`)
             ))
-            .then(memberData => {
-                if (memberData.length) {
-                    setTripMembers(memberData);
-                }
+            .then(response => {
+                console.log(response);
+                setTripMembers(response);
             })
             .catch(err => console.log(err));
         }
-        if (users.length == 0) {
-            fetch(url + "api/users/?is_staff=false")
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.length) {
-                    setUsers(data);
+        if (users.length === 0) {
+            axios.get("api/users/?is_staff=false")
+            .then((response) => {
+                if (response.data.length) {
+                    setUsers(response.data);
                 }
             })
             .catch(err => console.log(err))
@@ -47,7 +44,7 @@ function GetTripMembers(props) {
 
     const getNonMembers = () => {
         nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
-        if (nonMembers.length == 0) {
+        if (nonMembers.length === 0) {
             return <option>No users to add</option>
         }
         return <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
@@ -59,23 +56,15 @@ function GetTripMembers(props) {
 
     const addMembers = (e) => {
       e.preventDefault();
-        if (addedMembers.length == 0) {
+        if (addedMembers.length === 0) {
             alert("Please select members to add.");
         } else {
-            fetch(`${url}add-members/`, {
-                method: 'POST',
-                headers: { "Content-type": "application/json" },
-                body: JSON.stringify({
-                      'tripID': trip.id,
-                      'memberIDs': addedMembers.members
-                })
+            axios.post(`add-members/`, {
+                'tripID': trip.id,
+                'memberIDs': addedMembers
             })
             .then((response) => {
-              console.log(response); // Log the entire response
-              return response.json();
-            })
-            .then((responseData) => {
-              console.log(responseData);
+              console.log(response);
               window.location.reload();
             })
             .catch((err) => console.error("Error:", err));
@@ -84,20 +73,12 @@ function GetTripMembers(props) {
 
     const removeMember = (e, member, tripID) => {
         e.preventDefault();
-        fetch(`${url}remove-member/`, {
-            method: 'POST',
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-                'memberID': member.id,
-                'tripID': tripID
-            })
+        axios.post(`remove-member/`, {
+            'memberID': member.id,
+            'tripID': tripID
         })
         .then((response) => {
-          console.log(response); // Log the entire response
-          return response.json();
-        })
-        .then((responseData) => {
-            console.log(responseData);
+            console.log(response);
             window.location.reload();
         })
         .catch((err) => console.error("Error:", err));
@@ -105,9 +86,9 @@ function GetTripMembers(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.id}>
-                {member.username}
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member, trip.id)}>Remove</button> : ""}
+            <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.data.id}>
+                {member.data.username}
+                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member.data, trip.id)}>Remove</button> : ""}
             </li>
         ));
     };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import url from './url';
 import GetItineraries from './GetItineraries';
 import GetTripMembers from './GetTripMembers';
+import axios from 'axios';
 
 function ViewTrip(props) {
     let trip = props.trip;
@@ -9,11 +9,11 @@ function ViewTrip(props) {
 
     // Fetch requests
     useEffect(() => {
-        if (tripOwner.length == 0) {
-            fetch(`${url}api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
-            .then((response) => response.json())
-            .then((ownerData) => {
-                setTripOwner(ownerData);
+        if (tripOwner.length === 0) {
+            axios.get(`api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
+            .then((response) => {
+                console.log(response);
+                setTripOwner(response.data);
             })
             .catch(err => console.log(err))
         }
@@ -22,19 +22,11 @@ function ViewTrip(props) {
     // Trip functions
     const deleteTrip = (e) => {
         e.preventDefault();
-        fetch(`${url}delete-trip/`, {
-            method: 'POST',
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({
-                'tripID': trip.id
-            })
+        axios.post(`delete-trip/`, {
+            'tripID': trip.id
         })
         .then((response) => {
-          console.log(response); // Log the entire response
-          return response.json();
-        })
-        .then((responseData) => {
-          console.log(responseData);
+          console.log(response);
           window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
