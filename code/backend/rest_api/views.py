@@ -276,10 +276,10 @@ def getActivities(request):
 
                 # Check if image data is available
                 if image_data:
-                    # Convert binary image data to base64
+                    # Convert binary image data to base64 https://bobbyhadz.com/blog/convert-image-to-base64-string-in-python
 
                     encoded_image = base64.b64encode(image_data).decode('utf-8')
-                    print("Successful")
+                    # print("Successful")
                 else:
                     encoded_image = None
                 address = place.get("formatted_address", "")

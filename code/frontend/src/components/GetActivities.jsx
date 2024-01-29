@@ -35,6 +35,7 @@ function GetActivities (props) {
                     <img
                         style={{height: '160px', width: '160px', objectFit: 'cover', marginLeft: '20px'}}
                         //src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=${activity.photos[0].width}&photo_reference=${activity.photos[0].photo_reference}&key=AIzaSyAudMNmJ-wUGoZKtx61S3mh6GhvzBMCbHM`}
+                        // https://stackoverflow.com/questions/8499633/how-to-display-base64-images-in-html
                         src={`data:image/jpeg;base64,${activity.image_data}`}
                         alt={activity.name}/>
                 </li>
