@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import GetActivities from './GetActivities';
 import axios from 'axios';
 
-let filterList = {
+const filterList = {
+  'Breakfast': 'breakfast',
+  'Lunch': 'lunch',
+  'Dinner': 'dinner',
   'Walking': 'park',
   'History': 'museum',
   'Shopping': 'shopping_mall',
@@ -21,9 +24,21 @@ function GetItineraries(props) {
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [data, setData] = useState({
-        date: "",
-        startTime: "",
-        endTime: ""
+      date: "",
+      startTime: "",
+      endTime: "",
+      breakfast: "false",
+      lunch: "false",
+      dinner: "false",
+      park: "false",
+      museum: "false",
+      shopping_mall: "false",
+      zoo: "false",
+      aquarium: "false",
+      amusement_park: "false",
+      bowling_alley: "false",
+      tourist_attraction: "false",
+      night_club: "false"
     });
     
     // Fetch requests
@@ -43,7 +58,13 @@ function GetItineraries(props) {
     // Create Itinerary
     const handle = (e) => {
       const newData = {...data};
-      newData[e.target.id] = e.target.value;
+      if (newData[e.target.id].value == "false") {
+        newData[e.target.id] = "true";
+      } else if (newData[e.target.id].value == "true") {
+        newData[e.target.id] = "false";
+      } else {
+        newData[e.target.id] = e.target.value;
+      }
       setData(newData);
       console.log(newData);
     }
@@ -67,14 +88,55 @@ function GetItineraries(props) {
         return (
           <div style={{minHeight: '20rem', borderLeft: 'solid 1px grey', paddingLeft: '30px'}}>
               <form className="form-group" onSubmit={(e) => submitForm(e)} style={{width: '14rem'}}>
-                  <label htmlFor="date">Date </label>
-                  <input className="form-control" onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>
-                  <br />
-                  <label htmlFor="startTime">Start Time </label>
-                  <input className="form-control" onChange={(e) => handle(e)} value={data.startTime} id="startTime" type='time'></input>
-                  <br />
-                  <label htmlFor="endTime">End Time </label>
-                  <input className="form-control" onChange={(e) => handle(e)} value={data.endTime} id="endTime" type='time'></input>
+                  <div style={{display: 'flex', gap: '30px'}}>
+                    <div>
+                      <label htmlFor="date">Date </label>
+                      <input className="form-control" onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>
+                      <br />
+                      <label htmlFor="startTime">Start Time </label>
+                      <input className="form-control" onChange={(e) => handle(e)} value={data.startTime} id="startTime" type='time'></input>
+                      <br />
+                      <label htmlFor="endTime">End Time </label>
+                      <input className="form-control" onChange={(e) => handle(e)} value={data.endTime} id="endTime" type='time'></input>
+                    </div>
+                    <div style={{paddingLeft: '20px', display: 'grid', gridTemplateColumns: 'auto', justifyContent: 'space-between'}}>
+                      <label style={{marginRight: '5px'}} for="breakfast">Breakfast</label>
+                      <input onChange={(e) => handle(e)} value={data.breakfast} className="form-check-input" id='breakfast' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="lunch">Lunch</label>
+                      <input onChange={(e) => handle(e)} value={data.lunch} className="form-check-input" id='lunch' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="dinner">Dinner</label>
+                      <input onChange={(e) => handle(e)} value={data.dinner} className="form-check-input" id='dinner' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="park">Parks</label>
+                      <input onChange={(e) => handle(e)} value={data.park} className="form-check-input" id='park' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="museum">Museum</label>
+                      <input onChange={(e) => handle(e)} value={data.museum} className="form-check-input" id='museum' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="shopping">Shopping</label>
+                      <input onChange={(e) => handle(e)} value={data.shopping} className="form-check-input" id='shopping' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="zoo">Zoo</label>
+                      <input onChange={(e) => handle(e)} value={data.zoo} className="form-check-input" id='zoo' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="aquarium">Aquarium</label>
+                      <input onChange={(e) => handle(e)} value={data.aquarium} className="form-check-input" id='aquarium' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="amusement_park">Amusement Park</label>
+                      <input onChange={(e) => handle(e)} value={data.amusement_park} className="form-check-input" id='amusement_park' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="bowling">Bowling</label>
+                      <input onChange={(e) => handle(e)} value={data.bowling} className="form-check-input" id='bowling' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="tourism">Tourism</label>
+                      <input onChange={(e) => handle(e)} value={data.tourism} className="form-check-input" id='tourism' type='checkbox' />
+                      <br />
+                      <label style={{marginRight: '5px'}} for="nightlife">Nightlife</label>
+                      <input onChange={(e) => handle(e)} value={data.nightlife} className="form-check-input" id='nightlife' type='checkbox' />
+                    </div>
+                  </div>
                   <br />
                   <div style={{display: 'flex', gap: '5px'}}>
                     <button className="btn btn-primary" type='submit'>Create Itinerary</button>
