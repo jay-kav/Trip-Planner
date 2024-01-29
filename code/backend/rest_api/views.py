@@ -31,7 +31,7 @@ def createTrip(request):
                 'location': location,
                 'startDate': start_date,
                 'endDate': end_date,
-                'members': members
+                'members': [members]
             }
             print(form_data)
             
