@@ -26,14 +26,15 @@ def createTrip(request):
             end_date = data.get('endDate')
             members = data.get('members')
             if not members:
-                members = owner_id
+                members = []
+            members.append(owner_id)
             form_data = {
                 'owner': owner_id,
                 'tripname': trip_name,
                 'location': location,
                 'startDate': start_date,
                 'endDate': end_date,
-                'members': [members]
+                'members': members
             }
             print(form_data)
             

@@ -18,7 +18,7 @@ function GetTrips() {
             <p className="card-text">{trip.location}</p>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
               <button className="btn btn-secondary" onClick={() => {setSelected(trip)}}>View</button>
-              <p className="card-text" style={{paddingTop: '10px'}}>Members: {trip.members.length + 1}</p>
+              <p className="card-text" style={{paddingTop: '10px'}}>Members: {trip.members.length}</p>
             </div>
           </div>
         </div>

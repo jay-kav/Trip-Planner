@@ -22,7 +22,7 @@ function GetTripMembers(props) {
             })
             .catch(err => console.log(err));
         }
-        if (users.length === 0) {
+        if (users.length == 0) {
             axios.get("api/users/?is_staff=false")
             .then((response) => {
                 if (response.data.length) {
@@ -86,6 +86,7 @@ function GetTripMembers(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
+            member.data.id != tripOwner.id &&
             <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.data.id}>
                 {member.data.username}
                 {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member.data, trip.id)}>Remove</button> : ""}
