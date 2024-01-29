@@ -10,9 +10,16 @@ function GetTrips() {
       return trips.map(trip => (
         <div key={trip.id} className="card" style={{width: '18rem', margin: '10px'}}>
           <div className="card-body">
-            <h5 className="card-title">{trip.id} - {trip.tripname}</h5>
+            { trip.owner != localStorage.getItem('sessionID') ? <h5 className="card-title">{trip.tripname}</h5>
+            : <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <h5 className="card-title">{trip.tripname}</h5>
+              <p className="card-text">Owner</p>
+            </div>}
             <p className="card-text">{trip.location}</p>
-            <button className="btn btn-secondary" onClick={() => {setSelected(trip)}}>View</button>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <button className="btn btn-secondary" onClick={() => {setSelected(trip)}}>View</button>
+              <p className="card-text" style={{paddingTop: '10px'}}>Members: {trip.members.length}</p>
+            </div>
           </div>
         </div>
       ));

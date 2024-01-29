@@ -19,10 +19,12 @@ function CreateTrip() {
     };  
 
     useEffect(() => {
-      if (users.length === 0) {
+      if (users.length == 0) {
           axios.get("api/users/?is_staff=false")
           .then((response) => {
-              setUsers(response.data);
+              if (response.data.length) {
+                  setUsers(response.data);
+              }
           })
           .catch(err => console.log(err))
       }
