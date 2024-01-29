@@ -2,6 +2,18 @@ import React, { useState, useEffect } from 'react';
 import GetActivities from './GetActivities';
 import axios from 'axios';
 
+let filterList = {
+  'Walking': 'park',
+  'History': 'museum',
+  'Shopping': 'shopping_mall',
+  'Zoo': 'zoo',
+  'Aquarium': 'aquarium',
+  'Amusement Park': 'amusement_park',
+  'Bowling': 'bowling_alley',
+  'Tourism': 'tourist_attraction',
+  'Nightlife': 'night_club', 
+};
+
 function GetItineraries(props) {
     let tripOwner = props.tripOwner;
     let trip = props.trip;
