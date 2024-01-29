@@ -29,11 +29,12 @@ function GetActivities (props) {
                         <p>{activity.address}</p>
                         <p>{activity.rating}/5</p>
                     </div>
+                    <div>
                     <img
-                        style={{height: '160px', width: '160px', objectFit: 'cover', marginLeft: '20px'}}
-                        // https://stackoverflow.com/questions/8499633/how-to-display-base64-images-in-html
+                        style={{height: '160px', width: '160px', borderRadius: '80px', objectFit: 'cover', marginLeft: '20px'}}
                         src={`data:image/jpeg;base64,${activity.image_data}`}
                         alt={activity.name}/>
+                    </div>
                 </li>
             ))}
         </ul>

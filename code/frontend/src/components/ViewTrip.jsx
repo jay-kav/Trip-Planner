@@ -32,6 +32,23 @@ function ViewTrip(props) {
         .catch((err) => console.error("Error:", err));
     }
 
+    const leaveTrip = (e, tripID) => {
+        e.preventDefault();
+        if (tripOwner.id == localStorage.getItem('sessionID')) {
+            alert("You are the owner of this trip. Please assign someone else as trip owner.");
+        } else {
+            axios.post(`remove-member/`, {
+                'memberID': tripOwner.id,
+                'tripID': tripID
+            })
+            .then((response) => {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch((err) => console.error("Error:", err));
+        }
+    }
+
     const tripInfo = () => {
       return (
         <div>
@@ -54,7 +71,10 @@ function ViewTrip(props) {
             <br />
             <GetItineraries trip={trip} tripOwner={tripOwner} />
             <br />
-            {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+            <div style={{display: 'flex', gap: '20px'}}>
+                <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
+                {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+            </div>
         </div>
     )
 }

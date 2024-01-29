@@ -84,12 +84,28 @@ function GetTripMembers(props) {
         .catch((err) => console.error("Error:", err));
     }
 
+    const changeOwner = (e, member, tripID) => {
+        e.preventDefault();
+        axios.post(`change-owner/`, {
+            'memberID': member.id,
+            'tripID': tripID
+        })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
     const getTripMembers = () => {
         return tripMembers.map(member => (
             member.data.id != tripOwner.id &&
             <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.data.id}>
                 {member.data.username}
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member.data, trip.id)}>Remove</button> : ""}
+                <div style={{display: 'flex', gap: '10px'}}>
+                    {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-secondary" onClick={(e) => changeOwner(e, member.data, trip.id)}>Assign Owner</button> : ""}
+                    {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member.data, trip.id)}>Remove</button> : ""}
+                </div>
             </li>
         ));
     };
