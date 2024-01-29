@@ -25,6 +25,8 @@ def createTrip(request):
             start_date = data.get('startDate')
             end_date = data.get('endDate')
             members = data.get('members')
+            if not members:
+                members = owner_id
             form_data = {
                 'owner': owner_id,
                 'tripname': trip_name,
