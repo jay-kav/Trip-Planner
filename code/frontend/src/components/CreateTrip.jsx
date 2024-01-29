@@ -12,7 +12,7 @@ function CreateTrip() {
     });
 
     const getUsers = () => {
-      let notOwner = users.filter(user => user.id !== localStorage.getItem('sessionID'));
+      let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
       return notOwner.map(user => (
         <option key={user.id} value={user.id}>{user.username}</option>
       ));
@@ -21,9 +21,8 @@ function CreateTrip() {
     useEffect(() => {
       if (users.length === 0) {
           axios.get("api/users/?is_staff=false")
-          .then((response) => response.json())
-          .then((data) => {
-              setUsers(data);
+          .then((response) => {
+              setUsers(response.data);
           })
           .catch(err => console.log(err))
       }
@@ -46,7 +45,7 @@ function CreateTrip() {
     
     const getDate = (date) => {
       let num = date.split("-");
-      return parseInt(num[0]) + parseInt(num[1]) * 30 + parseInt(num[2]) * 365;
+      return parseInt(num[2]) + parseInt(num[1]) * 30 + parseInt(num[0]) * 365;
     }
   
     function submitForm (e) {
@@ -68,7 +67,7 @@ function CreateTrip() {
           'location': data.location,
           'startDate': data.startDate,
           'endDate': data.endDate,
-          'members': data.members.push(localStorage.getItem('sessionID'))
+          'members': data.members
         })
         .then((response) => {
           console.log(response);
