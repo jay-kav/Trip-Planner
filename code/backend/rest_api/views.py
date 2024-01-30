@@ -190,6 +190,24 @@ def removeMember(request):
                 return JsonResponse({'error': 'Invalid member data'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
+def changeOwner(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # print(data)
+            trip_id = data.get('tripID')
+            member_id = data.get('memberID')
+
+            trip = get_object_or_404(Trip, id=trip_id)
+
+             if member_id:
+                trip.owner = member_id
+                return JsonResponse({'detail': 'Successfully changed owner'})
+            return JsonResponse({'error': 'Member not found'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
             
     """ ------------------------- Activity Functions ------------------------- """
 
