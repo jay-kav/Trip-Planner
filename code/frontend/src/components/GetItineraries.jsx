@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GetActivities from './GetActivities';
 import axios from 'axios';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const filterList = {
   'Breakfast': 'breakfast',
@@ -165,15 +166,16 @@ function GetItineraries(props) {
     const getItineraries = () => {
         console.log(itineraries);
         return itineraries.map(itinerary => (
-            <div key={itinerary.id} className="card" style={{margin: '10px', minWidth: '28rem'}}>
+            <div key={itinerary.id} className="card" style={{margin: '10px', minWidth: '28rem', height: '90%'}}>
                 <div className="card-body">
                     <div style={{display: 'flex', justifyContent: 'space-between'}} className="card-title">
                         <h5>{itinerary.date}</h5>
-                        {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => deleteItinerary(e, itinerary, trip.id)}>Delete</button> : ""}
+                        {localStorage.getItem('sessionID') == tripOwner.id && <DeleteOutlineIcon titleAccess="Delete Itinerary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)} />}
                     </div>
-                    <p className="card-text">{itinerary.start.slice(0, -3)} - {itinerary.end.slice(0, -3)}</p>
                     <br />
-                    <GetActivities ids={itinerary.activities} />
+                    <ul className='list-group' style={{overflowY: 'scroll', height: '80%', border: 'solid grey 1px'}}>
+                      <GetActivities ids={itinerary.activities} />
+                    </ul>
                 </div>
             </div>
           ));
@@ -182,14 +184,14 @@ function GetItineraries(props) {
     // Render Itineraries
     return (
       <div>
-          <div style={{display: 'flex', gap: '20px'}}>
-            <h3>Itineraries</h3>
+          <div style={{display: 'flex', gap: '45%', margin: '0 15px'}}>
+            <h4>Itineraries</h4>
             {localStorage.getItem('sessionID') == tripOwner.id
             && !create
             && <button className='btn btn-secondary' onClick={() => setCreate(!create)}>Add Itinerary</button>}
           </div>
           <div style={{display: 'flex', gap: '5px'}}>
-              <div style={{display: 'flex', overflowX: 'scroll'}}>
+              <div>
                   {getItineraries()}
               </div>
               {create && createItinerary()}

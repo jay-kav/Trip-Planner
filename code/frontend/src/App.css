@@ -13,6 +13,42 @@
   }
 }
 
+#nav {
+  background-color: transparent !important;
+  border: none !important;
+  margin: 5px;
+  border-radius: 5px;
+  color: grey !important;
+  transition: 200ms color ease-in;
+}
+
+#nav:hover {
+  background-color: rgba(255, 255, 255, .05) !important;
+  font-size: 17px;
+  color: white;
+}
+
+ul::-webkit-scrollbar {
+  display: none;
+}
+
+li > button {
+  background-color: transparent;
+  border: none;
+}
+
+.MuiSvgIcon-root {
+    cursor: pointer;
+    align-items: center;
+    min-height: 40px;
+    color: grey;
+    transition: 200ms color ease-in;
+}
+
+.MuiSvgIcon-root:hover {
+  color: white;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

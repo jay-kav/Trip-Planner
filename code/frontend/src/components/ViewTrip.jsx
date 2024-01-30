@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import GetItineraries from './GetItineraries';
 import GetTripMembers from './GetTripMembers';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 function ViewTrip(props) {
     let trip = props.trip;
@@ -60,20 +61,22 @@ function ViewTrip(props) {
     };
 
     return (
-        <div>
-            <button className="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
-            <h1 style={{textAlign: 'center'}}>{trip.tripname}</h1>
-            <br />
-            <div key={trip.id} style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
+        <div style={{display: 'grid', gridTemplateColumns: '20% 30% 30%', gap: '30px'}}>
+            <Navbar />
+            <div key={trip.id}>
+                <h4 style={{textAlign: 'center'}}>{trip.tripname}</h4>
+                <br />
                 {tripInfo()}
+                <br />
                 <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                <br />
+                <div style={{display: 'flex', gap: '20px'}}>
+                    <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
+                    {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+                </div>
             </div>
-            <br />
-            <GetItineraries trip={trip} tripOwner={tripOwner} />
-            <br />
-            <div style={{display: 'flex', gap: '20px'}}>
-                <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
-                {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+            <div>
+                <GetItineraries trip={trip} tripOwner={tripOwner} />
             </div>
         </div>
     )

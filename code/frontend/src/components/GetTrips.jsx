@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ViewTrip from './ViewTrip';
 import axios from 'axios';
+import Navbar from './Navbar';
 
 function GetTrips() {
     const [trips, setTrips] = useState([]);
@@ -8,7 +9,7 @@ function GetTrips() {
 
     const getTrips = () => {
       return trips.map(trip => (
-        <div key={trip.id} className="card" style={{width: '18rem', margin: '10px'}}>
+        <div key={trip.id} className="card" style={{margin: '10px 30px'}}>
           <div className="card-body">
             { trip.owner != localStorage.getItem('sessionID') ? <h5 className="card-title">{trip.tripname}</h5>
             : <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -40,14 +41,17 @@ function GetTrips() {
         )
     }
     return (
-        <div>
-            <h1>All Trips</h1>
-            <br />
-            <button className="btn btn-primary" onClick={() => window.location.href='/createtrip'}>New Trip +</button>
-            <br />
-            <br />
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly'}}>
-                {getTrips()}
+        <div style={{display: 'flex'}}>
+            <Navbar />
+            <div>
+              <h1>All Trips</h1>
+              <br />
+              <button className="btn btn-primary" onClick={() => window.location.href='/createtrip'}>New Trip +</button>
+              <br />
+              <br />
+              <div style={{overflowY: 'scroll'}}>
+                  {getTrips()}
+              </div>
             </div>
         </div>
     )
