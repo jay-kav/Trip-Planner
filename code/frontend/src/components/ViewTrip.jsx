@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import GetItineraries from './GetItineraries';
 import GetTripMembers from './GetTripMembers';
 import axios from 'axios';
-import Navbar from './Navbar';
 
 function ViewTrip(props) {
     let trip = props.trip;
@@ -61,8 +60,7 @@ function ViewTrip(props) {
     };
 
     return (
-        <div style={{display: 'grid', gridTemplateColumns: '20% 30% 30%', gap: '30px'}}>
-            <Navbar />
+        <div style={{display: 'grid', gridTemplateColumns: '50% 50%'}}>
             <div key={trip.id}>
                 <h4 style={{textAlign: 'center'}}>{trip.tripname}</h4>
                 <br />
