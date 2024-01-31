@@ -1,29 +1,33 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const defaultTheme = createTheme();
+
+// Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
 function Login() {
-  const [data, setData] = useState({
-    username: "",
-    password: ""
-  });
 
-  function handle (e) {
-    const newData = {...data};
-    newData[e.target.id] = e.target.value;
-    setData(newData);
-    //console.log(newData);
-  }
-
-  function submitForm (e) {
+  const submitForm = (e) => {
     e.preventDefault();
-    if (data.username === "") {
+    const data = new FormData(e.currentTarget);
+    const username = data.get('username');
+    const password = data.get('password');
+    if (username == "") {
       alert("Please enter a username");
-    } else if (data.password === "") {
+    } else if (password == "") {
       alert("Please enter a password");
     } else {
       axios.post(`login/`, {
-        "username": data.username,
-        "password": data.password
+        "username": username,
+        "password": password
       })
       .then((response) => {
         console.log(response);
@@ -35,17 +39,61 @@ function Login() {
   };
 
   return (
-    <div>
-      <form className="form-group" onSubmit={(e) => submitForm(e)}>
-        <label htmlFor="username">Username </label>
-        <input className="form-control" onChange={(e) => handle(e)} value={data.username} id="username" type='username'></input>
-        <br />
-        <label htmlFor="password">Password </label>
-        <input className="form-control" onChange={(e) => handle(e)} value={data.password} id='password' type='password'></input>
-        <br />
-        <button className="btn btn-primary" type='submit'>Login</button>
-      </form>
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <br />
+          <Typography component="h1" variant="h5">
+            Log in
+          </Typography>
+          <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Log In
+            </Button>
+            <Grid container>
+              <Grid item >
+                <Link href="/register" variant="body2">
+                  {"Don't have an account? Register"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 }
 

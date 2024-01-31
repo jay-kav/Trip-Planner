@@ -32,6 +32,23 @@ function ViewTrip(props) {
         .catch((err) => console.error("Error:", err));
     }
 
+    const leaveTrip = (e, tripID) => {
+        e.preventDefault();
+        if (tripOwner.id == localStorage.getItem('sessionID')) {
+            alert("You are the owner of this trip. Please assign someone else as trip owner.");
+        } else {
+            axios.post(`remove-member/`, {
+                'memberID': tripOwner.id,
+                'tripID': tripID
+            })
+            .then((response) => {
+                console.log(response);
+                window.location.reload();
+            })
+            .catch((err) => console.error("Error:", err));
+        }
+    }
+
     const tripInfo = () => {
       return (
         <div>
@@ -43,18 +60,22 @@ function ViewTrip(props) {
     };
 
     return (
-        <div>
-            <button className="btn btn-secondary" onClick={() => window.location.reload()}>Back</button>
-            <h1 style={{textAlign: 'center'}}>{trip.tripname}</h1>
-            <br />
-            <div key={trip.id} style={{display: 'flex', width: '100%', justifyContent: 'space-between'}}>
+        <div style={{display: 'grid', gridTemplateColumns: '50% 50%'}}>
+            <div key={trip.id}>
+                <h4 style={{textAlign: 'center'}}>{trip.tripname}</h4>
+                <br />
                 {tripInfo()}
+                <br />
                 <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                <br />
+                <div style={{display: 'flex', gap: '20px'}}>
+                    <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
+                    {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+                </div>
             </div>
-            <br />
-            <GetItineraries trip={trip} tripOwner={tripOwner} />
-            <br />
-            {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+            <div>
+                <GetItineraries trip={trip} tripOwner={tripOwner} />
+            </div>
         </div>
     )
 }

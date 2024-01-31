@@ -1,5 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
 
 function GetTripMembers(props) {
     let tripOwner = props.tripOwner;
@@ -84,28 +87,44 @@ function GetTripMembers(props) {
         .catch((err) => console.error("Error:", err));
     }
 
+    const changeOwner = (e, member, tripID) => {
+        e.preventDefault();
+        axios.post(`change-owner/`, {
+            'memberID': member.id,
+            'tripID': tripID
+        })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
     const getTripMembers = () => {
         return tripMembers.map(member => (
             member.data.id != tripOwner.id &&
-            <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}} key={member.data.id}>
+            <li className="list-group-item" style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between', fontSize: '14px'}} key={member.data.id}>
                 {member.data.username}
-                {localStorage.getItem('sessionID') == tripOwner.id ? <button className="btn btn-danger" onClick={(e) => removeMember(e, member.data, trip.id)}>Remove</button> : ""}
+                <div style={{display: 'flex', gap: '10px'}}>
+                    {localStorage.getItem('sessionID') == tripOwner.id && <AddModeratorIcon titleAccess="Make Trip Owner" onClick={(e) => changeOwner(e, member.data, trip.id)} />}
+                    {localStorage.getItem('sessionID') == tripOwner.id && <HighlightOffIcon titleAccess="Remove Member" onClick={(e) => removeMember(e, member, trip.id)} />}
+                </div>
             </li>
         ));
     };
 
     return (
-      <ul style={{width: '50%'}} className="list-group">
+      <ul className="list-group" style={{height: '45%'}}>
           <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}>
               <strong>Trip Members</strong>
-              {localStorage.getItem('sessionID') == tripOwner.id && !addMember ? <button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Add Member</button> : ""}
+              {localStorage.getItem('sessionID') == tripOwner.id && !addMember && <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>}
               {addMember && <form className="form-group" onSubmit={(e) => addMembers(e)}>
                   {getNonMembers()}
                   <br />
                   <div style={{display: 'flex', gap: '10px'}}>{nonMembers.length > 0 && <button className='btn btn-primary' type='submit'>Add Members</button>}<button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Cancel</button></div>
               </form>}
           </li>
-          <li className="list-group-item">{tripOwner.username} (Owner)</li>
+          <li className="list-group-item" style={{alignItems: 'center', fontSize: '14px'}}>{tripOwner.username} (Owner)</li>
           {getTripMembers()}
       </ul>
     )

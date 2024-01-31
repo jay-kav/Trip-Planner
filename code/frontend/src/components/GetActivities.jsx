@@ -23,17 +23,19 @@ function GetActivities (props) {
         <ul className='list-group'>
             {
             activities.map(activity => (
-                <li className='list-group-item' key={activity.id} style={{ display: 'flex', justifyContent: 'space-between'}}>
-                    <div>
-                        <h5>{activity.name}</h5>
-                        <p>{activity.address}</p>
-                        <p>{activity.rating}/5</p>
+                <li className='list-group-item' key={activity.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px', alignItems: 'center'}}>
+                    <div style={{alignItems: 'center', padding: '0 4px'}}>
+                        <h5 style={{fontSize: '14px'}}>{activity.name}</h5>
+                        <p style={{fontSize: '12px'}}>{activity.address}</p>
+                        <p style={{fontSize: '11px', margin: 0}}>Rating: {activity.rating}/5</p>
                     </div>
-                    <img
-                        style={{height: '160px', width: '160px', objectFit: 'cover', marginLeft: '20px'}}
-                        // https://stackoverflow.com/questions/8499633/how-to-display-base64-images-in-html
-                        src={`data:image/jpeg;base64,${activity.image_data}`}
-                        alt={activity.name}/>
+                    <div style={{alignItems: 'center'}}>
+                        <img
+                            style={{height: '60px', width: '60px', borderRadius: '30px', objectFit: 'cover', margin: '0 8px'}}
+                            src={`data:image/jpeg;base64,${activity.image_data}`}
+                            alt={activity.name}
+                        />
+                    </div>
                 </li>
             ))}
         </ul>
