@@ -19,7 +19,7 @@ export default function Navbar(props) {
   }
 
   return (
-    <div style={{position: 'fixed', width: '15%'}}>
+    <div style={{width: '15%'}}>
       <ul className='list-group' style={{background: 'black', height: '100%', paddingLeft: '15px', paddingTop: '20px'}}>
         <li className='list-group-item' id="nav"><button onClick={(e) => redirect(e, "/")}>Trip Planner</button></li>
         <li className='list-group-item' id="nav"><button onClick={(e) => redirect(e, "/")}>View Trips</button></li>

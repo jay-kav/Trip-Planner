@@ -41,7 +41,7 @@ function GetTrips() {
         )
     }
     return (
-        <div style={{display: 'flex'}}>
+        <div>
             <Navbar />
             <div>
               <h1>All Trips</h1>
