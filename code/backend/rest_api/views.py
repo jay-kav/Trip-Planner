@@ -202,7 +202,7 @@ def changeOwner(request):
 
             trip = get_object_or_404(Trip, id=trip_id)
 
-             if member_id:
+            if member_id:
                 trip.owner = member_id
                 return JsonResponse({'detail': 'Successfully changed owner'})
             return JsonResponse({'error': 'Member not found'}, status=400)
