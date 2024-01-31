@@ -25,7 +25,7 @@ function GetTripMembers(props) {
             })
             .catch(err => console.log(err));
         }
-        if (users.length == 0) {
+        if (!users.length) {
             axios.get("api/users/?is_staff=false")
             .then((response) => {
                 if (response.data.length) {
