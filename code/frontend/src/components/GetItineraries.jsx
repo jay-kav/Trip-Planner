@@ -18,6 +18,8 @@ const filterList = {
   'Nightlife': 'night_club', 
 };
 
+let itineraryCount = 0;
+
 function GetItineraries(props) {
     let tripOwner = props.tripOwner;
     let trip = props.trip;
@@ -44,13 +46,15 @@ function GetItineraries(props) {
     
     // Fetch requests
     useEffect(() => {
-        if (!itineraries.length) {
-            axios.get(`api/itineraries/?trip_id=${trip.id}`)
-            .then((response) => {
-              console.log(response);
-              setItineraries(response.data);
-            })
-            .catch(err => console.log(err))
+        if (itineraryCount < 10) {
+          axios.get(`api/itineraries/?trip_id=${trip.id}`)
+          .then((response) => {
+            console.log(response);
+            setItineraries(response.data);
+            itineraryCount += 1;
+            console.log(itineraryCount);
+          })
+          .catch(err => console.log(err))
         }
     });
 

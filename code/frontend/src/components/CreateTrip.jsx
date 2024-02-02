@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import { Select, MenuItem } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const defaultTheme = createTheme();
+
+// Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
 function CreateTrip() {
     const [users, setUsers] = useState([]);
-    const [data, setData] = useState({
-      tripname: "",
-      location: "",
-      startDate: "",
-      endDate: "",
-      members: []
-    });
+    const [members, setMembers] = useState([]);
 
     const getUsers = () => {
       let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
       return notOwner.map(user => (
-        <option key={user.id} value={user.id}>{user.username}</option>
+        <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
       ));
     };  
 
@@ -29,82 +35,174 @@ function CreateTrip() {
           .catch(err => console.log(err))
       }
     });
-  
-    function handle(e) {
-      const newData = { ...data };
-    
-      if (e.target.id === "members") {
-        // If the event target is the "members" select element
-        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-        newData.members = selectedOptions;
-      } else {
-        // For other input fields
-        newData[e.target.id] = e.target.value;
-      }
-      setData(newData);
-      console.log("newdata", newData);
-    }
     
     const getDate = (date) => {
       let num = date.split("-");
       return parseInt(num[2]) + parseInt(num[1]) * 30 + parseInt(num[0]) * 365;
     }
   
-    function submitForm (e) {
+    const submitForm = (e) => {
       e.preventDefault();
-      if (data.tripname === "") {
+      const data = new FormData(e.currentTarget);
+      const tripname = data.get('tripname');
+      const country = data.get('country');
+      const city = data.get('city');
+      const startDate = data.get('startdate');
+      const endDate = data.get('enddate');
+      const members = Array.isArray(data.getAll('members')) ? Array.from(data.getAll('members')) : [];
+      if (tripname === "") {
         alert("Please enter a trip name");
-      } else if (data.location === "") {
-        alert("Please enter a location");
-      } else if (data.startDate === "") {
+      } else if (country === "") {
+        alert("Please select a country");
+      } else if (city === "") {
+        alert("Please select a city");
+      } else if (startDate === "") {
         alert("Please enter a start date");
-      } else if (data.endDate === "") {
+      } else if (endDate === "") {
         alert("Please enter an end date");
-      } else if (getDate(data.startDate) > getDate(data.endDate)) {
+      } else if (getDate(startDate) > getDate(endDate)) {
         alert("End date must be after start date");
       } else {
+        console.log({
+          'ownerID': localStorage.getItem('sessionID'),
+          'tripname': tripname,
+          'country': country,
+          'city': city,
+          'startDate': startDate,
+          'endDate': endDate,
+          'members': members[0]
+        });
         axios.post(`create-trip/`, {
           'ownerID': localStorage.getItem('sessionID'),
-          'tripname': data.tripname,
-          'location': data.location,
-          'startDate': data.startDate,
-          'endDate': data.endDate,
-          'members': data.members
+          'tripname': tripname,
+          'country': country,
+          'city': city,
+          'startDate': startDate,
+          'endDate': endDate,
+          'members': members[0]
         })
         .then((response) => {
           console.log(response);
-          window.location.href = "/";
+          //window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
       }
     };
-  
-    return (
-      <div>
-        <button className="btn btn-secondary" onClick={() => window.location.href='/'}>Back</button>
-        <h1>New Trip</h1>
-        <form className="form-group" onSubmit={(e) => submitForm(e)}>
-          <label htmlFor="tripname">Trip Name </label>
-          <input className="form-control" onChange={(e) => handle(e)} value={data.tripname} id="tripname" type='text'></input>
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => window.location.href = "/"}>Home</Button>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
           <br />
-          <label htmlFor="location">Location </label>
-          <input className="form-control" onChange={(e) => handle(e)} value={data.location} id="location" type='text'></input>
-          <br />
-          <label htmlFor="startDate">Start Date </label>
-          <input className="form-control" onChange={(e) => handle(e)} value={data.startDate} id="startDate" type='date'></input>
-          <br />
-          <label htmlFor="endDate">End Date </label>
-          <input className="form-control" onChange={(e) => handle(e)} value={data.endDate} id="endDate" type='date'></input>
-          <br />
-          <label htmlFor="members">Members </label>
-          <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
-            {getUsers()}
-          </select>
-          <br />
-          <button className="btn btn-secondary" type='submit'>Create Trip</button>
-        </form>
-      </div>
-    );
+          <Typography component="h1" variant="h5">
+            New Trip
+          </Typography>
+          <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="tripname"
+              label="Trip Name"
+              name="tripname"
+              autoComplete="tripname"
+              defaultValue=""
+              autoFocus
+            />
+            <Select
+              required
+              fullWidth
+              id="country"
+              label="Country"
+              name="country"
+              autoComplete="country"
+              defaultValue=""
+              autoFocus
+            >
+              <MenuItem value={''}></MenuItem>
+              <MenuItem value={'Belgium'}>Belgium</MenuItem>
+              <MenuItem value={'New York'}>New York</MenuItem>
+            </Select>
+            <br />
+            <br />
+            <Select
+              required
+              fullWidth
+              id="city"
+              label="City"
+              name="city"
+              autoComplete="city"
+              defaultValue=""
+              autoFocus
+            >
+              <MenuItem value={''}></MenuItem>
+              <MenuItem value={'Brussels'}>Brussels</MenuItem>
+              <MenuItem value={'Antwerp'}>Antwerp</MenuItem>
+            </Select>
+            <br />
+            <br />
+            <DatePicker 
+              margin="normal"
+              required
+              fullWidth
+              id="startdate"
+              label="Start Date"
+              name="startdate"
+              autoComplete="startdate"
+              autoFocus
+            />
+            <br />
+            <br />
+            <DatePicker 
+              margin="normal"
+              required
+              fullWidth
+              id="enddate"
+              label="End Date"
+              name="enddate"
+              autoComplete="enddate"
+              autoFocus
+            />
+            <br />
+            <br />
+            <Select
+              required
+              fullWidth
+              id="members"
+              label="Members"
+              name="members"
+              autoComplete="members"
+              autoFocus
+              multiple
+              defaultValue={''} // Provide the default value
+              value={members} // Provide the array of selected members
+              onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
+            >
+              <MenuItem value={''}></MenuItem>
+              {getUsers()}
+            </Select>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Create Trip
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
 }
 
 export default CreateTrip

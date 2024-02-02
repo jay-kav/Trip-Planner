@@ -10,7 +10,7 @@ class ItineraryForm(forms.ModelForm):
 class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
-        fields = ['owner', 'tripname', 'location', 'startDate', 'endDate', 'members']
+        fields = ['owner', 'tripname', 'country', 'city', 'startDate', 'endDate', 'members']
         
         widgets = {
             'startDate': SelectDateWidget(),
