@@ -60,21 +60,24 @@ function ViewTrip(props) {
     };
 
     return (
-        <div style={{display: 'grid', gridTemplateColumns: '50% 50%'}}>
-            <div key={trip.id}>
-                <h4 style={{textAlign: 'center'}}>{trip.tripname}</h4>
-                <br />
-                {tripInfo()}
-                <br />
-                <GetTripMembers trip={trip} tripOwner={tripOwner} />
-                <br />
-                <div style={{display: 'flex', gap: '20px'}}>
-                    <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
-                    {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+        <div>
+            <button className='btn btn-primary' onClick={() => window.location.reload()}>Home</button>
+            <div style={{display: 'grid', gridTemplateColumns: '50% 50%'}}>
+                <div key={trip.id}>
+                    <h4 style={{textAlign: 'center'}}>{trip.tripname}</h4>
+                    <br />
+                    {tripInfo()}
+                    <br />
+                    <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                    <br />
+                    <div style={{display: 'flex', gap: '20px'}}>
+                        <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
+                        {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
+                    </div>
                 </div>
-            </div>
-            <div>
-                <GetItineraries trip={trip} tripOwner={tripOwner} />
+                <div>
+                    <GetItineraries trip={trip} tripOwner={tripOwner} />
+                </div>
             </div>
         </div>
     )

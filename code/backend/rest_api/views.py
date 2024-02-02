@@ -21,20 +21,24 @@ def createTrip(request):
             data = json.loads(request.body)
             owner_id = data.get('ownerID')
             trip_name = data.get('tripname')
-            location = data.get('location')
+            country = data.get('country')
+            city = data.get('city')
             start_date = data.get('startDate')
             end_date = data.get('endDate')
             members = data.get('members')
             if not members:
                 members = []
+            else:
+                members = members.split(",")
             members.append(owner_id)
             form_data = {
                 'owner': owner_id,
                 'tripname': trip_name,
-                'location': location,
+                'country': country,
+                'city': city,
                 'startDate': start_date,
                 'endDate': end_date,
-                'members': members
+                'members': members,
             }
             print(form_data)
             

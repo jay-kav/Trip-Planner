@@ -9,7 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class TripSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Trip
-		fields = ['id', 'owner', 'tripname', 'location', 'startDate', 'endDate', 'members', 'created', 'activities']
+		fields = ['id', 'owner', 'tripname', 'country', 'city', 'startDate', 'endDate', 'members', 'created', 'activities']
 
 class ItinerarySerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
