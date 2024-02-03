@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import { List, ListItemIcon, ListItemText } from '@mui/material';
+import ListItem from '@mui/material/ListItem';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 function GetTripMembers(props) {
     let tripOwner = props.tripOwner;
@@ -102,19 +104,36 @@ function GetTripMembers(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            member.data.id != tripOwner.id &&
-            <li className="list-group-item" style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between', fontSize: '14px'}} key={member.data.id}>
-                {member.data.username}
-                <div style={{display: 'flex', gap: '10px'}}>
-                    {localStorage.getItem('sessionID') == tripOwner.id && <AddModeratorIcon titleAccess="Make Trip Owner" onClick={(e) => changeOwner(e, member.data, trip.id)} />}
-                    {localStorage.getItem('sessionID') == tripOwner.id && <HighlightOffIcon titleAccess="Remove Member" onClick={(e) => removeMember(e, member, trip.id)} />}
-                </div>
-            </li>
+            tripOwner.id != member.data.id && <ListItem disablePadding>
+                <ListItemText primary={member.data.username} />
+                <ListItemIcon sx={{
+                    marginLeft: '5rem',
+                }}>
+                    <div style={{display: 'flex', gap: '10px'}}>
+                        {localStorage.getItem('sessionID') == tripOwner.id && <AddModeratorIcon titleAccess="Make Trip Owner" onClick={(e) => changeOwner(e, member.data, trip.id)} />}
+                        {localStorage.getItem('sessionID') == tripOwner.id && <HighlightOffIcon titleAccess="Remove Member" onClick={(e) => removeMember(e, member, trip.id)} />}
+                    </div>
+                </ListItemIcon>
+            </ListItem>
         ));
     };
 
     return (
-      <ul className="list-group" style={{height: '45%'}}>
+        <List>
+            <ListItem disablePadding>
+                <ListItemText primary={tripOwner.username + " (Owner)"} />
+                <ListItemIcon sx={{
+                    marginLeft: '5rem',
+                }}>
+                    <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>
+                </ListItemIcon>
+            </ListItem>
+            {getTripMembers()}
+        </List>
+    )
+
+    /*return (
+        <ul className="list-group" style={{height: '45%'}}>
           <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}>
               <strong>Trip Members</strong>
               {localStorage.getItem('sessionID') == tripOwner.id && !addMember && <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>}
@@ -127,7 +146,7 @@ function GetTripMembers(props) {
           <li className="list-group-item" style={{alignItems: 'center', fontSize: '14px'}}>{tripOwner.username} (Owner)</li>
           {getTripMembers()}
       </ul>
-    )
+    )*/
 }
 
 export default GetTripMembers

@@ -58,7 +58,6 @@ function GetTrips() {
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <main>
-          {/* Hero unit */}
           <Box
             sx={{
               bgcolor: 'background.paper',
@@ -89,8 +88,7 @@ function GetTrips() {
               </Stack>
             </Container>
           </Box>
-          <Container sx={{ py: 8 }} maxWidth="md">
-            {/* End hero unit */}
+          <Container sx={{ py: 8, display: 'flex', flexDirection: 'row' }} maxWidth="md">
             <Grid container spacing={4}>
               {getTrips()}
             </Grid>
