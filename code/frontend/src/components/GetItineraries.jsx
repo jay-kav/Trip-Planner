@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import GetActivities from './GetActivities';
 import axios from 'axios';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import { DatePicker } from '@mui/x-date-pickers';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { TimeField } from '@mui/x-date-pickers';
 
 const filterList = {
   'Breakfast': 'breakfast',
@@ -18,6 +30,8 @@ const filterList = {
   'Nightlife': 'night_club', 
 };
 
+const defaultTheme = createTheme();
+
 let itineraryCount = 0;
 
 function GetItineraries(props) {
@@ -26,23 +40,6 @@ function GetItineraries(props) {
 
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
-    const [data, setData] = useState({
-      date: "",
-      startTime: "",
-      endTime: "",
-      breakfast: "false",
-      lunch: "false",
-      dinner: "false",
-      park: "false",
-      museum: "false",
-      shopping_mall: "false",
-      zoo: "false",
-      aquarium: "false",
-      amusement_park: "false",
-      bowling_alley: "false",
-      tourist_attraction: "false",
-      night_club: "false"
-    });
     
     // Fetch requests
     useEffect(() => {
@@ -59,28 +56,14 @@ function GetItineraries(props) {
     });
 
     /* ---------- Itinerary Functions ---------- */
-
-    // Create Itinerary
-    const handle = (e) => {
-      const newData = {...data};
-      if (newData[e.target.id].value == "false") {
-        newData[e.target.id] = "true";
-      } else if (newData[e.target.id].value == "true") {
-        newData[e.target.id] = "false";
-      } else {
-        newData[e.target.id] = e.target.value;
-      }
-      setData(newData);
-      console.log(newData);
-    }
-
     const submitForm = (e) => {
       e.preventDefault();
+      const data = new FormData(e.currentTarget);
       axios.post(`create-itinerary/`, {
         'tripID': trip.id,
-        'date': data.date,
-        'startTime': data.startTime,
-        'endTime': data.endTime
+        'date': data.get('date'),
+        'startTime': data.get('startTime'),
+        'endTime': data.get('endTime'),
       })
       .then((response) => {
         console.log(response);
@@ -90,7 +73,84 @@ function GetItineraries(props) {
     };
   
     const createItinerary = () => {
-        return (
+      return (
+        <ThemeProvider theme={defaultTheme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Typography component="h1" variant="h5">
+                New Itinerary
+              </Typography>
+              <Box component="form" noValidate onSubmit={submitForm} sx={{ mt: 3 }}>
+                <Grid item xs={12}>
+                  <DatePicker
+                    required
+                    fullWidth
+                    id="date"
+                    label="Date"
+                    name="date"
+                    autoComplete="date"
+                  />
+                </Grid>
+                <br />
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TimeField 
+                      autoComplete="starttime"
+                      name="starttime"
+                      required
+                      fullWidth
+                      id="starttime"
+                      label="Start Time"
+                      autoFocus
+                      format="HH:mm"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TimeField 
+                      required
+                      fullWidth
+                      id="endtime"
+                      label="End Time"
+                      name="endtime"
+                      autoComplete="endtime"
+                      format="HH:mm"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Create Itinerary
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Button
+                      type="cancel"
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Cancel
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Container>
+        </ThemeProvider>
+      );
+
+      /*  return (
           <div style={{minHeight: '20rem', borderLeft: 'solid 1px grey', paddingLeft: '30px'}}>
               <form className="form-group" onSubmit={(e) => submitForm(e)} style={{width: '14rem'}}>
                   <div style={{display: 'flex', gap: '30px'}}>
@@ -149,7 +209,7 @@ function GetItineraries(props) {
                   </div>
               </form>
           </div>
-    )};
+      )*/};
 
     // Delete Itinerary
     const deleteItinerary = (e, itinerary, tripID) => {
@@ -189,7 +249,6 @@ function GetItineraries(props) {
     return (
       <div>
           <div style={{display: 'flex', gap: '45%', margin: '0 15px'}}>
-            <h4>Itineraries</h4>
             {localStorage.getItem('sessionID') == tripOwner.id
             && !create
             && <button className='btn btn-secondary' onClick={() => setCreate(!create)}>Add Itinerary</button>}

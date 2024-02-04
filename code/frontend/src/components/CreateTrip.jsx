@@ -83,125 +83,126 @@ function CreateTrip() {
         })
         .then((response) => {
           console.log(response);
-          //window.location.href = "/";
+          window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
       }
     };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => window.location.href = "/"}>Home</Button>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <br />
-          <Typography component="h1" variant="h5">
-            New Trip
-          </Typography>
-          <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="tripname"
-              label="Trip Name"
-              name="tripname"
-              autoComplete="tripname"
-              defaultValue=""
-              autoFocus
-            />
-            <Select
-              required
-              fullWidth
-              id="country"
-              label="Country"
-              name="country"
-              autoComplete="country"
-              defaultValue=""
-              autoFocus
-            >
-              <MenuItem value={''}></MenuItem>
-              <MenuItem value={'Belgium'}>Belgium</MenuItem>
-              <MenuItem value={'New York'}>New York</MenuItem>
-            </Select>
+    <div>
+      <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => window.location.href = "/"}>Home</Button>
+      <ThemeProvider theme={defaultTheme}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <br />
-            <br />
-            <Select
-              required
-              fullWidth
-              id="city"
-              label="City"
-              name="city"
-              autoComplete="city"
-              defaultValue=""
-              autoFocus
-            >
-              <MenuItem value={''}></MenuItem>
-              <MenuItem value={'Brussels'}>Brussels</MenuItem>
-              <MenuItem value={'Antwerp'}>Antwerp</MenuItem>
-            </Select>
-            <br />
-            <br />
-            <DatePicker 
-              margin="normal"
-              required
-              fullWidth
-              id="startdate"
-              label="Start Date"
-              name="startdate"
-              autoComplete="startdate"
-              autoFocus
-            />
-            <br />
-            <br />
-            <DatePicker 
-              margin="normal"
-              required
-              fullWidth
-              id="enddate"
-              label="End Date"
-              name="enddate"
-              autoComplete="enddate"
-              autoFocus
-            />
-            <br />
-            <br />
-            <Select
-              required
-              fullWidth
-              id="members"
-              label="Members"
-              name="members"
-              autoComplete="members"
-              autoFocus
-              multiple
-              defaultValue={''} // Provide the default value
-              value={members} // Provide the array of selected members
-              onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
-            >
-              <MenuItem value={''}></MenuItem>
-              {getUsers()}
-            </Select>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Create Trip
-            </Button>
+            <Typography component="h1" variant="h5">
+              New Trip
+            </Typography>
+            <Box component="form" onSubmit={submitForm} noValidate sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="tripname"
+                label="Trip Name"
+                name="tripname"
+                autoComplete="tripname"
+                defaultValue=""
+                autoFocus
+              />
+              <Select
+                required
+                fullWidth
+                id="country"
+                label="Country"
+                name="country"
+                autoComplete="country"
+                defaultValue=""
+                autoFocus
+              >
+                <MenuItem value={''}></MenuItem>
+                <MenuItem value={'Belgium'}>Belgium</MenuItem>
+                <MenuItem value={'New York'}>New York</MenuItem>
+              </Select>
+              <br />
+              <br />
+              <Select
+                required
+                fullWidth
+                id="city"
+                label="City"
+                name="city"
+                autoComplete="city"
+                defaultValue=""
+                autoFocus
+              >
+                <MenuItem value={''}></MenuItem>
+                <MenuItem value={'Brussels'}>Brussels</MenuItem>
+                <MenuItem value={'Antwerp'}>Antwerp</MenuItem>
+              </Select>
+              <br />
+              <br />
+              <DatePicker 
+                margin="normal"
+                required
+                fullWidth
+                id="startdate"
+                label="Start Date"
+                name="startdate"
+                autoComplete="startdate"
+                autoFocus
+              />
+              <br />
+              <br />
+              <DatePicker 
+                margin="normal"
+                required
+                fullWidth
+                id="enddate"
+                label="End Date"
+                name="enddate"
+                autoComplete="enddate"
+                autoFocus
+              />
+              <br />
+              <br />
+              <Select
+                required
+                fullWidth
+                id="members"
+                label="Members"
+                name="members"
+                autoComplete="members"
+                autoFocus
+                multiple
+                defaultValue={''} // Provide the default value
+                value={members} // Provide the array of selected members
+                onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
+              >
+                <MenuItem value={''}></MenuItem>
+                {getUsers()}
+              </Select>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Create Trip
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
+    </div>
   );
 }
 

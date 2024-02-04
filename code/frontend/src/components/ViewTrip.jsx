@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import GetItineraries from './GetItineraries';
 import GetTripMembers from './GetTripMembers';
+import { Box, Grid } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
+import { Card, CardContent, CardActions, Button, Typography } from '@mui/material';
+
+const defaultTheme = createTheme();
 
 function ViewTrip(props) {
     let trip = props.trip;
@@ -51,13 +57,53 @@ function ViewTrip(props) {
 
     const tripInfo = () => {
       return (
-        <div>
-            <p>Trip Location: {trip.location}</p>
-            <p>Start Date: {trip.startDate}</p>
-            <p>End Date: {trip.endDate}</p>
-        </div>
+        <Card sx={{ minWidth: 275 }}>
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {trip.tripname}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              {trip.city}, {trip.country}
+            </Typography>
+            <Typography variant="body2">
+              {trip.startDate} - {trip.endDate}
+            </Typography>
+          </CardContent>
+        </Card>
       );
     };
+
+    return (
+        <div>
+            <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => window.location.href = "/"}>Home</Button>
+            <ThemeProvider theme={defaultTheme}>
+                <Grid container component="main" sx={{ height: '100vh', display: 'flex',
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          gap: '100px',
+                          alignItems: 'center'}}>
+                    <CssBaseline />
+                    <Grid>
+                        <Box sx={{
+                          my: 8,
+                          mx: 4,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                        }}>
+                            {tripInfo()}
+                            <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                        </Box>
+                    </Grid>
+                    <Grid>
+                        <Box>
+                            <GetItineraries trip={trip} tripOwner={tripOwner} />
+                        </Box>
+                    </Grid>
+                </Grid>
+            </ThemeProvider>
+        </div>
+    )
 
     return (
         <div>
