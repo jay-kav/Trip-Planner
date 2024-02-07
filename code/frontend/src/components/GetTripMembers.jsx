@@ -2,9 +2,15 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-import { List, ListItemIcon, ListItemText } from '@mui/material';
+import { Button, List, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Box, CssBaseline, Grid } from '@mui/material';
+import Select from '@mui/material/Select';
+import { Card, CardContent } from '@mui/material';
+
+const defaultTheme = createTheme();
 
 function GetTripMembers(props) {
     let tripOwner = props.tripOwner;
@@ -50,17 +56,17 @@ function GetTripMembers(props) {
     const getNonMembers = () => {
         nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
         if (nonMembers.length === 0) {
-            return <option>No users to add</option>
+            return <MenuItem key="" value="">No users to add</MenuItem>
         }
         return <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
             {nonMembers.map(user => (
-            <option key={user.id} value={user.id}>{user.username}</option>
+            <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
         ))}
         </select>
     };
 
     const addMembers = (e) => {
-      e.preventDefault();
+        e.preventDefault();
         if (addedMembers.length === 0) {
             alert("Please select members to add.");
         } else {
@@ -119,34 +125,65 @@ function GetTripMembers(props) {
     };
 
     return (
-        <List>
-            <ListItem disablePadding>
-                <ListItemText primary={tripOwner.username + " (Owner)"} />
-                <ListItemIcon sx={{
-                    marginLeft: '5rem',
-                }}>
-                    <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>
-                </ListItemIcon>
-            </ListItem>
-            {getTripMembers()}
-        </List>
+        <Card sx={{ width: '36vw', height: '50vh' }}>
+          <CardContent>
+            <List>
+                <ListItem disablePadding>
+                    <ListItemText primary={tripOwner.username + " (Owner)"} />
+                    <ListItemIcon sx={{
+                        marginLeft: '5rem',
+                    }}>
+                        <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>
+                    </ListItemIcon>
+                </ListItem>
+                <ListItem>
+                    {addMember && 
+                    <ThemeProvider theme={defaultTheme}>
+                        <Grid container component="main" sx={{ height: '100vh' }}>
+                        <CssBaseline />
+                            <Box component="form" onSubmit={(e) => addMembers(e)} noValidate sx={{ mt: 1 }}>
+                            <Select
+                                  required
+                                  fullWidth
+                                  id="members"
+                                  label="Members"
+                                  name="members"
+                                  autoComplete="members"
+                                  autoFocus
+                                  multiple
+                                  defaultValue={''} // Provide the default value
+                                  value={addedMembers} // Provide the array of selected members
+                                  onChange={(e) => setAddedMembers(e.target.value)} // Update the state with selected members
+                                >
+                                  <MenuItem value={''}></MenuItem>
+                                  {getNonMembers()}
+                                </Select>
+                            </Box>
+                        </Grid>
+                      <div style={{display: 'flex', gap: '10px'}}>{nonMembers.length > 0 && <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Add Members
+                </Button>}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => setAddMember(!addMember)}
+                >
+                  Cancel
+                </Button></div>
+                    </ThemeProvider>}
+                </ListItem>
+                {getTripMembers()}
+            </List>
+        </CardContent>
+    </Card>
     )
-
-    /*return (
-        <ul className="list-group" style={{height: '45%'}}>
-          <li className="list-group-item" style={{display: 'flex', justifyContent: 'space-between'}}>
-              <strong>Trip Members</strong>
-              {localStorage.getItem('sessionID') == tripOwner.id && !addMember && <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>}
-              {addMember && <form className="form-group" onSubmit={(e) => addMembers(e)}>
-                  {getNonMembers()}
-                  <br />
-                  <div style={{display: 'flex', gap: '10px'}}>{nonMembers.length > 0 && <button className='btn btn-primary' type='submit'>Add Members</button>}<button onClick={() => setAddMember(!addMember)} className='btn btn-secondary'>Cancel</button></div>
-              </form>}
-          </li>
-          <li className="list-group-item" style={{alignItems: 'center', fontSize: '14px'}}>{tripOwner.username} (Owner)</li>
-          {getTripMembers()}
-      </ul>
-    )*/
 }
 
 export default GetTripMembers
