@@ -5,7 +5,7 @@ import { Box, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { Card, CardContent, CardActions, Button, Typography } from '@mui/material';
+import { Card, CardContent, Typography } from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -57,7 +57,7 @@ function ViewTrip(props) {
 
     const tripInfo = () => {
       return (
-        <Card sx={{ minWidth: 275 }}>
+        <Card sx={{ width: '36vw', height: '24vh' }}>
           <CardContent>
             <Typography variant="h5" component="div">
               {trip.tripname}
@@ -74,35 +74,31 @@ function ViewTrip(props) {
     };
 
     return (
-        <div>
-            <Button variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => window.location.href = "/"}>Home</Button>
-            <ThemeProvider theme={defaultTheme}>
-                <Grid container component="main" sx={{ height: '100vh', display: 'flex',
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          gap: '100px',
-                          alignItems: 'center'}}>
-                    <CssBaseline />
-                    <Grid>
-                        <Box sx={{
-                          my: 8,
-                          mx: 4,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                        }}>
-                            {tripInfo()}
-                            <GetTripMembers trip={trip} tripOwner={tripOwner} />
-                        </Box>
-                    </Grid>
-                    <Grid>
-                        <Box>
-                            <GetItineraries trip={trip} tripOwner={tripOwner} />
-                        </Box>
-                    </Grid>
+        <ThemeProvider theme={defaultTheme}>
+            <Grid container component="main" sx={{ height: '100vh', display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center'}}>
+                <CssBaseline />
+                <Grid>
+                    <Box sx={{
+                      mx: 4,
+                      my: 8,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}>
+                        {tripInfo()}
+                        <br />
+                        <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                    </Box>
                 </Grid>
-            </ThemeProvider>
-        </div>
+                <Grid>
+                    <Box>
+                        <GetItineraries trip={trip} tripOwner={tripOwner} />
+                    </Box>
+                </Grid>
+            </Grid>
+        </ThemeProvider>
     )
 
     return (
