@@ -3,9 +3,6 @@ import GetActivities from './GetActivities';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -14,6 +11,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { TimeField } from '@mui/x-date-pickers';
+import { Card, CardContent } from '@mui/material';
 
 const filterList = {
   'Breakfast': 'breakfast',
@@ -136,7 +134,7 @@ function GetItineraries(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
-                      type="cancel"
+                      onClick={() => setCreate(!create)}
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                     >
@@ -247,19 +245,26 @@ function GetItineraries(props) {
 
     // Render Itineraries
     return (
-      <div>
-          <div style={{display: 'flex', gap: '45%', margin: '0 15px'}}>
-            {localStorage.getItem('sessionID') == tripOwner.id
-            && !create
-            && <button className='btn btn-secondary' onClick={() => setCreate(!create)}>Add Itinerary</button>}
-          </div>
-          <div style={{display: 'flex', gap: '5px'}}>
-              <div>
-                  {getItineraries()}
-              </div>
-              {create && createItinerary()}
-          </div>
-      </div>
+      <Card sx={{ width: '36vw', height: '78vh', 
+      my: 8 }}>
+          <CardContent>
+            <div style={{display: 'flex', gap: '45%', margin: '0 15px'}}>
+              {localStorage.getItem('sessionID') == tripOwner.id
+              && !create
+              && <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={() => setCreate(!create)}>Add Itinerary</Button>}
+            </div>
+            <div style={{display: 'flex', gap: '5px'}}>
+                <div>
+                    {getItineraries()}
+                </div>
+                {create && createItinerary()}
+            </div>
+          </CardContent>
+        </Card>
     )
 }
 
