@@ -13,6 +13,7 @@ from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
 import base64
+import re
 
 @csrf_exempt
 def createTrip(request):
@@ -53,6 +54,41 @@ def createTrip(request):
             return JsonResponse({'error': 'Failed to create trip'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
+@csrf_exempt
+def getCountries(request):
+    if request.method == 'POST':
+        MONGO_URL = os.getenv('MONGO_URL')
+        client = MongoClient(MONGO_URL)
+        pattern = r"^[A-Z]"
+
+        regex = re.compile(pattern)
+        my_list = client.list_database_names()
+        countries = [item for item in my_list if regex.match(item)]
+        return JsonResponse({'detail': 'Successfully retrieved countries', 'countries': countries}, status=200)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def getCities(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            country = data.get('country')
+            if not country:
+                return JsonResponse({'detail': 'No country selected', 'cities': []}, status=200)
+
+            client = MongoClient(get_env_value('MONGO_URL'))
+            db = client[country]
+            my_list = db.list_collection_names()
+
+            pattern = r"^[A-Z]"
+            regex = re.compile(pattern)
+
+            cities = [item for item in my_list if regex.match(item)]
+            return JsonResponse({'detail': 'Successfully retrieved cities', 'cities': cities}, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
         
 @csrf_exempt
 def deleteTrip(request):
@@ -149,7 +185,7 @@ def deleteItinerary(request):
     """ ------------------------- Member Functions ------------------------- """
 
 @csrf_exempt
-def add_members(request):
+def addMembers(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
