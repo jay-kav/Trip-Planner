@@ -16,6 +16,9 @@ const defaultTheme = createTheme();
 function CreateTrip() {
     const [users, setUsers] = useState([]);
     const [members, setMembers] = useState([]);
+    const [countries, setCountries] = useState([]);
+    const [country, setCountry] = useState('');
+    const [cities, setCities] = useState([]);
 
     const getUsers = () => {
       let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
@@ -34,11 +37,41 @@ function CreateTrip() {
           })
           .catch(err => console.log(err))
       }
+      if (countries.length == 0) {
+        axios.post(`get-countries/`)
+        .then((response) => {
+          console.log(response);
+          setCountries(response.data.countries);
+        })
+        .catch((err) => console.error("Error:", err));
+      }
+      if (cities.length == 0 && country != '') {
+        axios.post(`get-cities/`, {
+          'country': country
+        })
+        .then((response) => {
+          console.log(response);
+          setCities(response.data.cities);
+        })
+        .catch((err) => console.error("Error:", err));
+      };
     });
+
+    const getCities = () => {
+      return cities.map(city => (
+          <MenuItem key={city} value={city}>{city}</MenuItem>
+      ));
+    }
     
     const getDate = (date) => {
       let num = date.split("-");
       return parseInt(num[2]) + parseInt(num[1]) * 30 + parseInt(num[0]) * 365;
+    }
+
+    const getCountries = () => {
+      return countries.map(country => (
+        <MenuItem key={country} value={country}>{country}</MenuItem>
+      ));
     }
   
     const submitForm = (e) => {
@@ -63,15 +96,6 @@ function CreateTrip() {
       } else if (getDate(startDate) > getDate(endDate)) {
         alert("End date must be after start date");
       } else {
-        console.log({
-          'ownerID': localStorage.getItem('sessionID'),
-          'tripname': tripname,
-          'country': country,
-          'city': city,
-          'startDate': startDate,
-          'endDate': endDate,
-          'members': members[0]
-        });
         axios.post(`create-trip/`, {
           'ownerID': localStorage.getItem('sessionID'),
           'tripname': tripname,
@@ -125,10 +149,10 @@ function CreateTrip() {
               autoComplete="country"
               defaultValue=""
               autoFocus
+              onChange={(e) => setCountry(e.target.value)}
             >
               <MenuItem value={''}></MenuItem>
-              <MenuItem value={'Belgium'}>Belgium</MenuItem>
-              <MenuItem value={'New York'}>New York</MenuItem>
+              {getCountries()}
             </Select>
             <br />
             <br />
@@ -143,8 +167,7 @@ function CreateTrip() {
               autoFocus
             >
               <MenuItem value={''}></MenuItem>
-              <MenuItem value={'Brussels'}>Brussels</MenuItem>
-              <MenuItem value={'Antwerp'}>Antwerp</MenuItem>
+              {getCities()}
             </Select>
             <br />
             <br />

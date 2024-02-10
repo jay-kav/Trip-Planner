@@ -29,7 +29,7 @@ function GetTrips() {
                 {trip.tripname}
               </Typography>
               <Typography>
-                {trip.location}
+                {trip.city}, {trip.country}
               </Typography>
             </CardContent>
             <CardActions>
@@ -73,7 +73,7 @@ function GetTrips() {
                 color="text.primary"
                 gutterBottom
               >
-                Trips
+                Journo
               </Typography>
               <Typography variant="h5" align="center" color="text.secondary" paragraph>
                 A collection of trips you are a member of.
