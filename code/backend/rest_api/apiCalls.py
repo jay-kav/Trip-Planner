@@ -153,7 +153,7 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
 
-            start_time = time + walkTime
+            start_time = int(time + walkTime)
             print(start_time)
             
             endTime = start_time + 90

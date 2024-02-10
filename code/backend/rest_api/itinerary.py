@@ -49,7 +49,7 @@ def createItinerary(request):
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
 
 
-            date_object = datetime.strptime(date, '%d/%m/%Y')
+            date_object = datetime.strptime(date, '%m/%d/%Y')
             day_of_week = date_object.weekday()
 
             start_time = datetime.strptime(start, '%H:%M')
