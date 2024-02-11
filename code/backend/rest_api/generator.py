@@ -40,58 +40,67 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
         filters = used_filters
     
     types = timeDict[roundedTime]
-    search = True
-    i = 0
-    while i < len(filters) and search:
-        if time > 1200:
-            api_result = apiCall(location, time, night, trip, day, activities, previous)
-        else:
-            if isinstance(types, list):
-                if food and types[0] in food:
-                    current_type = types[0]
-                    api_result = foodApiCall(location, time, current_type, trip, day, activities, previous, vegetarian)
-                    if api_result == None:
-                        api_result = apiCall(location, time, "food", trip, day, activities, previous)
+    failed = []
+    while True:
+        search = True
+        i = 0
+        while i < len(filters) and search:
+            if time > 1200:
+                api_result = apiCall(location, time, night, trip, day, activities, previous, failed)
+            else:
+                if isinstance(types, list):
+                    if food and types[0] in food:
+                        current_type = types[0]
+                        api_result = foodApiCall(location, time, current_type, trip, day, activities, previous, vegetarian, failed)
+                        if api_result == None:
+                            api_result = apiCall(location, time, "food", trip, day, activities, previous, failed)
+                    else:
+                        current_type = filters[i]
+                        if current_type:
+                            print(f"item - {current_type}")
+                            api_result = apiCall(location, time, current_type, trip, day, activities, previous, failed)
+                            i += 1
+        
                 else:
                     current_type = filters[i]
-                    if current_type:
-                        print(f"item - {current_type}")
-                        api_result = apiCall(location, time, current_type, trip, day, activities, previous)
-                        i += 1
-    
-            else:
-                current_type = filters[i]
-                api_result = apiCall(location, time, current_type, trip, day, activities, previous)
-                i += 1
+                    api_result = apiCall(location, time, current_type, trip, day, activities, previous)
+                    i += 1
 
-        if api_result is not None:
-            activity, startTime, endTime = api_result
-            if endTime > end:
-                if endTime - end <= 20: # leaway 
-                    endTime = end
+            if api_result is not None:
+                activity, startTime, endTime = api_result
+                if endTime > end:
+                    if endTime - end <= 20: # leeway 
+                        endTime = end
+                        search = False
+                else:
                     search = False
             else:
-                search = False
+                print("No valid activity found. Continuing search.")
+
+        if api_result == None:
+            return False, previous
+
+    # Continue with the rest of your code...
+
+        activityDetails = activity + ';' + str(startTime) + ';' + str(endTime)
+        itineray.append(activityDetails)
+        activities.append(activity)
+        if current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
+            used_filters.append(current_type)
+            filters.remove(current_type)
         else:
-            print("No valid activity found. Continuing search.")
-
-            # Optionally, update or modify the parameters for the next iteration
-    if api_result == None:
-        return None
-
-# Continue with the rest of your code...
-
-    activityDetails = activity + ';' + str(startTime) + ';' + str(endTime)
-    itineray.append(activityDetails)
-    activities.append(activity)
-    if current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
-        used_filters.append(current_type)
-        filters.remove(current_type)
-    else:
-        food.remove(current_type)
+            food.remove(current_type)
 
 
-    itineray = linearItinerary(location, trip, day, endTime, end, food, filters, night, vegetarian, activity, itineray, activities)
+        itineraryResult = linearItinerary(location, trip, day, endTime, end, food, filters, night, vegetarian, activity, itineray, activities)
+        if itineraryResult[0]:
+            break
+        failed.append(itineraryResult[1])
+
+
+    # Append 
+
+
     return itineray
     
     

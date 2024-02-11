@@ -22,22 +22,30 @@ time_to_spend = {
 }
 
 @csrf_exempt
-def apiCall(location, time, types, trip_id, day, activities=None, previous=''):
+def apiCall(location, time, types, trip_id, day, activities=None, previous='', failed=None):
 
     if not activities:
         activities = []
-    client = MongoClient(get_env_value('MONGO_URL'))
+    if not failed:
+        failed = []
+    # client = MongoClient(get_env_value('MONGO_URL'))
+    MONGO_URL = 'mongodb+srv://testUser:LL0TlwSJy97L4v41@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
+    client = MongoClient(MONGO_URL)
     db = client[location[0]]
     collection = db[location[1]]
 
     trip = get_object_or_404(Trip, id=trip_id)
 
     if previous:
-        lat, lon = get_coordinates(collection, previous)
+        coordinates = get_coordinates(collection, previous)
     else : 
         # lon, lat = get_coordinates(collection, location[2])
-        lat, lon = location[2]
-        print(f"passed location {time}, {lat} , {lon}")
+        coordinates = location[2]
+
+    if not coordinates:
+        return None
+    
+    lat, lon = coordinates
 
     query = {
         "types": types,
@@ -57,12 +65,20 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous=''):
 
     documents = list(collection.find(query))
 
+    if not documents:
+        return None
+
     random.shuffle(documents)
+    activities.extend(trip.activities)
+    usedLocations = activities.extend(failed)
+
+    if not usedLocations:
+        usedLocations = []
 
     for doc in documents:
         name = doc.get("name")
-        if name not in trip.activities and name not in activities:
-        #if name not in activities:
+        #if name not in trip.activities() and name not in activities:
+        if name not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
@@ -89,21 +105,28 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous=''):
     return None
 
 @csrf_exempt
-def foodApiCall(location, time, food_type, trip_id, day, activities=None, previous=None, vegetarian=False):
+def foodApiCall(location, time, food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
     if not activities:
         activities = []
-    client = MongoClient(get_env_value('MONGO_URL'))
+    # client = MongoClient(get_env_value('MONGO_URL'))
+    MONGO_URL = 'mongodb+srv://testUser:LL0TlwSJy97L4v41@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
+    client = MongoClient(MONGO_URL)
     db = client[location[0]]
     collection = db[location[1]]
     print(f"food api {food_type}")
-    print(trip_id)
+
     trip = get_object_or_404(Trip, id=trip_id)
 
     if previous:
-        lat, lon = get_coordinates(collection, previous)
+        coordinates = get_coordinates(collection, previous)
     else : 
         # lon, lat = get_coordinates(collection, location[2])
-        lat, lon = location[2]
+        coordinates = location[2]
+
+    if not coordinates:
+        return None
+    
+    lat, lon = coordinates
 
     if vegetarian:
         query = {
@@ -140,12 +163,20 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
         }
     documents = list(collection.find(query))
 
+    if not documents:
+        return None
+
     random.shuffle(documents)
+    activities.extend(trip.activities)
+    usedLocations = activities.extend(failed)
+
+    if not usedLocations:
+        usedLocations = []
 
     for doc in documents:
         name = doc.get("name")
-        if name not in trip.activities and name not in activities:
-        #if name not in activities:
+        #if name not in trip.activities() and name not in activities:
+        if name not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
@@ -153,7 +184,7 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
 
-            start_time = int(time + walkTime)
+            start_time = time + walkTime
             print(start_time)
             
             endTime = start_time + 90
