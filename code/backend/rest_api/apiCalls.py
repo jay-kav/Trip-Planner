@@ -28,9 +28,7 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
         activities = []
     if not failed:
         failed = []
-    # client = MongoClient(get_env_value('MONGO_URL'))
-    MONGO_URL = 'mongodb+srv://testUser:LL0TlwSJy97L4v41@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
-    client = MongoClient(MONGO_URL)
+    client = MongoClient(get_env_value('MONGO_URL'))
     db = client[location[0]]
     collection = db[location[1]]
 
@@ -108,9 +106,7 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
 def foodApiCall(location, time, food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
     if not activities:
         activities = []
-    # client = MongoClient(get_env_value('MONGO_URL'))
-    MONGO_URL = 'mongodb+srv://testUser:LL0TlwSJy97L4v41@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
-    client = MongoClient(MONGO_URL)
+    client = MongoClient(get_env_value('MONGO_URL'))
     db = client[location[0]]
     collection = db[location[1]]
     print(f"food api {food_type}")
