@@ -71,7 +71,7 @@ def createItinerary(request):
                     result = linearItinerary((country, city, hotel), trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
                     i += 1
                     # pass
-                
+                print(f"Itinerary result {result[1]}")
                 if result[1]:
                     activities = result[1]
                     validator = activities[-1].split(';')

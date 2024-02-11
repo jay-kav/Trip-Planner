@@ -7,7 +7,8 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
     print("new call")
     if start > (end - 40):
         #valid check
-        return itineray
+        print("ended here")
+        return True, itineray
     
     if itineray == None:
         itineray = []
@@ -66,7 +67,7 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
                     api_result = apiCall(location, time, current_type, trip, day, activities, previous)
                     i += 1
 
-            if api_result is not None:
+            if api_result:
                 activity, startTime, endTime = api_result
                 if endTime > end:
                     if endTime - end <= 20: # leeway 
@@ -81,7 +82,7 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
             return False, previous
 
     # Continue with the rest of your code...
-
+        print("error sector 1")
         activityDetails = activity + ';' + str(startTime) + ';' + str(endTime)
         itineray.append(activityDetails)
         activities.append(activity)
@@ -101,7 +102,7 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
     # Append 
 
 
-    return itineray
+    return True , itineray
     
     
 
