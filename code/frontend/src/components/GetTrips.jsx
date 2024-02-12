@@ -61,7 +61,6 @@ function GetTrips() {
           <Box
             sx={{
               bgcolor: 'background.paper',
-              pt: 8,
               pb: 6,
             }}
           >
@@ -79,7 +78,6 @@ function GetTrips() {
                 A collection of trips you are a member of.
               </Typography>
               <Stack
-                sx={{ pt: 4 }}
                 direction="row"
                 spacing={2}
                 justifyContent="center"
@@ -88,7 +86,7 @@ function GetTrips() {
               </Stack>
             </Container>
           </Box>
-          <Container sx={{ py: 8, display: 'flex', flexDirection: 'row' }} maxWidth="md">
+          <Container sx={{ display: 'flex', flexDirection: 'row' }} maxWidth="md">
             <Grid container spacing={4}>
               {getTrips()}
             </Grid>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import GetItineraries from './GetItineraries';
 import GetTripMembers from './GetTripMembers';
-import { Box, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
@@ -55,6 +55,11 @@ function ViewTrip(props) {
         }
     }
 
+    const getDate = (date) => {
+        let ymd = date.split('-');
+        return `${ymd[1]}/${ymd[2]}/${ymd[0]}`;
+    }
+
     const tripInfo = () => {
       return (
         <Card sx={{ width: '36vw', height: '24vh' }}>
@@ -66,7 +71,7 @@ function ViewTrip(props) {
               {trip.city}, {trip.country}
             </Typography>
             <Typography variant="body2">
-              {trip.startDate} - {trip.endDate}
+              {getDate(trip.startDate)} - {getDate(trip.endDate)}
             </Typography>
           </CardContent>
         </Card>
@@ -75,14 +80,14 @@ function ViewTrip(props) {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh', display: 'flex',
+            <Grid container component="main" sx={{ height: '88vh', display: 'flex',
                       flexDirection: 'row',
                       justifyContent: 'center'}}>
                 <CssBaseline />
                 <Grid>
                     <Box sx={{
                       mx: 4,
-                      my: 8,
+                      mt: 3,
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -98,30 +103,11 @@ function ViewTrip(props) {
                     </Box>
                 </Grid>
             </Grid>
+            <Box sx={{ display: 'flex', gap: '20px', marginLeft: 14 }}>
+                <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>
+                <Button onClick={leaveTrip} variant="contained" color="error">Leave Trip</Button>
+            </Box>
         </ThemeProvider>
-    )
-
-    return (
-        <div>
-            <button className='btn btn-primary' onClick={() => window.location.reload()}>Home</button>
-            <div style={{display: 'grid', gridTemplateColumns: '50% 50%'}}>
-                <div key={trip.id}>
-                    <h4 style={{textAlign: 'center'}}>{trip.tripname}</h4>
-                    <br />
-                    {tripInfo()}
-                    <br />
-                    <GetTripMembers trip={trip} tripOwner={tripOwner} />
-                    <br />
-                    <div style={{display: 'flex', gap: '20px'}}>
-                        <button className='btn btn-danger' onClick={(e) => leaveTrip(e)}>Leave Trip</button>
-                        {localStorage.getItem('sessionID') == tripOwner.id && <button className='btn btn-danger' onClick={(e) => deleteTrip(e)}>Delete Trip</button>}
-                    </div>
-                </div>
-                <div>
-                    <GetItineraries trip={trip} tripOwner={tripOwner} />
-                </div>
-            </div>
-        </div>
     )
 }
 

@@ -324,7 +324,21 @@ def getActivities(request):
             def getID(activity):
                 return activity.split(";")[0]
 
+            def getStartTime(activity):
+                start = int(float(activity.split(";")[1]))
+                hours = start // 60
+                minutes = start % 60
+                return f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}"
+            
+            def getEndTime(activity):
+                end = int(float(activity.split(";")[2]))
+                hours = end // 60
+                minutes = end % 60
+                return f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}"
+
             place_ids = list(map(getID, activities))
+            start_times = list(map(getStartTime, activities))
+            end_times = list(map(getEndTime, activities))
 
             places = collection.find({"place_id": {"$in": place_ids}})
 
@@ -351,7 +365,7 @@ def getActivities(request):
                     'rating': rating,
                     'image_data': encoded_image
                 })
-            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities}, status=200)
+            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities, 'startTimes': start_times, 'endTimes': end_times}, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 
