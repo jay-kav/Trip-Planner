@@ -55,14 +55,26 @@ function GetTripMembers(props) {
 
     const getNonMembers = () => {
         nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
+        console.log("nonMembers", nonMembers);
         if (nonMembers.length === 0) {
             return <MenuItem key="" value="">No users to add</MenuItem>
         }
-        return <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
+        return <Select
+            required
+            fullWidth
+            id="members"
+            label="Members"
+            name="members"
+            multiple
+            defaultValue={''} // Provide the default value
+            value={addedMembers} // Provide the array of selected members
+            onChange={(e) => setAddedMembers(e.target.value)} // Update the state with selected members
+        >
+        <MenuItem value={''}></MenuItem>
             {nonMembers.map(user => (
-            <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
-        ))}
-        </select>
+                <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
+            ))}
+        </Select>
     };
 
     const addMembers = (e) => {
@@ -110,7 +122,7 @@ function GetTripMembers(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            tripOwner.id != member.data.id && <ListItem disablePadding>
+            tripOwner.id != member.data.id && <ListItem key={member} disablePadding>
                 <ListItemText primary={member.data.username} />
                 <ListItemIcon sx={{
                     marginLeft: '5rem',
@@ -142,7 +154,7 @@ function GetTripMembers(props) {
                         <Grid container component="main" sx={{ height: '100vh' }}>
                         <CssBaseline />
                             <Box component="form" onSubmit={(e) => addMembers(e)} noValidate sx={{ mt: 1 }}>
-                            <Select
+                                <Select
                                   required
                                   fullWidth
                                   id="members"
@@ -159,24 +171,24 @@ function GetTripMembers(props) {
                                   {getNonMembers()}
                                 </Select>
                             </Box>
+                            <Box style={{display: 'flex', gap: '10px', height: '3rem'}}>
+                                {nonMembers.length > 0 && <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                >
+                                    Add Members
+                                </Button>}
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    onClick={() => setAddMember(!addMember)}
+                                >
+                                    Cancel
+                                </Button>
+                            </Box>
                         </Grid>
-                      <div style={{display: 'flex', gap: '10px'}}>{nonMembers.length > 0 && <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Add Members
-                </Button>}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => setAddMember(!addMember)}
-                >
-                  Cancel
-                </Button></div>
                     </ThemeProvider>}
                 </ListItem>
                 {getTripMembers()}

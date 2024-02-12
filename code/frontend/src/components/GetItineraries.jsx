@@ -12,6 +12,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { TimeField } from '@mui/x-date-pickers';
 import { Card, CardContent } from '@mui/material';
+import { List } from '@mui/material';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
 const filterList = {
   'Breakfast': 'breakfast',
@@ -33,21 +36,22 @@ const defaultTheme = createTheme();
 let itineraryCount = 0;
 
 function GetItineraries(props) {
+    console.log(props);
     let tripOwner = props.tripOwner;
     let trip = props.trip;
 
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
+    const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
     
     // Fetch requests
     useEffect(() => {
-        if (itineraryCount < 10) {
+        if (itineraryCount < 5) {
           axios.get(`api/itineraries/?trip_id=${trip.id}`)
           .then((response) => {
             console.log(response);
             setItineraries(response.data);
             itineraryCount += 1;
-            console.log(itineraryCount);
           })
           .catch(err => console.log(err))
         }
@@ -57,11 +61,21 @@ function GetItineraries(props) {
     const submitForm = (e) => {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
-      axios.post(`create-itinerary/`, {
+      console.log({
         'tripID': trip.id,
+        'country': trip.country,
+        'city': trip.city,
         'date': data.get('date'),
         'startTime': data.get('startTime'),
         'endTime': data.get('endTime'),
+      })
+      axios.post(`create-itinerary/`, {
+        'tripID': trip.id,
+        'country': trip.country,
+        'city': trip.city,
+        'date': data.get('date'),
+        'startTime': data.get('starttime'),
+        'endTime': data.get('endtime'),
       })
       .then((response) => {
         console.log(response);
@@ -93,20 +107,18 @@ function GetItineraries(props) {
                     id="date"
                     label="Date"
                     name="date"
-                    autoComplete="date"
+                    autoFocus
                   />
                 </Grid>
                 <br />
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <TimeField 
-                      autoComplete="starttime"
+                    <TimeField
                       name="starttime"
                       required
                       fullWidth
                       id="starttime"
                       label="Start Time"
-                      autoFocus
                       format="HH:mm"
                     />
                   </Grid>
@@ -117,7 +129,6 @@ function GetItineraries(props) {
                       id="endtime"
                       label="End Time"
                       name="endtime"
-                      autoComplete="endtime"
                       format="HH:mm"
                     />
                   </Grid>
@@ -210,7 +221,7 @@ function GetItineraries(props) {
       )*/};
 
     // Delete Itinerary
-    const deleteItinerary = (e, itinerary, tripID) => {
+    const deleteItinerary = (e, itinerary, tripID) => { 
         e.preventDefault();
         axios.post(`delete-itinerary/`, {
             'itineraryID': itinerary.id,
@@ -224,29 +235,39 @@ function GetItineraries(props) {
         .catch((err) => console.error("Error:", err));
     }
 
-    // Get Itineraries
+    const getDate = (date) => {
+      let ymd = date.split('-');
+      return `${ymd[1]}/${ymd[2]}/${ymd[0]}`;
+    }
+
+    // Functions to handle cycling through itineraries
+    const goToPreviousItinerary = () => {
+      setCurrentItineraryIndex(prevIndex => (prevIndex === 0 ? itineraries.length - 1 : prevIndex - 1));
+    };
+
+    const goToNextItinerary = () => {
+      setCurrentItineraryIndex(prevIndex => (prevIndex === itineraries.length - 1 ? 0 : prevIndex + 1));
+    };
+
     const getItineraries = () => {
-        console.log(itineraries);
-        return itineraries.map(itinerary => (
-            <div key={itinerary.id} className="card" style={{margin: '10px', minWidth: '28rem', height: '90%'}}>
-                <div className="card-body">
-                    <div style={{display: 'flex', justifyContent: 'space-between'}} className="card-title">
-                        <h5>{itinerary.date}</h5>
-                        {localStorage.getItem('sessionID') == tripOwner.id && <DeleteOutlineIcon titleAccess="Delete Itinerary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)} />}
-                    </div>
-                    <br />
-                    <ul className='list-group' style={{overflowY: 'scroll', height: '80%', border: 'solid grey 1px'}}>
-                      <GetActivities ids={itinerary.activities} />
-                    </ul>
-                </div>
-            </div>
-          ));
+      return itineraries.map((itinerary, index) => (
+          <Card key={itinerary.id} style={{ with: '80vw', display: index === currentItineraryIndex ? 'block' : 'none' }}>
+            <Box>
+              <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '10px' }}>
+                <h5>{getDate(itinerary.date)}</h5>
+                {localStorage.getItem('sessionID') == tripOwner.id && <DeleteOutlineIcon titleAccess="Delete Itinerary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)} />}  
+              </Box>
+            </Box>
+            <List sx={{height: '50vh', overflowY: 'scroll'}}>
+              <GetActivities ids={itinerary.activities} />
+            </List>
+          </Card>
+        ));
     }
 
     // Render Itineraries
     return (
-      <Card sx={{ width: '36vw', height: '78vh', 
-      my: 8 }}>
+      <Card sx={{ width: '46vw', height: '78vh', mt: 3, overflowY: 'auto'}}>
           <CardContent>
             <div style={{display: 'flex', gap: '45%', margin: '0 15px'}}>
               {localStorage.getItem('sessionID') == tripOwner.id
@@ -257,11 +278,21 @@ function GetItineraries(props) {
               sx={{ mt: 3, mb: 2 }}
               onClick={() => setCreate(!create)}>Add Itinerary</Button>}
             </div>
-            <div style={{display: 'flex', gap: '5px'}}>
-                <div>
-                    {getItineraries()}
+            <div style={{gap: '5px', alignItems: 'center'}}>
+              {create && createItinerary()}
+              <div style={{
+                display: 'flex'
+              }}>
+                {itineraries.length > 0 && currentItineraryIndex != 0 && <ArrowBackIosRoundedIcon sx={{marginRight: '8px'}} onClick={goToPreviousItinerary} />}
+                <div style={{
+                display: 'flex',
+                whiteSpace: 'nowrap',
+                width: '39vw'
+              }}>
+                  {getItineraries()}
                 </div>
-                {create && createItinerary()}
+                {itineraries.length > 0 && currentItineraryIndex != itineraries.length - 1 && <ArrowForwardIosRoundedIcon sx={{marginLeft: '8px'}} onClick={goToNextItinerary} />}
+              </div>
             </div>
           </CardContent>
         </Card>
