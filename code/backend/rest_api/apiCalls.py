@@ -74,9 +74,9 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
         usedLocations = []
 
     for doc in documents:
-        name = doc.get("name")
+        id = doc.get("place_id")
         #if name not in trip.activities() and name not in activities:
-        if name not in usedLocations:
+        if id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
@@ -99,7 +99,7 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
             if open_time <= start_time and endTime <= (closed_time - 20):
                 if endTime > closed_time:
                     endTime -= (endTime - closed_time)
-                return name, start_time, endTime
+                return id, start_time, endTime
     return None
 
 @csrf_exempt
@@ -170,9 +170,9 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
         usedLocations = []
 
     for doc in documents:
-        name = doc.get("name")
+        id = doc.get("place_id")
         #if name not in trip.activities() and name not in activities:
-        if name not in usedLocations:
+        if id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
@@ -195,14 +195,14 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
             if open_time <= start_time and endTime <= (closed_time - 20):
                 if endTime > closed_time:
                     endTime -= (endTime - closed_time)
-                return name, start_time, endTime
+                return id, start_time, endTime
     return None
 
 @csrf_exempt
 def get_coordinates(collection, place_name):    
 
     # Query for the document with the given place name
-    result = collection.find_one({"name": place_name})
+    result = collection.find_one({"place_id": place_name})
 
     if result:
         # Extract latitude and longitude from the nested structure
