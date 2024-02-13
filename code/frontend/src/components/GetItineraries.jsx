@@ -69,16 +69,6 @@ function GetItineraries(props) {
           filters.push(filterList[filter]);
         }
       }
-      console.log({
-        'tripID': trip.id,
-        'country': trip.country,
-        'city': trip.city,
-        'date': data.get('date'),
-        'startTime': data.get('starttime'),
-        'endTime': data.get('endtime'),
-        'roundTrip': data.get('roundtrip')  == 'on',
-        'filters': filters
-      })
       axios.post(`create-itinerary/`, {
         'tripID': trip.id,
         'country': trip.country,
