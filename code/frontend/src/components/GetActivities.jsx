@@ -26,9 +26,6 @@ function GetActivities (props) {
     });
 
     const getItems = () => {
-        console.log("activities", activities);
-        console.log("startTimes", startTimes);
-        console.log("endTimes", endTimes);
         let items = []
         for (let i = 0; i < activities.length; i++) {
             let activity = activities[i];

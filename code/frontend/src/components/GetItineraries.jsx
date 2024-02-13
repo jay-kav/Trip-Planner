@@ -15,13 +15,15 @@ import { Card, CardContent } from '@mui/material';
 import { List } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const filterList = {
   'Breakfast': 'breakfast',
   'Lunch': 'lunch',
   'Dinner': 'dinner',
-  'Walking': 'park',
-  'History': 'museum',
+  'Parks': 'park',
+  'Museum': 'museum',
   'Shopping': 'shopping_mall',
   'Zoo': 'zoo',
   'Aquarium': 'aquarium',
@@ -61,13 +63,21 @@ function GetItineraries(props) {
     const submitForm = (e) => {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
+      let filters = [];
+      for (let filter in filterList) {
+        if (data.get(filterList[filter]) == 'on') {
+          filters.push(filterList[filter]);
+        }
+      }
       console.log({
         'tripID': trip.id,
         'country': trip.country,
         'city': trip.city,
         'date': data.get('date'),
-        'startTime': data.get('startTime'),
-        'endTime': data.get('endTime'),
+        'startTime': data.get('starttime'),
+        'endTime': data.get('endtime'),
+        'roundTrip': data.get('roundtrip')  == 'on',
+        'filters': filters
       })
       axios.post(`create-itinerary/`, {
         'tripID': trip.id,
@@ -76,10 +86,12 @@ function GetItineraries(props) {
         'date': data.get('date'),
         'startTime': data.get('starttime'),
         'endTime': data.get('endtime'),
+        'roundTrip': data.get('roundtrip') == 'on',
+        'filters': filters
       })
       .then((response) => {
         console.log(response);
-        window.location.reload();
+        //window.location.href = "/";
       })
       .catch((err) => console.error("Error:", err));
     };
@@ -100,36 +112,170 @@ function GetItineraries(props) {
                 New Itinerary
               </Typography>
               <Box component="form" noValidate onSubmit={submitForm} sx={{ mt: 3 }}>
-                <Grid item xs={12}>
-                  <DatePicker
-                    required
-                    fullWidth
-                    id="date"
-                    label="Date"
-                    name="date"
-                    autoFocus
-                  />
-                </Grid>
-                <br />
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <TimeField
-                      name="starttime"
-                      required
-                      fullWidth
-                      id="starttime"
-                      label="Start Time"
-                      format="HH:mm"
+                  <Grid item xs={5}>
+                    <Grid>
+                      <DatePicker
+                        required
+                        fullWidth
+                        id="date"
+                        label="Date"
+                        name="date"
+                        autoFocus
+                      />
+                    </Grid>
+                    <br />
+                    <Grid>
+                      <TimeField
+                        name="starttime"
+                        required
+                        fullWidth
+                        id="starttime"
+                        label="Start Time"
+                        format="HH:mm"
+                      />
+                    </Grid>
+                    <br />
+                    <Grid>
+                      <TimeField 
+                        required
+                        fullWidth
+                        id="endtime"
+                        label="End Time"
+                        name="endtime"
+                        format="HH:mm"
+                      />
+                    </Grid>
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="roundtrip"
+                              id="roundtrip"
+                          />
+                      }
+                      label="Round Trip"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TimeField 
-                      required
-                      fullWidth
-                      id="endtime"
-                      label="End Time"
-                      name="endtime"
-                      format="HH:mm"
+                  <Grid item xs={7}>
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="breakfast"
+                              id="breakfast"
+                              defaultChecked
+                          />
+                      }
+                      label="Breakfast"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="lunch"
+                              id="lunch"
+                              defaultChecked
+                          />
+                      }
+                      label="Lunch"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="dinner"
+                              id="dinner"
+                              checked
+                          />
+                      }
+                      label="Dinner"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="park"
+                              id="park"
+                              defaultChecked
+                          />
+                      }
+                      label="Parks"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="museum"
+                              id="museum"
+                              defaultChecked
+                          />
+                      }
+                      label="Museum"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="shopping_mall"
+                              id="shopping_mall"
+                              defaultChecked
+                          />
+                      }
+                      label="Shopping"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="zoo"
+                              id="zoo"
+                              defaultChecked
+                          />
+                      }
+                      label="Zoo"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="amusement_park"
+                              id="amusement_park"
+                              defaultChecked
+                          />
+                      }
+                      label="Amusement Park"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="aquarium"
+                              id="aquarium"
+                              defaultChecked
+                          />
+                      }
+                      label="Aquarium"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="bowling_alley"
+                              id="bowling_alley"
+                              defaultChecked
+                          />
+                      }
+                      label="Bowling"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="tourist_attraction"
+                              id="tourist_attraction"
+                              defaultChecked
+                          />
+                      }
+                      label="Tourist Attractions"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="night_club"
+                              id="night_club"
+                              defaultChecked
+                          />
+                      }
+                      label="Nightlife"
                     />
                   </Grid>
                 </Grid>
@@ -158,67 +304,7 @@ function GetItineraries(props) {
           </Container>
         </ThemeProvider>
       );
-
-      /*  return (
-          <div style={{minHeight: '20rem', borderLeft: 'solid 1px grey', paddingLeft: '30px'}}>
-              <form className="form-group" onSubmit={(e) => submitForm(e)} style={{width: '14rem'}}>
-                  <div style={{display: 'flex', gap: '30px'}}>
-                    <div>
-                      <label htmlFor="date">Date </label>
-                      <input className="form-control" onChange={(e) => handle(e)} value={data.date} id="date" type='date'></input>
-                      <br />
-                      <label htmlFor="startTime">Start Time </label>
-                      <input className="form-control" onChange={(e) => handle(e)} value={data.startTime} id="startTime" type='time'></input>
-                      <br />
-                      <label htmlFor="endTime">End Time </label>
-                      <input className="form-control" onChange={(e) => handle(e)} value={data.endTime} id="endTime" type='time'></input>
-                    </div>
-                    <div style={{paddingLeft: '20px', display: 'grid', gridTemplateColumns: 'auto', justifyContent: 'space-between'}}>
-                      <label style={{marginRight: '5px'}} for="breakfast">Breakfast</label>
-                      <input onChange={(e) => handle(e)} value={data.breakfast} className="form-check-input" id='breakfast' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="lunch">Lunch</label>
-                      <input onChange={(e) => handle(e)} value={data.lunch} className="form-check-input" id='lunch' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="dinner">Dinner</label>
-                      <input onChange={(e) => handle(e)} value={data.dinner} className="form-check-input" id='dinner' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="park">Parks</label>
-                      <input onChange={(e) => handle(e)} value={data.park} className="form-check-input" id='park' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="museum">Museum</label>
-                      <input onChange={(e) => handle(e)} value={data.museum} className="form-check-input" id='museum' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="shopping">Shopping</label>
-                      <input onChange={(e) => handle(e)} value={data.shopping} className="form-check-input" id='shopping' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="zoo">Zoo</label>
-                      <input onChange={(e) => handle(e)} value={data.zoo} className="form-check-input" id='zoo' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="aquarium">Aquarium</label>
-                      <input onChange={(e) => handle(e)} value={data.aquarium} className="form-check-input" id='aquarium' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="amusement_park">Amusement Park</label>
-                      <input onChange={(e) => handle(e)} value={data.amusement_park} className="form-check-input" id='amusement_park' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="bowling">Bowling</label>
-                      <input onChange={(e) => handle(e)} value={data.bowling} className="form-check-input" id='bowling' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="tourism">Tourism</label>
-                      <input onChange={(e) => handle(e)} value={data.tourism} className="form-check-input" id='tourism' type='checkbox' />
-                      <br />
-                      <label style={{marginRight: '5px'}} for="nightlife">Nightlife</label>
-                      <input onChange={(e) => handle(e)} value={data.nightlife} className="form-check-input" id='nightlife' type='checkbox' />
-                    </div>
-                  </div>
-                  <br />
-                  <div style={{display: 'flex', gap: '5px'}}>
-                    <button className="btn btn-primary" type='submit'>Create Itinerary</button>
-                    <button className='btn btn-secondary' onClick={() => setCreate(!create)} >Cancel</button>
-                  </div>
-              </form>
-          </div>
-      )*/};
+    }
 
     // Delete Itinerary
     const deleteItinerary = (e, itinerary, tripID) => { 
@@ -251,14 +337,14 @@ function GetItineraries(props) {
 
     const getItineraries = () => {
       return itineraries.map((itinerary, index) => (
-          <Card key={itinerary.id} style={{ with: '80vw', display: index === currentItineraryIndex ? 'block' : 'none' }}>
+          <Card key={itinerary.id} style={{ width: '85vw', display: index === currentItineraryIndex ? 'block' : 'none' }}>
             <Box>
               <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '10px' }}>
                 <h5>{getDate(itinerary.date)}</h5>
                 {localStorage.getItem('sessionID') == tripOwner.id && <DeleteOutlineIcon titleAccess="Delete Itinerary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)} />}  
               </Box>
             </Box>
-            <List sx={{height: '50vh', overflowY: 'scroll'}}>
+            <List sx={{height: '62vh', overflowY: 'scroll'}}>
               <GetActivities ids={itinerary.activities} />
             </List>
           </Card>
@@ -267,9 +353,9 @@ function GetItineraries(props) {
 
     // Render Itineraries
     return (
-      <Card sx={{ width: '46vw', height: '78vh', mt: 3, overflowY: 'auto'}}>
+      <Card sx={{ width: '46vw', height: '90vh', mt: 5, overflowY: 'auto'}}>
           <CardContent>
-            <div style={{display: 'flex', gap: '45%', margin: '0 15px'}}>
+            <div style={{display: 'flex', margin: '0 15px'}}> 
               {localStorage.getItem('sessionID') == tripOwner.id
               && !create
               && <Button
@@ -280,9 +366,7 @@ function GetItineraries(props) {
             </div>
             <div style={{gap: '5px', alignItems: 'center'}}>
               {create && createItinerary()}
-              <div style={{
-                display: 'flex'
-              }}>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 {itineraries.length > 0 && currentItineraryIndex != 0 && <ArrowBackIosRoundedIcon sx={{marginRight: '8px'}} onClick={goToPreviousItinerary} />}
                 <div style={{
                 display: 'flex',
