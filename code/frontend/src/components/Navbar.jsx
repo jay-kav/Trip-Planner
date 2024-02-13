@@ -78,7 +78,7 @@ function Navbar() {
 
     return (
         <React.Fragment key={'left'}>
-          <MenuRoundedIcon sx={{ mx: 1, position: 'fixed' }} fontSize='large' onClick={toggleDrawer('left', true)} />
+          <MenuRoundedIcon sx={{ mx: 1, mt: 2, position: 'fixed' }} fontSize='large' onClick={toggleDrawer('left', true)} />
           <Drawer
             anchor={'left'}
             open={state['left']}

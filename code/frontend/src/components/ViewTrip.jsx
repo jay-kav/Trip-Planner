@@ -80,14 +80,17 @@ function ViewTrip(props) {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '88vh', display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'center'}}>
+            <Grid container spacing={2} component="main" sx={{
+                    height: '88vh',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center'
+                }}>
                 <CssBaseline />
-                <Grid>
+                <Grid item xs={5}>
                     <Box sx={{
                       mx: 4,
-                      mt: 3,
+                      mt: 5,
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
@@ -95,18 +98,19 @@ function ViewTrip(props) {
                         {tripInfo()}
                         <br />
                         <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                        <br />
+                        <Box sx={{ display: 'flex', gap: '16vw' }}>
+                            <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>
+                            <Button onClick={leaveTrip} variant="contained" color="error">Leave Trip</Button>
+                        </Box>
                     </Box>
                 </Grid>
-                <Grid>
+                <Grid item xs={7}>
                     <Box>
                         <GetItineraries trip={trip} tripOwner={tripOwner} />
                     </Box>
                 </Grid>
             </Grid>
-            <Box sx={{ display: 'flex', gap: '20px', marginLeft: 14 }}>
-                <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>
-                <Button onClick={leaveTrip} variant="contained" color="error">Leave Trip</Button>
-            </Box>
         </ThemeProvider>
     )
 }
