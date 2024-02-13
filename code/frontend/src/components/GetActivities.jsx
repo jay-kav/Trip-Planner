@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { List, ListItem } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 function GetActivities (props) {
     const [activities, setActivities] = useState([]);
+    const [startTimes, setStartTimes] = useState([]);
+    const [endTimes, setEndTimes] = useState([]);
 
     useEffect(() => {
         if (!activities.length) {
@@ -10,35 +14,54 @@ function GetActivities (props) {
                 'activities': props.ids
             })
             .then(res => {
-                console.log(res.data);
-                if (res.data.activities.length) {
+                console.log(res);
+                if (res.data.activities.length > 0) {
                     setActivities(res.data.activities);
+                    setStartTimes(res.data.startTimes);
+                    setEndTimes(res.data.endTimes);
                 }
             })
             .catch(err => console.log(err));
         }
     });
 
+    const getItems = () => {
+        let items = []
+        for (let i = 0; i < activities.length; i++) {
+            let activity = activities[i];
+            let startTime = startTimes[i];
+            let endTime = endTimes[i];
+            items.push(<ListItem key={activity.id} sx={{border: 'solid 1px lightgrey', borderRadius: '5px', m: '5px 10px', width: '37vw', justifyContent: 'space-between'}}>
+                <Box>
+                    <img
+                        style={{height: '60px', width: '60px', borderRadius: '30px', objectFit: 'cover', marginRight: '8px'}}
+                        src={`data:image/jpeg;base64,${activity.image_data}`}
+                        alt={activity.name}
+                    />
+                </Box>
+                <Box sx={{width: '24vw', marginRight: '10px', paddingRight: '10px', borderRight: 'solid 1px lightgrey'}}>
+                    <Typography>{activity.name}</Typography>
+                    <Typography sx={{textWrap: 'wrap'}}>{activity.address}</Typography>
+                    <Typography>Rating: {activity.rating}/5</Typography>
+                </Box>
+                <Box sx={{margin: 'auto', textAlign: 'center' }}>
+                    <Typography>{startTime}</Typography>
+                    <Typography>{endTime}</Typography>
+                </Box>
+            </ListItem>);
+        }
+        return items;
+    }
+
+    if (activities.length === 0) {
+        return (
+            <Typography>No activities found.</Typography>
+        );
+    }
     return (
-        <ul className='list-group'>
-            {
-            activities.map(activity => (
-                <li className='list-group-item' key={activity.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '5px', alignItems: 'center'}}>
-                    <div style={{alignItems: 'center', padding: '0 4px'}}>
-                        <h5 style={{fontSize: '14px'}}>{activity.name}</h5>
-                        <p style={{fontSize: '12px'}}>{activity.address}</p>
-                        <p style={{fontSize: '11px', margin: 0}}>Rating: {activity.rating}/5</p>
-                    </div>
-                    <div style={{alignItems: 'center'}}>
-                        <img
-                            style={{height: '60px', width: '60px', borderRadius: '30px', objectFit: 'cover', margin: '0 8px'}}
-                            src={`data:image/jpeg;base64,${activity.image_data}`}
-                            alt={activity.name}
-                        />
-                    </div>
-                </li>
-            ))}
-        </ul>
+        <List>
+            {getItems()}
+        </List>
     );
 }
 

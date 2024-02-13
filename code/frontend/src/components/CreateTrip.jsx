@@ -147,8 +147,6 @@ function CreateTrip() {
               label="Country"
               name="country"
               autoComplete="country"
-              defaultValue=""
-              autoFocus
               onChange={(e) => setCountry(e.target.value)}
             >
               <MenuItem value={''}></MenuItem>
@@ -163,8 +161,6 @@ function CreateTrip() {
               label="City"
               name="city"
               autoComplete="city"
-              defaultValue=""
-              autoFocus
             >
               <MenuItem value={''}></MenuItem>
               {getCities()}
@@ -179,7 +175,6 @@ function CreateTrip() {
               label="Start Date"
               name="startdate"
               autoComplete="startdate"
-              autoFocus
             />
             <br />
             <br />
@@ -191,7 +186,6 @@ function CreateTrip() {
               label="End Date"
               name="enddate"
               autoComplete="enddate"
-              autoFocus
             />
             <br />
             <br />
@@ -202,7 +196,6 @@ function CreateTrip() {
               label="Members"
               name="members"
               autoComplete="members"
-              autoFocus
               multiple
               defaultValue={''} // Provide the default value
               value={members} // Provide the array of selected members

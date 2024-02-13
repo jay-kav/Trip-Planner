@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-import { Button, List, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
+import { Button, List, ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -55,14 +55,27 @@ function GetTripMembers(props) {
 
     const getNonMembers = () => {
         nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
+        console.log("nonMembers", nonMembers);
         if (nonMembers.length === 0) {
-            return <MenuItem key="" value="">No users to add</MenuItem>
+            return <Typography key="" value="">No users to add</Typography>
         }
-        return <select className="form-control" onChange={(e) => handle(e)} id="members" multiple>
+        return <Select
+            required
+            fullWidth
+            id="members"
+            label="Members"
+            name="members"
+            multiple
+            defaultValue={''} // Provide the default value
+            value={addedMembers} // Provide the array of selected members
+            onChange={(e) => setAddedMembers(e.target.value)} // Update the state with selected members
+            sx={{ width: '10vw' }}
+        >
+            <MenuItem value={''}></MenuItem>
             {nonMembers.map(user => (
-            <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
-        ))}
-        </select>
+                <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
+            ))}
+        </Select>
     };
 
     const addMembers = (e) => {
@@ -76,7 +89,7 @@ function GetTripMembers(props) {
             })
             .then((response) => {
               console.log(response);
-              window.location.reload();
+              window.location.href = "/";
             })
             .catch((err) => console.error("Error:", err));
         }
@@ -110,11 +123,9 @@ function GetTripMembers(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            tripOwner.id != member.data.id && <ListItem disablePadding>
+            tripOwner.id != member.data.id && <ListItem key={member} disablePadding>
                 <ListItemText primary={member.data.username} />
-                <ListItemIcon sx={{
-                    marginLeft: '5rem',
-                }}>
+                <ListItemIcon sx={{marginLeft: '5rem'}}>
                     <div style={{display: 'flex', gap: '10px'}}>
                         {localStorage.getItem('sessionID') == tripOwner.id && <AddModeratorIcon titleAccess="Make Trip Owner" onClick={(e) => changeOwner(e, member.data, trip.id)} />}
                         {localStorage.getItem('sessionID') == tripOwner.id && <HighlightOffIcon titleAccess="Remove Member" onClick={(e) => removeMember(e, member, trip.id)} />}
@@ -139,44 +150,29 @@ function GetTripMembers(props) {
                 <ListItem>
                     {addMember && 
                     <ThemeProvider theme={defaultTheme}>
-                        <Grid container component="main" sx={{ height: '100vh' }}>
+                        <Grid container component="main" sx={{ height: '10vh' }}>
                         <CssBaseline />
-                            <Box component="form" onSubmit={(e) => addMembers(e)} noValidate sx={{ mt: 1 }}>
-                            <Select
-                                  required
-                                  fullWidth
-                                  id="members"
-                                  label="Members"
-                                  name="members"
-                                  autoComplete="members"
-                                  autoFocus
-                                  multiple
-                                  defaultValue={''} // Provide the default value
-                                  value={addedMembers} // Provide the array of selected members
-                                  onChange={(e) => setAddedMembers(e.target.value)} // Update the state with selected members
+                            <Box component="form" onSubmit={(e) => addMembers(e)} noValidate sx={{ mr: 2 }}>
+                                {getNonMembers()}
+                            </Box>
+                            <Box style={{display: 'flex', gap: '10px', height: '3rem'}}>
+                                {nonMembers.length > 0 && <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
                                 >
-                                  <MenuItem value={''}></MenuItem>
-                                  {getNonMembers()}
-                                </Select>
+                                    Add Members
+                                </Button>}
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    onClick={() => setAddMember(!addMember)}
+                                >
+                                    Cancel
+                                </Button>
                             </Box>
                         </Grid>
-                      <div style={{display: 'flex', gap: '10px'}}>{nonMembers.length > 0 && <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Add Members
-                </Button>}
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => setAddMember(!addMember)}
-                >
-                  Cancel
-                </Button></div>
                     </ThemeProvider>}
                 </ListItem>
                 {getTripMembers()}
