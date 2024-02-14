@@ -24,7 +24,7 @@ time_to_spend = {
 }
 
 @csrf_exempt
-def cApiCall(location, time, startTime, endTime, types, trip_id, day, activities=None, previous='', failed=None):
+def cApiCall(toggle, location, time, startTime, endTime, types, trip_id, day, activities=None, previous='', failed=None):
 
     if not activities:
         activities = []
@@ -35,6 +35,7 @@ def cApiCall(location, time, startTime, endTime, types, trip_id, day, activities
     collection = db[location[1]]
 
     trip = get_object_or_404(Trip, id=trip_id)
+    distance = 0
 
     if previous:
         coordinates = get_coordinates(collection, previous)
@@ -47,8 +48,8 @@ def cApiCall(location, time, startTime, endTime, types, trip_id, day, activities
     
     lat, lon = coordinates
     startLat, startLon = location[2]
-
-    distance = distanceCal(time, endTime, startTime, time_to_spend[types])
+    if toggle:
+        distance = distanceCal(time, endTime, startTime, time_to_spend[types])
 
     query = {
         "types": types,
@@ -113,12 +114,10 @@ def cApiCall(location, time, startTime, endTime, types, trip_id, day, activities
     return None
 
 @csrf_exempt
-def cFoodApiCall(location, time, startTime, endTime,  food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
+def cFoodApiCall(toggle, location, time, startTime, endTime,  food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
     if not activities:
         activities = []
-    # client = MongoClient(get_env_value('MONGO_URL'))
-    MONGO_URL = 'mongodb+srv://testUser:LL0TlwSJy97L4v41@cluster0.rvgahvn.mongodb.net/?retryWrites=true&w=majority'
-    client = MongoClient(MONGO_URL)
+    client = MongoClient(get_env_value('MONGO_URL'))
     db = client[location[0]]
     collection = db[location[1]]
     print(f"food api {food_type}")
@@ -137,7 +136,8 @@ def cFoodApiCall(location, time, startTime, endTime,  food_type, trip_id, day, a
     lat, lon = coordinates
     startLat, startLon = location[2]
 
-    distance = distanceCal(time, endTime, startTime, 90)
+    if toggle:
+        distance = distanceCal(time, endTime, startTime, 90)
     
     query = {
         food_type: True,
@@ -179,28 +179,29 @@ def cFoodApiCall(location, time, startTime, endTime,  food_type, trip_id, day, a
         if name not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
-            if haversine([startLat,startLon], [doc_location.get("lat"), doc_location.get("lng") ]) <= distance:
-                distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
-                print(f"distance {distance}")
-                walkTime = (distance * 12) 
-                walkTime = walkTime - (walkTime % 5) + 5
+            if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
+                continue
+            distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
+            print(f"distance {distance}")
+            walkTime = (distance * 12) 
+            walkTime = walkTime - (walkTime % 5) + 5
 
-                start_time = time + walkTime
-                print(start_time)
-                
-                endTime = start_time + 90
-                print(endTime)
-                print(f"test {doc.get('name')}, {start_time}, {endTime}")
-                time_range = doc.get("minute_times")[day]
-                if time_range == 'Open24hours':
-                    open_time, closed_time = 0, 1440
-                else:
-                    open_time, closed_time = map(int, time_range.split('-'))
+            start_time = time + walkTime
+            print(start_time)
+            
+            endTime = start_time + 90
+            print(endTime)
+            print(f"test {doc.get('name')}, {start_time}, {endTime}")
+            time_range = doc.get("minute_times")[day]
+            if time_range == 'Open24hours':
+                open_time, closed_time = 0, 1440
+            else:
+                open_time, closed_time = map(int, time_range.split('-'))
 
-                if open_time <= start_time and endTime <= (closed_time - 20):
-                    if endTime > closed_time:
-                        endTime -= (endTime - closed_time)
-                    return name, start_time, endTime
+            if open_time <= start_time and endTime <= (closed_time - 20):
+                if endTime > closed_time:
+                    endTime -= (endTime - closed_time)
+                return name, start_time, endTime
     return None
 
 

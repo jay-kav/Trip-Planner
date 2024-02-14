@@ -3,6 +3,7 @@ import random
 from pymongo import MongoClient
 from load_env_var import get_env_value
 from .distanceCalculator import haversine
+from .dist import distanceCal
 #from distanceCalculator import haversine
 from .models import *
 from django.shortcuts import get_object_or_404
@@ -11,7 +12,9 @@ time_to_spend = {
     "shopping_mall": 240,
     "park": 120,
     "museum": 120,
-    "amusement_park": 36,
+    "food": 90,
+    "tourist_attraction": 90,
+    "amusement_park": 180,
     "zoo": 240,
     "bar": 90,
     "bowling_alley": 90, 
@@ -22,7 +25,7 @@ time_to_spend = {
 }
 
 @csrf_exempt
-def apiCall(location, time, types, trip_id, day, activities=None, previous='', failed=None):
+def apiCall(toggle, location, time, startTime, endTime, types, trip_id, day, activities=None, previous='', failed=None):
 
     if not activities:
         activities = []
@@ -33,6 +36,7 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
     collection = db[location[1]]
 
     trip = get_object_or_404(Trip, id=trip_id)
+    distance = 0
 
     if previous:
         coordinates = get_coordinates(collection, previous)
@@ -44,6 +48,9 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
         return None
     
     lat, lon = coordinates
+    startLat, startLon = location[2]
+    if toggle:
+        distance = distanceCal(time, endTime, startTime, time_to_spend[types])
 
     query = {
         "types": types,
@@ -60,6 +67,8 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
             }
         }
     }
+
+
 
     documents = list(collection.find(query))
 
@@ -79,6 +88,9 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
         if id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
+            if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
+                continue
+
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
             print(f"distance {distance}")
             walkTime = (distance * 12) 
@@ -103,7 +115,7 @@ def apiCall(location, time, types, trip_id, day, activities=None, previous='', f
     return None
 
 @csrf_exempt
-def foodApiCall(location, time, food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
+def foodApiCall(toggle, location, time, startTime, endTime,  food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
     if not activities:
         activities = []
     client = MongoClient(get_env_value('MONGO_URL'))
@@ -123,7 +135,11 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
         return None
     
     lat, lon = coordinates
+    startLat, startLon = location[2]
 
+    if toggle:
+        distance = distanceCal(time, endTime, startTime, 90)
+    
     query = {
         food_type: True,
         f"cleaned_times.{day}": {
@@ -140,8 +156,11 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
         }
     }
 
+
     if vegetarian:
         query["serves_vegetarian_food"] = True
+
+
     
     documents = list(collection.find(query))
 
@@ -156,11 +175,12 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
         usedLocations = []
 
     for doc in documents:
-        id = doc.get("place_id")
-        #if name not in trip.activities() and name not in activities:
-        if id not in usedLocations:
+        name = doc.get("name")
+        if name not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
+            if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
+                continue
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
             print(f"distance {distance}")
             walkTime = (distance * 12) 
@@ -181,7 +201,7 @@ def foodApiCall(location, time, food_type, trip_id, day, activities=None, previo
             if open_time <= start_time and endTime <= (closed_time - 20):
                 if endTime > closed_time:
                     endTime -= (endTime - closed_time)
-                return id, start_time, endTime
+                return name, start_time, endTime
     return None
 
 @csrf_exempt

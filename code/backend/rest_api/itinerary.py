@@ -26,10 +26,10 @@ def createItinerary(request):
             #start = data.get('startTime')
             #end = data.get('endTime')
             start = '9:00'
-            end = '17:00'
+            end = '18:00'
             #filters = data.get('activities', [])
             #toggle = data.get('toggle')
-            filters = ['zoo', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'serves_vegetarian_food']
+            filters = ['tourist_attraction', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'shopping_mall']
             toggle = True
 
             # country = data.get('country')
@@ -37,10 +37,10 @@ def createItinerary(request):
             country = 'Belgium'
             city = 'Brussels'
             # hotel = data.get('hotel')
-            # hotel = [50.8503, 4.3517]
+            hotel = [50.8503, 4.3517]
             # hotel = [50.8492581, 4.3547629]
             # hotel= [50.8488443, 4.352517199999999]
-            hotel = [50.8452508, 4.3544393]
+            # hotel = [50.8452508, 4.3544393]
 
 
             foods = [food for food in FOODS if food in filters]
@@ -64,11 +64,11 @@ def createItinerary(request):
 
             while i < 11:
                 if toggle:
-                    result = circularItinerary((country, city, hotel), trip_id, day_of_week, (start_minutes - 30), end_minutes, foods, list(filters[i]), night, vegetarian )
+                    result = linearItinerary(toggle, (country, city, hotel), trip_id, day_of_week, start_minutes, (end_minutes - 30), foods, list(filters[i]), night, vegetarian )
                     i += 1
                     pass
                 else:
-                    result = linearItinerary((country, city, hotel), trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
+                    result = linearItinerary(toggle, (country, city, hotel), trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
                     i += 1
                     # pass
                 print(f"Itinerary result {result[1]}")

@@ -6,11 +6,17 @@ from load_env_var import get_env_value
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
-def linearItinerary(location, trip, day, start, end, food=False, filters=False, night=False, vegetarian=False, previous='', itineray=None, activities=None, used_filters=None):
+def linearItinerary(toggle, location, trip, day, start, end, food=False, filters=False, night=False, vegetarian=False, previous='', itineray=None, activities=None, used_filters=None):
     print("new call")
     if start > (end - 40):
         #valid check
         print("ended here")
+        # if toggle:
+        #     result = isValid(location[2], previous)
+        #     if result :
+        #         return True, itineray
+        #     return False, previous
+        
         return True, itineray
     
     if itineray == None:
@@ -50,24 +56,24 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
         i = 0
         while i < len(filters) and search:
             if time > 1200 and night:
-                api_result = apiCall(location, time, night, trip, day, activities, previous, failed)
+                api_result = apiCall(toggle, location, time, start, end, night, trip, day, activities, previous, failed)
             else:
                 if isinstance(types, list):
                     if food and types[0] in food:
                         current_type = types[0]
-                        api_result = foodApiCall(location, time, current_type, trip, day, activities, previous, vegetarian, failed)
+                        api_result = foodApiCall(toggle, location, time, start, end, current_type, trip, day, activities, previous, vegetarian, failed)
                         if api_result == None:
-                            api_result = apiCall(location, time, "food", trip, day, activities, previous, failed)
+                            api_result = apiCall(toggle, location, time, start, end, "food", trip, day, activities, previous, failed)
                     else:
                         current_type = filters[i]
                         if current_type:
                             print(f"item - {current_type}")
-                            api_result = apiCall(location, time, current_type, trip, day, activities, previous, failed)
+                            api_result = apiCall(toggle, location, time, start, end, current_type, trip, day, activities, previous, failed)
                             i += 1
         
                 else:
                     current_type = filters[i]
-                    api_result = apiCall(location, time, current_type, trip, day, activities, previous)
+                    api_result = apiCall(toggle, location, time, start, end, current_type, trip, day, activities, previous, failed)
                     i += 1
 
             if api_result:
@@ -84,7 +90,6 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
         if api_result == None:
             return False, previous
 
-    # Continue with the rest of your code...
         # print("error sector 1")
         activityDetails = activity + ';' + str(startTime) + ';' + str(endTime)
         itineray.append(activityDetails)
@@ -96,7 +101,7 @@ def linearItinerary(location, trip, day, start, end, food=False, filters=False, 
             food.remove(current_type)
 
 
-        itineraryResult = linearItinerary(location, trip, day, endTime, end, food, filters, night, vegetarian, activity, itineray, activities)
+        itineraryResult = linearItinerary(toggle, location, trip, day, endTime, end, food, filters, night, vegetarian, activity, itineray, activities)
         if itineraryResult[0]:
             break
         failed.append(itineraryResult[1])
@@ -113,7 +118,9 @@ def circularItinerary(location, trip, day, start, end, food=False, filters=False
     if start > (end - 40):
         #valid check
         result = isValid(location[2], previous)
-        return True, itineray
+        if result :
+            return True, itineray
+        return False, previous
     
     if itineray == None:
         itineray = []
@@ -186,7 +193,7 @@ def circularItinerary(location, trip, day, start, end, food=False, filters=False
         if api_result == None:
             return False, previous
 
-    # Continue with the rest of your code...
+    
 
         activityDetails = activity + ';' + str(startTime) + ';' + str(endTime)
         itineray.append(activityDetails)
