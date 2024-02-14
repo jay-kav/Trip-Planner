@@ -86,29 +86,30 @@ def cApiCall(location, time, startTime, endTime, types, trip_id, day, activities
         if id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
-            if haversine([startLat,startLon], [doc_location.get("lat"), doc_location.get("lng") ]) <= distance:
+            if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
+                continue
 
-                distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
-                print(f"distance {distance}")
-                walkTime = (distance * 12) 
-                walkTime = walkTime - (walkTime % 5) + 5
+            distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
+            print(f"distance {distance}")
+            walkTime = (distance * 12) 
+            walkTime = walkTime - (walkTime % 5) + 5
 
-                start_time = int(time + walkTime)
-                print(start_time)
-                
-                endTime = start_time + time_to_spend[types]
-                print(endTime)
-                print(f"test {doc.get('name')}, {start_time}, {endTime}")
-                time_range = doc.get("minute_times")[day]
-                if time_range == 'Open24hours':
-                    open_time, closed_time = 0, 1440
-                else:
-                    open_time, closed_time = map(int, time_range.split('-'))
+            start_time = int(time + walkTime)
+            print(start_time)
+            
+            endTime = start_time + time_to_spend[types]
+            print(endTime)
+            print(f"test {doc.get('name')}, {start_time}, {endTime}")
+            time_range = doc.get("minute_times")[day]
+            if time_range == 'Open24hours':
+                open_time, closed_time = 0, 1440
+            else:
+                open_time, closed_time = map(int, time_range.split('-'))
 
-                if open_time <= start_time and endTime <= (closed_time - 20):
-                    if endTime > closed_time:
-                        endTime -= (endTime - closed_time)
-                    return id, start_time, endTime
+            if open_time <= start_time and endTime <= (closed_time - 20):
+                if endTime > closed_time:
+                    endTime -= (endTime - closed_time)
+                return id, start_time, endTime
     return None
 
 @csrf_exempt
