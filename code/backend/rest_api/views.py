@@ -121,7 +121,7 @@ def deleteItinerary(request):
             result = [item.split(";")[0] for item in activities]
             itinerary = get_object_or_404(Itinerary, id=itinerary_id)
             if itinerary.delete():
-                delete_activities(trip_id, result)
+                deleteActivities(trip_id, result)
                 return JsonResponse({'detail': 'Successfully deleted itinerary'})
             else:
                 return JsonResponse({'error': 'Unable to delete itinerary'})
@@ -200,7 +200,7 @@ def changeOwner(request):
     """ ------------------------- Activity Functions ------------------------- """
  
 @csrf_exempt
-def delete_activities(trip_id, remove = []):
+def deleteActivities(trip_id, remove = []):
     trip = get_object_or_404(Trip, id=trip_id)
 
     if trip:
@@ -211,6 +211,19 @@ def delete_activities(trip_id, remove = []):
         else:
             return JsonResponse({'detail': 'Successful without deletion'})
         return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+    return JsonResponse({'error': 'Trip not found'}, status=404)
+    
+@csrf_exempt
+def clearActivities(trip_id):
+
+    trip = get_object_or_404(Trip, id=trip_id)
+    
+    if trip:
+        trip.activities = []
+        if trip.save():
+            return JsonResponse({'detail': 'Successfully cleared activities'})
+        return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+        
     
 @csrf_exempt
 def getActivities(request):
