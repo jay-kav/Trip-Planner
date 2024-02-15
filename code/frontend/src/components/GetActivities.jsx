@@ -5,20 +5,18 @@ import { Box, Typography } from '@mui/material';
 
 function GetActivities (props) {
     const [activities, setActivities] = useState([]);
-    const [startTimes, setStartTimes] = useState([]);
-    const [endTimes, setEndTimes] = useState([]);
 
     useEffect(() => {
         if (!activities.length) {
             axios.post(`get-activities/`, {
-                'activities': props.ids
+                'activities': props.ids,
+                'country': props.country,
+                'city': props.city,
             })
             .then(res => {
                 console.log(res);
                 if (res.data.activities.length > 0) {
                     setActivities(res.data.activities);
-                    setStartTimes(res.data.startTimes);
-                    setEndTimes(res.data.endTimes);
                 }
             })
             .catch(err => console.log(err));
@@ -26,12 +24,8 @@ function GetActivities (props) {
     });
 
     const getItems = () => {
-        let items = []
-        for (let i = 0; i < activities.length; i++) {
-            let activity = activities[i];
-            let startTime = startTimes[i];
-            let endTime = endTimes[i];
-            items.push(<ListItem key={activity.id} sx={{border: 'solid 1px lightgrey', borderRadius: '5px', m: '5px 10px', width: '37vw', justifyContent: 'space-between'}}>
+        return activities.map(activity => (
+            <ListItem key={activity.id} sx={{border: 'solid 1px lightgrey', borderRadius: '5px', m: '5px 10px', width: '37vw', justifyContent: 'space-between'}}>
                 <Box>
                     <img
                         style={{height: '60px', width: '60px', borderRadius: '30px', objectFit: 'cover', marginRight: '8px'}}
@@ -40,20 +34,19 @@ function GetActivities (props) {
                     />
                 </Box>
                 <Box sx={{width: '24vw', marginRight: '10px', paddingRight: '10px', borderRight: 'solid 1px lightgrey'}}>
-                    <Typography>{activity.name}</Typography>
+                    <Typography sx={{textWrap: 'wrap'}}>{activity.name}</Typography>
                     <Typography sx={{textWrap: 'wrap'}}>{activity.address}</Typography>
                     <Typography>Rating: {activity.rating}/5</Typography>
                 </Box>
                 <Box sx={{margin: 'auto', textAlign: 'center' }}>
-                    <Typography>{startTime}</Typography>
-                    <Typography>{endTime}</Typography>
+                    <Typography>{activity.startTimes}</Typography>
+                    <Typography>{activity.endTimes}</Typography>
                 </Box>
-            </ListItem>);
-        }
-        return items;
+            </ListItem>
+        ));
     }
 
-    if (activities.length === 0) {
+    if (activities.length == 0) {
         return (
             <Typography>No activities found.</Typography>
         );

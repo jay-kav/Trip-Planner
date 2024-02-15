@@ -15,6 +15,7 @@ urlpatterns = [
     path('get-activities/', views.getActivities, name='get_activities'),
     path('get-countries/', views.getCountries, name='get_countries'),
     path('get-cities/', views.getCities, name='get_cities'),
+    path('get-hotels/', views.getHotels, name='get_hotels'),
     path('add-members/', views.addMembers, name='add_members'),
     path('remove-member/', views.removeMember, name='remove_member'),
     path('change-owner/', views.changeOwner, name='change_owner'),

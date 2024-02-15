@@ -9,6 +9,7 @@ class Trip(models.Model):
     tripname = models.CharField(max_length=255) 
     country = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
+    hotel = models.CharField(max_length=255, default="")
     startDate = models.DateField()
     endDate = models.DateField() 
     members = models.ManyToManyField(User, related_name='members', default=None)

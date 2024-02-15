@@ -24,6 +24,7 @@ def createTrip(request):
             trip_name = data.get('tripname')
             country = data.get('country')
             city = data.get('city')
+            hotel = data.get('hotel')
             start_date = data.get('startDate')
             end_date = data.get('endDate')
             members = data.get('members')
@@ -37,6 +38,7 @@ def createTrip(request):
                 'tripname': trip_name,
                 'country': country,
                 'city': city,
+                'hotel': hotel,
                 'startDate': start_date,
                 'endDate': end_date,
                 'members': members,
@@ -86,6 +88,31 @@ def getCities(request):
 
             cities = [item for item in my_list if regex.match(item)]
             return JsonResponse({'detail': 'Successfully retrieved cities', 'cities': cities}, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def getHotels(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            country = data.get('country')
+            city = data.get('city')
+            if not country or not city:
+                return JsonResponse({'detail': 'No country or city selected', 'hotels': []}, status=200)
+
+            client = MongoClient(get_env_value('MONGO_URL'))
+            db = client[country]
+            collection = db[city]
+
+            hotels = collection.find({"types": "hotel"})
+            hotels_names = []
+            for hotel in hotels:
+                name = hotel.get("name")
+                id = hotel.get("place_id")
+                hotels_names.append({'id': id, 'name': name})
+            return JsonResponse({'detail': 'Successfully retrieved hotels', 'hotels': hotels_names}, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -229,18 +256,18 @@ def clearActivities(trip_id):
 def getActivities(request):
     if request.method == 'POST':
         try:
-
             data = json.loads(request.body)
-
+            activities = data.get('activities')
+            country = data.get('country')
+            city = data.get('city')
 
             MONGO_URL = os.getenv('MONGO_URL')
             client = MongoClient(MONGO_URL)
-            db = client[data.get('country')]
-            collection = db[data.get('city')]
+            db = client[country]
+            collection = db[city]
 
-            activities = data.get('activities')
-
-            list_of_places = [s.split(",") for s in activities]
+            list_of_places = [s.split(";") for s in activities]
+            print(f"places list {list_of_places}")
 
             def getID(activity):
                 return activity.split(";")[0]
@@ -256,16 +283,17 @@ def getActivities(request):
 
             places = collection.find({"place_id": {"$in": place_ids}})
 
-            activities = []
+            activityList = []
             i = 0
             for place in places:
                 details = list_of_places[i]
+                print(f"details {details}")
                 id = place.get("place_id", "")
                 if details[0] != id:
                     print("error in getActivities collection return")
 
-                start_times = getTime(details[1])
-                end_times = getTime(details[2])
+                start_times = getTime(int(details[1]))
+                end_times = getTime(int(details[2]))
                 image_data = place.get("image_data", None)
 
                 # Check if image data is available
@@ -281,7 +309,7 @@ def getActivities(request):
                 rating = place.get("rating", "")
                 url = place.get("url", "")
                 website = place.get("website", "")
-                activities.append({
+                activityList.append({
                     'id': id,
                     'name': name,
                     'startTimes': start_times,
@@ -292,7 +320,8 @@ def getActivities(request):
                     'url': url,
                     'website': website
                 })
-            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities, }, status=200)
+                i += 1
+            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 

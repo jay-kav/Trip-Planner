@@ -24,20 +24,20 @@ def createItinerary(request):
             print(data)
             trip_id = data.get('tripID')
             date = data.get('date')
-            # start = data.get('startTime')
-            # end = data.get('endTime')
-            start = '9:00'
-            end = '18:00'
-            #filters = data.get('activities', [])
-            #toggle = data.get('toggle')
-            filters = ['tourist_attraction', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'shopping_mall']
-            toggle = False
+            start = data.get('startTime')
+            end = data.get('endTime')
+            #start = '9:00'
+            #end = '18:00'
+            filters = data.get('filters', [])
+            toggle = data.get('roundtrip')
+            #filters = ['tourist_attraction', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'shopping_mall']
+            #toggle = False
 
             country = data.get('country')
             city = data.get('city')
             # country = "Belgium"
             # city = "Brussels"
-            # hotel = data.get('hotel')
+            #hotel = data.get('hotel')
             hotel = [50.8503, 4.3517]
             # hotel = [50.8492581, 4.3547629]
             # hotel= [50.8488443, 4.352517199999999]
@@ -154,4 +154,3 @@ def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, e
     filters = random.shuffle(filters)
 
     return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
-                

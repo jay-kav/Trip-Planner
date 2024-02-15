@@ -55,6 +55,13 @@ function ViewTrip(props) {
         }
     }
 
+    const clearActivities = (e) => {
+        e.preventDefault();
+        axios.post(`clear-activities/`, {
+            'tripID': trip.id
+        })
+    }
+
     const getDate = (date) => {
         let ymd = date.split('-');
         return `${ymd[1]}/${ymd[2]}/${ymd[0]}`;
@@ -68,11 +75,17 @@ function ViewTrip(props) {
               {trip.tripname}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              {trip.hotel}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {trip.city}, {trip.country}
             </Typography>
             <Typography variant="body2">
               {getDate(trip.startDate)} - {getDate(trip.endDate)}
             </Typography>
+            {localStorage.getItem('sessionID') == tripOwner.id
+            && <Button sx={{fontSize: '.9vw', marginLeft: '22vw', height: '5vh'}} onClick={(e) => clearActivities(e)} variant="contained" color="error">Clear Activities</Button>
+            }
           </CardContent>
         </Card>
       );
@@ -100,7 +113,8 @@ function ViewTrip(props) {
                         <GetTripMembers trip={trip} tripOwner={tripOwner} />
                         <br />
                         <Box sx={{ display: 'flex', gap: '16vw' }}>
-                            <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>
+                        {localStorage.getItem('sessionID') == tripOwner.id
+                            && <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>}
                             <Button onClick={leaveTrip} variant="contained" color="error">Leave Trip</Button>
                         </Box>
                     </Box>
