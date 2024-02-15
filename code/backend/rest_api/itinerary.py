@@ -26,27 +26,29 @@ def createItinerary(request):
             date = data.get('date')
             start = data.get('startTime')
             end = data.get('endTime')
-            # start = '9:00'
-            # end = '18:00'
+            #start = '9:00'
+            #end = '18:00'
             filters = data.get('filters', [])
-            toggle = data.get('roundTrip')
+            toggle = data.get('roundtrip')
             #filters = ['tourist_attraction', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'shopping_mall']
-            #toggle = True
+            #toggle = False
 
             country = data.get('country')
             city = data.get('city')
-            # hotel = data.get('hotel')
+            # country = "Belgium"
+            # city = "Brussels"
+            #hotel = data.get('hotel')
             hotel = [50.8503, 4.3517]
             # hotel = [50.8492581, 4.3547629]
             # hotel= [50.8488443, 4.352517199999999]
             # hotel = [50.8452508, 4.3544393]
 
-
+            print(filters)
             foods = [food for food in FOODS if food in filters]
             vegetarian = ["serves_vegetarian_food" if "serves_vegetarian_food" in filters else False]
             night = [activity for activity in NIGHT if activity in filters]
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
-
+            print(filters)
             # collection , hotel = getHotel(hotel, country, city)
             collection = tmpCollection(country, city)
             date_object = datetime.strptime(date, '%m/%d/%Y')
@@ -64,13 +66,16 @@ def createItinerary(request):
             i = 0
             filters = list(permutations(filters))
             random.shuffle(filters)
+            print(day_of_week)
 
             while i < 11:
+                
                 result = linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
                 i += 1
         
-                print(f"Itinerary result {result[1]}")
+    
                 if result[1]:
+                    print(f"Itinerary result {result[1]}")
                     activities = result[1]
                     validator = activities[-1].split(';')
                     if abs(int(validator[-1]) - end_minutes) < 30:
@@ -136,6 +141,8 @@ def tmpCollection(country, city):
     client = MongoClient(get_env_value('MONGO_URL'))
     db = client[country]
     collection = db[city]
+    print("collection retrieved")
+    # print(collection)
 
     return collection
 
@@ -147,4 +154,3 @@ def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, e
     filters = random.shuffle(filters)
 
     return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
-                

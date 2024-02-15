@@ -85,7 +85,7 @@ function CreateTrip() {
 
     const getHotels = () => {
       return hotels.map(hotel => (
-          <MenuItem key={hotel} value={hotel}>{hotel}</MenuItem>
+          <MenuItem key={hotel} value={hotel.id}>{hotel.name}</MenuItem>
       ));
     }
     

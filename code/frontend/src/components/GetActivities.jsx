@@ -24,7 +24,7 @@ function GetActivities (props) {
     });
 
     const getItems = () => {
-        return activities.map(activity => {
+        return activities.map(activity => (
             <ListItem key={activity.id} sx={{border: 'solid 1px lightgrey', borderRadius: '5px', m: '5px 10px', width: '37vw', justifyContent: 'space-between'}}>
                 <Box>
                     <img
@@ -43,10 +43,10 @@ function GetActivities (props) {
                     <Typography>{activity.endTimes}</Typography>
                 </Box>
             </ListItem>
-        })
+        ));
     }
 
-    if (activities.length === 0) {
+    if (activities.length == 0) {
         return (
             <Typography>No activities found.</Typography>
         );

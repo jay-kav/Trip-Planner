@@ -110,7 +110,8 @@ def getHotels(request):
             hotels_names = []
             for hotel in hotels:
                 name = hotel.get("name")
-                hotels_names.append(name)
+                id = hotel.get("place_id")
+                hotels_names.append({'id': id, 'name': name})
             return JsonResponse({'detail': 'Successfully retrieved hotels', 'hotels': hotels_names}, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -319,6 +320,7 @@ def getActivities(request):
                     'url': url,
                     'website': website
                 })
+                i += 1
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
