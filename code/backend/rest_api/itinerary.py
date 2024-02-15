@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from datetime import datetime
-from .generator import linearItinerary, circularItinerary
-# from . import generator
+from .generator import linearItinerary
 import random
+from pymongo import MongoClient
+from load_env_var import get_env_value
 from itertools import permutations
 import json
 from .serializers import *
@@ -23,24 +24,22 @@ def createItinerary(request):
             print(data)
             trip_id = data.get('tripID')
             date = data.get('date')
-            #start = data.get('startTime')
-            #end = data.get('endTime')
-            start = '9:00'
-            end = '17:00'
-            #filters = data.get('activities', [])
-            #toggle = data.get('toggle')
-            filters = ['zoo', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'serves_vegetarian_food']
-            toggle = True
+            start = data.get('startTime')
+            end = data.get('endTime')
+            # start = '9:00'
+            # end = '18:00'
+            filters = data.get('activities', [])
+            toggle = data.get('toggle')
+            #filters = ['tourist_attraction', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'shopping_mall']
+            #toggle = True
 
-            # country = data.get('country')
-            # city = data.get('city')
-            country = 'Belgium'
-            city = 'Brussels'
+            country = data.get('country')
+            city = data.get('city')
             # hotel = data.get('hotel')
-            # hotel = [50.8503, 4.3517]
+            hotel = [50.8503, 4.3517]
             # hotel = [50.8492581, 4.3547629]
             # hotel= [50.8488443, 4.352517199999999]
-            hotel = [50.8452508, 4.3544393]
+            # hotel = [50.8452508, 4.3544393]
 
 
             foods = [food for food in FOODS if food in filters]
@@ -48,7 +47,8 @@ def createItinerary(request):
             night = [activity for activity in NIGHT if activity in filters]
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
 
-
+            # collection , hotel = getHotel(hotel, country, city)
+            collection = tmpCollection(country, city)
             date_object = datetime.strptime(date, '%m/%d/%Y')
             day_of_week = date_object.weekday()
 
@@ -58,25 +58,26 @@ def createItinerary(request):
             start_minutes = start_time.hour * 60 + start_time.minute
             end_minutes = end_time.hour * 60 + end_time.minute
 
+            if toggle:
+                end_minutes -= 30
+
             i = 0
             filters = list(permutations(filters))
-            random.shuffle(filters)
+            filters = random.shuffle(filters)
 
             while i < 11:
-                if toggle:
-                    result = circularItinerary((country, city, hotel), trip_id, day_of_week, (start_minutes - 30), end_minutes, foods, list(filters[i]), night, vegetarian )
-                    i += 1
-                    pass
-                else:
-                    result = linearItinerary((country, city, hotel), trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
-                    i += 1
-                    # pass
+                result = linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
+                i += 1
+        
                 print(f"Itinerary result {result[1]}")
                 if result[1]:
                     activities = result[1]
                     validator = activities[-1].split(';')
                     if abs(int(validator[-1]) - end_minutes) < 30:
                         break
+
+            if not activities:
+                activities = backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian)
 
             form_data = {
                 'trip_id': trip_id,
@@ -113,3 +114,37 @@ def add_activities(trip_id, activities_to_add):
         return JsonResponse({'detail': 'Successfully added activities'})
     else:
         return JsonResponse({'error': 'Invalid activities data'}, status=400)
+    
+@csrf_exempt
+def getHotel(hotel, country, city):
+    client = MongoClient(get_env_value('MONGO_URL'))
+    db = client[country]
+    collection = db[city]
+
+    query = {
+        "place_id": hotel
+    }
+
+    document = collection.find(query)
+
+    doc = document.get("geometry", {}).get("location", {})
+    location = [doc.get("lat"), doc.get("lng")]
+    return collection, location
+
+@csrf_exempt
+def tmpCollection(country, city):
+    client = MongoClient(get_env_value('MONGO_URL'))
+    db = client[country]
+    collection = db[city]
+
+    return collection
+
+@csrf_exempt
+def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian):
+    filters = ['zoo', 'museum', 'park', 'shopping_mall', 'bowling_alley', 'tourist_attraction', 'aquarium', "amusement_park"]
+    foods = ["serves_breakfast", "serves_lunch", "serves_dinner"]
+
+    filters = random.shuffle(filters)
+
+    return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
+                

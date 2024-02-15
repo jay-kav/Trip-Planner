@@ -108,58 +108,6 @@ def deleteTrip(request):
         
     """ ------------------------- Itinerary Functions ------------------------- """
 
-@csrf_exempt
-def createItinerary(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            print(data)
-            trip_id = data.get('tripID')
-            date = data.get('date')
-            start = data.get('startTime')
-            end = data.get('endTime')
-            #filters = data.get('filters', [])
-            #country = data.get('country')
-            #city = data.get('city')
-            #hotel = data.get('hotel')
-            
-            client = MongoClient(get_env_value('MONGO_URL'))
-            db = client['Belgium']
-            collection = db['Brussels']
-            
-            cursor = collection.find().limit(5)
-    
-            activities = []
-            trip = []
-            for document in cursor:
-                product_id = str(document.get("place_id"))
-                opening_times = str(document.get("cleaned_times", [])[0])
-                
-                result = product_id + ";" + opening_times
-                
-                trip.append(product_id)
-                activities.append(result)
-                
-            form_data = {
-                'trip_id': trip_id,
-                'date': date,
-                'start': start,
-                'end': end,
-                'activities': activities,
-            }
-        
-            form = ItineraryForm(data=form_data)
-            
-            if form.is_valid():
-                if form.save():
-                    add_activities(trip_id, trip)
-                    return JsonResponse({'detail': 'Successfully created new itnerary'})
-                return JsonResponse({'error': 'Failed to create itinerary'}, status=400)
-            else:
-                print(form.errors)
-            return JsonResponse({'error': 'Failed to create itinerary'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
 def deleteItinerary(request):
@@ -173,7 +121,7 @@ def deleteItinerary(request):
             result = [item.split(";")[0] for item in activities]
             itinerary = get_object_or_404(Itinerary, id=itinerary_id)
             if itinerary.delete():
-                delete_activities(trip_id, result)
+                deleteActivities(trip_id, result)
                 return JsonResponse({'detail': 'Successfully deleted itinerary'})
             else:
                 return JsonResponse({'error': 'Unable to delete itinerary'})
@@ -250,54 +198,9 @@ def changeOwner(request):
             return JsonResponse({'error': 'Invalid request method'}, status=405)
             
     """ ------------------------- Activity Functions ------------------------- """
-
-@csrf_exempt
-def deleteTrip(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            trip_id = data.get('tripID')
-            trip = get_object_or_404(Trip, id=trip_id)
-            if trip.delete():
-                return JsonResponse({'detail': 'Successfully deleted Trip'})
-            else:
-                return JsonResponse({'error': 'Could not delete Trip'})
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-@csrf_exempt
-def deleteItinerary(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            print(data)
-            itinerary_id = data.get('itineraryID')
-            activities = data.get('activities')
-            trip_id = data.get('tripID')
-            result = [item.split(";")[0] for item in activities]
-            itinerary = get_object_or_404(Itinerary, id=itinerary_id)
-            if itinerary.delete():
-                delete_activities(trip_id, result)
-                return JsonResponse({'detail': 'Successfully deleted itinerary'})
-            else:
-                return JsonResponse({'error': 'Unable to delete itinerary'})
-
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid request method'}, status=405)
-@csrf_exempt
-def add_activities(trip_id, activities_to_add):
-    trip = get_object_or_404(Trip, id=trip_id)
-
-        # Update the activities field with multiple activities
-    if activities_to_add:
-        trip.activities.extend(activities_to_add)
-        trip.save()
-        return JsonResponse({'detail': 'Successfully added activities'})
-    else:
-        return JsonResponse({'error': 'Invalid activities data'}, status=400)
  
 @csrf_exempt
-def delete_activities(trip_id, remove = []):
+def deleteActivities(trip_id, remove = []):
     trip = get_object_or_404(Trip, id=trip_id)
 
     if trip:
@@ -308,43 +211,61 @@ def delete_activities(trip_id, remove = []):
         else:
             return JsonResponse({'detail': 'Successful without deletion'})
         return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+    return JsonResponse({'error': 'Trip not found'}, status=404)
+    
+@csrf_exempt
+def clearActivities(trip_id):
+
+    trip = get_object_or_404(Trip, id=trip_id)
+    
+    if trip:
+        trip.activities = []
+        if trip.save():
+            return JsonResponse({'detail': 'Successfully cleared activities'})
+        return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+        
     
 @csrf_exempt
 def getActivities(request):
     if request.method == 'POST':
         try:
-            MONGO_URL = os.getenv('MONGO_URL')
-            client = MongoClient(MONGO_URL)
-            db = client['Belgium']
-            collection = db['Brussels']
 
             data = json.loads(request.body)
+
+
+            MONGO_URL = os.getenv('MONGO_URL')
+            client = MongoClient(MONGO_URL)
+            db = client[data.get('country')]
+            collection = db[data.get('city')]
+
             activities = data.get('activities')
+
+            list_of_places = [s.split(",") for s in activities]
 
             def getID(activity):
                 return activity.split(";")[0]
+        
 
-            def getStartTime(activity):
-                start = int(float(activity.split(";")[1]))
-                hours = start // 60
-                minutes = start % 60
+            def getTime(time):
+                hours = time // 60
+                minutes = time % 60
                 return f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}"
-            
-            def getEndTime(activity):
-                end = int(float(activity.split(";")[2]))
-                hours = end // 60
-                minutes = end % 60
-                return f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}"
+        
 
             place_ids = list(map(getID, activities))
-            start_times = list(map(getStartTime, activities))
-            end_times = list(map(getEndTime, activities))
 
             places = collection.find({"place_id": {"$in": place_ids}})
 
             activities = []
+            i = 0
             for place in places:
+                details = list_of_places[i]
                 id = place.get("place_id", "")
+                if details[0] != id:
+                    print("error in getActivities collection return")
+
+                start_times = getTime(details[1])
+                end_times = getTime(details[2])
                 image_data = place.get("image_data", None)
 
                 # Check if image data is available
@@ -358,14 +279,20 @@ def getActivities(request):
                 address = place.get("formatted_address", "")
                 name = place.get("name", "")
                 rating = place.get("rating", "")
+                url = place.get("url", "")
+                website = place.get("website", "")
                 activities.append({
                     'id': id,
                     'name': name,
+                    'startTimes': start_times,
+                    'endTimes': end_times,
                     'address': address,
                     'rating': rating,
-                    'image_data': encoded_image
+                    'image_data': encoded_image,
+                    'url': url,
+                    'website': website
                 })
-            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities, 'startTimes': start_times, 'endTimes': end_times}, status=200)
+            return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activities, }, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 
