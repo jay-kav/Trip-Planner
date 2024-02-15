@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from datetime import datetime
-from .generator import linearItinerary
+from .generator import linearItinerary, circularItinerary
 # from . import generator
 import random
 from itertools import permutations
@@ -30,7 +30,7 @@ def createItinerary(request):
             #filters = data.get('activities', [])
             #toggle = data.get('toggle')
             filters = ['zoo', 'museum', 'park', 'serves_lunch', 'bowling_alley', 'serves_breakfast', 'serves_vegetarian_food']
-            toggle = False
+            toggle = True
 
             # country = data.get('country')
             # city = data.get('city')
@@ -64,7 +64,7 @@ def createItinerary(request):
 
             while i < 11:
                 if toggle:
-                    # circularItinerary()
+                    result = circularItinerary((country, city, hotel), trip_id, day_of_week, (start_minutes - 30), end_minutes, foods, list(filters[i]), night, vegetarian )
                     i += 1
                     pass
                 else:
