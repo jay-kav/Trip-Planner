@@ -73,6 +73,7 @@ function GetItineraries(props) {
         'tripID': trip.id,
         'country': trip.country,
         'city': trip.city,
+        'hotel': trip.hotel,
         'date': data.get('date'),
         'startTime': data.get('starttime'),
         'endTime': data.get('endtime'),
@@ -327,7 +328,7 @@ function GetItineraries(props) {
 
     const getItineraries = () => {
       return itineraries.map((itinerary, index) => (
-          <Card key={itinerary.id} style={{ width: '85vw', display: index === currentItineraryIndex ? 'block' : 'none' }}>
+          <Card key={itinerary.id} style={{display: index === currentItineraryIndex ? 'block' : 'none' }}>
             <Box>
               <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '10px' }}>
                 <h5>{getDate(itinerary.date)}</h5>
@@ -343,7 +344,7 @@ function GetItineraries(props) {
 
     // Render Itineraries
     return (
-      <Card sx={{ width: '46vw', height: '90vh', mt: 5, overflowY: 'auto'}}>
+      <Card sx={{ width: '55vw', height: '90vh', mt: 5, overflowY: 'auto'}}>
           <CardContent>
             <div style={{display: 'flex', margin: '0 15px'}}> 
               {localStorage.getItem('sessionID') == tripOwner.id
@@ -360,8 +361,7 @@ function GetItineraries(props) {
                 {itineraries.length > 0 && currentItineraryIndex != 0 && <ArrowBackIosRoundedIcon sx={{marginRight: '8px'}} onClick={goToPreviousItinerary} />}
                 <div style={{
                 display: 'flex',
-                whiteSpace: 'nowrap',
-                width: '39vw'
+                whiteSpace: 'nowrap'
               }}>
                   {getItineraries()}
                 </div>

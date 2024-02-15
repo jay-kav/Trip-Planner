@@ -41,7 +41,7 @@ function GetTrips() {
     };  
 
     useEffect(() => {
-        axios.get(`api/trips/?sessionID=${localStorage.getItem('sessionID')}`)
+        axios.get(`api/trips/?members=${localStorage.getItem('sessionID')}`)
         .then((response) => {
             console.log(response);
             setTrips(response.data);

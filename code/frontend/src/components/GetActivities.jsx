@@ -40,7 +40,7 @@ function GetActivities (props) {
                     />
                 </Box>
                 <Box sx={{width: '24vw', marginRight: '10px', paddingRight: '10px', borderRight: 'solid 1px lightgrey'}}>
-                    <Typography>{activity.name}</Typography>
+                    <Typography sx={{textWrap: 'wrap'}}>{activity.name}</Typography>
                     <Typography sx={{textWrap: 'wrap'}}>{activity.address}</Typography>
                     <Typography>Rating: {activity.rating}/5</Typography>
                 </Box>

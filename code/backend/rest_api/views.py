@@ -24,6 +24,7 @@ def createTrip(request):
             trip_name = data.get('tripname')
             country = data.get('country')
             city = data.get('city')
+            hotel = data.get('hotel')
             start_date = data.get('startDate')
             end_date = data.get('endDate')
             members = data.get('members')
@@ -37,6 +38,7 @@ def createTrip(request):
                 'tripname': trip_name,
                 'country': country,
                 'city': city,
+                'hotel': hotel,
                 'startDate': start_date,
                 'endDate': end_date,
                 'members': members,
@@ -89,6 +91,30 @@ def getCities(request):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def getHotels(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            country = data.get('country')
+            city = data.get('city')
+            if not country or not city:
+                return JsonResponse({'detail': 'No country or city selected', 'hotels': []}, status=200)
+
+            client = MongoClient(get_env_value('MONGO_URL'))
+            db = client[country]
+            collection = db[city]
+
+            hotels = collection.find({"types": "hotel"})
+            hotels_names = []
+            for hotel in hotels:
+                name = hotel.get("name")
+                hotels_names.append(name)
+            return JsonResponse({'detail': 'Successfully retrieved hotels', 'hotels': hotels_names}, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
         
 @csrf_exempt
 def deleteTrip(request):
@@ -118,10 +144,10 @@ def createItinerary(request):
             date = data.get('date')
             start = data.get('startTime')
             end = data.get('endTime')
-            #filters = data.get('filters', [])
-            #country = data.get('country')
-            #city = data.get('city')
-            #hotel = data.get('hotel')
+            filters = data.get('filters', [])
+            country = data.get('country')
+            city = data.get('city')
+            hotel = data.get('hotel')
             
             client = MongoClient(get_env_value('MONGO_URL'))
             db = client['Belgium']

@@ -100,7 +100,7 @@ function ViewTrip(props) {
                         <GetTripMembers trip={trip} tripOwner={tripOwner} />
                         <br />
                         <Box sx={{ display: 'flex', gap: '16vw' }}>
-                            <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>
+                            {trip.owner == localStorage.getItem('sessionID') && <Button onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>}
                             <Button onClick={leaveTrip} variant="contained" color="error">Leave Trip</Button>
                         </Box>
                     </Box>
