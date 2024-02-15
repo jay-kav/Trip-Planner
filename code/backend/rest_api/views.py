@@ -150,8 +150,8 @@ def createItinerary(request):
             hotel = data.get('hotel')
             
             client = MongoClient(get_env_value('MONGO_URL'))
-            db = client['Belgium']
-            collection = db['Brussels']
+            db = client[country]
+            collection = db[city]
             
             cursor = collection.find().limit(5)
     
@@ -339,13 +339,15 @@ def delete_activities(trip_id, remove = []):
 def getActivities(request):
     if request.method == 'POST':
         try:
-            MONGO_URL = os.getenv('MONGO_URL')
-            client = MongoClient(MONGO_URL)
-            db = client['Belgium']
-            collection = db['Brussels']
-
             data = json.loads(request.body)
             activities = data.get('activities')
+            country = data.get('country')
+            city = data.get('city')
+
+            MONGO_URL = os.getenv('MONGO_URL')
+            client = MongoClient(MONGO_URL)
+            db = client[country]
+            collection = db[city]
 
             def getID(activity):
                 return activity.split(";")[0]
