@@ -336,7 +336,7 @@ function GetItineraries(props) {
               </Box>
             </Box>
             <List sx={{height: '62vh', overflowY: 'scroll'}}>
-              <GetActivities ids={itinerary.activities} />
+              <GetActivities ids={itinerary.activities} country={trip.country} city={trip.city} />
             </List>
           </Card>
         ));
