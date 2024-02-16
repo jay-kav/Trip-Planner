@@ -10,6 +10,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import CheckIcon from '@mui/icons-material/Check';
 
 const defaultTheme = createTheme();
 
@@ -104,6 +106,11 @@ function CreateTrip() {
       const endDate = data.get('enddate');
       const members = Array.isArray(data.getAll('members')) ? Array.from(data.getAll('members')) : [];
       if (tripname === "") {
+        /*return (
+          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            Here is a gentle confirmation that your action was successful.
+          </Alert>
+        );*/
         alert("Please enter a trip name");
       } else if (country === "") {
         alert("Please select a country");

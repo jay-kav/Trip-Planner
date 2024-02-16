@@ -60,6 +60,11 @@ function ViewTrip(props) {
         axios.post(`clear-activities/`, {
             'tripID': trip.id
         })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        })
+        .catch((err) => console.error("Error:", err));
     }
 
     const getDate = (date) => {
