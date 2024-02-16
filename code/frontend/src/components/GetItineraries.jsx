@@ -19,9 +19,10 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 const filterList = {
-  'Breakfast': 'breakfast',
-  'Lunch': 'lunch',
-  'Dinner': 'dinner',
+  'Breakfast': 'serves_breakfast',
+  'Lunch': 'serves_lunch',
+  'Dinner': 'serves_dinner',
+  'Vegetarian Food': 'serves_vegetarian_food',
   'Parks': 'park',
   'Museum': 'museum',
   'Shopping': 'shopping_mall',
@@ -151,7 +152,11 @@ function GetItineraries(props) {
                     <FormControlLabel
                       control={
                           <Checkbox
+<<<<<<< HEAD
                               name="breakfast"
+=======
+                              name="serves_breakfast"
+>>>>>>> newbran
                               id="serves_breakfast"
                               defaultChecked
                           />
@@ -161,7 +166,11 @@ function GetItineraries(props) {
                     <FormControlLabel
                       control={
                           <Checkbox
+<<<<<<< HEAD
                               name="lunch"
+=======
+                              name="serves_lunch"
+>>>>>>> newbran
                               id="serves_lunch"
                               defaultChecked
                           />
@@ -171,12 +180,28 @@ function GetItineraries(props) {
                     <FormControlLabel
                       control={
                           <Checkbox
+<<<<<<< HEAD
                               name="dinner"
                               id="serves_dinner"
                               checked
+=======
+                              name="serves_dinner"
+                              id="serves_dinner"
+                              defaultChecked
+>>>>>>> newbran
                           />
                       }
                       label="Dinner"
+                    />
+                    <FormControlLabel
+                      control={
+                          <Checkbox
+                              name="serves_vegetarian_food"
+                              id="serves_vegetarian_food"
+                              defaultChecked
+                          />
+                      }
+                      label="Vegetarian Food"
                     />
                     <FormControlLabel
                       control={

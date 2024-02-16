@@ -1,5 +1,3 @@
-from django_filters import rest_framework as filters
-from rest_framework import viewsets
 from .serializers import *
 from .models import *
 from django.shortcuts import get_object_or_404
@@ -7,7 +5,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, logout, login
 from .forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
@@ -241,15 +238,20 @@ def deleteActivities(trip_id, remove = []):
     return JsonResponse({'error': 'Trip not found'}, status=404)
     
 @csrf_exempt
-def clearActivities(trip_id):
+def clearActivities(request):
+    try:
+        data = json.loads(request.body)
+        trip_id = data.get('tripID')
+        print(trip_id)
+        trip = get_object_or_404(Trip, id=trip_id)
 
-    trip = get_object_or_404(Trip, id=trip_id)
-    
-    if trip:
-        trip.activities = []
-        trip.save()
-        return JsonResponse({'detail': 'Successfully cleared activities'})
-    return JsonResponse({'error': 'Trip Not Found'}, status=400)
+        if trip:
+            trip.activities = []
+            trip.save()
+            return JsonResponse({'detail': 'Successfully cleared activities'}, status=200)
+        return JsonResponse({'error': 'Trip not found'}, status=404)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
         
     
 @csrf_exempt
@@ -325,68 +327,3 @@ def getActivities(request):
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-    """ ------------------------- User Authentication ------------------------- """
-
-# Function to create a new User instance
-@csrf_exempt
-def registerView(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            username = data.get('username')
-            email = data.get('email')
-            password = data.get('password')
-
-            user = User.objects.create_user(username=username, email=email, password=password)
-            if user:
-                return JsonResponse({'detail': 'Successfully created new user'})
-            return JsonResponse({'error': 'Failed to create new user'})
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-# Function to log in a User instance if it exists
-@csrf_exempt
-def loginView(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            username = data.get('username')
-            password = data.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return JsonResponse({'detail': 'Successfully logged in', 'uid': user.pk}, status=200)   
-            return JsonResponse({'error': 'Log in failed'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-# Function to log out current User
-@csrf_exempt
-def logoutView(request):
-    if request.method == 'POST':
-        logout(request)
-        return JsonResponse({'detail': 'Successfully logged out'})
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-    """ ------------------------- View sets ------------------------- """
-   
-class UserViewset(viewsets.ModelViewSet):
-    serializer_class = UserSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ['is_staff', 'id']
-    queryset = User.objects.all()
-
-class TripViewset(viewsets.ModelViewSet):
-    serializer_class = TripSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ['members']
-    queryset = Trip.objects.all()
-
-class ItineraryViewset(viewsets.ModelViewSet):
-    serializer_class = ItinerarySerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_fields = ['trip_id']
-    queryset = Itinerary.objects.all()
