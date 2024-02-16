@@ -64,7 +64,7 @@ def createItinerary(request):
                 end_minutes -= 30
 
             i = 0
-            filters = list(permutations(filters))
+            filters = mixLists(filters)
             random.shuffle(filters)
             print(day_of_week)
 
@@ -141,7 +141,7 @@ def tmpCollection(country, city):
     client = MongoClient(get_env_value('MONGO_URL'))
     db = client[country]
     collection = db[city]
-    print("collection retrieved")
+    # print("collection retrieved")
     # print(collection)
 
     return collection
@@ -154,3 +154,13 @@ def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, e
     filters = random.shuffle(filters)
 
     return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
+
+@csrf_exempt
+def mixLists(origional):
+    result = [origional]
+    
+    for i in range(1, len(origional)):
+        swapped_list = list(origional)  # Brackets used to create a shallow copy , different memory location
+        swapped_list[0], swapped_list[i] = swapped_list[i], swapped_list[0]  # Swap the first element
+        result.append(swapped_list)
+    return result

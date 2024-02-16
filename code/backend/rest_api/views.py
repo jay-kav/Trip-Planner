@@ -247,11 +247,8 @@ def clearActivities(request):
 
         if trip:
             trip.activities = []
-            if trip.save():
-                print("saved")
-                return JsonResponse({'detail': 'Successfully cleared activities'}, status=200)
-            print("failed")
-            return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+            trip.save()
+            return JsonResponse({'detail': 'Successfully cleared activities'}, status=200)
         return JsonResponse({'error': 'Trip not found'}, status=404)
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -286,46 +283,47 @@ def getActivities(request):
 
             place_ids = list(map(getID, activities))
 
-            places = collection.find({"place_id": {"$in": place_ids}})
+            places = list(collection.find({"place_id": {"$in": place_ids}}))
 
             activityList = []
-            i = 0
-            for place in places:
-                details = list_of_places[i]
-                print(f"details {details}")
-                id = place.get("place_id", "")
-                if details[0] != id:
-                    print("error in getActivities collection return")
+            for details in list_of_places:
+                found = False
+                for place in places:
+                    print(f"details {details}")
+                    id = place.get("place_id", "")
+                    if details[0] != id or found:
+                        continue
 
-                start_times = getTime(int(details[1]))
-                end_times = getTime(int(details[2]))
-                image_data = place.get("image_data", None)
+                    found = True
 
-                # Check if image data is available
-                if image_data:
-                    # Convert binary image data to base64 https://bobbyhadz.com/blog/convert-image-to-base64-string-in-python
+                    start_times = getTime(int(details[1]))
+                    end_times = getTime(int(details[2]))
+                    image_data = place.get("image_data", None)
 
-                    encoded_image = base64.b64encode(image_data).decode('utf-8')
-                    # print("Successful")
-                else:
-                    encoded_image = None
-                address = place.get("formatted_address", "")
-                name = place.get("name", "")
-                rating = place.get("rating", "")
-                url = place.get("url", "")
-                website = place.get("website", "")
-                activityList.append({
-                    'id': id,
-                    'name': name,
-                    'startTimes': start_times,
-                    'endTimes': end_times,
-                    'address': address,
-                    'rating': rating,
-                    'image_data': encoded_image,
-                    'url': url,
-                    'website': website
-                })
-                i += 1
+                    # Check if image data is available
+                    if image_data:
+                        # Convert binary image data to base64 https://bobbyhadz.com/blog/convert-image-to-base64-string-in-python
+
+                        encoded_image = base64.b64encode(image_data).decode('utf-8')
+                        # print("Successful")
+                    else:
+                        encoded_image = None
+                    address = place.get("formatted_address", "")
+                    name = place.get("name", "")
+                    rating = place.get("rating", "")
+                    url = place.get("url", "")
+                    website = place.get("website", "")
+                    activityList.append({
+                        'id': id,
+                        'name': name,
+                        'startTimes': start_times,
+                        'endTimes': end_times,
+                        'address': address,
+                        'rating': rating,
+                        'image_data': encoded_image,
+                        'url': url,
+                        'website': website
+                    })
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
