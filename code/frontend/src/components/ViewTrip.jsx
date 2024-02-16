@@ -61,8 +61,8 @@ function ViewTrip(props) {
             'tripID': trip.id
         })
         .then((response) => {
-            console.log(response);
-            window.location.reload();
+          console.log(response);
+          window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
     }

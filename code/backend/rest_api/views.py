@@ -238,15 +238,23 @@ def deleteActivities(trip_id, remove = []):
     return JsonResponse({'error': 'Trip not found'}, status=404)
     
 @csrf_exempt
-def clearActivities(trip_id):
+def clearActivities(request):
+    try:
+        data = json.loads(request.body)
+        trip_id = data.get('tripID')
+        print(trip_id)
+        trip = get_object_or_404(Trip, id=trip_id)
 
-    trip = get_object_or_404(Trip, id=trip_id)
-    
-    if trip:
-        trip.activities = []
-        if trip.save():
-            return JsonResponse({'detail': 'Successfully cleared activities'})
-        return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+        if trip:
+            trip.activities = []
+            if trip.save():
+                print("saved")
+                return JsonResponse({'detail': 'Successfully cleared activities'}, status=200)
+            print("failed")
+            return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
+        return JsonResponse({'error': 'Trip not found'}, status=404)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
         
     
 @csrf_exempt
