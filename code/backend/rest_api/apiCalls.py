@@ -162,8 +162,8 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
         return None
 
     random.shuffle(documents)
-    activities.extend(trip.activities)
-    usedLocations = activities.extend(failed)
+    usedLocations = activities.extend(trip.activities)
+    usedLocations = usedLocations.extend(failed)
 
     if not usedLocations:
         usedLocations = []
@@ -180,7 +180,7 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
 
-            start_time = time + walkTime
+            start_time = int(time + walkTime)
             print(start_time)
             
             end_time = start_time + 90

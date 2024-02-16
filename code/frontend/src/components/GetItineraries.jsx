@@ -152,7 +152,7 @@ function GetItineraries(props) {
                       control={
                           <Checkbox
                               name="breakfast"
-                              id="breakfast"
+                              id="serves_breakfast"
                               defaultChecked
                           />
                       }
@@ -162,7 +162,7 @@ function GetItineraries(props) {
                       control={
                           <Checkbox
                               name="lunch"
-                              id="lunch"
+                              id="serves_lunch"
                               defaultChecked
                           />
                       }
@@ -172,7 +172,7 @@ function GetItineraries(props) {
                       control={
                           <Checkbox
                               name="dinner"
-                              id="dinner"
+                              id="serves_dinner"
                               checked
                           />
                       }
