@@ -59,7 +59,7 @@
 
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
-    <img src="/user_manual/Images/Sidebar_1.png" alt="Sidebar 1" width="450"/>
+    <img src="/user_manual/Images/Sidebar_1.png" alt="Sidebar 1" width="450" height="300"/>
     <img src="/user_manual/Images/Sidebar_2.png" alt="Sidebar 2" width="450"/>
   </div>
 
