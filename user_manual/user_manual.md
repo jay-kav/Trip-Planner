@@ -113,7 +113,7 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/View_Trip.png" alt="View Trip" width="450"/>
-    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Trip Components" width="450"/>
+    <img src="/user_manual/Images/Trip_Page.png" alt="Trip Page" width="450"/>
   </div>
 
   <div>
@@ -138,7 +138,7 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Add_Member.png" alt="Add Member" width="450"/>
-    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Select Member" width="450"/>
+    <img src="/user_manual/Images/Add_Member_Clicked.png" alt="Select Member" width="450"/>
   </div>
 
   <div>
@@ -189,7 +189,6 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Delete_Trip.png" alt="Delete Trip" width="450"/>
-    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Select Member" width="450"/>
   </div>
 
   <div>
@@ -215,7 +214,6 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Leave_Trip.png" alt="Leave Trip" width="450"/>
-    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Select Member" width="450"/>
   </div>
 
   <div>
@@ -244,7 +242,7 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Create_Itinerary.png" alt="Create Itinerary Trip" width="450"/>
-    <img src="/user_manual/Images/CCreate_Itinerary_Components.png" alt="Itinerary Components" width="450"/>
+    <img src="/user_manual/Images/Create_Itinerary_Components.png" alt="Itinerary Components" width="450"/>
   </div>
 
   <div>
@@ -275,7 +273,6 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Delete_Itinerary.png" alt="Delete Itinerary" width="450"/>
-    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Select Member" width="450"/>
   </div>
 
   <div>
@@ -297,7 +294,7 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Cycle_Itinerary.png" alt="Page 1 Itinerary" width="450"/>
-    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Page 2 Itinerary" width="450"/>
+    <img src="/user_manual/Images/Cycle_Itinerary2.png" alt="Page 2 Itinerary" width="450"/>
   </div>
 
   <div>
