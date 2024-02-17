@@ -1,13 +1,11 @@
+# USER MANUAL
+## For JURNO
 
-<p align="center">
-  <h1>USER MANUAL</h1>
-  <h2>For JURNO</h2>
-</p>
+*by Ethan & Jamie*  
+*17/02/2000*
 
-<p align="left">
-  <em>by Ethan & Jamie</em><br>
-  <em>17/02/2000</em>
-</p>
+This manual is designed for all users to use as a guide for the system.
+
 
 
 This manual is designed
