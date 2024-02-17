@@ -1,5 +1,4 @@
-<h1 align="center"> USER MANUAL <\h1>
-## For JURNO
+# USER MANUAL FOR JURNO
 
 *by Ethan & Jamie*  
 *17/02/2000*
