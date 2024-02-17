@@ -54,7 +54,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
     while True:
         search = True
         i = 0
-        while i < len(filters) and search:
+        while i < (len(filters) - 1) and search:
             if time > 1200 and night:
                 if len(night) > 1:
                     nightActivity = chooseNightActivity(night, start)
@@ -66,6 +66,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
                     if food and types[0] in food:
                         current_type = types[0]
                         api_result = foodApiCall(toggle, collection, hotel, time, start, end, current_type, trip, day, activities, previous, vegetarian, failed)
+                        i += 1
                         if api_result == None:
                             api_result = apiCall(toggle, collection, hotel, time, start, end, "food", trip, day, activities, previous, failed)
                     else:
@@ -150,4 +151,3 @@ def chooseNightActivity(night, time):
     if time > 1320:
         return night[0]
     return night[1]
-

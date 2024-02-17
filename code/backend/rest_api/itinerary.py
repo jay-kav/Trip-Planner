@@ -5,7 +5,6 @@ from .generator import linearItinerary
 import random
 from pymongo import MongoClient
 from load_env_var import get_env_value
-from itertools import permutations
 import json
 from .serializers import *
 from .models import *
@@ -37,8 +36,8 @@ def createItinerary(request):
             city = data.get('city')
             # country = "Belgium"
             # city = "Brussels"
-            #hotel = data.get('hotel')
-            hotel = [50.8503, 4.3517]
+            hotel = data.get('hotel')
+            # hotel = [50.8503, 4.3517]
             # hotel = [50.8492581, 4.3547629]
             # hotel= [50.8488443, 4.352517199999999]
             # hotel = [50.8452508, 4.3544393]
@@ -48,9 +47,10 @@ def createItinerary(request):
             vegetarian = ["serves_vegetarian_food" if "serves_vegetarian_food" in filters else False]
             night = [activity for activity in NIGHT if activity in filters]
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
-            print(filters)
-            # collection , hotel = getHotel(hotel, country, city)
-            collection = tmpCollection(country, city)
+            print(f"filters {filters}")
+            print(f"foods {foods}")
+            collection , hotel = getHotel(hotel, country, city)
+            # collection = tmpCollection(country, city)
             date_object = datetime.strptime(date, '%m/%d/%Y')
             day_of_week = date_object.weekday()
 
@@ -68,7 +68,7 @@ def createItinerary(request):
             random.shuffle(filters)
             print(day_of_week)
 
-            while i < 11:
+            while i < (len(filters) - 1):
                 
                 result = linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
                 i += 1
@@ -150,6 +150,8 @@ def tmpCollection(country, city):
 def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian):
     filters = ['zoo', 'museum', 'park', 'shopping_mall', 'bowling_alley', 'tourist_attraction', 'aquarium', "amusement_park"]
     foods = ["serves_breakfast", "serves_lunch", "serves_dinner"]
+
+    print("backup used")
 
     filters = random.shuffle(filters)
 
