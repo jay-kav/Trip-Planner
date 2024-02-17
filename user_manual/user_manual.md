@@ -597,9 +597,14 @@ Generated an unsatisfactory itinerary? That's fine; let's delete it:
 
 Want to see all the itineraries you've created for a trip:
 
-![Page 1 Itinerary](/user_manual/Images/Cycle_Itinerary.png)
----
-![Page 2 Itinerary](/user_manual/Images/Cycle_Itinerary2.png)
+<div style="display: flex; align-items: center;">
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/Cycle_Itinerary.png" alt="Page 1 Itinerary" width="450"/>
+  </div>
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/Cycle_Itinerary2.png" alt="Page 2 Itinerary" width="450"/>
+  </div>
+</div>
 
 - Your trip has multiple itineraries, but you can only see one.
 - Above the itinerary, to its sides, there are arrows.
@@ -607,6 +612,7 @@ Want to see all the itineraries you've created for a trip:
 - Note: Itineraries are stored in order of date, not order of creation.
 
 ---
+
 
 ## 5. Other Functions
 
