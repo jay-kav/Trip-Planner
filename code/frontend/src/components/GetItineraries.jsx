@@ -70,22 +70,37 @@ function GetItineraries(props) {
           filters.push(filterList[filter]);
         }
       }
-      axios.post(`create-itinerary/`, {
-        'tripID': trip.id,
-        'country': trip.country,
-        'city': trip.city,
-        'hotel': trip.hotel,
-        'date': data.get('date'),
-        'startTime': data.get('starttime'),
-        'endTime': data.get('endtime'),
-        'roundTrip': data.get('roundtrip') == 'on',
-        'filters': filters
-      })
-      .then((response) => {
-        console.log(response);
-        //window.location.href = "/";
-      })
-      .catch((err) => console.error("Error:", err));
+      let date = data.get('date')
+      let startTime = data.get('starttime')
+      let endTime = data.get('endtime')
+      let roundTrip = data.get('roundtrip')
+      let a = date.split('/');
+      let checkdate = `${a[2]}-${a[0]}-${a[1]}`;
+      console.log(checkdate, trip.startDate, trip.endDate)
+      if (checkdate > trip.endDate || checkdate < trip.startDate) {
+        alert('You must create an itinerary for a date in you trip!');
+      } else if (startTime < "08:00") {
+        alert('You must select a start time of earliest 08:00');
+      } else if (endTime < "08:00") {
+        alert('You must select a end time of latest 23:59');
+      } else {
+        axios.post(`create-itinerary/`, {
+          'tripID': trip.id,
+          'country': trip.country,
+          'city': trip.city,
+          'hotel': trip.hotel,
+          'date': date,
+          'startTime': startTime,
+          'endTime': endTime,
+          'roundTrip': roundTrip,
+          'filters': filters
+        })
+        .then((response) => {
+          console.log(response);
+          window.location.href = "/";
+        })
+        .catch((err) => console.error("Error:", err));
+      }
     };
   
     const createItinerary = () => {
