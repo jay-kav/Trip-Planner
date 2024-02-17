@@ -414,6 +414,7 @@ Welcome to Journo, your go-to web app for managing and planning your trips and i
 To start using Journo, you need to register an account. Follow these steps:
 
 ![Register 1](/user_manual/Images/Register_1.png)
+---
 ![Register 2](/user_manual/Images/Register_2.png)
 
 - Click "Don't have an account? Register" if you do not have an account.
@@ -440,6 +441,7 @@ Once registered, you will be redirected to the original login page:
 After logging in, you will be placed on the landing page:
 
 ![Sidebar 1](/user_manual/Images/Sidebar_1.png)
+---
 ![Sidebar 2](/user_manual/Images/Sidebar_2.png)
 
 - By clicking the three horizontal lines in the top left-hand corner, the sidebar with four options will be displayed.
@@ -457,6 +459,7 @@ After logging in, you will be placed on the landing page:
 Once on the "My Trip" page, you have the option to create a new trip:
 
 ![Create Trip](/user_manual/Images/Create_Trip.png)
+---
 ![Trip Components](/user_manual/Images/Create_Trip_Components.png)
 
 - First, click the blue button reading "New Trip."
@@ -473,6 +476,7 @@ Once on the "My Trip" page, you have the option to create a new trip:
 When on the "My Trip" page, you can view one of your trips:
 
 ![View Trip](/user_manual/Images/View_Trip.png)
+---
 ![Trip Page](/user_manual/Images/Trip_Page.png)
 
 - Click the "View" button on the chosen trip you want to see.
@@ -489,6 +493,7 @@ When on the "My Trip" page, you can view one of your trips:
 When looking at the trip details page, you have the option to add members:
 
 ![Add Member](/user_manual/Images/Add_Member.png)
+---
 ![Select Member](/user_manual/Images/Add_Member_Clicked.png)
 
 - If you are the owner, a person icon will appear by your name.
@@ -506,7 +511,6 @@ When looking at the trip details page, you have the option to add members:
 When looking at the trip details page, you have the option to remove members:
 
 ![Remove Member](/user_manual/Images/Remove_Member.png)
-![Select Member](/user_manual/Images/Create_Trip_Components.png)
 
 - If you are the owner, an "X" icon will appear next to members' names.
 - Once clicked, you will be shown a text box.
@@ -558,6 +562,7 @@ If you no longer want to be part of a trip:
 Craft your daily schedule by adding activities to your trip:
 
 ![Create Itinerary Trip](/user_manual/Images/Create_Itinerary.png)
+---
 ![Itinerary Components](/user_manual/Images/Create_Itinerary_Component.png)
 
 - When viewing a trip, you'll need to add daily activities.
@@ -593,6 +598,7 @@ Generated an unsatisfactory itinerary? That's fine; let's delete it:
 Want to see all the itineraries you've created for a trip:
 
 ![Page 1 Itinerary](/user_manual/Images/Cycle_Itinerary.png)
+---
 ![Page 2 Itinerary](/user_manual/Images/Cycle_Itinerary2.png)
 
 - Your trip has multiple itineraries, but you can only see one.
