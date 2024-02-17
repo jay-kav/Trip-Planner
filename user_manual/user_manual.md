@@ -11,6 +11,8 @@
 
 ### 1.1 Registering an Account
 
+###### To start using Journo, you need to register an account. Follow these steps:
+
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="450"/>
@@ -27,34 +29,30 @@
   </div>
 </div>
 
-### 1.1 Registering an Account
-
-<div style="display: flex; align-items: center;">
-  <div style="flex-shrink: 0; margin-right: 20px;">
-    <img align="left" width="100" height="100" src="/user_manual/Images/Register_1.png">
-    <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="450"/>
-    <img src="/user_manual/Images/Register_2.png" alt="Register 2" width="350"/>
-  </div>
-
-</div>
-
-To start using Journo, you need to register an account. Follow these steps:
-
-   \' - Click "Don't have an account? Register" if you do not have an account.
-    - Fill in a User name you'll remember.
-    - Add your email address you'd prefer to use.
-    - Create a strong Password you'd remember \'
-
 
 ### 1.2 Logging In
 
-Once registered, log in using your credentials.
+Once registered, You will be redirected to the origional login page.
 
-[Step-by-step instructions]
+###### To start using Journo, you need to register an account. Follow these steps:
 
-## 3. Creating and Managing Trips
+<div style="display: flex; align-items: center;">
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="450"/>
+  </div>
 
-### 3.1 Creating a Trip
+  <div>
+    - From here enter your choosen Username.
+    - Enter in your Password.
+    - Click Login.
+  </div>
+</div>
+
+<hr>
+
+## Step 2. Creating and Managing Trips
+
+### 2.1 Creating a Trip
 
 Plan your journey by creating a new trip.
 
