@@ -417,6 +417,11 @@ To start using Journo, you need to register an account. Follow these steps:
 ---
 ![Register 2](/user_manual/Images/Register_2.png)
 
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Register_2.png" alt="Register 2" width="450"/>
+</div>
+
 - Click "Don't have an account? Register" if you do not have an account.
 - Fill in a Username you'll remember.
 - Add your email address you'd prefer to use.
@@ -444,6 +449,11 @@ After logging in, you will be placed on the landing page:
 ---
 ![Sidebar 2](/user_manual/Images/Sidebar_2.png)
 
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Sidebar_1.png" alt="Sidebar 1" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Sidebar_2.png" alt="Sidebar 2" width="450"/>
+</div>
+
 - By clicking the three horizontal lines in the top left-hand corner, the sidebar with four options will be displayed.
 - View the Homepage.
 - View "My Trips" page.
@@ -462,6 +472,11 @@ Once on the "My Trip" page, you have the option to create a new trip:
 ---
 ![Trip Components](/user_manual/Images/Create_Trip_Components.png)
 
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Create_Trip.png" alt="Create Trip" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Create_Trip_Components.png" alt="Trip Components" width="450"/>
+</div>
+
 - First, click the blue button reading "New Trip."
 - You will be redirected to a new page to fill in the details.
 - Enter a Trip name of your choice.
@@ -479,6 +494,11 @@ When on the "My Trip" page, you can view one of your trips:
 ---
 ![Trip Page](/user_manual/Images/Trip_Page.png)
 
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/View_Trip.png" alt="View Trip" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Trip_Page.png" alt="Trip Page" width="450"/>
+</div>
+
 - Click the "View" button on the chosen trip you want to see.
 - Once clicked, you will be directed to a page with the trip details.
 - In this page, you can see the members and itineraries for said trip.
@@ -495,6 +515,12 @@ When looking at the trip details page, you have the option to add members:
 ![Add Member](/user_manual/Images/Add_Member.png)
 ---
 ![Select Member](/user_manual/Images/Add_Member_Clicked.png)
+
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Add_Member.png" alt="Add Member" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Add_Member_Clicked.png" alt="Select Member" width="450"/>
+</div>
+
 
 - If you are the owner, a person icon will appear by your name.
 - Once clicked, you will be shown a text box.
@@ -564,6 +590,11 @@ Craft your daily schedule by adding activities to your trip:
 ![Create Itinerary Trip](/user_manual/Images/Create_Itinerary.png)
 ---
 ![Itinerary Components](/user_manual/Images/Create_Itinerary_Component.png)
+
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Create_Itinerary.png" alt="Page 1 Itinerary" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Create_Itinerary_Component.png" alt="Page 2 Itinerary" width="450"/>
+</div>
 
 - When viewing a trip, you'll need to add daily activities.
 - Clicking the "Add Itinerary" will display a form to fill in the details.
