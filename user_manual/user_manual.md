@@ -23,9 +23,10 @@
 
 
     - Click "Don't have an account? Register" if you do not have an account.
-    - Fill in a User name you'll remember.
+    - Fill in a Username you'll remember.
     - Add your email address you'd prefer to use.
     - Create a strong Password you'd remember
+    - Click "Register"
   </div>
 </div>
 
@@ -42,6 +43,8 @@ Once registered, You will be redirected to the origional login page.
   </div>
 
   <div>
+
+
     - From here enter your choosen Username.
     - Enter in your Password.
     - Click Login.
