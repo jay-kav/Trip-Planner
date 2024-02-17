@@ -76,11 +76,12 @@ function GetItineraries(props) {
       let roundTrip = data.get('roundtrip')
       let a = date.split('/');
       let checkdate = `${a[2]}-${a[0]}-${a[1]}`;
-      console.log(checkdate, trip.startDate, trip.endDate)
       if (checkdate > trip.endDate || checkdate < trip.startDate) {
         alert('You must create an itinerary for a date in you trip!');
       } else if (startTime < "08:00") {
         alert('You must select a start time of earliest 08:00');
+      } else if (endTime < startTime) {
+        alert('You must select an end time later than start time');
       } else if (endTime < "08:00") {
         alert('You must select a end time of latest 23:59');
       } else {
