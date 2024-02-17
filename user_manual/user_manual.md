@@ -242,7 +242,7 @@
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
     <img src="/user_manual/Images/Create_Itinerary.png" alt="Create Itinerary Trip" width="450"/>
-    <img src="/user_manual/Images/Create_Itinerary_Components.png" alt="Itinerary Components" width="450"/>
+    <img src="/user_manual/Images/Create_Itinerary_Component.png" alt="Itinerary Components" width="450"/>
   </div>
 
   <div>
@@ -381,4 +381,3 @@
   </div>
 </div>
 
-[Step-by-step instructions]
