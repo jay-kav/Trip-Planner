@@ -19,6 +19,26 @@ To start using Journo, you need to register an account. Follow these steps:
 - Create a strong Password you'd remember
 
 ![Register](/user_manual/Images/Register_1.png)
+![Register](/user_manual/Images/Register_2.png)
+
+### 1.1 Registering an Account
+
+<p align="center">To start using Journo, you need to register an account. Follow these steps:</p>
+
+- Click "Don't have an account? Register" if you do not have an account.
+- Fill in a User name you'll remember.
+- Add your email address you'd prefer to use.
+- Create a strong Password you'd remember
+
+<div style="float: left; margin-right: 20px;">
+  <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="200"/>
+</div>
+
+<div style="float: left;">
+  <img src="/user_manual/Images/Register_2.png" alt="Register 2" width="200"/>
+</div>
+
+<div style="clear: both;"></div>
 
 ### 1.2 Logging In
 
