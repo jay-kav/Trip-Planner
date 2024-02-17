@@ -80,9 +80,6 @@ function ViewTrip(props) {
               {trip.tripname}
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {trip.hotel}
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
               {trip.city}, {trip.country}
             </Typography>
             <Typography variant="body2">
