@@ -130,7 +130,7 @@ def getHotel(hotel, country, city):
         "place_id": hotel
     }
 
-    document = collection.find(query)
+    document = collection.find_one(query)
 
     doc = document.get("geometry", {}).get("location", {})
     location = [doc.get("lat"), doc.get("lng")]
