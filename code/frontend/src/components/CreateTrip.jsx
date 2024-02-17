@@ -102,6 +102,7 @@ function CreateTrip() {
       const tripname = data.get('tripname');
       const country = data.get('country');
       const city = data.get('city');
+      const hotel = data.get('hotel');
       const startDate = data.get('startdate');
       const endDate = data.get('enddate');
       const members = Array.isArray(data.getAll('members')) ? Array.from(data.getAll('members')) : [];
@@ -128,7 +129,7 @@ function CreateTrip() {
           'tripname': tripname,
           'country': country,
           'city': city,
-          'hotel': data.get('hotel'),
+          'hotel': hotel,
           'startDate': startDate,
           'endDate': endDate,
           'members': members[0]
