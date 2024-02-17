@@ -56,6 +56,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
         i = 0
         while i < (len(filters) - 1) and search:
             if time > 1200 and night:
+                i += 1
                 if len(night) > 1:
                     nightActivity = chooseNightActivity(night, start)
                 else:
