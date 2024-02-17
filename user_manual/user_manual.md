@@ -20,7 +20,7 @@
   </div>
 
   <div>
-    <p>To start using Journo, you need to register an account. Follow these steps:</p>
+
 
     - Click "Don't have an account? Register" if you do not have an account.
     - Fill in a User name you'll remember.
