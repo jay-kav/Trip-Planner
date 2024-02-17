@@ -72,16 +72,19 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
         return None
 
     random.shuffle(documents)
-    activities.extend(trip.activities)
-    usedLocations = activities.extend(failed)
 
-    if not usedLocations:
+
+    if trip.activities:
+        usedLocations = trip.activities.copy()
+    else:
         usedLocations = []
+    usedLocations.extend(activities)
+    usedLocations.extend(failed)
 
     for doc in documents:
         id = doc.get("place_id")
         #if name not in trip.activities() and name not in activities:
-        if id not in usedLocations:
+        if usedLocations is None or id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
         
             if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
@@ -162,15 +165,17 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
         return None
 
     random.shuffle(documents)
-    usedLocations = activities.extend(trip.activities)
-    usedLocations = usedLocations.extend(failed)
 
-    if not usedLocations:
+    if trip.activities:
+        usedLocations = trip.activities.copy()
+    else:
         usedLocations = []
+    usedLocations.extend(activities)
+    usedLocations.extend(failed)
 
     for doc in documents:
-        name = doc.get("name")
-        if name not in usedLocations:
+        id = doc.get("place_id")
+        if usedLocations is None or id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
             if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
@@ -195,7 +200,7 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
             if open_time <= start_time and end_time <= (closed_time - 20):
                 if end_time > closed_time:
                     end_time -= (end_time - closed_time)
-                return name, start_time, end_time
+                return id, start_time, end_time
     return None
 
 @csrf_exempt
