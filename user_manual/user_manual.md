@@ -1,6 +1,9 @@
 # Journo User Manual
 
- ## <p align="center">1. Introduction</p>
+ ## <h1 align="center">1. Introduction</h1>
+ 
+###### <h6 align="center">Welcome to Journo, your go-to web app</h6>  
+
 
 ---
 
@@ -10,7 +13,12 @@
 
 To start using Journo, you need to register an account. Follow these steps:
 
-[Step-by-step instructions]
+- Clicked "Don't have an account? Register" if you do not have an account.
+- Fill in a User name youll remember. 
+- Add your email address you'd prefer to use.
+- Create a strong Password you'd remember
+
+![Register](/user_manual/Images/Register_1.png)
 
 ### 1.2 Logging In
 
