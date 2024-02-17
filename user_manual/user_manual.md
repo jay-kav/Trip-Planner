@@ -11,7 +11,7 @@
 
 ### 1.1 Registering an Account
 
-###### To start using Journo, you need to register an account. Follow these steps:
+##### To start using Journo, you need to register an account. Follow these steps:
 
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
@@ -33,9 +33,7 @@
 
 ### 1.2 Logging In
 
-Once registered, You will be redirected to the origional login page.
-
-###### To start using Journo, you need to register an account. Follow these steps:
+##### Once registered, You will be redirected to the origional login page:
 
 <div style="display: flex; align-items: center;">
   <div style="flex-shrink: 0; margin-right: 20px;">
@@ -53,19 +51,100 @@ Once registered, You will be redirected to the origional login page.
 
 <hr>
 
-## Step 2. Creating and Managing Trips
+## Step 2. Homepage Navigation
 
-### 2.1 Creating a Trip
+### 2.1 Side Bar 
 
-Plan your journey by creating a new trip.
+##### After logging in you will be placed on the landing page:
 
-[Step-by-step instructions]
+<div style="display: flex; align-items: center;">
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/Sidebar_1.png" alt="Sidebar 1" width="450"/>
+    <img src="/user_manual/Images/Sidebar_2.png" alt="Sidebar 2" width="450"/>
+  </div>
+
+  <div>
+
+
+    - By clicking the three horizontal in the top left hand corner.
+    - This will display the side bar with four options.
+    - View the Homepage.
+    - View "My Trips" page.
+    - Option to Create a Trip.
+    - Finally a button to log out.
+  </div>
+</div>
+
+<hr>
+
+## Step 3. Creating and Managing Trips
+
+### 3.1 Creating a Trip
+
+#### Once on the "my Trip" page you have the option to create a new trip:
+
+<div style="display: flex; align-items: center;">
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/Create_Trip.png" alt="Create Trip" width="450"/>
+    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Trip Components" width="450"/>
+  </div>
+
+  <div>
+
+
+    - First click the the blue button reading "New Trip".
+    - From there you will be redirected to a new page to fill in the details.
+    - Enter a Trip name of your choice.
+    - Following that select the Country, City and Hotel you will be staying in.
+    - Below choose your starting and end date of the trip.
+    - The final box allows your to add friends who have Jurno to the trip.
+  </div>
+</div>
+
+### 3.1 Viewing a Trip
+
+#### When on the "my Trip" you can view one of your trips:
+
+<div style="display: flex; align-items: center;">
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/View_Trip.png" alt="View Trip" width="450"/>
+    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Trip Components" width="450"/>
+  </div>
+
+  <div>
+
+
+    - Click "View" button on the choosen trip you want to see.
+    - Once Clicked you will be directed to a page with the trip details.
+    - in this page you can see the members and itineraries for sed trip.
+    - To exit page interact with the Sidebar.
+  </div>
+</div>
+
 
 ### 3.2 Adding Members to a Trip
 
-Invite friends to join your trip.
+### Conditions
+1. Must be in a specific trip
+2. Must be the owner of the trip 
 
-[Step-by-step instructions]
+#### When looking at the trip details page you've the option to add members:
+
+<div style="display: flex; align-items: center;">
+  <div style="flex-shrink: 0; margin-right: 20px;">
+    <img src="/user_manual/Images/Add_Member.png" alt="Add Member" width="450"/>
+    <img src="/user_manual/Images/Create_Trip_Components.png" alt="Select Member" width="450"/>
+  </div>
+
+  <div>
+
+
+    - Click "View" button on the choosen trip you want to see.
+    - Once Clicked you will be directed to a page with the trip details.
+    - in this page you can see the members and itineraries for sed trip.
+    - To exit page interact with the Sidebar.
+  </div>
+</div>
 
 ### 3.3 Deleting Members from a Trip
 
