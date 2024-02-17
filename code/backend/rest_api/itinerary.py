@@ -36,10 +36,10 @@ def createItinerary(request):
             city = data.get('city')
             # country = "Belgium"
             # city = "Brussels"
-            hotel = data.get('hotel')
+            # hotel = data.get('hotel')
             # hotel = [50.8503, 4.3517]
             # hotel = [50.8492581, 4.3547629]
-            # hotel= [50.8488443, 4.352517199999999]
+            hotel= [50.8488443, 4.352517199999999]
             # hotel = [50.8452508, 4.3544393]
 
             print(filters)
@@ -49,8 +49,8 @@ def createItinerary(request):
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
             print(f"filters {filters}")
             print(f"foods {foods}")
-            collection , hotel = getHotel(hotel, country, city)
-            # collection = tmpCollection(country, city)
+            # collection , hotel = getHotel(hotel, country, city)
+            collection = tmpCollection(country, city)
             date_object = datetime.strptime(date, '%m/%d/%Y')
             day_of_week = date_object.weekday()
 
