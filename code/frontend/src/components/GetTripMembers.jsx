@@ -160,6 +160,7 @@ function GetTripMembers(props) {
                                     type="submit"
                                     fullWidth
                                     variant="contained"
+                                    onClick={(e) => addMembers(e)}
                                 >
                                     Add Members
                                 </Button>}

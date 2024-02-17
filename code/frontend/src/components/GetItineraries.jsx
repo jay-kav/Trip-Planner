@@ -152,11 +152,7 @@ function GetItineraries(props) {
                     <FormControlLabel
                       control={
                           <Checkbox
-<<<<<<< HEAD
-                              name="breakfast"
-=======
                               name="serves_breakfast"
->>>>>>> newbran
                               id="serves_breakfast"
                               defaultChecked
                           />
@@ -166,11 +162,7 @@ function GetItineraries(props) {
                     <FormControlLabel
                       control={
                           <Checkbox
-<<<<<<< HEAD
-                              name="lunch"
-=======
                               name="serves_lunch"
->>>>>>> newbran
                               id="serves_lunch"
                               defaultChecked
                           />
@@ -180,15 +172,9 @@ function GetItineraries(props) {
                     <FormControlLabel
                       control={
                           <Checkbox
-<<<<<<< HEAD
-                              name="dinner"
-                              id="serves_dinner"
-                              checked
-=======
                               name="serves_dinner"
                               id="serves_dinner"
                               defaultChecked
->>>>>>> newbran
                           />
                       }
                       label="Dinner"
