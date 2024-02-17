@@ -1,4 +1,4 @@
-<div style="background-color: #f2f2f2; padding: 10px;">
+<div style="background-color: #ffffff; padding: 10px;">
 
   # Journo User Manual
 
