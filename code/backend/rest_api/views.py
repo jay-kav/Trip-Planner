@@ -10,6 +10,7 @@ from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
 import base64
+import logging
 import re
 
 @csrf_exempt
@@ -184,6 +185,7 @@ def removeMember(request):
         try:
             data = json.loads(request.body)
             print(data)
+            print("here")
             trip_id = data.get('tripID')
             member_id = data.get('memberID')
 
@@ -201,24 +203,29 @@ def removeMember(request):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+logger = logging.getLogger(__name__)
+
 @csrf_exempt
 def changeOwner(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            # print(data)
+            print(data)
             trip_id = data.get('tripID')
             member_id = data.get('memberID')
             member = get_object_or_404(User, id=member_id)
 
             trip = get_object_or_404(Trip, id=trip_id)
+            new_owner = get_object_or_404(User, id=member_id)
 
-            if member:
-                trip.owner = member
+            if new_owner:
+                trip.owner = new_owner
+                trip.save()
                 return JsonResponse({'detail': 'Successfully changed owner'})
             return JsonResponse({'error': 'Member not found'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid request method'}, status=405)
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON decoding error: {e}")
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
             
     """ ------------------------- Activity Functions ------------------------- """
  
