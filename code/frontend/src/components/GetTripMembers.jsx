@@ -43,15 +43,6 @@ function GetTripMembers(props) {
             .catch(err => console.log(err))
         }
     });
-    
-    // Members Function
-    const handle = (e) => {
-        const newData = { ...addedMembers };
-        const selectedOptions = Array.from(e.target.selectedOptions, option => option.value);
-        newData.members = selectedOptions;
-        setAddedMembers(newData.members);
-        console.log("newdata", newData);
-    }
 
     const getNonMembers = () => {
         nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
@@ -71,7 +62,7 @@ function GetTripMembers(props) {
             onChange={(e) => setAddedMembers(e.target.value)} // Update the state with selected members
             sx={{ width: '10vw' }}
         >
-            <MenuItem value={''}></MenuItem>
+            <MenuItem key={"default"} value={''}></MenuItem>
             {nonMembers.map(user => (
                 <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
             ))}
@@ -80,6 +71,7 @@ function GetTripMembers(props) {
 
     const addMembers = (e) => {
         e.preventDefault();
+        console.log("addedMembers", addedMembers);
         if (addedMembers.length === 0) {
             alert("Please select members to add.");
         } else {
@@ -98,7 +90,7 @@ function GetTripMembers(props) {
     const removeMember = (e, member, tripID) => {
         e.preventDefault();
         axios.post(`remove-member/`, {
-            'memberID': member.id,
+            'memberID': member.data.id,
             'tripID': tripID
         })
         .then((response) => {
@@ -110,6 +102,7 @@ function GetTripMembers(props) {
 
     const changeOwner = (e, member, tripID) => {
         e.preventDefault();
+        console.log(member, tripID);
         axios.post(`change-owner/`, {
             'memberID': member.id,
             'tripID': tripID
@@ -123,7 +116,7 @@ function GetTripMembers(props) {
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
-            tripOwner.id != member.data.id && <ListItem key={member} disablePadding>
+            tripOwner.id != member.data.id && <ListItem key={member.data.id} disablePadding>
                 <ListItemText primary={member.data.username} />
                 <ListItemIcon sx={{marginLeft: '5rem'}}>
                     <div style={{display: 'flex', gap: '10px'}}>

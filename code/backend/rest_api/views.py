@@ -163,20 +163,18 @@ def addMembers(request):
             data = json.loads(request.body)
             print(data)
             trip_id = data.get('tripID')
-            member_ids = data.get('memberIDs')
+            member_ids = data.get('memberIDs', [])
+            print(member_ids)
 
             trip = get_object_or_404(Trip, id=trip_id)
 
             for member_id in member_ids:
-                if member_id:
-                    member_to_add = get_object_or_404(User, id=member_id)
-                    if member_to_add not in trip.members.all():
-                        trip.members.add(member_to_add)
-                        return JsonResponse({'detail': 'Successfully added a member'})
-                    else:
-                        return JsonResponse({'error': 'Member already in the trip members list'}, status=400)
+                member_to_add = get_object_or_404(User, id=member_id)
+                if member_to_add not in trip.members.all():
+                    trip.members.add(member_to_add)
                 else:
-                    return JsonResponse({'error': 'Invalid member data'}, status=400)
+                    return JsonResponse({'error': 'Member already in the trip members list'}, status=400)
+            return JsonResponse({'detail': 'Successfully added a member'})
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 
@@ -203,7 +201,7 @@ def removeMember(request):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
+@csrf_exempt
 def changeOwner(request):
     if request.method == 'POST':
         try:
@@ -211,11 +209,12 @@ def changeOwner(request):
             # print(data)
             trip_id = data.get('tripID')
             member_id = data.get('memberID')
+            member = get_object_or_404(User, id=member_id)
 
             trip = get_object_or_404(Trip, id=trip_id)
 
-            if member_id:
-                trip.owner = member_id
+            if member:
+                trip.owner = member
                 return JsonResponse({'detail': 'Successfully changed owner'})
             return JsonResponse({'error': 'Member not found'}, status=400)
         except json.JSONDecodeError:
