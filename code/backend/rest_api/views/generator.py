@@ -36,10 +36,13 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
         840 : ["serves_lunch", filters], 
         900 :  filters,
         960 :  filters,
-        1020 : ["serves_lunch", filters],
-        1080 : ["serves_lunch", filters],
-        1140 :  ["serves_lunch", filters],
-        1200 : "bar"
+        1020 : ["serves_dinner", filters],
+        1080 : ["serves_dinner", filters],
+        1140 :  ["serves_dinner", filters],
+        1200 : ["serves_dinner", filters],
+        1260 :  filters,
+        1320 :  filters,
+        1380 : filters
     }
     time = start
     roundedTime = round_nearest_hour(time)
