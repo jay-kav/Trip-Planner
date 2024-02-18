@@ -70,21 +70,24 @@ def createItinerary(request):
             random.shuffle(filters)
             print(day_of_week)
 
-            while i < (len(filters) - 1):
-                
-                result = linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
-                i += 1
+            if len(filters) > 0:
+
+                while i < (len(filters) - 1):
+                    
+                    result = linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, list(filters[i]), night, vegetarian )
+                    i += 1
+            
         
-    
-                if result[1]:
-                    print(f"Itinerary result {result[1]}")
-                    activities = result[1]
-                    validator = activities[-1].split(';')
-                    if abs(int(validator[-1]) - end_minutes) < 30:
-                        break
+                    if result[1]:
+                        print(f"Itinerary result {result[1]}")
+                        activities = result[1]
+                        validator = activities[-1].split(';')
+                        if abs(int(validator[-1]) - end_minutes) < 30:
+                            break
 
             if not activities:
-                activities = backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian)
+                result = backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian)
+                activities = result[1]
 
             form_data = {
                 'trip_id': trip_id,
