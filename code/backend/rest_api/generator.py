@@ -51,6 +51,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
     
     types = timeDict[roundedTime]
     failed = []
+    api_result = None
     while True:
         search = True
         i = 0

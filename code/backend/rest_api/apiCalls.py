@@ -37,8 +37,9 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
 
     if previous:
         coordinates = get_coordinates(collection, previous)
-    else : 
+    else: 
         coordinates = hotel
+        print(f"this is importnat {coordinates}")
 
     if not coordinates:
         return None
@@ -123,9 +124,11 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
     trip = get_object_or_404(Trip, id=trip_id)
 
     if previous:
+        print("This one")
         coordinates = get_coordinates(collection, previous)
     else : 
         # lon, lat = get_coordinates(collection, location[2])
+        print("here")
         coordinates = hotel
 
     if not coordinates:

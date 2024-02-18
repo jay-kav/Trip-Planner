@@ -49,8 +49,8 @@ def createItinerary(request):
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
             print(f"filters {filters}")
             print(f"foods {foods}")
-            # collection , hotel = getHotel(hotel, country, city)
-            collection = tmpCollection(country, city)
+            collection , hotel = getHotel(hotel, country, city)
+            # collection = tmpCollection(country, city)
             date_object = datetime.strptime(date, '%m/%d/%Y')
             day_of_week = date_object.weekday()
 
@@ -62,6 +62,8 @@ def createItinerary(request):
 
             if toggle:
                 end_minutes -= 30
+
+            activities = []
 
             i = 0
             filters = mixLists(filters)
