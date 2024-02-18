@@ -44,7 +44,7 @@ function ViewTrip(props) {
             alert("You are the owner of this trip. Please assign someone else as trip owner.");
         } else {
             axios.post(`remove-member/`, {
-                'memberID': tripOwner.id,
+                'memberID': localStorage.getItem('sessionID'),
                 'tripID': tripID
             })
             .then((response) => {
