@@ -6,10 +6,10 @@ import random
 from pymongo import MongoClient
 from load_env_var import get_env_value
 import json
-from .serializers import *
-from .models import *
+from ..serializers import *
+from ..models import *
 from django.views.decorators.csrf import csrf_exempt
-from .forms import *
+from ..forms import *
 
 
 FOODS = ["serves_breakfast", "serves_lunch", "serves_dinner"]

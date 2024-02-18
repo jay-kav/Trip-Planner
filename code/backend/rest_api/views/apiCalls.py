@@ -5,7 +5,7 @@ from load_env_var import get_env_value
 from .distanceCalculator import haversine
 from .dist import distanceCal
 #from distanceCalculator import haversine
-from .models import *
+from ..models import *
 from django.shortcuts import get_object_or_404
 
 time_to_spend = {
