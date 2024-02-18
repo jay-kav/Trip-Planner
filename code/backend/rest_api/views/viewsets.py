@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from django_filters import rest_framework as filters
-from .models import User, Trip, Itinerary
-from .serializers import UserSerializer, TripSerializer, ItinerarySerializer
+from ..models import User, Trip, Itinerary
+from ..serializers import UserSerializer, TripSerializer, ItinerarySerializer
 
    
 class UserViewset(viewsets.ModelViewSet):
