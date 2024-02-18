@@ -1,7 +1,6 @@
 from django.urls import path, include
 
-from .views import authentication, itinerary, views
-from .views import viewsets
+from .views import authentication, itinerary, views, viewsets
 from rest_framework import routers
 
 router = routers.DefaultRouter()

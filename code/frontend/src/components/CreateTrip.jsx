@@ -180,7 +180,11 @@ function CreateTrip() {
                     label="Country"
                     name="country"
                     autoComplete="country"
-                    onChange={(e) => setCountry(e.target.value)}
+                    onChange={(e) => {
+                      setCountry(e.target.value)
+                      setCities([]);
+                    }
+                  }
                   >
                     <MenuItem value={''}></MenuItem>
                     {getCountries()}
@@ -194,7 +198,13 @@ function CreateTrip() {
                   label="City"
                   name="city"
                   autoComplete="city"
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={
+                    (e) => {
+                      setCity(e.target.value);
+                      setHotels([]);
+                    }
+                  }
+                  disabled={country === ""}
                 >
                   <MenuItem value={''}></MenuItem>
                   {getCities()}
@@ -208,6 +218,7 @@ function CreateTrip() {
                     label="hotel"
                     name="hotel"
                     autoComplete="hotel"
+                    disabled={city === ""}
                   >
                     <MenuItem value={''}></MenuItem>
                     {getHotels()}
@@ -224,6 +235,7 @@ function CreateTrip() {
                     label="Start Date"
                     name="startdate"
                     autoComplete="startdate"
+                    format="DD/MM/YYYY"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -235,6 +247,7 @@ function CreateTrip() {
                     label="End Date"
                     name="enddate"
                     autoComplete="enddate"
+                    format="DD/MM/YYYY"
                   />
                 </Grid>
               </Grid>
