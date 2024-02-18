@@ -180,7 +180,11 @@ function CreateTrip() {
                     label="Country"
                     name="country"
                     autoComplete="country"
-                    onChange={(e) => setCountry(e.target.value)}
+                    onChange={(e) => {
+                      setCountry(e.target.value)
+                      setCities([]);
+                    }
+                  }
                   >
                     <MenuItem value={''}></MenuItem>
                     {getCountries()}
@@ -194,7 +198,12 @@ function CreateTrip() {
                   label="City"
                   name="city"
                   autoComplete="city"
-                  onChange={(e) => setCity(e.target.value)}
+                  onChange={
+                    (e) => {
+                      setCity(e.target.value);
+                      setHotels([]);
+                    }
+                  }
                   disabled={country === ""}
                 >
                   <MenuItem value={''}></MenuItem>

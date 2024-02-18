@@ -243,7 +243,7 @@ def deleteActivities(trip_id, remove = []):
         return JsonResponse({'error': 'Invalid activities data or activities not found'}, status=400)
     return JsonResponse({'error': 'Trip not found'}, status=404)
     
-
+@csrf_exempt
 def clearActivities(request):
     try:
         data = json.loads(request.body)
