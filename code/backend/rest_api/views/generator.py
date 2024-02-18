@@ -51,6 +51,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
     
     types = timeDict[roundedTime]
     failed = []
+    api_result = None
     while True:
         search = True
         i = 0
@@ -102,6 +103,8 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
         activities.append(activity)
         if current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
             used_filters.append(current_type)
+            print(filters)
+            print(f"error sue {current_type}")
             filters.remove(current_type)
         else:
             food.remove(current_type)
