@@ -64,6 +64,7 @@ function GetItineraries(props) {
     const submitForm = (e) => {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
+      console.log(data.get('date'));
       let filters = [];
       for (let filter in filterList) {
         if (data.get(filterList[filter]) == 'on') {
@@ -75,9 +76,10 @@ function GetItineraries(props) {
       let endTime = data.get('endtime')
       let roundTrip = data.get('roundtrip')
       let a = date.split('/');
-      let checkdate = `${a[2]}-${a[0]}-${a[1]}`;
-      if (checkdate > trip.endDate || checkdate < trip.startDate) {
-        alert('You must create an itinerary for a date in you trip!');
+      let checkdate = new Date(`${a[2]}-${a[1]}-${a[0]}T00:00:00Z`);
+      console.log(checkdate);
+      if (checkdate > new Date(trip.endDate) || checkdate < new Date(trip.startDate)) {
+        alert('You must create an itinerary for a valid date in you trip!');
       } else if (startTime < "08:00") {
         alert('You must select a start time of earliest 08:00');
       } else if (endTime < startTime) {
@@ -130,6 +132,7 @@ function GetItineraries(props) {
                         label="Date"
                         name="date"
                         autoFocus
+                        format="DD/MM/YYYY"
                       />
                     </Grid>
                     <br />
@@ -341,7 +344,7 @@ function GetItineraries(props) {
 
     const getDate = (date) => {
       let ymd = date.split('-');
-      return `${ymd[1]}/${ymd[2]}/${ymd[0]}`;
+      return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
     }
 
     // Functions to handle cycling through itineraries

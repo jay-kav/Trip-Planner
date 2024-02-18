@@ -51,7 +51,7 @@ def createItinerary(request):
             print(f"foods {foods}")
             collection , hotel = getHotel(hotel, country, city)
             # collection = tmpCollection(country, city)
-            date_object = datetime.strptime(date, '%m/%d/%Y')
+            date_object = datetime.strptime(date, '%d/%m/%Y')
             day_of_week = date_object.weekday()
 
             start_time = datetime.strptime(start, '%H:%M')
