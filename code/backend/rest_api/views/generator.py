@@ -2,6 +2,7 @@
 from .apiCalls import apiCall, foodApiCall
 from .distanceCalculator import haversine
 from pymongo import MongoClient
+from django.http import JsonResponse
 from load_env_var import get_env_value
 from django.views.decorators.csrf import csrf_exempt
 
