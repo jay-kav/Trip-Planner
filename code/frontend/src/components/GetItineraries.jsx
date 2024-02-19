@@ -103,10 +103,10 @@ function GetItineraries(props) {
         })
         .then((response) => {
           console.log(response);
-          //window.location.href = "/";
+          window.location.href = "/";
         })
         .catch((err) => {
-          alert(err.data.reason);
+          alert(err.response.data.reason);
           console.error("Error:", err);
         })
       }
