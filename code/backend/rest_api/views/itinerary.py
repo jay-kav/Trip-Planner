@@ -87,7 +87,10 @@ def createItinerary(request):
 
             if not activities:
                 result = backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian)
+                if not result:
+                    return JsonResponse({'reason': 'Failed to create itinerary'})
                 activities = result[1]
+
 
             form_data = {
                 'trip_id': trip_id,
@@ -103,12 +106,13 @@ def createItinerary(request):
                 if form.save():
                     add_activities(trip_id, activities)
                     return JsonResponse({'detail': 'Successfully created new itnerary'})
-                return JsonResponse({'error': 'Failed to create itinerary'}, status=400)
+                return JsonResponse({'reason': 'Could not save the itinerary'})
             else:
                 print(form.errors)
             return 
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid request method'}, status=405)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return  JsonResponse({'reason': 'Failed to create itinerary'})
         
 
 
@@ -138,9 +142,14 @@ def getHotel(hotel, country, city):
 
     document = collection.find_one(query)
 
-    doc = document.get("geometry", {}).get("location", {})
-    location = [doc.get("lat"), doc.get("lng")]
-    return collection, location
+    try:
+        doc = document.get("geometry", {}).get("location", {})
+        location = [doc.get("lat"), doc.get("lng")]
+        return collection, location
+
+    except Exception as e:
+            print(f"An error occurred: {e}")
+            return  JsonResponse({'reason': 'Hotel could not be found'})
 
 @csrf_exempt
 def tmpCollection(country, city):
@@ -160,8 +169,11 @@ def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, e
     print("backup used")
 
     filters = random.shuffle(filters)
-
-    return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
+    try:
+        return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
+    except Exception as e:
+            print(f"An error occurred: {e}")
+            return  JsonResponse({'reason': 'Not enough activities to satisfy your request'}) 
 
 @csrf_exempt
 def mixLists(origional):
