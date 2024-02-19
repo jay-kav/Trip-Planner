@@ -47,7 +47,7 @@ function GetItineraries(props) {
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
-    const [submit, setSubmit] = useState(false);
+    const [load, setLoad] = useState(false);
     
     // Fetch requests
     useEffect(() => {
@@ -64,8 +64,8 @@ function GetItineraries(props) {
 
     /* ---------- Itinerary Functions ---------- */
     const submitForm = (e) => {
+      setLoad(true);
       e.preventDefault();
-      setSubmit(true);
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
       let filters = [];
@@ -106,12 +106,11 @@ function GetItineraries(props) {
           window.location.href = "/";
         })
         .catch((err) => {
-          setSubmit(false);
           alert('Failed to create itinerary');
           console.error("Error:", err);
         })
       }
-      setSubmit(false);
+      setLoad(false);
     };
   
     const createItinerary = () => {
@@ -310,7 +309,7 @@ function GetItineraries(props) {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                  {submit ? <LoadIcon /> : <Button
+                  {load ? <LoadIcon /> : <Button
                       type="submit"
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
@@ -395,16 +394,16 @@ function GetItineraries(props) {
             </div>
             <div style={{gap: '5px', alignItems: 'center'}}>
               {create && createItinerary()}
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                {itineraries.length > 0 && currentItineraryIndex != 0 && <ArrowBackIosRoundedIcon sx={{marginRight: '8px'}} onClick={goToPreviousItinerary} />}
+              {itineraries.length > 0 && <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <ArrowBackIosRoundedIcon disa sx={{marginRight: '8px'}} onClick={goToPreviousItinerary}/>
                 <div style={{
                 display: 'flex',
                 whiteSpace: 'nowrap'
               }}>
                   {getItineraries()}
                 </div>
-                {itineraries.length > 0 && currentItineraryIndex != itineraries.length - 1 && <ArrowForwardIosRoundedIcon sx={{marginLeft: '8px'}} onClick={goToNextItinerary} />}
-              </div>
+                <ArrowForwardIosRoundedIcon sx={{marginLeft: '8px'}} onClick={goToNextItinerary}/>
+              </div>}
             </div>
           </CardContent>
         </Card>
