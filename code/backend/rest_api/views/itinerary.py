@@ -127,6 +127,7 @@ def add_activities(trip_id, activities_to_add):
     
 @csrf_exempt
 def getHotel(hotel, country, city):
+    print(f"This is the hotel placeid {hotel}, {country}, {city}")
     client = MongoClient(get_env_value('MONGO_URL'))
     db = client[country]
     collection = db[city]
