@@ -88,7 +88,7 @@ def createItinerary(request):
             if not activities:
                 result = backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian)
                 if not result:
-                    return JsonResponse({'reason': 'Failed to create itinerary'})
+                    return JsonResponse({'reason': 'Failed to create itinerary'}, status=400)
                 activities = result[1]
 
 
@@ -112,7 +112,7 @@ def createItinerary(request):
             return 
         except Exception as e:
             print(f"An error occurred: {e}")
-            return  JsonResponse({'reason': 'Failed to create itinerary'})
+            return  JsonResponse({'reason': 'Failed to create itinerary'}, status=400)
         
 
 
@@ -149,7 +149,7 @@ def getHotel(hotel, country, city):
 
     except Exception as e:
             print(f"An error occurred: {e}")
-            return  JsonResponse({'reason': 'Hotel could not be found'})
+            return  JsonResponse({'reason': 'Hotel could not be found'}, status=400)
 
 @csrf_exempt
 def tmpCollection(country, city):
@@ -173,7 +173,7 @@ def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, e
         return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
     except Exception as e:
             print(f"An error occurred: {e}")
-            return  JsonResponse({'reason': 'Not enough activities to satisfy your request'}) 
+            return  JsonResponse({'reason': 'Not enough activities to satisfy your request'}, status=400) 
 
 @csrf_exempt
 def mixLists(origional):
