@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import LoadIcon from './LoadIcon';
 
 const defaultTheme = createTheme();
 
@@ -24,6 +25,7 @@ function CreateTrip() {
     const [cities, setCities] = useState([]);
     const [city, setCity] = useState('');
     const [hotels, setHotels] = useState([]);
+    const [submit, setSubmit] = useState(false);
 
     const getUsers = () => {
       let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
@@ -98,6 +100,7 @@ function CreateTrip() {
   
     const submitForm = (e) => {
       e.preventDefault();
+      setSubmit(true);
       const data = new FormData(e.currentTarget);
       const tripname = data.get('tripname');
       const country = data.get('country');
@@ -137,8 +140,13 @@ function CreateTrip() {
         .then((response) => {
           console.log(response);
           window.location.href = "/";
+          setSubmit(false);
         })
-        .catch((err) => console.error("Error:", err));
+        .catch((err) => {
+          setSubmit(false);
+          alert('Failed to create trip');
+          console.error("Error:", err);
+        });
       }
     };
 
@@ -268,14 +276,14 @@ function CreateTrip() {
                   {getUsers()}
                 </Select>
               </Grid>
-              <Button
+              {submit ? <LoadIcon /> : <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Create Trip
-              </Button>
+              </Button>}
           </Box>
         </Box>
       </Container>

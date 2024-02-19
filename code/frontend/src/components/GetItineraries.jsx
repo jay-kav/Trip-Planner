@@ -17,6 +17,7 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import LoadIcon from './LoadIcon';
 
 const filterList = {
   'Breakfast': 'serves_breakfast',
@@ -46,6 +47,7 @@ function GetItineraries(props) {
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
+    const [submit, setSubmit] = useState(false);
     
     // Fetch requests
     useEffect(() => {
@@ -63,6 +65,7 @@ function GetItineraries(props) {
     /* ---------- Itinerary Functions ---------- */
     const submitForm = (e) => {
       e.preventDefault();
+      setSubmit(true);
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
       let filters = [];
@@ -102,8 +105,13 @@ function GetItineraries(props) {
           console.log(response);
           window.location.href = "/";
         })
-        .catch((err) => console.error("Error:", err));
+        .catch((err) => {
+          setSubmit(false);
+          alert('Failed to create itinerary');
+          console.error("Error:", err);
+        })
       }
+      setSubmit(false);
     };
   
     const createItinerary = () => {
@@ -302,13 +310,13 @@ function GetItineraries(props) {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <Button
+                  {submit ? <LoadIcon /> : <Button
                       type="submit"
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                     >
                       Create Itinerary
-                    </Button>
+                    </Button>}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
