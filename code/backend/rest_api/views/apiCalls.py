@@ -2,8 +2,8 @@ from django.views.decorators.csrf import csrf_exempt
 import random
 from pymongo import MongoClient
 from load_env_var import get_env_value
-from .distanceCalculator import haversine
-from .dist import distanceCal
+from .distanceCalculator import haversine, distanceCal
+#from .dist import distanceCal
 #from distanceCalculator import haversine
 from ..models import *
 from django.shortcuts import get_object_or_404
