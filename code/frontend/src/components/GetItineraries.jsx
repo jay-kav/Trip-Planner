@@ -17,6 +17,7 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import LoadIcon from './LoadIcon';
 
 const filterList = {
   'Breakfast': 'serves_breakfast',
@@ -46,6 +47,7 @@ function GetItineraries(props) {
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
+    const [load, setLoad] = useState(false);
     
     // Fetch requests
     useEffect(() => {
@@ -62,6 +64,7 @@ function GetItineraries(props) {
 
     /* ---------- Itinerary Functions ---------- */
     const submitForm = (e) => {
+      setLoad(true);
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
@@ -102,8 +105,12 @@ function GetItineraries(props) {
           console.log(response);
           window.location.href = "/";
         })
-        .catch((err) => console.error("Error:", err));
+        .catch((err) => {
+          alert(err.response.data.reason);
+          console.error("Error:", err);
+        })
       }
+      setLoad(false);
     };
   
     const createItinerary = () => {
@@ -302,13 +309,13 @@ function GetItineraries(props) {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <Button
+                  {load ? <LoadIcon /> : <Button
                       type="submit"
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                     >
                       Create Itinerary
-                    </Button>
+                    </Button>}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -387,16 +394,16 @@ function GetItineraries(props) {
             </div>
             <div style={{gap: '5px', alignItems: 'center'}}>
               {create && createItinerary()}
-              <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                {itineraries.length > 0 && currentItineraryIndex != 0 && <ArrowBackIosRoundedIcon sx={{marginRight: '8px'}} onClick={goToPreviousItinerary} />}
+              {itineraries.length > 0 && <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <ArrowBackIosRoundedIcon disa sx={{marginRight: '8px'}} onClick={goToPreviousItinerary}/>
                 <div style={{
                 display: 'flex',
                 whiteSpace: 'nowrap'
               }}>
                   {getItineraries()}
                 </div>
-                {itineraries.length > 0 && currentItineraryIndex != itineraries.length - 1 && <ArrowForwardIosRoundedIcon sx={{marginLeft: '8px'}} onClick={goToNextItinerary} />}
-              </div>
+                <ArrowForwardIosRoundedIcon sx={{marginLeft: '8px'}} onClick={goToNextItinerary}/>
+              </div>}
             </div>
           </CardContent>
         </Card>

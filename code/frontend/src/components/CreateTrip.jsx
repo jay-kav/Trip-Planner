@@ -3,7 +3,7 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import { Select, MenuItem } from '@mui/material';
+import { Select, MenuItem, FormControlLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import CheckIcon from '@mui/icons-material/Check';
+import LoadIcon from './LoadIcon';
 
 const defaultTheme = createTheme();
 
@@ -24,6 +25,7 @@ function CreateTrip() {
     const [cities, setCities] = useState([]);
     const [city, setCity] = useState('');
     const [hotels, setHotels] = useState([]);
+    const [submit, setSubmit] = useState(false);
 
     const getUsers = () => {
       let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
@@ -98,6 +100,7 @@ function CreateTrip() {
   
     const submitForm = (e) => {
       e.preventDefault();
+      setSubmit(true);
       const data = new FormData(e.currentTarget);
       const tripname = data.get('tripname');
       const country = data.get('country');
@@ -137,8 +140,13 @@ function CreateTrip() {
         .then((response) => {
           console.log(response);
           window.location.href = "/";
+          setSubmit(false);
         })
-        .catch((err) => console.error("Error:", err));
+        .catch((err) => {
+          setSubmit(false);
+          alert('Failed to create trip');
+          console.error("Error:", err);
+        });
       }
     };
 
@@ -171,61 +179,7 @@ function CreateTrip() {
                 autoFocus
               />
             </Grid>
-              <Grid container spacing={3} mt={1}>
-                <Grid item xs={12} sm={4}>
-                  <Select
-                    required
-                    fullWidth
-                    id="country"
-                    label="Country"
-                    name="country"
-                    autoComplete="country"
-                    onChange={(e) => {
-                      setCountry(e.target.value)
-                      setCities([]);
-                    }
-                  }
-                  >
-                    <MenuItem value={''}></MenuItem>
-                    {getCountries()}
-                  </Select>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                <Select                   
-                  required
-                  fullWidth
-                  id="city"
-                  label="City"
-                  name="city"
-                  autoComplete="city"
-                  onChange={
-                    (e) => {
-                      setCity(e.target.value);
-                      setHotels([]);
-                    }
-                  }
-                  disabled={country === ""}
-                >
-                  <MenuItem value={''}></MenuItem>
-                  {getCities()}
-                </Select>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                  <Select                   
-                    required
-                    fullWidth
-                    id="hotel"
-                    label="hotel"
-                    name="hotel"
-                    autoComplete="hotel"
-                    disabled={city === ""}
-                  >
-                    <MenuItem value={''}></MenuItem>
-                    {getHotels()}
-                  </Select>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} mt={1}>
+            <Grid container spacing={2} mt={1}>
                 <Grid item xs={12} sm={6}>
                   <DatePicker 
                     margin="normal"
@@ -251,31 +205,105 @@ function CreateTrip() {
                   />
                 </Grid>
               </Grid>
-              <Grid container mt={2}>
-                <Select
-                  required
-                  fullWidth
-                  id="members"
-                  label="Members"
-                  name="members"
-                  autoComplete="members"
-                  multiple
-                  defaultValue={''} // Provide the default value
-                  value={members} // Provide the array of selected members
-                  onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
-                >
-                  <MenuItem value={''}></MenuItem>
-                  {getUsers()}
-                </Select>
+              <Grid container spacing={2} mt={1}>
+                <Grid item xs={12} sm={6}>
+                  <FormControlLabel 
+                    control={
+                      <Select
+                        required
+                        fullWidth
+                        id="country"
+                        name="country"
+                        onChange={(e) => {
+                          setCountry(e.target.value)
+                          setCities([]);
+                        }}
+                      >
+                        <MenuItem value={''}></MenuItem>
+                        {getCountries()}
+                      </Select>
+                    }
+                    label="Country"
+                    labelPlacement='top'
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                <FormControlLabel 
+                    control={
+                      <Select                   
+                        required
+                        fullWidth
+                        id="city"
+                        label="City"
+                        name="city"
+                        onChange={
+                          (e) => {
+                            setCity(e.target.value);
+                            setHotels([]);
+                          }
+                        }
+                        disabled={country === ""}
+                      >
+                        <MenuItem value={''}></MenuItem>
+                        {getCities()}
+                      </Select>
+                    }
+                    label="City"
+                    labelPlacement='top'
+                  />
+                </Grid>
               </Grid>
-              <Button
+              <Grid container spacing={2} mt={2}>
+              <Grid item xs={12} sm={6}>
+                  <FormControlLabel 
+                    control={
+                      <Select                   
+                        required
+                        fullWidth
+                        id="hotel"
+                        label="hotel"
+                        name="hotel"
+                        disabled={city === ""}
+                      >
+                        <MenuItem value={''}></MenuItem>
+                        {getHotels()}
+                      </Select>
+                    }
+                    label="Hotel"
+                    labelPlacement='top'
+                  />
+                </Grid>
+              <Grid item xs={12} sm={6}>
+              <FormControlLabel 
+                    control={
+                      <Select
+                        required
+                        fullWidth
+                        id="members"
+                        name="members"
+                        autoComplete="members"
+                        multiple
+                        defaultValue={''} // Provide the default value
+                        value={members} // Provide the array of selected members
+                        onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
+                      >
+                        <MenuItem value={''}></MenuItem>
+                        {getUsers()}
+                      </Select>
+                    }
+                    label="Members"
+                    labelPlacement='top'
+                  />
+              </Grid>
+              </Grid>
+              {submit ? <LoadIcon /> : <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Create Trip
-              </Button>
+              </Button>}
           </Box>
         </Box>
       </Container>
