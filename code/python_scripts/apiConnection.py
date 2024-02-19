@@ -2,13 +2,13 @@ import googlemaps
 from pymongo import MongoClient
 
 # Connection to  Google Maps API
-gmaps = googlemaps.Client(key=GAPI_KEY)
+gmaps = googlemaps.Client(key=get_env_value('GAPI_KEY'))
 
 # MongoDB connection
 
-client = MongoClient(ADMIN_URL)
+client = MongoClient(get_env_value('ADMIN_URL'))
 db = client['Belgium']
-collection = db['Brussels']
+collection = db['']
 
 # Brussels city center coordinates
 brussels_center = (50.8503, 4.3517)
