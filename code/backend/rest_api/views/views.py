@@ -320,6 +320,9 @@ def getActivities(request):
                     rating = place.get("rating", "")
                     url = place.get("url", "")
                     website = place.get("website", "")
+                    location = place.get("geometry", {}).get("location", {})
+                    latitude = location.get("lat")
+                    longitude = location.get("lng")
                     activityList.append({
                         'id': id,
                         'name': name,
@@ -330,7 +333,9 @@ def getActivities(request):
                         'rating': rating,
                         'image_data': encoded_image,
                         'url': url,
-                        'website': website
+                        'website': website,
+                        'latitude': latitude,
+                        'longitude': longitude
                     })
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
         except json.JSONDecodeError:

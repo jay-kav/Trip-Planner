@@ -93,7 +93,7 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
             if toggle and haversine([startLat, startLon], [docLatitude, docLongitude ]) > distance:
                 continue
 
-            distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
+            distance = haversine([lat,lon], [docLatitude, docLongitude])
             print(f"distance {distance}")
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
@@ -113,7 +113,7 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
             if open_time <= start_time and end_time <= (closed_time - 20):
                 if end_time > closed_time:
                     end_time -= (end_time - closed_time)
-                return id, start_time, end_time, docLatitude, docLongitude
+                return id, start_time, end_time
     return None
 
 @csrf_exempt
@@ -187,7 +187,7 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
             docLongitude = doc_location.get("lng")
             if toggle and haversine([startLat, startLon], [docLatitude, docLongitude ]) > distance:
                 continue
-            distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
+            distance = haversine([lat,lon], [docLatitude, docLongitude ])
             print(f"distance {distance}")
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
@@ -207,7 +207,7 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
             if open_time <= start_time and end_time <= (closed_time - 20):
                 if end_time > closed_time:
                     end_time -= (end_time - closed_time)
-                return id, start_time, end_time , docLatitude, docLongitude
+                return id, start_time, end_time
     return None
 
 @csrf_exempt
