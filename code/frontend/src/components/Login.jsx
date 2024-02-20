@@ -32,6 +32,7 @@ function Login() {
       .then((response) => {
         console.log(response);
         localStorage.setItem("sessionID", response.data.uid);
+        localStorage.setItem('selectTrip', 0);
         window.location.href = '/';
       })
       .catch((err) => console.error("Error:", err));

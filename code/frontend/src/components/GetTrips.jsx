@@ -33,7 +33,9 @@ function GetTrips() {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" onClick={() => setSelected(trip)}>View</Button>
+              <Button size="small" onClick={() => {
+                setSelected(trip);
+              }}>View</Button>
             </CardActions>
           </Card>
         </Grid>
