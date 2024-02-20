@@ -121,13 +121,11 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             failed.append(itineraryResult[1])
 
 
-        # Append 
-
 
         return True , itineray
     except Exception as e:
         print(f"An error occurred: {e}")
-        return  JsonResponse({'reason': 'Could not make an itinerary to satisfy your filters'}) 
+        return  JsonResponse({'error': 'Failed to create itinerary', 'reason': 'Could not make an itinerary to satisfy your selections'}) 
 
 
 @csrf_exempt
