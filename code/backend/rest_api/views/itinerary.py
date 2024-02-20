@@ -89,11 +89,12 @@ def createItinerary(request):
 
             if not activities:
                 result = backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian)
-                if not result:
+                print(f"backup result {result}")
+                if not result[1]:
                     return JsonResponse({'error': 'Failed to create itinerary', 'reason': 'Could not make backup'}, status=400)
                 activities = result[1]
 
-
+            print(f"activities {activities}")
             form_data = {
                 'trip_id': trip_id,
                 'date': date,
@@ -111,7 +112,8 @@ def createItinerary(request):
                 return JsonResponse({'error': 'Could not save the itinerary', 'reason': 'Could not save the itinerary'}, status=400)
             else:
                 print(form.errors)
-            return 
+                print("zahras problem")
+            return JsonResponse({'error': 'Form was not valid', 'reason': 'form was not vaid'}, status=400)
         except Exception as e:
             print(f"An error occurred: {e}")
             return  JsonResponse({'error': 'Failed to create itinerary', 'reason': 'data is not correctly formatted'}, status=400)
@@ -167,14 +169,14 @@ def tmpCollection(country, city):
 
 @csrf_exempt
 def backupCall(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, night, vegetarian):
-    filters = ['zoo', 'museum', 'park', 'shopping_mall', 'bowling_alley', 'tourist_attraction', 'aquarium', "amusement_park"]
-    foods = ["serves_breakfast", "serves_lunch", "serves_dinner"]
+    backupFilters = ['zoo', 'museum', 'park', 'shopping_mall', 'bowling_alley', 'tourist_attraction', 'aquarium', "amusement_park"]
+    backupFoods = ["serves_breakfast", "serves_lunch", "serves_dinner"]
 
     print("backup used")
 
-    filters = random.shuffle(filters)
+    random.shuffle(backupFilters)
     try:
-        return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, foods, filters, night, vegetarian )
+        return linearItinerary(toggle, collection, hotel, trip_id, day_of_week, start_minutes, end_minutes, backupFoods, backupFilters, night, vegetarian )
     except Exception as e:
             print(f"An error occurred: {e}")
             return JsonResponse({'error': 'Failed to create itinerary', 'reason': 'Not enough activities to satisfy your request'}, status=400)
