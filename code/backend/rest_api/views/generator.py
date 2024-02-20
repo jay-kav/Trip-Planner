@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False, filters=False, night=False, vegetarian=False, previous='', itineray=None, activities=None, used_filters=None):
     try: 
-        print("new call")
+        print(f"new call {night}")
         if start > (end - 40):
             #valid check
             print("ended here")
@@ -27,6 +27,8 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             activities = []
         if used_filters == None:
             used_filters = []
+
+        itineraryLength = len(itineray)
 
         timeDict = {
             480 : "serves_breakfast",
@@ -56,12 +58,16 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
         
         types = timeDict[roundedTime]
         failed = []
+        current_type = None
         api_result = None
         while True:
+            if len(itineray) > itineraryLength:
+                errorAmount = len(itineray) - itineraryLength
+                itineray = itineray[:-errorAmount]
             search = True
             i = 0
             while i < (len(filters) - 1) and search:
-                if time > 1200 and night:
+                if start >= 1140 and night:
                     i += 1
                     if len(night) > 1:
                         nightActivity = chooseNightActivity(night, start)
@@ -91,7 +97,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
                 if api_result:
                     activity, startTime, endTime = api_result
                     if endTime > end:
-                        if endTime - end <= 20: # leeway 
+                        if (endTime - end) <= 40: # leeway 
                             endTime = end
                             search = False
                     else:
@@ -116,7 +122,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
                 print(filters)
                 print(f"error sue {current_type}")
                 filters.remove(current_type)
-            else:
+            elif current_type:
                 food.remove(current_type)
 
 
