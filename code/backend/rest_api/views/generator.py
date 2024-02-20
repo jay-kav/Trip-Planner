@@ -102,11 +102,16 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             if api_result == None:
                 return False, previous
 
-            # print("error sector 1")
-            activityDetails = activity + ';' + str(startTime) + ';' + str(endTime)
+            print("error sector 1")
+            if current_type:
+                processed = processString(current_type)
+            else: 
+                processed = processString(nightActivity)
+            print("past error section")
+            activityDetails = activity + ';' + str(startTime) + ';' + str(endTime) + ';'+  processed
             itineray.append(activityDetails)
             activities.append(activity)
-            if current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
+            if current_type and current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
                 used_filters.append(current_type)
                 print(filters)
                 print(f"error sue {current_type}")
@@ -165,3 +170,13 @@ def chooseNightActivity(night, time):
     if time > 1320:
         return night[0]
     return night[1]
+
+def processString(string):
+    print(f"Error in the function process {string}")
+    string = string.replace("_", " ")
+    word = string.split()
+    if word:
+        if word[0] == "serves":
+            return word[1]
+        string = " ".join(word)
+    return string
