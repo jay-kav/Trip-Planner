@@ -1,7 +1,7 @@
-# USER MANUAL FOR JURNO
+# USER MANUAL FOR JOURNO
 
 *by Ethan & Jamie*  
-*17/02/2000*
+*17/02/2024*
 
 This manual is designed for all users to use as a guide for the system.
 
@@ -14,17 +14,25 @@ for the system.
 
 **Table of Contents**
 1. [Getting Started](#step-1-getting-started)
-  1. [Registering an Account](#11-registering-an-account)
-  2. [Logging In](#12-logging-in)
+    1. [Registering an Account](#11-registering-an-account)    
+    2. [Logging In](#12-logging-in)   
 2. [Homepage Navigation](#step-2-homepage-navigation)
-  1. [Side Bar](#21-side-bar)
+    1. [Side Bar](#21-side-bar)
 3. [Creating and Managing Trips](#step-3-creating-and-managing-trips)
-  1. [Creating a Trip](#31-creating-a-trip)
-  2. [Viewing a Trip](#32-viewing-a-trip)
-  3. [Adding Members to a Trip](#32-adding-members-to-a-trip)
-  4. [Deleting Members from a Trip](#34-deleting-members-from-a-trip)
-  5. [Deleting a Trip](#35-deleting-a-trip)
-  6. [Leaving a Trip](#36-leaving-a-trip)
+    1. [Creating a Trip](#31-creating-a-trip)
+    2. [Viewing a Trip](#32-viewing-a-trip)
+    3. [Adding Members to a Trip](#32-adding-members-to-a-trip)
+    4. [Deleting Members from a Trip](#34-deleting-members-from-a-trip)
+    5. [Deleting a Trip](#35-deleting-a-trip)
+    6. [Leaving a Trip](#36-leaving-a-trip)  
+4. [Creating and Managing Itineraries](#step-4-creating-and-managing-itineraries)
+    1. [Creating an Itinerary](#41-creating-an-itinerary)
+    2. [Deleting an Itinerary](#42-deleting-an-itinerary)
+    3. [Viewing Itineraries](#43-view-all-itineraries)
+5. [Other Function](#step-5-other-functions)
+    1. [Clearing Activities](#51-clearing-activities)
+    2. [Changing Owner of a Trip](#52-changing-owner-of-a-trip)
+    3. [Logging Out](#53-logging-out)
 
 ---
 
@@ -239,7 +247,7 @@ Want to see all the itineraries you've created for a trip:
 ---
 
 
-## 5. Other Functions
+## Step 5: Other Functions
 
 ### 5.1 Clearing Activities
 
