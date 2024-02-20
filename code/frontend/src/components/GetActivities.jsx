@@ -37,19 +37,11 @@ function GetActivities (props) {
                     <Typography sx={{textWrap: 'wrap'}}>{activity.name}</Typography>
                     <Typography sx={{textWrap: 'wrap'}}>{activity.address}</Typography>
                     <Typography>Rating: {activity.rating}/5</Typography>
-                    {activity.website && (
-                    <Typography>
-                        <a href={activity.website} target="_blank" rel="noopener noreferrer">Website</a>
-                    </Typography>
-                    )}
-                    {activity.url && (
-                    <Typography>
-                        <a href={activity.url} target="_blank" rel="noopener noreferrer">Location</a>
-                    </Typography>
-                    )}
-
+                    {activity.website  && (<Typography><a href={activity.website} target="_blank" rel="noopener noreferrer">Website</a></Typography> )}
+                    {activity.url && (<Typography><a href={activity.url} target="_blank" rel="noopener noreferrer">Location</a></Typography>)}
                 </Box>
                 <Box sx={{margin: 'auto', textAlign: 'center' }}>
+                <Typography>{activity.type}</Typography>
                     <Typography>{activity.startTimes}</Typography>
                     <Typography>{activity.endTimes}</Typography>
                 </Box>
