@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { List, ListItem } from '@mui/material';
+import { Button, List, ListItem } from '@mui/material';
 import { Box, Typography } from '@mui/material';
 
 function GetActivities (props) {
@@ -26,24 +26,25 @@ function GetActivities (props) {
     const getItems = () => {
         return activities.map(activity => (
             <ListItem key={activity.id} sx={{border: 'solid 1px lightgrey', borderRadius: '5px', m: '5px 10px', width: '37vw', justifyContent: 'space-between'}}>
-                <Box>
+                <Box sx={{textAlign: 'center', width: '3vw'}}>
+                    <Typography>{activity.startTimes}</Typography>
+                    <Typography>{activity.endTimes}</Typography>
+                </Box>
+                <Box sx={{width: '24vw', marginLeft: '10px', paddingLeft: '10px', borderLeft: 'solid 1px lightgrey'}}>
+                    <Typography sx={{textWrap: 'wrap'}}>{activity.name}</Typography>
+                    <Typography sx={{textWrap: 'wrap'}}>{activity.address}</Typography>
+                    <Box sx={{display: 'flex', gap: '10px'}}>
+                        {activity.website  && (<Button sx={{fontSize: '.8vw'}} variant="contained" href={activity.website} target="_blank" rel="noopener noreferrer">Website</Button> )}
+                        {activity.url && (<Button sx={{fontSize: '.8vw'}} variant="contained" href={activity.url} target="_blank" rel="noopener noreferrer">Location</Button>)}
+                    </Box>
+                </Box>
+                <Box sx={{justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', width: '5vw'}}>
                     <img
-                        style={{height: '60px', width: '60px', borderRadius: '30px', objectFit: 'cover', marginRight: '8px'}}
+                        style={{height: '60px', width: '60px', borderRadius: '30px', objectFit: 'cover'}}
                         src={`data:image/jpeg;base64,${activity.image_data}`}
                         alt={activity.name}
                     />
-                </Box>
-                <Box sx={{width: '24vw', marginRight: '10px', paddingRight: '10px', borderRight: 'solid 1px lightgrey'}}>
-                    <Typography sx={{textWrap: 'wrap'}}>{activity.name}</Typography>
-                    <Typography sx={{textWrap: 'wrap'}}>{activity.address}</Typography>
-                    <Typography>Rating: {activity.rating}/5</Typography>
-                    {activity.website  && (<Typography><a href={activity.website} target="_blank" rel="noopener noreferrer">Website</a></Typography> )}
-                    {activity.url && (<Typography><a href={activity.url} target="_blank" rel="noopener noreferrer">Location</a></Typography>)}
-                </Box>
-                <Box sx={{margin: 'auto', textAlign: 'center' }}>
-                <Typography>{activity.type}</Typography>
-                    <Typography>{activity.startTimes}</Typography>
-                    <Typography>{activity.endTimes}</Typography>
+                    <Typography sx={{textWrap: 'wrap', textAlign: 'center'}}>{activity.type}</Typography>
                 </Box>
             </ListItem>
         ));

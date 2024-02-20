@@ -10,9 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Grid } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import CheckIcon from '@mui/icons-material/Check';
-import LoadIcon from './LoadIcon';
+import Load from './Load';
 
 const defaultTheme = createTheme();
 
@@ -92,11 +90,6 @@ function CreateTrip() {
           <MenuItem key={hotel} value={hotel.id}>{hotel.name}</MenuItem>
       ));
     }
-    
-    const getDate = (date) => {
-      let num = date.split("-");
-      return parseInt(num[2]) + parseInt(num[1]) * 30 + parseInt(num[0]) * 365;
-    }
   
     const submitForm = (e) => {
       e.preventDefault();
@@ -109,24 +102,26 @@ function CreateTrip() {
       const startDate = data.get('startdate');
       const endDate = data.get('enddate');
       const members = Array.isArray(data.getAll('members')) ? Array.from(data.getAll('members')) : [];
+      const today = new Date();
+      let date = String(today.getDate()).padStart(2, '0') + '/' + String(today.getMonth() + 1).padStart(2, '0') + '/' + today.getFullYear();
       if (tripname === "") {
-        /*return (
-          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            Here is a gentle confirmation that your action was successful.
-          </Alert>
-        );*/
         alert("Please enter a trip name");
-      } else if (country === "") {
-        alert("Please select a country");
-      } else if (city === "") {
-        alert("Please select a city");
       } else if (startDate === "") {
         alert("Please enter a start date");
       } else if (endDate === "") {
         alert("Please enter an end date");
-      } else if (getDate(startDate) > getDate(endDate)) {
+      } else if (startDate > endDate) {
         alert("End date must be after start date");
+      } else if (startDate < date) {
+        alert("Trip start date must be atleast today");
+      } else if (country === "") {
+        alert("Please select a country");
+      } else if (city === "") {
+        alert("Please select a city");
+      } else if (hotel === "") {
+        alert("Please select a hotel");
       } else {
+        setSubmit(true);
         axios.post(`create-trip/`, {
           'ownerID': localStorage.getItem('sessionID'),
           'tripname': tripname,
@@ -140,7 +135,6 @@ function CreateTrip() {
         .then((response) => {
           console.log(response);
           window.location.href = "/";
-          setSubmit(false);
         })
         .catch((err) => {
           setSubmit(false);
@@ -148,6 +142,7 @@ function CreateTrip() {
           console.error("Error:", err);
         });
       }
+      setSubmit(false);
     };
 
   return (
@@ -277,7 +272,6 @@ function CreateTrip() {
               <FormControlLabel 
                     control={
                       <Select
-                        required
                         fullWidth
                         id="members"
                         name="members"
@@ -296,14 +290,7 @@ function CreateTrip() {
                   />
               </Grid>
               </Grid>
-              {submit ? <LoadIcon /> : <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Create Trip
-              </Button>}
+              <Load text="Create Trip" messageTitle="Creating Trip" messageBody="Your trip is being created" submit={submit} />
           </Box>
         </Box>
       </Container>
