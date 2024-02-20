@@ -321,7 +321,7 @@ function GetItineraries(props) {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <Load text="Create Itinerary" messageTitle="Creating Itinerary" messageBody="Your itinerary is being created" submit={submit} />
+                    <Button variant="contained" type='submit' fullWidth sx={{ mt: 3, mb: 2 }}>Create Itinerary</Button>
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -387,9 +387,9 @@ function GetItineraries(props) {
 
     // Render Itineraries
     return (
-      <Card sx={{ width: '55vw', height: '90vh', mt: 5, overflowY: 'auto'}}>
+      <Card sx={{ width: '48vw', height: '90vh', mt: 5, overflowY: 'auto'}}>
           <CardContent>
-            <div style={{display: 'flex', margin: '0 15px', gap: '5px'}}> 
+            <div style={{display: 'flex', margin: '0 15px', justifyContent: 'space-between'}}> 
               {localStorage.getItem('sessionID') == tripOwner.id
               && !create
               && <Button
@@ -398,7 +398,7 @@ function GetItineraries(props) {
               sx={{ mt: 3, mb: 2 }}
               onClick={() => setCreate(!create)}>Add Itinerary</Button>}
               {localStorage.getItem('sessionID') == tripOwner.id
-                && <Button sx={{fontSize: '1vw', mt: 3, mb: 2 }} onClick={(e) => clearActivities(e)} variant="contained" color="error">Clear Activities</Button>
+                && <Button sx={{fontSize: '1vw', mt: 3, mb: 2 }} onClick={(e) => clearActivities(e)} variant="contained">Clear Activities</Button>
               }
             </div>
             <div style={{gap: '5px', alignItems: 'center'}}>
@@ -415,6 +415,7 @@ function GetItineraries(props) {
               </div>}
             </div>
           </CardContent>
+          <Load messageTitle="Creating Itinerary" messageBody="Your itinerary is being created"/>
         </Card>
     )
 }

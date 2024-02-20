@@ -17,20 +17,21 @@ const style = {
 };
 
 export default function Load(props) {
-    let text = props.text;
+    //let text = props.text;
     let messageTitle = props.messageTitle;
     let messageBody = props.messageBody;
-    let submit = props.submit;
+    //let submit = props.submit;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  if (!submit) {
+  /*if (!submit) {
     return <Button variant="contained" type='submit' fullWidth sx={{ mt: 3, mb: 2 }} onClick={handleOpen}>{text}</Button>;
-  };
+  };*/
+  //<Button variant="contained" type='submit' fullWidth sx={{ mt: 3, mb: 2 }} onClick={handleOpen}>{text}</Button>
   return (
     <div>
-      <Button variant="contained" type='submit' fullWidth sx={{ mt: 3, mb: 2 }} onClick={handleOpen}>{text}</Button>
+      
       <Modal
         open={open}
         onClose={handleClose}

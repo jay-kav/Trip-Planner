@@ -91,6 +91,30 @@ def getCities(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_exempt
+def getHotel(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            country = data.get('country')
+            city = data.get('city')
+            hotel = data.get('hotel')
+            if not country or not city:
+                return JsonResponse({'detail': 'No country or city or hotel selected', 'hotel': []}, status=200)
+            
+            client = MongoClient(get_env_value('MONGO_URL'))
+            db = client[country]
+            collection = db[city]
+            hotel = collection.find_one({"place_id": hotel})
+            name = hotel.get("name")
+
+            return JsonResponse({'detail': 'Successfully retrieved hotel', 'hotel': name}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
+
+@csrf_exempt
 def getHotels(request):
     if request.method == 'POST':
         try:
@@ -320,12 +344,13 @@ def getActivities(request):
                     rating = place.get("rating", "")
                     url = place.get("url", "")
                     website = place.get("website", "")
+
                     activityList.append({
                         'id': id,
                         'name': name,
                         'startTimes': start_times,
                         'endTimes': end_times,
-                        'type': type,
+                        'type': type.title(),
                         'address': address,
                         'rating': rating,
                         'image_data': encoded_image,

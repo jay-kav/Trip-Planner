@@ -129,9 +129,10 @@ function GetTripMembers(props) {
     };
 
     return (
-        <Card sx={{ width: '36vw', height: '50vh' }}>
+        <Card sx={{ width: '21vw', height: '28vh' }}>
           <CardContent>
-            <List>
+            <Typography variant="h6" component="div" gutterBottom>Trip Members</Typography>
+            <List sx={{overflowY:'scroll', height: '24vh'}}>
                 <ListItem disablePadding>
                     <ListItemText primary={tripOwner.username + " (Owner)"} />
                     <ListItemIcon sx={{
