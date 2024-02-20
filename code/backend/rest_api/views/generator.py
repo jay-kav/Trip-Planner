@@ -95,7 +95,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
                         i += 1
 
                 if api_result:
-                    activity, startTime, endTime = api_result
+                    activity, startTime, endTime, docLatitude, docLongitude = api_result
                     if endTime > end:
                         if (endTime - end) <= 40: # leeway 
                             endTime = end
@@ -114,7 +114,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             else: 
                 processed = processString(nightActivity)
             print("past error section")
-            activityDetails = activity + ';' + str(startTime) + ';' + str(endTime) + ';'+  processed
+            activityDetails = activity + ';' + str(startTime) + ';' + str(endTime) + ';'+  processed + ';' + str(docLatitude) + ';' + str(docLongitude)
             itineray.append(activityDetails)
             activities.append(activity)
             if current_type and current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
