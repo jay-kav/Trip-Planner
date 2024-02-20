@@ -35,7 +35,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             540 : ["serves_breakfast", filters],
             600 :["serves_breakfast", filters],
             660 : filters, 
-            720 : ["serves_lunch", filters],
+            720 : filters,
             780 : ["serves_lunch", filters],
             840 : ["serves_lunch", filters], 
             900 :  filters,
@@ -131,6 +131,10 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
                 break
             failed.append(itineraryResult[1])
 
+            if current_type and current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
+                filters.append(current_type)
+            else:
+                food.append(current_type)
 
 
         return True , itineray
