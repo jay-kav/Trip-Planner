@@ -49,6 +49,9 @@ We had not used it before so we needed to research what was involved with the in
 For our project we couldn’t afford to continuously query Google Places API so we needed to choose a database to store the information. MongoDB is a non-relational database that was chosen for its suitability in storing JSON documents and its support for geospatial querying, a feature we anticipated would greatly enhance our itinerary generator later on. Our exploration of MongoDB included mastering the setup of the database, creating collections, and designing the document structure within. Additionally, we delved into the process of connecting the database to our application using MongoDB drivers and PyMongo.
 ### 2.3 Algorithms
 #### 2.3.1 Heuristics
+Creating a perfect itinerary generator for our project posed challenges due to the inherent complexity, making it an NP-complete problem. To address this, we strategically employed heuristics to enhance manageability. The initial step involved categorizing activities into distinct groups, providing a foundation for heuristic application.
+
+These heuristics played a pivotal role in determining the activity group based on the time of day. As Google did not offer predefined durations for locations, we assigned heuristic times to each location. This approach significantly contributed to the generation of well-crafted activities within the itinerary.
 #### 2.3.2 Distance Calculation
 There were limitations with the MongoDB geospatial query, as it struggled to precisely convert latitude and longitude coordinates into a reliable distance calculation. Initially, we considered incorporating third party solutions such as the Google Routes API or OpenStreetMap API for distance calculations. However, instead of outsourcing this functionality to a third party, we decided to challenge ourselves by exploring alternative methods.
 
