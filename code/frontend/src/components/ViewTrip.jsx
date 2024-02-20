@@ -38,14 +38,14 @@ function ViewTrip(props) {
         .catch((err) => console.error("Error:", err));
     }
 
-    const leaveTrip = (e, tripID) => {
+    const leaveTrip = (e) => {
         e.preventDefault();
         if (tripOwner.id == localStorage.getItem('sessionID')) {
             alert("You are the owner of this trip. Please assign someone else as trip owner.");
         } else {
             axios.post(`remove-member/`, {
                 'memberID': localStorage.getItem('sessionID'),
-                'tripID': tripID
+                'tripID': trip.id
             })
             .then((response) => {
                 console.log(response);

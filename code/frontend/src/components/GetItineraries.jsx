@@ -98,7 +98,7 @@ function GetItineraries(props) {
           'date': date,
           'startTime': startTime,
           'endTime': endTime,
-          'roundTrip': roundTrip,
+          'roundTrip': roundTrip == "on",
           'filters': filters
         })
         .then((response) => {
