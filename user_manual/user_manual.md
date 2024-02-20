@@ -26,6 +26,20 @@ for the system.
   5. [Deleting a Trip](#35-deleting-a-trip)
   6. [Leaving a Trip](#36-leaving-a-trip)
 
+1. [Getting Started](#step-1-getting-started)
+    1. [Registering an Account](#11-registering-an-account)    
+    2. [Logging In](#12-logging-in)   
+2. [Homepage Navigation](#step-2-homepage-navigation)
+    1. [Side Bar](#21-side-bar)
+3. [Creating and Managing Trips](#step-3-creating-and-managing-trips)
+    1. [Creating a Trip](#31-creating-a-trip)
+    2. [Viewing a Trip](#32-viewing-a-trip)
+    3. [Adding Members to a Trip](#32-adding-members-to-a-trip)
+    4. [Deleting Members from a Trip](#34-deleting-members-from-a-trip)
+    5. [Deleting a Trip](#35-deleting-a-trip)
+    6. [Leaving a Trip](#36-leaving-a-trip)  
+  
+
 ---
 
 ## Step 1: Getting Started
