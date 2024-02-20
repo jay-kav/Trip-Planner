@@ -26,6 +26,13 @@ for the system.
     5. [Deleting a Trip](#35-deleting-a-trip)
     6. [Leaving a Trip](#36-leaving-a-trip)  
 4. [Creating and Managing Itineraries](#step-4-creating-and-managing-itineraries)
+    1. [Creating an Itinerary](#41-creating-an-itinerary)
+    2. [Deleting an Itinerary](#42-deleting-an-itinerary)
+    3. [Viewing Itineraries](#43-view-all-itineraries)
+5. [Other Function](#step-5-other-function)
+    1. [Clearing Activities](#51-clearing-activities)
+    2. [Changing Owner of a Trip](#52-changing-owner-of-a-trip)
+    3. [Logging Out](#53-logging-out)
 
 ---
 
@@ -240,7 +247,7 @@ Want to see all the itineraries you've created for a trip:
 ---
 
 
-## 5. Other Functions
+## Step 5: Other Functions
 
 ### 5.1 Clearing Activities
 
