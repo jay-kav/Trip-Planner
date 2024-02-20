@@ -55,18 +55,6 @@ function ViewTrip(props) {
         }
     }
 
-    const clearActivities = (e) => {
-        e.preventDefault();
-        axios.post(`clear-activities/`, {
-            'tripID': trip.id
-        })
-        .then((response) => {
-          console.log(response);
-          window.location.href = "/";
-        })
-        .catch((err) => console.error("Error:", err));
-    }
-
     const getDate = (date) => {
         let ymd = date.split('-');
         return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
@@ -85,9 +73,6 @@ function ViewTrip(props) {
             <Typography variant="body2">
               {getDate(trip.startDate)} - {getDate(trip.endDate)}
             </Typography>
-            {localStorage.getItem('sessionID') == tripOwner.id
-            && <Button sx={{fontSize: '.9vw', marginLeft: '22vw', height: '5vh'}} onClick={(e) => clearActivities(e)} variant="contained" color="error">Clear Activities</Button>
-            }
           </CardContent>
         </Card>
       );

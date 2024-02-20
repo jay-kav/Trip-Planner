@@ -76,9 +76,6 @@ function GetTrips() {
               >
                 Journo
               </Typography>
-              <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                A collection of trips you are a member of.
-              </Typography>
               <Stack
                 direction="row"
                 spacing={2}

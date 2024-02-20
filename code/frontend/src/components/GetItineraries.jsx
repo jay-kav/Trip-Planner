@@ -17,7 +17,7 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import LoadIcon from './LoadIcon';
+import Load from './Load';
 
 const filterList = {
   'Breakfast': 'serves_breakfast',
@@ -47,7 +47,7 @@ function GetItineraries(props) {
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
-    const [load, setLoad] = useState(false);
+    const [submit, setSubmit] = useState(false);
     
     // Fetch requests
     useEffect(() => {
@@ -64,7 +64,6 @@ function GetItineraries(props) {
 
     /* ---------- Itinerary Functions ---------- */
     const submitForm = (e) => {
-      setLoad(true);
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
@@ -90,6 +89,7 @@ function GetItineraries(props) {
       } else if (endTime < "08:00") {
         alert('You must select a end time of latest 23:59');
       } else {
+        setSubmit(true);
         axios.post(`create-itinerary/`, {
           'tripID': trip.id,
           'country': trip.country,
@@ -103,15 +103,27 @@ function GetItineraries(props) {
         })
         .then((response) => {
           console.log(response);
-          window.location.href = "/";
+          window.location.reload();
         })
         .catch((err) => {
           alert(err.response.data.reason);
           console.error("Error:", err);
         })
       }
-      setLoad(false);
+      setSubmit(false);
     };
+
+    const clearActivities = (e) => {
+      e.preventDefault();
+      axios.post(`clear-activities/`, {
+          'tripID': trip.id
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.reload();
+      })
+      .catch((err) => console.error("Error:", err));
+    }
   
     const createItinerary = () => {
       return (
@@ -309,13 +321,7 @@ function GetItineraries(props) {
                 </Grid>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                  {load ? <LoadIcon /> : <Button
-                      type="submit"
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
-                    >
-                      Create Itinerary
-                    </Button>}
+                    <Load text="Create Itinerary" messageTitle="Creating Itinerary" messageBody="Your itinerary is being created" submit={submit} />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <Button
@@ -383,7 +389,7 @@ function GetItineraries(props) {
     return (
       <Card sx={{ width: '55vw', height: '90vh', mt: 5, overflowY: 'auto'}}>
           <CardContent>
-            <div style={{display: 'flex', margin: '0 15px'}}> 
+            <div style={{display: 'flex', margin: '0 15px', gap: '5px'}}> 
               {localStorage.getItem('sessionID') == tripOwner.id
               && !create
               && <Button
@@ -391,6 +397,9 @@ function GetItineraries(props) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={() => setCreate(!create)}>Add Itinerary</Button>}
+              {localStorage.getItem('sessionID') == tripOwner.id
+                && <Button sx={{fontSize: '1vw', mt: 3, mb: 2 }} onClick={(e) => clearActivities(e)} variant="contained" color="error">Clear Activities</Button>
+              }
             </div>
             <div style={{gap: '5px', alignItems: 'center'}}>
               {create && createItinerary()}
