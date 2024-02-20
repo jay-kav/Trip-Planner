@@ -88,7 +88,9 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
         if usedLocations is None or id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
         
-            if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
+            docLatitude = doc_location.get("lat")
+            docLongitude = doc_location.get("lng")
+            if toggle and haversine([startLat, startLon], [docLatitude, docLongitude ]) > distance:
                 continue
 
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
@@ -111,7 +113,7 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
             if open_time <= start_time and end_time <= (closed_time - 20):
                 if end_time > closed_time:
                     end_time -= (end_time - closed_time)
-                return id, start_time, end_time
+                return id, start_time, end_time, docLatitude, docLongitude
     return None
 
 @csrf_exempt
@@ -181,7 +183,9 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
         if usedLocations is None or id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
             print(doc_location)
-            if toggle and haversine([startLat, startLon], [doc_location.get("lat"), doc_location.get("lng")]) > distance:
+            docLatitude = doc_location.get("lat")
+            docLongitude = doc_location.get("lng")
+            if toggle and haversine([startLat, startLon], [docLatitude, docLongitude ]) > distance:
                 continue
             distance = haversine([lat,lon], [doc_location.get("lat"), doc_location.get("lng") ])
             print(f"distance {distance}")
@@ -203,7 +207,7 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
             if open_time <= start_time and end_time <= (closed_time - 20):
                 if end_time > closed_time:
                     end_time -= (end_time - closed_time)
-                return id, start_time, end_time
+                return id, start_time, end_time , docLatitude, docLongitude
     return None
 
 @csrf_exempt
