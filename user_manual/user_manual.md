@@ -1,7 +1,7 @@
-# USER MANUAL FOR JURNO
+# USER MANUAL FOR JOURNO
 
 *by Ethan & Jamie*  
-*17/02/2000*
+*17/02/2024*
 
 This manual is designed for all users to use as a guide for the system.
 
