@@ -305,6 +305,7 @@ def getActivities(request):
                     start_times = getTime(int(details[1]))
                     end_times = getTime(int(details[2]))
                     image_data = place.get("image_data", None)
+                    type = details[3]
 
                     # Check if image data is available
                     if image_data:
@@ -324,6 +325,7 @@ def getActivities(request):
                         'name': name,
                         'startTimes': start_times,
                         'endTimes': end_times,
+                        'type': type,
                         'address': address,
                         'rating': rating,
                         'image_data': encoded_image,

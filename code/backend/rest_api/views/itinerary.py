@@ -82,7 +82,7 @@ def createItinerary(request):
                         print(f"Itinerary result {result[1]}")
                         activities = result[1]
                         validator = activities[-1].split(';')
-                        if abs(int(validator[-1]) - end_minutes) < 30:
+                        if abs(int(validator[-2]) - end_minutes) < 30:
                             break
 
             if not activities:
