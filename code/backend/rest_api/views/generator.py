@@ -35,7 +35,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             540 : ["serves_breakfast", filters],
             600 :["serves_breakfast", filters],
             660 : filters, 
-            720 : ["serves_lunch", filters],
+            720 : filters,
             780 : ["serves_lunch", filters],
             840 : ["serves_lunch", filters], 
             900 :  filters,
