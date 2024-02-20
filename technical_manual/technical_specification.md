@@ -11,7 +11,12 @@
     2. [Databases](#22-databases)
         1. [PostgreSQL](#221-postgresql)
         2. [MongoDB Atlas](#222-mongoDB-atlas)
-    3. [Algorithms](#3-algorithms)
+    3. [Algorithms](#23-algorithms)
+        1. [Heuristics](#231-heuristics)
+        2. [Distance Calculation](#232-distance-calculation)
+    4. [Google Places API](#24-google-places-api)
+3. [Design](#3-design)
+    1. [System Architecture](#31-system-architecture)
 
 ## 1. Introduction
 ### 1.1 Overview
@@ -42,3 +47,16 @@ By default Django uses SQLite3 for storing data. We discovered SQLite3 does not 
 We had not used it before so we needed to research what was involved with the installation of the packages and set up a database. Then connect that database to our Django backend.
 #### 2.2.2 MongoDB Atlas
 For our project we couldn’t afford to continuously query Google Places API so we needed to choose a database to store the information. MongoDB is a non-relational database that was chosen for its suitability in storing JSON documents and its support for geospatial querying, a feature we anticipated would greatly enhance our itinerary generator later on. Our exploration of MongoDB included mastering the setup of the database, creating collections, and designing the document structure within. Additionally, we delved into the process of connecting the database to our application using MongoDB drivers and PyMongo.
+### 2.3 Algorithms
+#### 2.3.1 Heuristics
+#### 2.3.2 Distance Calculation
+There were limitations with the MongoDB geospatial query, as it struggled to precisely convert latitude and longitude coordinates into a reliable distance calculation. Initially, we considered incorporating third party solutions such as the Google Routes API or OpenStreetMap API for distance calculations. However, instead of outsourcing this functionality to a third party, we decided to challenge ourselves by exploring alternative methods.
+
+To overcome this challenge, we researched the Manhattan distance formula and the Haversine formula. After conscientious consideration, we opted for the Haversine formula due to its suitability for calculating distances in unknown layouts. In contrast, the Manhattan formula is more appropriate for flat surfaces and city blocks, making it less applicable in European terrains where the landscape tends to be more varied compared to the organised grid-like structure commonly found in American cities. 
+### 2.4 Google Places API
+To gather the essential information required for our web app we needed to use an API. We conducted extensive research into both the Google Maps API and OpenStreetMaps API. While our obvious preference being Google Maps API due to its superior capabilities, we encountered a challenge related to its associated costs.
+
+Our in-depth research of the Google Places API consisted of understanding how to establish connections, execute queries, and utilise the different products available with the API. The pivotal aspect of our research, however, revolved around identifying the most cost-effective approach to utilise the API's power without incurring additional expenses. This involved meticulous planning of the pricing structure for each query type, estimating the required number of documents, and assessing additional costs for specific information queries within each document.
+## 3. Design
+This shows off the various stages of the design process. This will include a number of use cases, sequence and data flow diagrams.
+### 3.1 System Architecture
