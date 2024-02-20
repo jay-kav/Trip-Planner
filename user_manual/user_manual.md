@@ -29,7 +29,7 @@ for the system.
     1. [Creating an Itinerary](#41-creating-an-itinerary)
     2. [Deleting an Itinerary](#42-deleting-an-itinerary)
     3. [Viewing Itineraries](#43-view-all-itineraries)
-5. [Other Function](#step-5-other-function)
+5. [Other Function](#step-5-other-functions)
     1. [Clearing Activities](#51-clearing-activities)
     2. [Changing Owner of a Trip](#52-changing-owner-of-a-trip)
     3. [Logging Out](#53-logging-out)
