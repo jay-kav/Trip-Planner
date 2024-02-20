@@ -105,14 +105,15 @@ def createItinerary(request):
             if form.is_valid():
                 if form.save():
                     add_activities(trip_id, activities)
-                    return JsonResponse({'detail': 'Successfully created new itnerary'})
-                return JsonResponse({'error': 'Failed to save itinerary', 'reason': 'Could not save the itinerary'})
+                    return JsonResponse({'detail': 'Successfully created new itnerary'}, status=200)
+                return JsonResponse({'error': 'Could not save the itinerary', 'reason': 'Could not save the itinerary'}, status=400)
             else:
                 print(form.errors)
             return 
         except Exception as e:
             print(f"An error occurred: {e}")
-            return  JsonResponse({'error': 'Failed to create itinerary', 'reason': 'data is not correctly formatted'})
+            return  JsonResponse({'error': 'Failed to create itinerary', 'reason': 'data is not correctly formatted'}, status=400)
+
         
 
 

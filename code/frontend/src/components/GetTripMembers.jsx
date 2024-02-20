@@ -137,7 +137,7 @@ function GetTripMembers(props) {
                     <ListItemIcon sx={{
                         marginLeft: '5rem',
                     }}>
-                        <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>
+                        {localStorage.getItem('sessionID') == tripOwner.id && <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>}
                     </ListItemIcon>
                 </ListItem>
                 <ListItem>
