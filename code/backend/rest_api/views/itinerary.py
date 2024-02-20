@@ -45,7 +45,9 @@ def createItinerary(request):
             print(filters)
             foods = [food for food in FOODS if food in filters]
             vegetarian = ["serves_vegetarian_food" if "serves_vegetarian_food" in filters else False]
-            night = [activity for activity in NIGHT if activity in filters]
+            if "night_club" in filters:
+                filters.remove("night_club")
+                night = NIGHT
             filters = [activity for activity in filters if activity not in night and activity not in foods and activity != "serves_vegetarian_food"]
             print(f"filters {filters}")
             print(f"foods {foods}")
