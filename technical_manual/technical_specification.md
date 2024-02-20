@@ -1,18 +1,17 @@
 # Technical Specification
 ## Table Of Contents
 
-1. Introduction \
-1.1 Overview    
-1.2 Glossary    
-2. Research\
-2.1 Web App\
-2.1.1 Django    
-2.1.2 React \
-2.2 Databases   
-2.2.1 PostgreSQL    
-2.2.2 MongoDB Atlas \
-2.3 Algorithms  
-
+1. [Introduction](#1-introduction)
+    1. [Overview](#11-overview)    
+    2. [Glossary](#12-glossary)    
+2. [Research](#2-research)
+    1. [Web App](#21-web-app)
+        1. [Django](#211-django)   
+        2. [React](#212-react)
+    2. [Databases](#22-databases)
+        1. [PostgreSQL](#221-postgresql)
+        2. [MongoDB Atlas](#222-mongoDB-atlas)
+    3. [Algorithms](#3-algorithms)
 
 ## 1. Introduction
 ### 1.1 Overview
