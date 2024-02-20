@@ -112,7 +112,8 @@ def createItinerary(request):
             return 
         except Exception as e:
             print(f"An error occurred: {e}")
-            return  JsonResponse({'error': 'Could not save the itinerary', 'reason': 'Failed to create itinerary'}, status=400)
+            return  JsonResponse({'error': 'Failed to create itinerary', 'reason': 'data is not correctly formatted'}, status=400)
+
         
 
 
