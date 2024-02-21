@@ -63,3 +63,20 @@ Our in-depth research of the Google Places API consisted of understanding how to
 ## 3. Design
 This shows off the various stages of the design process. This will include a number of use cases, sequence and data flow diagrams.
 ### 3.1 System Architecture
+
+### 3.2 Use Cases
+#### User Authentication
+| Name                          | User Registers An Account                               |
+|-------------------------------|--------------------------------------------------------|
+| Goal                          | User successfully creates a new account                |
+| Preconditions                | User does not already have a registered account       |
+| Successful Outcome            | User account is created                                 |
+| Fail Outcome                  | User cannot be registered, incorrect information entered |
+| Primary Actor(s)              | User                                                   |
+| Main Scenario                 | 1. User opens web application                          |
+|                               | 2. Clicks to register an account                        |
+|                               | 3. Enters the required information                     |
+|                               | 4. Clicks the register button                           |
+|                               | 5. User account is created                              |
+| Alternative Scenario          | - Incorrect information is entered                    |
+|                               | - User account cannot be created                       |
