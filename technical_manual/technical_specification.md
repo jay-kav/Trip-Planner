@@ -67,7 +67,7 @@ This shows off the various stages of the design process. This will include a num
 ### 3.2 Use Cases
 #### 3.2.1 User Authentication
 | Name                          | User Registers An Account                                |
-|-------------------------------|--------------------------------------------------------  |
+|-------------------------------|----------------------------------------------------------|
 | Goal                          | User successfully creates a new account                  |
 | Preconditions                 | User does not already have a registered account          |
 | Successful Outcome            | User account is created                                  |
@@ -95,21 +95,149 @@ This shows off the various stages of the design process. This will include a num
 | Alternative Scenario          | - User enters incorrect information                    |
 |                               | - User cannot be logged in                             |
 
+| Name                   | User Logs Out                                    |
+|------------------------|--------------------------------------------------|
+| Goal                   | User logs out of the web application             |
+| Preconditions          | User is logged in                                |
+| Successful Outcome     | User is logged out                               |
+| Fail Outcome           | User is unable to logout, due to system error    |
+| Primary Actor(s)       | User                                             |
+| Main Scenario          | 1. User is using the web application             |
+|                        | 2. User clicks logout button                     |
+|                        | 3. User is logged out                            |
+| Alternative Scenario   | - Error occurs in the system                     |
+|                        | - User cannot be logged out                      |
+
 #### 3.2.2 User Creates Trip
+
+| Name                   | User Creates Trip                                        |
+|------------------------|----------------------------------------------------------|
+| Goal                   | User creates a new trip                                  |
+| Preconditions          | User is logged in                                        |
+| Successful Outcome     | User creates a new trip                                  |
+| Fail Outcome           | User cannot create a trip                                |
+| Primary Actor(s)       | User                                                     |
+| Main Scenario          | 1. User clicks the 'New Trip' button on the main screen  |
+|                        | 2. User enters information for their trip                |
+|                        | 3. User clicks the submit button                         |
+|                        | 4. New trip is created                                   |
+| Alternative Scenario   | - User enters incorrect information                      |
+|                        | - New trip is not created                                |
+
 
 #### 3.2.3 User Views Trips
 
+| Name                   | User Views Trips                                                     |
+|------------------------|----------------------------------------------------------------------|
+| Goal                   | User views the trips they are a member of                            |
+| Preconditions          | User has created a trip or has been added to a trip                  |
+| Successful Outcome     | User can see a list of all their trips                               |
+| Fail Outcome           | No trips can be seen                                                 |
+| Primary Actor(s)       | User                                                                 |
+| Main Scenario          | 1. User logs into the app                                            |
+|                        | 2. All trips the user is a member of are retrieved from the database |
+|                        | 3. A list of all the trips is displayed                              |
+| Alternative Scenario   | - User is not a member of any trips                                  |
+|                        | - No trips are listed                                                |
+
+
 #### 3.2.4 User Deletes Trip
+
+| Name                   | User Deletes Trip                                |
+|------------------------|--------------------------------------------------|
+| Goal                   | User deletes the trip                            |
+| Preconditions          | User is the owner of a trip                      |
+| Successful Outcome     | Selected trip is deleted from the system         |
+| Fail Outcome           | Trip cannot be deleted                           |
+| Primary Actor(s)       | User                                             |
+| Main Scenario          | 1. User selects a trip to view                   |
+|                        | 2. User clicks the 'delete trip' button          |
+|                        | 3. Trip is deleted from the database             |
+| Alternative Scenario   | - User is not the owner of the trip              |
+|                        | - Trip cannot be deleted                         |
+
 
 #### 3.2.5 User Changes Ownership Of Trip
 
+| Name                          | User Changes Ownership Of Trip                                          |
+|-------------------------------|-------------------------------------------------------------------------|
+| Goal                          | A new user is made the owner of the selected trip                       |
+| Preconditions                 | User must be the owner of a trip. Trip must have multiple members       |
+| Successful Outcome            | Trip is given a new owner                                               |
+| Fail Outcome                  | Trip cannot be assigned a new owner                                     |
+| Primary Actor(s)              | User                                                                    |
+| Main Scenario                 | 1. User selects one of their trips                                      |
+|                               | 2. User clicks the badge beside the trip member they wish to make owner |
+|                               | 3. Trip ownership is reassigned to the selected trip member             |
+| Alternative Scenario          | - User is not the owner of the trip or is the only member of the trip   |
+|                               | - Trip owner cannot be changed                                          |
+
+
 #### 3.2.6 User Adds Itinerary To Trip
+
+| Name                          | User Adds Itinerary To Trip                                       |
+|-------------------------------|-------------------------------------------------------------------|
+| Goal                          | New itinerary is added to the trip                                |
+| Preconditions                 | User is the owner of a trip                                       |
+| Successful Outcome            | User adds a newly generated itinerary to their selected trip      |
+| Fail Outcome                  | User is unable to create an itinerary due to some error           |
+| Primary Actor(s)              | User                                                              |
+| Main Scenario                 | 1. User selects a trip                                            |
+|                               | 2. User clicks the 'add itinerary' button                         |
+|                               | 3. User fills in relevant information                             |
+|                               | 4. Itinerary is generated and added to the trip                   |
+| Alternative Scenario          | - User enters incorrect information or error occurs in the system |
+|                               | - New itinerary cannot be generated                               |
+
 
 #### 3.2.7 User Deletes Itinerary
 
+| Name                          | User Deletes Itinerary                                         |
+|-------------------------------|----------------------------------------------------------------|
+| Goal                          | Selected itinerary is deleted from the trip                    |
+| Preconditions                 | User is the owner of the trip. Itinerary has been created      |
+| Successful Outcome            | User deletes the selected itinerary from their selected trip   |
+| Fail Outcome                  | User is unable to delete the itinerary due to some error       |
+| Primary Actor(s)              | User                                                           |
+| Main Scenario                 | 1. User selects a trip                                         |
+|                               | 2. User clicks the bin icon on their desired itinerary         |
+|                               | 3. The chosen itinerary is deleted from the trip               |
+| Alternative Scenario          | - User is unable to delete the itinerary due to some error     |
+
+
 #### 3.2.8 User Add Member To Trip
 
+| Name                          | User Add Member To Trip                                        |
+|-------------------------------|----------------------------------------------------------------|
+| Goal                          | New member is added to the trip                                |
+| Preconditions                 | User must be the owner of a trip                               |
+| Successful Outcome            | User adds a new member to the trip                             |
+| Fail Outcome                  | User cannot add a new member to the trip                       |
+| Primary Actor(s)              | User                                                           |
+| Main Scenario                 | 1. User selects a trip                                         |
+|                               | 2. User clicks the group add icon                              |
+|                               | 3. User selects member(s) from the dropdown                    |
+|                               | 4. User clicks the 'add members' button                        |
+|                               | 5. Selected member(s) is/are added to the trip                 |
+| Alternative Scenario          | - No member available to add                                   |
+|                               | - User cannot add members to the trip                          |
+
+
 #### 3.2.9 User Removes Member
+
+| Name                          | User Removes Member                                            |
+|-------------------------------|----------------------------------------------------------------|
+| Goal                          | Member is removed from the trip                                |
+| Preconditions                 | User is the owner of the trip. Trip must have multiple members |
+| Successful Outcome            | User removes member from the trip                              |
+| Fail Outcome                  | User is unable to remove member                                |
+| Primary Actor(s)              | User                                                           |
+| Main Scenario                 | 1. User selects trip                                           |
+|                               | 2. User clicks remove icon beside the desired member           |
+|                               | 3. Selected member is deleted from the trip                    |
+| Alternative Scenario          | - There are no other members in the trip                       |
+|                               | - Member(s) cannot be removed                                  |
+
 
 
 
