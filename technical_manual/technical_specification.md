@@ -65,7 +65,7 @@ This shows off the various stages of the design process. This will include a num
 ### 3.1 System Architecture
 
 ### 3.2 Use Cases
-#### User Authentication
+#### 3.2.1 User Authentication
 | Name                          | User Registers An Account                                |
 |-------------------------------|--------------------------------------------------------  |
 | Goal                          | User successfully creates a new account                  |
@@ -94,5 +94,22 @@ This shows off the various stages of the design process. This will include a num
 |                               | 4. User is logged in                                   |
 | Alternative Scenario          | - User enters incorrect information                    |
 |                               | - User cannot be logged in                             |
+
+#### 3.2.2 User Creates Trip
+
+#### 3.2.3 User Views Trips
+
+#### 3.2.4 User Deletes Trip
+
+#### 3.2.5 User Changes Ownership Of Trip
+
+#### 3.2.6 User Adds Itinerary To Trip
+
+#### 3.2.7 User Deletes Itinerary
+
+#### 3.2.8 User Add Member To Trip
+
+#### 3.2.9 User Removes Member
+
 
 
