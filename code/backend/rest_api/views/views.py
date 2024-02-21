@@ -111,8 +111,7 @@ def getHotel(request):
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
-    return JsonResponse({'error': 'Invalid request method'}, status=405)
-        
+    return JsonResponse({'error': 'Invalid request method'}, status=405)        
 
 @csrf_exempt
 def getHotels(request):
