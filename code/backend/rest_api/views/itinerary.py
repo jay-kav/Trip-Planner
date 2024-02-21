@@ -113,7 +113,6 @@ def createItinerary(request):
                 return JsonResponse({'error': 'Could not save the itinerary', 'reason': 'Could not save the itinerary'}, status=400)
             else:
                 print(form.errors)
-                print("zahras problem")
             return JsonResponse({'error': 'Form was not valid', 'reason': 'form was not vaid'}, status=400)
         except Exception as e:
             print(f"An error occurred: {e}")
