@@ -17,8 +17,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 function GetTrips() {
-    const [trips, setTrips] = useState([]);
-    const [selected, setSelected] = useState(null);
+  const [trips, setTrips] = useState([]);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     const storedSelected = sessionStorage.getItem('selected');
@@ -27,11 +27,33 @@ function GetTrips() {
     }
   }, []);
 
+  useEffect(() => {
+    if (trips.length === 0) {
+      axios.get(`api/trips/?members=${localStorage.getItem('sessionID')}`)
+      .then((response) => {
+          console.log(response);
+          setTrips(response.data);
+      })
+      .catch(err => console.log(err))
+    }
+  });
+
+  const getImage = (country, city) => {
+    axios.post(`get-image/`, { 
+      'country': country, 
+      'city': city
+    })
+    .then((response) => {
+      return response.data.image;
+    })
+    .catch(err => console.log(err));
+  }
+
     const getTrips = () => {
       return trips.map((t) => (
         <Grid item key={t.id} xs={12} sm={6} md={4}>
           <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-          
+            <CardMedia component="img" height="140" image={getImage(t.country, t.city)} alt="trip image" />
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography gutterBottom variant="h5" component="h2">
                 {t.tripname}
@@ -49,19 +71,7 @@ function GetTrips() {
           </Card>
         </Grid>
       ));
-    };  
-
-    useEffect(() => {
-        if (trips.length === 0) {
-          axios.get(`api/trips/?members=${localStorage.getItem('sessionID')}`)
-          .then((response) => {
-              console.log(response);
-              setTrips(response.data);
-          })
-          .catch(err => console.log(err))
-        }
-    });
-
+    };
     
     if (selected) {
       console.log('selected', selected);
