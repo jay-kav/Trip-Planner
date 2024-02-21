@@ -6,6 +6,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { Card, CardContent, Typography } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import Map from './Map';
 
 const defaultTheme = createTheme();
 
@@ -13,6 +15,8 @@ function ViewTrip(props) {
     let trip = props.trip;
     const [tripOwner, setTripOwner] = useState("");
     const [hotel, setHotel] = useState("");
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
 
     // Fetch requests
     useEffect(() => {
@@ -41,18 +45,31 @@ function ViewTrip(props) {
     // Trip functions
     const deleteTrip = (e) => {
         e.preventDefault();
+        setShowDeleteConfirmation(true); // Show confirmation dialog
+    };
+
+    const confirmDeleteTrip = () => {
+        // Perform delete operation
         axios.post(`delete-trip/`, {
             'tripID': trip.id
         })
         .then((response) => {
-          console.log(response);
-          window.location.href = "/";
+            console.log(response);
+            window.location.href = "/";
         })
         .catch((err) => console.error("Error:", err));
-    }
+    };
+
+    const handleDeleteCloseConfirmation = () => {
+        setShowDeleteConfirmation(false); // Close confirmation dialog
+    };
 
     const leaveTrip = (e) => {
         e.preventDefault();
+        setShowLeaveConfirmation(true); // Show confirmation dialog
+    }
+
+    const confirmLeaveTrip = (e) => {
         if (tripOwner.id == localStorage.getItem('sessionID')) {
             alert("You are the owner of this trip. Please assign someone else as trip owner.");
         } else {
@@ -67,6 +84,10 @@ function ViewTrip(props) {
             .catch((err) => console.error("Error:", err));
         }
     }
+
+    const handleLeaveCloseConfirmation = () => {
+        setShowLeaveConfirmation(false); // Close confirmation dialog
+    };
 
     const getDate = (date) => {
         let ymd = date.split('-');
@@ -122,7 +143,7 @@ function ViewTrip(props) {
                     }}>
                         <Card sx={{ width: '44vw', height: '58vh'}}>
                           <CardContent>
-                          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4763.269431318977!2d-6.228799500000018!3d53.349794800000026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48670ef1b67ab3fb%3A0x897f83f77219806b!2sHost%20Point%20Campus!5e0!3m2!1sen!2sie!4v1708471672887!5m2!1sen!2sie" style={{width: '41vw', height: '52vh'}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <Map />
                           </CardContent>
                         </Card>
                     </Box>
@@ -133,6 +154,48 @@ function ViewTrip(props) {
                     </Box>
                 </Grid>
             </Grid>
+            <Dialog
+                open={showDeleteConfirmation}
+                onClose={handleDeleteCloseConfirmation}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Are you sure you want to delete this trip?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        This action cannot be undone.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDeleteCloseConfirmation} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={confirmDeleteTrip} color="primary" autoFocus>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={showLeaveConfirmation}
+                onClose={handleLeaveCloseConfirmation}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Are you sure you want to leave this trip?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        This action cannot be undone.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleLeaveCloseConfirmation} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={confirmLeaveTrip} color="primary" autoFocus>
+                        Leave
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </ThemeProvider>
     )
 }

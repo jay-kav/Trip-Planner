@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Box, CssBaseline, Grid } from '@mui/material';
 import Select from '@mui/material/Select';
 import { Card, CardContent } from '@mui/material';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 const defaultTheme = createTheme();
 
@@ -21,6 +22,10 @@ function GetTripMembers(props) {
     const [addedMembers, setAddedMembers] = useState([]);
     const [tripMembers, setTripMembers] = useState([]);
     const [users, setUsers] = useState([]);
+    const [member, setMember] = useState("");
+    const [showRemoveConfirmation, setShowRemoveConfirmation] = useState(false);
+    const [showChangeConfirmation, setShowChangeConfirmation] = useState(false);
+    const [showAddConfirmation, setShowAddConfirmation] = useState(false);
 
     useEffect(() => {
         if (!tripMembers.length) {
@@ -60,7 +65,7 @@ function GetTripMembers(props) {
             defaultValue={''} // Provide the default value
             value={addedMembers} // Provide the array of selected members
             onChange={(e) => setAddedMembers(e.target.value)} // Update the state with selected members
-            sx={{ width: '10vw' }}
+            sx={{width: '20vw'}}
         >
             <MenuItem key={"default"} value={''}></MenuItem>
             {nonMembers.map(user => (
@@ -71,7 +76,10 @@ function GetTripMembers(props) {
 
     const addMembers = (e) => {
         e.preventDefault();
-        console.log("addedMembers", addedMembers);
+        setShowAddConfirmation(true);
+    };
+
+    const confirmAddMembers = () => {
         if (addedMembers.length === 0) {
             alert("Please select members to add.");
         } else {
@@ -85,13 +93,22 @@ function GetTripMembers(props) {
             })
             .catch((err) => console.error("Error:", err));
         }
+    }
+
+    const handleAddCloseConfirmation = () => {
+        setShowAddConfirmation(false); // Close confirmation dialog
     };
 
-    const removeMember = (e, member, tripID) => {
+    const removeMember = (e, member) => {
         e.preventDefault();
+        setMember(member);
+        setShowRemoveConfirmation(true);
+    }
+
+    const confirmRemoveMember = () => {
         axios.post(`remove-member/`, {
             'memberID': member.data.id,
-            'tripID': tripID
+            'tripID': trip.id
         })
         .then((response) => {
             console.log(response);
@@ -100,12 +117,20 @@ function GetTripMembers(props) {
         .catch((err) => console.error("Error:", err));
     }
 
-    const changeOwner = (e, member, tripID) => {
+    const handleRemoveCloseConfirmation = () => {
+        setShowRemoveConfirmation(false); // Close confirmation dialog
+    };
+
+    const changeOwner = (e, member) => {
         e.preventDefault();
-        console.log(member, tripID);
+        setMember(member);
+        setShowChangeConfirmation(true);
+    }
+
+    const confirmChangeOwner = () => {
         axios.post(`change-owner/`, {
             'memberID': member.id,
-            'tripID': tripID
+            'tripID': trip.id
         })
         .then((response) => {
             console.log(response);
@@ -113,6 +138,10 @@ function GetTripMembers(props) {
         })
         .catch((err) => console.error("Error:", err));
     }
+
+    const handleChangeCloseConfirmation = () => {
+        setShowChangeConfirmation(false); // Close confirmation dialog
+    };
 
     const getTripMembers = () => {
         return tripMembers.map(member => (
@@ -132,47 +161,79 @@ function GetTripMembers(props) {
         <Card sx={{ width: '21vw', height: '28vh' }}>
           <CardContent>
             <Typography variant="h6" component="div" gutterBottom>Trip Members</Typography>
-            <List sx={{overflowY:'scroll', height: '24vh'}}>
+            <List sx={{overflowY:'scroll', height: '20vh'}}>
                 <ListItem disablePadding>
                     <ListItemText primary={tripOwner.username + " (Owner)"} />
                     <ListItemIcon sx={{
                         marginLeft: '5rem',
                     }}>
-                        {localStorage.getItem('sessionID') == tripOwner.id && <GroupAddIcon titleAccess="Add Member" onClick={() => setAddMember(!addMember)}/>}
+                        {localStorage.getItem('sessionID') == tripOwner.id && <GroupAddIcon titleAccess="Add Member" onClick={addMembers}/>}
                     </ListItemIcon>
-                </ListItem>
-                <ListItem>
-                    {addMember && 
-                    <ThemeProvider theme={defaultTheme}>
-                        <Grid container component="main" sx={{ height: '10vh' }}>
-                        <CssBaseline />
-                            <Box component="form" onSubmit={(e) => addMembers(e)} noValidate sx={{ mr: 2 }}>
-                                {getNonMembers()}
-                            </Box>
-                            <Box style={{display: 'flex', gap: '10px', height: '3rem'}}>
-                                {nonMembers.length > 0 && <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    onClick={(e) => addMembers(e)}
-                                >
-                                    Add Members
-                                </Button>}
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    onClick={() => setAddMember(!addMember)}
-                                >
-                                    Cancel
-                                </Button>
-                            </Box>
-                        </Grid>
-                    </ThemeProvider>}
                 </ListItem>
                 {getTripMembers()}
             </List>
         </CardContent>
+        <Dialog
+            open={showRemoveConfirmation}
+            onClose={handleRemoveCloseConfirmation}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{"Are you sure you want to remove this member from the trip?"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    This action cannot be undone.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleRemoveCloseConfirmation} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={confirmRemoveMember} color="primary" autoFocus>
+                    Remove
+                </Button>
+            </DialogActions>
+        </Dialog>
+        <Dialog
+            open={showChangeConfirmation}
+            onClose={handleChangeCloseConfirmation}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{"Are you sure you want to make this member owner of the trip?"}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    This action cannot be undone.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleChangeCloseConfirmation} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={confirmChangeOwner} color="primary" autoFocus>
+                    Change Owner
+                </Button>
+            </DialogActions>
+        </Dialog>
+        <Dialog
+            open={showAddConfirmation}
+            onClose={handleAddCloseConfirmation}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{"Add Members"}</DialogTitle>
+                <Box component="form" onSubmit={(e) => addMembers(e)} noValidate sx={{ m: '3vw 10vw' }}>
+                    {getNonMembers()}
+                </Box>
+            <DialogActions>
+                <Button onClick={handleAddCloseConfirmation} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={confirmAddMembers} color="primary" autoFocus>
+                    Add Members
+                </Button>
+            </DialogActions>
+        </Dialog>
     </Card>
     )
 }
