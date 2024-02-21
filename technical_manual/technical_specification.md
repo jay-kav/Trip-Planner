@@ -17,33 +17,33 @@
     4. [Google Places API](#24-google-places-api)
 3. [Design](#3-design)
     1. [System Architecture](#31-system-architecture)
-    2. Use Cases
-        1. User Authentication
-        2. User Creates Trip
-        3. User Views Trips
-        4. User Deletes Trip
-        5. User Changes Ownership Of Trip
-        6. User Adds Itinerary To Trip
-        7. User Deletes Itinerary
-        8. User Add Member To Trip
-        9. User Removes Member
-4. Implementation
-    1. React Frontend
-    2. Django Backend
-    3. Algorithm
-5. Problem and Solutions
-    1. Frontend Not Communicating With Backend
-    2. PostgreSQL Database Connection To Backend
-    3. MongoDB Server Down
-    4. Google Places Information
-    5. Geospatial Query
-    6. Increase Document Capacity
-6. Testing
-    1. APIs Testing
-    2. Unit Testing
-    3. Functionality Testing
-    4. User Testing
-7. Installation Guide
+    2. [Use Cases](#32-use-cases)
+        1. [User Authentication](#321-user-authentication)
+        2. [User Creates Trip](#322-user-creates-trip)
+        3. [User Views Trips](#323-user-views-trips)
+        4. [User Deletes Trip](#324-user-deletes-trip)
+        5. [User Changes Ownership Of Trip](#325-user-changes-ownership-of-trip)
+        6. [User Adds Itinerary To Trip](#326-user-adds-itinerary-to-trip)
+        7. [User Deletes Itinerary](#327-user-deletes-itinerary)
+        8. [User Add Member To Trip](#328-user-add-member-to-trip)
+        9. [User Removes Member](#329-user-removes-member)
+4. [Implementation](#4-implementation)
+    1. [React Frontend](#41-react-frontend)
+    2. [Django Backend](#42-django-backend)
+    3. [Algorithm](#43-algorithm)
+5. [Problem and Solutions](#5-problem-and-solutions)
+    1. [Frontend Not Communicating With Backend](#51-frontend-not-communicating-with-backend)
+    2. [PostgreSQL Database Connection To Backend](#52=postgresql-database-connection-to-backend)
+    3. [MongoDB Server Down](#53-mongodb-server-down)
+    4. [Google Places Information](#54-google-places-information)
+    5. [Geospatial Query](#55-geospatial-query)
+    6. [Increase Document Capacity](#56-increase-document-capacity)
+6. [Testing](#6-testing)
+    1. [APIs Testing](#61-apis-testing)
+    2. [Unit Testing](#62-unit-testing)
+    3. [Functionality Testing](#63-functionality-testing)
+    4. [User Testing](#64-user-testing)
+7. [Installation Guide](#7-installation-guide)
 
 
 ## 1. Introduction
