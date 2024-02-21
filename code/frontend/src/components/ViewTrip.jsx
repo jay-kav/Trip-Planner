@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { Card, CardContent, Typography } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import Map from './Map';
 
 const defaultTheme = createTheme();
 
@@ -142,7 +143,7 @@ function ViewTrip(props) {
                     }}>
                         <Card sx={{ width: '44vw', height: '58vh'}}>
                           <CardContent>
-                          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4763.269431318977!2d-6.228799500000018!3d53.349794800000026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48670ef1b67ab3fb%3A0x897f83f77219806b!2sHost%20Point%20Campus!5e0!3m2!1sen!2sie!4v1708471672887!5m2!1sen!2sie" style={{width: '41vw', height: '52vh'}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            <Map />
                           </CardContent>
                         </Card>
                     </Box>

@@ -6,9 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { DatePicker } from '@mui/x-date-pickers';
-import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { TimeField } from '@mui/x-date-pickers';
 import { Card, CardContent } from '@mui/material';
@@ -35,8 +33,6 @@ const filterList = {
   'Nightlife': 'night_club', 
 };
 
-const defaultTheme = createTheme();
-
 let itineraryCount = 0;
 
 function GetItineraries(props) {
@@ -50,7 +46,7 @@ function GetItineraries(props) {
     const [activities, setActivities] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [showAddConfirmation, setShowAddConfirmation] = useState(false);
+    //const [showAddConfirmation, setShowAddConfirmation] = useState(false);
     
     // Fetch requests
     useEffect(() => {
@@ -68,10 +64,6 @@ function GetItineraries(props) {
     /* ---------- Itinerary Functions ---------- */
     const submitForm = (e) => {
       e.preventDefault();
-      setShowAddConfirmation(true); // Show confirmation dialog
-    }
-
-    const confirmSubmitForm = (e) => {
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
       let filters = [];
@@ -118,10 +110,6 @@ function GetItineraries(props) {
       }
     };
 
-    const handleAddCloseConfirmation = () => {
-      setShowAddConfirmation(false); // Close confirmation dialog
-    };
-
     const clearActivities = (e) => {
       e.preventDefault();
       axios.post(`clear-activities/`, {
@@ -136,7 +124,17 @@ function GetItineraries(props) {
   
     const createItinerary = () => {
       return (
-        <Grid container spacing={4}>
+        <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Box id='form' component="form" onSubmit={(e) => submitForm(e)} noValidate>
+                  <Grid container spacing={4}>
           <Grid item xs={4}>
             <Grid>
               <DatePicker
@@ -318,6 +316,13 @@ function GetItineraries(props) {
             />
           </Grid>
         </Grid>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <Button variant='contained' type='submit'>Create Itinerary</Button>
+          <Button variant='contained' onClick={() => setCreate(false)}>Cancel</Button>
+        </div>
+                  </Box>
+                </Box>
+              </Container>
       );
     }
 
@@ -386,12 +391,13 @@ function GetItineraries(props) {
               && <Button
               type="submit"
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={submitForm}>Add Itinerary</Button>}
+              sx={{fontSize: '1vw', mt: 3, mb: 2 }}
+              onClick={() => setCreate(true)}>Add Itinerary</Button>}
               {localStorage.getItem('sessionID') == tripOwner.id
                 && <Button sx={{fontSize: '1vw', mt: 3, mb: 2 }} onClick={(e) => clearActivities(e)} variant="contained">Clear Activities</Button>
               }
             </div>
+            {create && createItinerary()}
             <div style={{gap: '5px', alignItems: 'center'}}>
               {itineraries.length > 0 && <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <ArrowBackIosRoundedIcon disa sx={{marginRight: '8px'}} onClick={goToPreviousItinerary}/>
@@ -426,6 +432,13 @@ function GetItineraries(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
+        </Card>
+    )
+}
+
+export default GetItineraries
+
+/* 
             <Dialog
               open={showAddConfirmation}
               onClose={handleAddCloseConfirmation}
@@ -442,7 +455,7 @@ function GetItineraries(props) {
                     alignItems: 'center',
                   }}
                 >
-                  <Box component="form" onSubmit={(e) => submitForm(e)} noValidate>
+                  <Box id='form' component="form" onSubmit={(e) => confirmSubmitForm(e)} noValidate>
                     {createItinerary()}
                   </Box>
                 </Box>
@@ -451,13 +464,64 @@ function GetItineraries(props) {
                   <Button onClick={handleAddCloseConfirmation} color="primary">
                       Cancel
                   </Button>
-                  <Button onClick={(e) => confirmSubmitForm(e)} color="primary" autoFocus>
+                  <Button for='form' type='submit' color="primary" autoFocus>
                       Create Itinerary
                   </Button>
               </DialogActions>
           </Dialog>
-        </Card>
-    )
-}
 
-export default GetItineraries
+          const submitForm = (e) => {
+            e.preventDefault();
+            setShowAddConfirmation(true); // Show confirmation dialog
+          }
+      
+          const confirmSubmitForm = (e) => {
+            const data = new FormData(e.currentTarget);
+            console.log(data.get('date'));
+            let filters = [];
+            for (let filter in filterList) {
+              if (data.get(filterList[filter]) == 'on') {
+                filters.push(filterList[filter]);
+              }
+            }
+            let date = data.get('date')
+            let startTime = data.get('starttime')
+            let endTime = data.get('endtime')
+            let roundTrip = data.get('roundtrip')
+            let a = date.split('/');
+            let checkdate = new Date(`${a[2]}-${a[1]}-${a[0]}T00:00:00Z`);
+            console.log(checkdate);
+            if (checkdate > new Date(trip.endDate) || checkdate < new Date(trip.startDate)) {
+              alert('You must create an itinerary for a valid date in you trip!');
+            } else if (startTime < "08:00") {
+              alert('You must select a start time of earliest 08:00');
+            } else if (endTime < startTime) {
+              alert('You must select an end time later than start time');
+            } else if (endTime < "08:00") {
+              alert('You must select a end time of latest 23:59');
+            } else {
+              axios.post(`create-itinerary/`, {
+                'tripID': trip.id,
+                'country': trip.country,
+                'city': trip.city,
+                'hotel': trip.hotel,
+                'date': date,
+                'startTime': startTime,
+                'endTime': endTime,
+                'roundTrip': roundTrip == "on",
+                'filters': filters
+              })
+              .then((response) => {
+                console.log(response);
+                window.location.reload();
+              })
+              .catch((err) => {
+                alert(err.response.data.reason);
+                console.error("Error:", err);
+              })
+            }
+          };
+      
+          const handleAddCloseConfirmation = () => {
+            setShowAddConfirmation(false); // Close confirmation dialog
+          };*/
