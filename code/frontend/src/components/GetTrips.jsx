@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -19,22 +20,30 @@ function GetTrips() {
     const [trips, setTrips] = useState([]);
     const [selected, setSelected] = useState(null);
 
+  useEffect(() => {
+    const storedSelected = sessionStorage.getItem('selected');
+    if (storedSelected) {
+      setSelected(JSON.parse(storedSelected));
+    }
+  }, []);
+
     const getTrips = () => {
-      // <CardMedia component="div" sx={{pt: '56.25%'}} image="https://source.unsplash.com/random?wallpapers"/>
-      return trips.map((trip) => (
-        <Grid item key={trip.id} xs={12} sm={6} md={4}>
+      return trips.map((t) => (
+        <Grid item key={t.id} xs={12} sm={6} md={4}>
           <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography gutterBottom variant="h5" component="h2">
-                {trip.tripname}
+                {t.tripname}
               </Typography>
               <Typography>
-                {trip.city}, {trip.country}
+                {t.city}, {t.country}
               </Typography>
             </CardContent>
             <CardActions>
               <Button size="small" onClick={() => {
-                setSelected(trip);
+                sessionStorage.setItem('selected', JSON.stringify(t.id));
+                setSelected(t.id);
               }}>View</Button>
             </CardActions>
           </Card>
@@ -43,15 +52,19 @@ function GetTrips() {
     };  
 
     useEffect(() => {
-        axios.get(`api/trips/?members=${localStorage.getItem('sessionID')}`)
-        .then((response) => {
-            console.log(response);
-            setTrips(response.data);
-        })
-        .catch(err => console.log(err))
-    }, []);
+        if (trips.length === 0) {
+          axios.get(`api/trips/?members=${localStorage.getItem('sessionID')}`)
+          .then((response) => {
+              console.log(response);
+              setTrips(response.data);
+          })
+          .catch(err => console.log(err))
+        }
+    });
 
+    
     if (selected) {
+      console.log('selected', selected);
         return (
             <ViewTrip trip={selected} />
         )
