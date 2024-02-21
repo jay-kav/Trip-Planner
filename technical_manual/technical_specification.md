@@ -66,17 +66,33 @@ This shows off the various stages of the design process. This will include a num
 
 ### 3.2 Use Cases
 #### User Authentication
-| Name                          | User Registers An Account                               |
-|-------------------------------|--------------------------------------------------------|
-| Goal                          | User successfully creates a new account                |
-| Preconditions                | User does not already have a registered account       |
-| Successful Outcome            | User account is created                                 |
+| Name                          | User Registers An Account                                |
+|-------------------------------|--------------------------------------------------------  |
+| Goal                          | User successfully creates a new account                  |
+| Preconditions                 | User does not already have a registered account          |
+| Successful Outcome            | User account is created                                  |
 | Fail Outcome                  | User cannot be registered, incorrect information entered |
+| Primary Actor(s)              | User                                                     |
+| Main Scenario                 | 1. User opens web application                            |
+|                               | 2. Clicks to register an account                         |
+|                               | 3. Enters the required information                       |
+|                               | 4. Clicks the register button                            |
+|                               | 5. User account is created                               |
+| Alternative Scenario          | - Incorrect information is entered                       |
+|                               | - User account cannot be created                         |
+
+| Name                          | User Logs In To Web App                                |
+|-------------------------------|--------------------------------------------------------|
+| Goal                          | User is logged into the web app                        |
+| Preconditions                 | User has already registered an account in the system   |
+| Successful Outcome            | User is logged in                                      |
+| Fail Outcome                  | User cannot be logged in                               |
 | Primary Actor(s)              | User                                                   |
 | Main Scenario                 | 1. User opens web application                          |
-|                               | 2. Clicks to register an account                        |
-|                               | 3. Enters the required information                     |
-|                               | 4. Clicks the register button                           |
-|                               | 5. User account is created                              |
-| Alternative Scenario          | - Incorrect information is entered                    |
-|                               | - User account cannot be created                       |
+|                               | 2. User enters correct account information             |
+|                               | 3. User clicks login button                            |
+|                               | 4. User is logged in                                   |
+| Alternative Scenario          | - User enters incorrect information                    |
+|                               | - User cannot be logged in                             |
+
+
