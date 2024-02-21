@@ -17,6 +17,34 @@
     4. [Google Places API](#24-google-places-api)
 3. [Design](#3-design)
     1. [System Architecture](#31-system-architecture)
+    2. Use Cases
+        1. User Authentication
+        2. User Creates Trip
+        3. User Views Trips
+        4. User Deletes Trip
+        5. User Changes Ownership Of Trip
+        6. User Adds Itinerary To Trip
+        7. User Deletes Itinerary
+        8. User Add Member To Trip
+        9. User Removes Member
+4. Implementation
+    1. React Frontend
+    2. Django Backend
+    3. Algorithm
+5. Problem and Solutions
+    1. Frontend Not Communicating With Backend
+    2. PostgreSQL Database Connection To Backend
+    3. MongoDB Server Down
+    4. Google Places Information
+    5. Geospatial Query
+    6. Increase Document Capacity
+6. Testing
+    1. APIs Testing
+    2. Unit Testing
+    3. Functionality Testing
+    4. User Testing
+7. Installation Guide
+
 
 ## 1. Introduction
 ### 1.1 Overview
@@ -63,7 +91,9 @@ Our in-depth research of the Google Places API consisted of understanding how to
 ## 3. Design
 This shows off the various stages of the design process. This will include a number of use cases, sequence and data flow diagrams.
 ### 3.1 System Architecture
-
+#### System Architecture Diagram
+![System Architecture Diagram](technical_manual/images/Architecture_Overview_Diagram.png)
+This diagram displays the system context, components, relationships, and dependencies. The user interacts with our system through the available input in the frontend React application. The frontend then has two-way communication with the Django backend, sending and requesting information. The backend saves all data to the PostgreSQL database. It also requests information from this. The backend sends requests to the MongoDB, and the requested information gets sent back to the backend. We use a python script to make requests to the Google Maps API and filter the information to send it to our MongoDB.
 ### 3.2 Use Cases
 #### 3.2.1 User Authentication
 | Name                          | User Registers An Account                                |
@@ -238,6 +268,164 @@ This shows off the various stages of the design process. This will include a num
 | Alternative Scenario          | - There are no other members in the trip                       |
 |                               | - Member(s) cannot be removed                                  |
 
+## 4. Implementation
+### 4.1 React Frontend
+The frontend of the application was implemented using React.js. We decided to use this because it is easy to use and provide a very simple 
+### 4.2 Django Backend
+We need a robust and secure framework for the backend of our web application. This is where Django comes in. Django can be installed using
+`pip install Django`
+This provided us with a number of tools such as views to add functionality
+
+    @csrf_exempt
+    def createTrip(request):
+        if request.method == 'POST':
+            try:
+                data = json.loads(request.body)
+
+urls to create endpoints for the frontend
+
+`
+path('create-trip/', views.createTrip, name='create_trip'),
+`
+
+and models to build the schema in our database.
+
+    class Trip(models.Model):
+        id = models.AutoField(primary_key=True)
+        owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
+
+To create new instance of an object
+`
+form.save()
+`
+was used. This is the standard way to do this Django, we found it was a more robust way of doing it, as opposed to patching information from the frontend.
+To establish connection between the backend and MongoDB we used a Python library called PyMongo. This library was install using:
+
+`
+pip install pymongo
+`
+
+And imported into the application using:
+
+`
+from pymongo import MongoClient
+`
+
+The connection string could be found here:
+![Connection1](technical_manual/images/Connection1.png)
+![Connection2](technical_manual/images/Connection2.png)
+
+Connection was then established with the MongoDB depending on the selected country and city
+
+    client = MongoClient(get_env_value('MONGO_URL'))
+    db = client[country]
+    collection = db[city]
+
+The function then queries the selected collection. The data is queried using find(), as seen in the below example:
+
+`
+hotels = collection.find({"types": "hotel"})
+`
+
+### 4.3 Algorithm
+Our algorithm processes user inputs to create optimal itineraries, considering various specifications. Given that achieving a perfect itinerary is an NP-complete problem, our solution focuses on generating high-quality itineraries for users.
+
+We chose to implement the algorithm in the backend of our web app using Python for increased efficiency compared to JavaScript. Initially split across seven files, we streamlined the algorithm to four modular files, each serving distinct purposes.
+
+**User Input Processing** (itinerary.py):
+This file transforms user inputs into a standardised format for processing. It converts dates into a numerical representation (0-6 for days of the week), changes times from hours to minutes, connects to the relevant database collection based on the specified location, and categorises preferences into groups for heuristic generation. The file validates the output from other files before saving it to the user's account.
+
+**Itinerary Generation** (generator.py):
+Responsible for creating the itinerary, this file incorporates user preferences and time-based heuristics. It interacts with the API communication file to fetch specific places or activities based on the generated heuristics. The algorithm creates and validates itineraries through a process of trial and error, backtracking when necessary until a valid solution is found. Once validated, the file appends location and time information to an array, sending it back to the user input processing file for storage.
+
+**API Communication** (apiCalls.py):
+This file facilitates communication with the database by sending specific queries based on information passed from the Itinerary Generation file. It has two functions, one to fetch a suitable place to eat and the other to identify activities around. How these functions find a suitable location is based on the users criteria. The functions ensure uniqueness and compliance with the user's timeframe, utilising a dictionary mapping heuristic times to activities. Each location it fetches is inside the defined distance set in the final file.
+
+**Distance Calculation** (distanceCalculation.py):
+This file houses the Haversine formula function for calculating distances between locations in kilometres. It assists in determining the distance travelled by the user, ensuring it doesn't exceed our walk threshold. The second function dynamically calculates the furthest distance achievable from home as time progresses, ensuring an appropriate distance for walking back home.
+## 5. Problem and Solutions
+### 5.1 Frontend Not Communicating With Backend
+Early on in the development cycle when the initial project setup was happening, we ran into an issue where api endpoints set up in the backend would return Cors errors. We were stuck on this issue for a number of days. 
+
+It turned out to be a csrf authentication error, which was fixed easily by adding
+`
+@csrf_exempt
+`
+before each view that required communication from the frontend.
+### 5.2 PostgreSQL Database Connection To Backend
+After switching from SQLite3 to PostgreSQL, there were some teething issues trying to get the database set up. It took some time to set up initially and then there was some connectivity issues between the database and backend application
+
+The problem was that the database information declared in Django settings.py didn’t align with the correct information set up for the Postgres database. To fix this we remade the Postgres database, this time making note of the information to ensure the correct information was then entered into the settings.
+### 5.3 MongoDB Server Down 
+Using mongodb we encountered to two problems. One each time we changed location we couldnt gain access to the database as our IP address wasnt registered to it. Two every so often mongodb would be down without a reason and we were unable to access the database during them time frames.
+
+### 5.4 Google Places Information
+While Google's API exhibited significant superiority over OpenStreetMap's API, we encountered an unexpected challenge. We realised that Google does not comprehensively regulate the information that it stores	. Numerous documents were either incomplete or lacked the implementation of certain fields. Compounding this issue, Google used various formats for presenting opening times of places this introduced complexities during information fetching. This posed a considerable challenge as our data showed inconsistencies. To address this, our strategy involved prioritizing essential information and identifying documents with the most consistent patterns.
+### 5.5 Geospatial Query
+A significant amount of the code was tailored during the algorithm's development to address a critical database query. Using geospatial queries in MongoDB was essential for proximity-based information filtering. However an unexpected problem emerged: MongoDB can only handle single-location geospatial queries, which means we are unable to compare multiple location distances at once. Testing revealed this constraint, which resulted in a major delay in our timeframe.
+
+    query = {
+        "types": {
+            "$in": types
+        },
+        "$or": [
+            {
+                f"cleaned_times.{day}": {
+                    "$ne": "Closed"
+                },
+                "geometry.location": {
+                    "$near": {
+                        "$geometry": {
+                            "type": "Point",
+                            "coordinates": [lat1, lon1]
+                        },
+                        "$maxDistance": 1000 
+                    }
+                }
+            },
+            {
+                f"cleaned_times.{day}": {
+                    "$ne": "Closed"
+                },
+                "geometry.location": {
+                    "$near": {
+                        "$geometry": {
+                            "type": "Point",
+                            "coordinates": [lat2, lon2]
+                        },
+                        "$maxDistance": 1000
+                    }
+                }
+            }
+        ]
+    }
+
+To overcome this , we took a step back and sought an alternative solution. We found our answer in the haversine formula, which enabled us to ensure that each selected location remained within a defined distance from our starting point. This alternative not only addressed the issue but also proved to be an effective and efficient means of achieving our objective.
+### 5.6 Increase Document Capacity
+
+During the project's early stages, we tested the system's performance and connection reliability by retrieving a small number of documents from the Google API. We encountered a problem as our demand for additional data increased. The API didn’t consistently return new documents. We were then forced to accept duplicate documents to solve this, which resulted in extra expenses since we had to get the same data repeatedly before finally obtaining new data. We were able to proceed with obtaining the data required for the development of our application from this workaround.
+
+## 6. Testing
+### 6.1 APIs Testing
+Two additional folders named ‘python_scripts’ and ‘test_scripts’ can be found in the code directory of the project. These are a collection of scripts that were used to test and establish connection with the Google Maps API and the MongoDB API. These scripts were also used to validate that incoming information was structured in the desired format.
+### 6.2 Unit Testing
+We used the standard unit testing library that comes with Python, unittest. Imported using Django
+from django.text import TestCase
+This comes with a class type TestCase which is used to create classes to test parts of the application. We used this to create unit tests for creation of our models (User, Trip, Itinerary). Unit tests were automatically executed using:
+
+`python3 manage.py test`
+
+### 6.3 Functionality Testing
+We tested all functionality of the application, by entering sample data in to create sample users, trips and itineraries. With these example instances in place we were able to test all the functionalities.
+User Functions: Registration, Login, Logout
+Trip Functions: Create Trip, View Trip, Delete Trip, Clear Activities
+Itinerary Functions: Create Itinerary, Delete Itinerary
+Trip Member Functions: Add Members, Leave Trip, Remove Members, Change Trip Owner
+For any functions that required a form to be filled out every form input was vigorously tested with various combinations of information to ensure proper functionality. This allowed us to find out if all functions were working correctly and repair any issues before beginning user testing.
+### 6.4 User Testing
+We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
+
+## 7. Installation Guide
 
 
 
