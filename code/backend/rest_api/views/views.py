@@ -9,6 +9,8 @@ from ..forms import *
 from pymongo import MongoClient
 from load_env_var import get_env_value
 import os
+from PIL import Image
+from io import BytesIO
 import base64
 import logging
 import re
@@ -362,5 +364,37 @@ def getActivities(request):
                         'longitude': longitude
                     })
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid request method'}, status=405)
+        
+@csrf_exempt
+def getImage(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            country = data.get('country')
+            city = data.get("city")
+            if not country or not city:
+                return JsonResponse({'error': 'Country or City missing'}, status=404)
+            
+            client = MongoClient(get_env_value('MONGO_URL'))
+            db = client[country]
+            collection = db["images"]
+            document = collection.find_one({"name": city})
+            if document:
+
+                image_data = document.get("image")
+
+                # Open the image using Pillow
+                image = Image.open(BytesIO(image_data))
+
+                # Convert the image to a base64-encoded string
+                buffered = BytesIO()
+                image.save(buffered, format="JPEG")  # You can adjust the format as needed
+                image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+
+                return JsonResponse({'detail': 'successfully retrieved image', 'image_base64': image_base64}, status=200)
+            
+            return JsonResponse({'error': 'Image not found'}, status=404)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
