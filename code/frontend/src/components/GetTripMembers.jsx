@@ -89,7 +89,7 @@ function GetTripMembers(props) {
             })
             .then((response) => {
               console.log(response);
-              window.location.href = "/";
+              window.location.reload();
             })
             .catch((err) => console.error("Error:", err));
         }

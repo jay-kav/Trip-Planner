@@ -12,15 +12,28 @@ import Map from './Map';
 const defaultTheme = createTheme();
 
 function ViewTrip(props) {
-    let trip = props.trip;
-    const [tripOwner, setTripOwner] = useState("");
+    let tripID = props.trip;
+    console.log('id', tripID);
+    const [tripOwner, setTripOwner] = useState(null);
+    const [trip, setTrip] = useState(null);
     const [hotel, setHotel] = useState("");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
 
     // Fetch requests
     useEffect(() => {
-        if (tripOwner.length === 0) {
+        if (trip == null) {
+            axios.get(`api/trips/${tripID}/`)
+            .then((response) => {
+                console.log(response);
+                setTrip(response.data);
+            })
+            .catch(err => console.log(err))
+        }
+    });
+
+    useEffect(() => {
+        if (trip && tripOwner == null) {
             axios.get(`api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
             .then((response) => {
                 console.log(response);
@@ -28,7 +41,10 @@ function ViewTrip(props) {
             })
             .catch(err => console.log(err))
         }
-        if (hotel.length == "") {
+    });
+
+    useEffect(() => {
+        if (trip && hotel.length == "") {
             axios.post(`get-hotel/`, {
                 'country': trip.country,
                 'city': trip.city,
@@ -40,7 +56,7 @@ function ViewTrip(props) {
             })
             .catch(err => console.log(err));
         }
-    });
+    }, trip);
 
     // Trip functions
     const deleteTrip = (e) => {
@@ -90,31 +106,34 @@ function ViewTrip(props) {
     };
 
     const getDate = (date) => {
+        console.log(date);
         let ymd = date.split('-');
         return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
     }
 
     const tripInfo = () => {
-      return (
-        <Card sx={{ width: '21vw', height: '28vh'}}>
-          <CardContent>
-            <Typography variant="h5" component="div">
-              {trip.tripname}
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {hotel}, {trip.city}, {trip.country}
-            </Typography>
-            <Typography variant="body2">
-              {getDate(trip.startDate)} - {getDate(trip.endDate)}
-            </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1.5}}>
-            {localStorage.getItem('sessionID') == tripOwner.id
-                && <Button sx={{fontSize: '.8vw'}} onClick={deleteTrip} variant="contained" color="error">Delete Trip</Button>}
-                <Button sx={{fontSize: '.8vw'}} onClick={leaveTrip} variant="contained" color="error">Leave Trip</Button>
-            </Box>
-          </CardContent>
-        </Card>
-      );
+        if (trip && tripOwner) {
+            return (
+                <Card sx={{ width: '21vw', height: '28vh'}}>
+                  <CardContent>
+                    <Typography variant="h5" component="div">
+                      {trip.tripname}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {hotel}, {trip.city}, {trip.country}
+                    </Typography>
+                    <Typography variant="body2">
+                      {getDate(trip.startDate)} - {getDate(trip.endDate)}
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1.5}}>
+                    {localStorage.getItem('sessionID') == tripOwner.id
+                        && <Button sx={{fontSize: '.8vw'}} onClick={(e) => {deleteTrip(e);sessionStorage.setItem('selected', null);}} variant="contained" color="error">Delete Trip</Button>}
+                        <Button sx={{fontSize: '.8vw'}} onClick={(e) => {leaveTrip(e);sessionStorage.setItem('selected', null);}} variant="contained" color="error">Leave Trip</Button>
+                    </Box>
+                  </CardContent>
+                </Card>
+              );
+        }
     };
 
     return (
@@ -131,7 +150,7 @@ function ViewTrip(props) {
                       gap: 3
                     }}>
                         {tripInfo()}
-                        <GetTripMembers trip={trip} tripOwner={tripOwner} />
+                        {trip && tripOwner && <GetTripMembers trip={trip} tripOwner={tripOwner} />}
                     </Box>
                     <Box sx={{
                       mx: 4,
@@ -143,14 +162,14 @@ function ViewTrip(props) {
                     }}>
                         <Card sx={{ width: '44vw', height: '58vh'}}>
                           <CardContent>
-                            <Map />
+                            
                           </CardContent>
                         </Card>
                     </Box>
                 </Grid>
                 <Grid>
                     <Box>
-                        <GetItineraries trip={trip} tripOwner={tripOwner} />
+                        {trip && tripOwner && <GetItineraries trip={trip} tripOwner={tripOwner} />}
                     </Box>
                 </Grid>
             </Grid>

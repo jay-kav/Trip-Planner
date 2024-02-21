@@ -38,7 +38,7 @@ function Navbar() {
         >
           <List>
               <ListItem key={'Journo'} disablePadding>
-                <ListItemButton onClick={() => {window.location.href = '/'}}>
+                <ListItemButton onClick={() => {sessionStorage.setItem('selected', null); window.location.href = '/'}}>
                   <ListItemIcon>
                     <InboxIcon />
                   </ListItemIcon>
@@ -46,7 +46,7 @@ function Navbar() {
                 </ListItemButton>
               </ListItem>
               <ListItem key={'My Trips'} disablePadding>
-                <ListItemButton onClick={() => {window.location.href = '/'}}>
+                <ListItemButton onClick={() => {sessionStorage.setItem('selected', null); window.location.href = '/'}}>
                   <ListItemIcon>
                     <HomeRoundedIcon />
                   </ListItemIcon>
@@ -54,7 +54,7 @@ function Navbar() {
                 </ListItemButton>
               </ListItem>
               <ListItem key={'Create Trip'} disablePadding>
-                <ListItemButton onClick={() => {window.location.href = '/createtrip'}}>
+                <ListItemButton onClick={() => {sessionStorage.setItem('selected', null); window.location.href = '/createtrip'}}>
                   <ListItemIcon>
                     <AddCircleOutlineRoundedIcon />
                   </ListItemIcon>
@@ -64,7 +64,10 @@ function Navbar() {
           </List>
           <Divider />
           <List>
-              <ListItem key={'logout'} onClick={() => logout()} disablePadding>
+              <ListItem key={'logout'} onClick={() => {
+                logout();
+                sessionStorage.setItem('selected', null);
+              }} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
                     <ExitToAppRoundedIcon />
