@@ -290,7 +290,12 @@ function CreateTrip() {
                   />
               </Grid>
               </Grid>
-              <Load text="Create Trip" messageTitle="Creating Trip" messageBody="Your trip is being created" submit={submit} />
+              <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              >Create Trip</Button>
           </Box>
         </Box>
       </Container>
