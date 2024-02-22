@@ -359,7 +359,7 @@ hotels = collection.find({"types": "hotel"})
 `
 
 ### 4.3 Algorithm
-#### Algarithm Flowchart
+#### Algorithm Flowchart
 
 ![Algorithm Flowchart](technical_manual/images/Blank_diagram.png)
 ----
