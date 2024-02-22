@@ -284,13 +284,13 @@ This diagram shows off the various components of the frontend application and ho
 
 ### 3.5 Sequence Diagrams
 #### 3.5.1 User Creates An Account
-![Creates An Account](technical_manual/images/Creates_An_Account.png)\
+![Creates An Account](technical_manual/images/Creates_An_Account.png)
 
 #### 3.5.2 User Creates A Trip
-![Creates Trip](technical_manual/images/Creates_Trip.png)\
+![Creates Trip](technical_manual/images/Creates_Trip.png)
 
 #### 3.5.3 User Deletes Trip
-![Delete Trip](technical_manual/images/Delete_Trip.png)\
+![Delete Trip](technical_manual/images/Delete_Trip.png)
 
 ## 4. Implementation
 ### 4.1 React Frontend
