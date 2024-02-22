@@ -70,7 +70,7 @@ We used React for the frontend of the application. We had to look into the vario
 #### 2.2.1 PostgreSQL
 By default Django uses SQLite3 for storing data. We discovered SQLite3 does not support an array type field, which is something we need for our models. We opted to use PostgreSQL for this reason. Use of PostgreSQL ArrayField in Django:
 
-    activities = ArrayField(models.CharField())
+`activities = ArrayField(models.CharField())`
 
 We had not used it before so we needed to research what was involved with the installation of the packages and set up a database. Then connect that database to our Django backend.
 #### 2.2.2 MongoDB Atlas
@@ -270,7 +270,34 @@ This diagram displays the system context, components, relationships, and depende
 
 ## 4. Implementation
 ### 4.1 React Frontend
-The frontend of the application was implemented using React.js. We decided to use this because it is easy to use and provide a very simple 
+The frontend of the application was implemented using React.js. We decided to use this because it is easy to use and can be put together efficiently due to the design and reuse of components.
+We used Axios for our fetch requests. This was installed using: `npm i axios` This was used for GET and POST requests. 
+
+    axios.get('api/trips/')
+    .then((response) => {
+        console.log(response.data)
+    })
+    .catch((err) => console.error(err))
+
+    axios.post('get-activites', {
+        'country': country,
+        'city': city,
+        'activites': itinerary.activities
+    })
+
+We chose Axios over the default node fetch method as it was much simpler to use and more effective in what we needed it for. We used the map function
+
+    return itineraries.map((itinerary, index) => (
+          <Card key={itinerary.id}>
+            <Box>
+              <Box
+                <h5>{getDate(itinerary.date)}</h5>
+              </Box>
+            </Box>
+          </Card>
+        ));
+
+to map all elements of a list into JavaScript objects. 
 ### 4.2 Django Backend
 We need a robust and secure framework for the backend of our web application. This is where Django comes in. Django can be installed using
 `pip install Django`
