@@ -66,11 +66,7 @@ function GetItineraries(props) {
     /* ---------- Itinerary Functions ---------- */
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = (event, reason) => {
-      if (reason && reason === "backdropClick")
-          setOpen(false);
-          return;
-    }
+    const handleClose = () => setOpen(false);
 
     const submitForm = (e) => {
       handleOpen();
@@ -92,12 +88,16 @@ function GetItineraries(props) {
       console.log(checkdate);
       if (checkdate > new Date(trip.endDate) || checkdate < new Date(trip.startDate)) {
         alert('You must create an itinerary for a valid date in you trip!');
+        handleClose();
       } else if (startTime < "08:00") {
         alert('You must select a start time of earliest 08:00');
+        handleClose();
       } else if (endTime < startTime) {
         alert('You must select an end time later than start time');
+        handleClose();
       } else if (endTime < "08:00") {
         alert('You must select a end time of latest 23:59');
+        handleClose();
       } else {
         axios.post(`create-itinerary/`, {
           'tripID': trip.id,
