@@ -8,12 +8,25 @@ import axios from "axios";
 
 export default function Map(props) {
     let trip = props.trip;
+    let itinerary = props.sharedState;
 
-    const [itineraries, setItineraries] = useState([]);
     const [hotel, setHotel] = useState("");
-    let markers = [];
+    const [activities, setActivities] = useState([]);
 
-    console.log('markers', markers);
+    useEffect(() => {
+        if (itinerary && activities.length == 0) {
+            axios.post(`get-activities/`, {
+                'country': trip.country,
+                'city': trip.city,
+                'activities': itinerary
+            })
+            .then((response) => {
+                console.log(response.data);
+                setActivities(response.data.activities);
+            })
+            .catch(err => console.log(err));
+        }
+    }, itinerary);
 
     useEffect(() => {
         if (trip && hotel.length == "") {
@@ -27,36 +40,6 @@ export default function Map(props) {
                 setHotel(response.data);
             })
             .catch(err => console.log(err));
-        }
-    }, trip);
-
-    useEffect(() => {
-        if (trip && itineraries.length == 0) {
-            axios.get(`api/itineraries/?trip_id=${trip.id}`)
-           .then((response) => {
-                console.log(response);
-                setItineraries(response.data);
-            })
-           .catch(err => console.log(err))
-        }
-    });
-
-    useEffect(() => {
-        if (itineraries.length > 0) {
-            for (let i = 0; i < itineraries.length; i++) {
-                console.log('itinerary', itineraries[i]);
-                axios.post(`get-activities/`, {
-                    'country': trip.country,
-                    'city': trip.city,
-                    'activities': itineraries[i].activities
-                })
-                .then((response) => {
-                    console.log('activities', response.data);
-                    markers.push(response.data);
-                    console.log('markers', markers);
-                })
-                .catch(err => console.log(err));
-            }
         }
     });
 
@@ -74,21 +57,36 @@ export default function Map(props) {
     };
 
     const getMarkers = () => {
-        console.log('index', parseInt(sessionStorage.getItem('currentItineraryIndex')));
-        if (markers[parseInt(sessionStorage.getItem('currentItineraryIndex'))]) {
-            return (
-                markers[parseInt(sessionStorage.getItem('currentItineraryIndex'))].activities.map((marker) => (
-                    <Marker position={[marker.longitude, marker.latitude]} icon={customIcon}>
-                        <Popup>{marker.name}</Popup>
-                    </Marker>
-                ))
-            )
+        console.log('activities', activities);
+        return (
+            activities.map((marker) => (
+                <Marker position={[marker.latitude, marker.longitude]} icon={customIcon}>
+                    <Popup>{marker.name}</Popup>
+                </Marker>
+            ))
+        )
+    }
+
+    const getLat = () => {
+        let total = hotel.lat;
+        for (let a in activities) {
+            total += activities[a].latitude;
         }
+        return total / (hotel.lat + activities.length);
+    }
+
+    const getLong = () => {
+        let total = hotel.long;
+        for (let a in activities) {
+            total += activities[a].longitude;
+        }
+        return total / (hotel.long + activities.length);
     }
     
-    if (hotel) {
+    if (hotel && activities) {
+        console.log('activities', activities);
         return (
-            <MapContainer center={[hotel.lat, hotel.long]} zoom={12}>
+            <MapContainer center={[hotel.lat/*getLat()*/, hotel.long/*getLong()*/]} zoom={15}>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -97,6 +95,9 @@ export default function Map(props) {
                         chunkedLoading
                         iconCreateFunction={createClusterCustomIcon}
                     >
+                        <Marker position={[hotel.lat, hotel.long]} icon={customIcon}>
+                            <Popup>{hotel.name}</Popup>
+                        </Marker>
                         {getMarkers()}
                     </MarkerClusterGroup>
                 </div>

@@ -164,9 +164,7 @@ function GetTripMembers(props) {
             <List sx={{overflowY:'scroll', height: '20vh'}}>
                 <ListItem disablePadding>
                     <ListItemText primary={tripOwner.username + " (Owner)"} />
-                    <ListItemIcon sx={{
-                        marginLeft: '5rem',
-                    }}>
+                    <ListItemIcon sx={{marginLeft: '5rem'}}>
                         {localStorage.getItem('sessionID') == tripOwner.id && <GroupAddIcon titleAccess="Add Member" onClick={addMembers}/>}
                     </ListItemIcon>
                 </ListItem>
