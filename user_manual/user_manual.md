@@ -32,7 +32,9 @@ for the system.
 5. [Other Function](#step-5-other-functions)
     1. [Clearing Activities](#51-clearing-activities)
     2. [Changing Owner of a Trip](#52-changing-owner-of-a-trip)
-    3. [Logging Out](#53-logging-out)
+    3. [View Website](#53-view-website)
+    4. [View Location](#54-view-location)
+    5. [Logging Out](#55-logging-out)
 
 ---
 
@@ -40,7 +42,7 @@ for the system.
 
 ### 1.1 Registering an Account
 
-To start using Journo, you need to register an account. Follow these steps:
+To begin your Journo journey, follow these steps:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="450" style="margin-right: 20px;"/>
@@ -55,7 +57,7 @@ To start using Journo, you need to register an account. Follow these steps:
 
 ### 1.2 Logging In
 
-Once registered, you will be redirected to the original login page:
+Once registered, follow these steps to log in:
 
 ![Register 1](/user_manual/Images/Register_1.png)
 
@@ -68,7 +70,7 @@ Once registered, you will be redirected to the original login page:
 
 ### 2.1 Side Bar
 
-After logging in, you will be placed on the landing page:
+After logging in, you'll be on the landing page:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Sidebar_1.png" alt="Sidebar 1" width="450" style="margin-right: 20px;"/>
@@ -78,8 +80,8 @@ After logging in, you will be placed on the landing page:
 - By clicking the three horizontal lines in the top left-hand corner, the sidebar with four options will be displayed.
 - View the Homepage.
 - View "My Trips" page.
-- Option to Create a Trip. See function 3.1 for more information [here](#31-creating-a-trip).
-- Finally, a button to log out. See function 5.3 for more information [here](#53-logging-out).
+- Option to Create a Trip. See [function 3.1](#31-creating-a-trip) for more information.
+- Finally, a button to log out. See [function 5.3](#53-logging-out) for more information.
 
 ---
 
@@ -87,7 +89,7 @@ After logging in, you will be placed on the landing page:
 
 ### 3.1 Creating a Trip
 
-Once on the "My Trip" page, you have the option to create a new trip:
+On the "My Trips" page, create a new trip:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Create_Trip.png" alt="Create Trip" width="450" style="margin-right: 20px;"/>
@@ -105,7 +107,7 @@ Once on the "My Trip" page, you have the option to create a new trip:
 
 ### 3.2 Viewing a Trip
 
-When on the "My Trip" page, you can view one of your trips:
+On the "My Trips" page, view one of your trips:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/View_Trip.png" alt="View Trip" width="450" style="margin-right: 20px;"/>
@@ -123,8 +125,7 @@ When on the "My Trip" page, you can view one of your trips:
 1. Must be in a specific trip.
 2. Must be the owner of the trip.
 
-When looking at the trip details page, you have the option to add members:
-
+When viewing trip details, add members:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Add_Member.png" alt="Add Member" width="450" style="margin-right: 20px;"/>
@@ -144,13 +145,15 @@ When looking at the trip details page, you have the option to add members:
 1. Must be in a specific trip.
 2. Must be the owner of the trip.
 
-When looking at the trip details page, you have the option to remove members:
+In trip details, remove members:
 
-![Remove Member](/user_manual/Images/Remove_Member.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Remove_Member.png" alt="Remove Member" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Remove_Member_Clicked.png" alt="Remove Member select" width="450"/>
+</div>
 
 - If you are the owner, an "X" icon will appear next to members' names.
-- Once clicked, you will be shown a text box.
-- Enter the username of the member you want to add.
+- Once clicked, you will be shown a confirmation text box.
 - Click "Remove Member" to confirm.
 - Click "Cancel" if you don't wish to continue.
 
@@ -160,13 +163,17 @@ When looking at the trip details page, you have the option to remove members:
 1. Must be in a specific trip.
 2. Must be the owner of the trip.
 
-If your plans change, you can delete a trip:
+Delete Trip:
 
-![Delete Trip](/user_manual/Images/Delete_Trip.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Delete_Trip.png" alt="Delete Trip" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Delete_Trip_Clicked.png" alt="Remove Trip select" width="450"/>
+</div>
 
 - If you are the owner, a "Delete Trip" button will be present on the screen.
 - Click the button if you wish to delete the trip.
-- Once clicked, the trip will be removed from the system.
+- You will be then displayed a confirmation box
+- Click delete and the trip will be removed from the system.
 - If you delete the trip, it will be deleted for all members as well.
 - Click "Cancel" if you don't wish to continue.
 
@@ -176,14 +183,18 @@ If your plans change, you can delete a trip:
 1. Must be in a specific trip.
 2. Cannot be the owner of the trip.
 
-If you no longer want to be part of a trip:
+Leave Trip:
 
-![Leave Trip](/user_manual/Images/Leave_Trip.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Leave_Trip.png" alt="Leave Trip" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Leave_Trip_Clicked.png" alt="Leave Trip select" width="450"/>
+</div>
 
 - If you no longer want to see a trip, you can leave the trip.
-- By clicking the "Leave Trip" button, you will be removed from the trip.
+- By clicking the "Leave Trip" button, You will be display with a confirm text box 
+- If you click "Leave" you will be removed from the trip.
 - If you are an owner, this will raise an error.
-- If you want to leave the trip without deleting it for everyone else, see function 5.3 [here](#53-logging-out).
+- If you want to leave the trip without deleting it for everyone else, see function 5.2 [here](#52-changing-owner-of-a-trip).
 
 ---
 
@@ -195,7 +206,7 @@ If you no longer want to be part of a trip:
 1. Must be in a specific trip
 2. Must be the owner of the trip
 
-Craft your daily schedule by adding activities to your trip:
+Generate a daily schedule:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Create_Itinerary.png" alt="Create Itinerary" width="450" style="margin-right: 20px;"/>
@@ -220,23 +231,26 @@ Craft your daily schedule by adding activities to your trip:
 1. Must be in a specific trip
 2. Cannot be the owner of the trip
 
-Generated an unsatisfactory itinerary? That's fine; let's delete it:
+Remove an unsatisfactory itinerary:
 
-![Delete Itinerary](/user_manual/Images/Delete_Itinerary.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Delete_Itinerary.png" alt="Delete Itinerary" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Delete_Itinerary_Clicked.png" alt="Delete Itinerary Component" width="450"/>
+</div>
 
 - If you don't like your itinerary, you have the option to delete it.
 - If you are an owner, a bin icon will appear in the top right-hand corner.
-- Pressing it will remove the itinerary for everyone.
+- Pressing it will show a confirmation box to delete the trip.
+- Once pressing it will remove the itinerary for everyone.
 - Note: Removing the itinerary will remove the saved activities associated with it.
-- See function 5.1 for more information.
+- See [function 5.1](#51-clearing-activities) for more information.
 
 ### 4.3 View all Itineraries
 
-Want to see all the itineraries you've created for a trip:
+View all trip itineraries:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Cycle_Itinerary.png" alt="Page 1 Itinerary" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Cycle_Itinerary2.png" alt="Page 2 Itinerary" width="450"/>
 </div>
 
 - Your trip has multiple itineraries, but you can only see one.
@@ -255,13 +269,15 @@ Want to see all the itineraries you've created for a trip:
 1. Must be in a specific trip
 2. Cannot be the owner of the trip
 
-Want to repeat activities:
+Reset completed activities:
 
-![Clear Activities](/user_manual/Images/Clear_Activities.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Clear_Activities.png" alt="Clear Activities" width="450" style="margin-right: 20px;"/>
+</div>
 
 - Each trip is designed to create itineraries without repeating activities.
 - If you are unsatisfied with the available unique activities, you can clear your slate.
-- If you are an owner, a "Clear Activities" button will appear at the top of the Trip screen.
+- If you are an owner, a "Clear Activities" button will appear at the top right of the Trip screen.
 - Pressing this will reset your completed activities.
 - Note: After pressing this, you will no longer get completely unique itineraries.
 
@@ -271,22 +287,51 @@ Want to repeat activities:
 1. Must be in a specific trip
 2. Cannot be the owner of the trip
 
-Want to transfer ownership of a trip to another member:
+Transfer ownership:
 
-![Change Owner](/user_manual/Images/Change_Owner.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Change_Owner.png" alt="Change Owner" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Change_Owner_Clicked.png" alt="Change Owner Component" width="450"/>
+</div>
 
 - If you wish to leave the trip without deleting it.
 - Or tired of having the responsibility of organizing the trip.
 - By pressing the shield icon next to a specific member.
+- It will dispay a confirmation box, if clicked.
 - You will pass on the ownership to them.
 - Note: Doing this will remove all control of the trip from your account.
 - You will no longer be able to create or delete anything from the trip.
 
-### 5.3 Logging Out
+### 5.3 View Website
 
-Finished up for the day:
+Explore a recommended activity's website:
+
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/View_Website.png" alt="View Website" width="450" style="margin-right: 20px;"/>
+</div>
+
+
+- You can find the button "Website" below the activites name.
+- Clicking this will transport you to the businesses personal page
+- Note: If you can't see the button then the activity doesn't have an associated website
+
+### 5.4 View Location
+
+Navigate to your next activity:
+
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/View_Location.png" alt="View Location" width="450" style="margin-right: 20px;"/>
+</div>
+
+- Click "Location" below the activity's name.
+- Google Maps will guide you.
+
+### 5.5 Logging Out
+
+Complete your session securely:
 
 ![Logout](/user_manual/Images/logout.png)
+
 
 - When you've finished up for the day, you can securely log out.
 - By interacting with the sidebar, you'll find the option to log out.
@@ -297,5 +342,3 @@ Finished up for the day:
 This concludes the user manual for Journo. We hope this guide helps you navigate and make the most out of our web app. If you have any further questions or encounter issues, please refer to the [FAQ section](#) on our website or contact our support team.
 
 Happy Journo-ing!
-
-
