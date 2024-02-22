@@ -20,7 +20,8 @@ class Trip(models.Model):
         return f"({self.id}) {self.tripname} - {self.owner.username}"
 
 class Itinerary(models.Model):
-    id = models.AutoField(primary_key=True)#
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255, default='')
     trip_id = models.ForeignKey(Trip, on_delete=models.CASCADE)
     date = models.DateField()
     start = models.TimeField()

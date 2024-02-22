@@ -7,7 +7,7 @@ class ItineraryForm(forms.ModelForm):
     date = DateField(input_formats=settings.DATE_INPUT_FORMATS)
     class Meta:
         model = Itinerary
-        fields = ['date', 'trip_id', 'start', 'end', 'activities']
+        fields = ['date', "title", 'trip_id', 'start', 'end', 'activities']
 
 class TripForm(forms.ModelForm):
     startDate = DateField(input_formats=settings.DATE_INPUT_FORMATS)

@@ -96,8 +96,13 @@ def createItinerary(request):
                 activities = result[1]
 
             print(f"activities {activities}")
+
+            title = getTitle(activities)
+            print(title)
+
             form_data = {
                 'trip_id': trip_id,
+                'Title': title,
                 'date': date,
                 'start': start,
                 'end': end,
@@ -190,3 +195,14 @@ def mixLists(origional):
         swapped_list[0], swapped_list[i] = swapped_list[i], swapped_list[0]  # Swap the first element
         result.append(swapped_list)
     return result
+
+def getTitle(actvities):
+    titles = []
+    for item in actvities:
+        titles.append(item[-1].capitalize())
+
+    filtered_words = [word for word in titles if word not in ["Lunch", "Dinner", "Breakfast"]]
+
+    title = filtered_words[:-1]
+
+    return ', '.join(title) + '&' + filtered_words[-1]
