@@ -274,7 +274,8 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - Member(s) cannot be removed                                  |
 
 ### 3.4 React Component Diagram
-![React Component Diagram](technical_manual/images/component_diagram.png)
+![React Component Diagram](technical_manual/images/component_diagram.png)\
+
 This diagram shows off the various components of the frontend application and how the interact with each other.
 ## 4. Implementation
 ### 4.1 React Frontend
