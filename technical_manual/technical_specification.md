@@ -387,6 +387,25 @@ This file facilitates communication with the database by sending specific querie
 
 **Distance Calculation** (distanceCalculation.py):
 This file houses the Haversine formula function for calculating distances between locations in kilometres. It assists in determining the distance travelled by the user, ensuring it doesn't exceed our walk threshold. The second function dynamically calculates the furthest distance achievable from home as time progresses, ensuring an appropriate distance for walking back home.
+#### 4.3.1 Heuristics
+
+In the implementation of our system, we have incorporated several heuristics to enhance the user experience and optimize the itinerary generation process. These heuristics are designed to make reasonable assumptions and streamline decision-making. The key heuristics employed are as follows:
+
+1. **Walking Assumption:**
+   - We operate under the assumption that users will primarily be walking to their destinations. This choice is made to align with common travel scenarios where walking is a preferred mode of transportation for short distances.
+
+2. **Scheduled Eating Times:**
+   - To ensure a balanced itinerary, we have predefined specific times for meals, such as Breakfast scheduled from 8 am to 10 am. This scheduling adds structure to the user's day and guarantees appropriate time allocations for meals.
+
+3. **Activity Grouping:**
+   - Every activity in the system is categorised into distinct groups based on the time of day they are best suited for. This grouping allows for a more coherent and logical arrangement of activities within the generated itinerary.
+
+4. **Time Allocation:**
+   - Each activity is associated with a calculated duration representing the estimated time a person might spend engaging in that particular activity. This calculation is integrated into the itinerary generation process to provide users with a realistic timeframe for their planned activities.
+
+The use of these heuristics enables our system to provide well-structured and personalised itineraries tailored to the user's needs.
+
+
 ## 5. Problem and Solutions
 ### 5.1 Frontend Not Communicating With Backend
 Early on in the development cycle when the initial project setup was happening, we ran into an issue where api endpoints set up in the backend would return Cors errors. We were stuck on this issue for a number of days. 
