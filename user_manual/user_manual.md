@@ -334,9 +334,7 @@ Don't know where your next activity is:
 
 Finished up for the day:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/logout.png" alt="Logout" width="450" style="margin-right: 20px;"/>
-</div>
+![Logout](/user_manual/Images/logout.png)
 
 
 - When you've finished up for the day, you can securely log out.
