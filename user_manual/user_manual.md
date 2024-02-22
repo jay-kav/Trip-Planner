@@ -154,8 +154,7 @@ When looking at the trip details page, you have the option to remove members:
 </div>
 
 - If you are the owner, an "X" icon will appear next to members' names.
-- Once clicked, you will be shown a text box.
-- Enter the username of the member you want to add.
+- Once clicked, you will be shown a confirmation text box.
 - Click "Remove Member" to confirm.
 - Click "Cancel" if you don't wish to continue.
 
@@ -174,7 +173,8 @@ If your plans change, you can delete a trip:
 
 - If you are the owner, a "Delete Trip" button will be present on the screen.
 - Click the button if you wish to delete the trip.
-- Once clicked, the trip will be removed from the system.
+- You will be then displayed a confirmation box
+- Click delete and the trip will be removed from the system.
 - If you delete the trip, it will be deleted for all members as well.
 - Click "Cancel" if you don't wish to continue.
 
@@ -192,9 +192,10 @@ If you no longer want to be part of a trip:
 </div>
 
 - If you no longer want to see a trip, you can leave the trip.
-- By clicking the "Leave Trip" button, you will be removed from the trip.
+- By clicking the "Leave Trip" button, You will be display with a confirm text box 
+- If you click "Leave" you will be removed from the trip.
 - If you are an owner, this will raise an error.
-- If you want to leave the trip without deleting it for everyone else, see function 5.3 [here](#53-logging-out).
+- If you want to leave the trip without deleting it for everyone else, see function 5.2 [here](#52-changing-owner-of-a-trip).
 
 ---
 
@@ -240,9 +241,10 @@ Generated an unsatisfactory itinerary? That's fine; let's delete it:
 
 - If you don't like your itinerary, you have the option to delete it.
 - If you are an owner, a bin icon will appear in the top right-hand corner.
-- Pressing it will remove the itinerary for everyone.
+- Pressing it will show a confirmation box to delete the trip.
+- Once pressing it will remove the itinerary for everyone.
 - Note: Removing the itinerary will remove the saved activities associated with it.
-- See function 5.1 for more information.
+- See [function 5.1](#51-clearing-activities) for more information.
 
 ### 4.3 View all Itineraries
 
@@ -270,11 +272,13 @@ Want to see all the itineraries you've created for a trip:
 
 Want to repeat activities:
 
-![Clear Activities](/user_manual/Images/Clear_Activities.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Clear_Activities.png" alt="Clear Activities" width="450" style="margin-right: 20px;"/>
+</div>
 
 - Each trip is designed to create itineraries without repeating activities.
 - If you are unsatisfied with the available unique activities, you can clear your slate.
-- If you are an owner, a "Clear Activities" button will appear at the top of the Trip screen.
+- If you are an owner, a "Clear Activities" button will appear at the top right of the Trip screen.
 - Pressing this will reset your completed activities.
 - Note: After pressing this, you will no longer get completely unique itineraries.
 
@@ -294,21 +298,46 @@ Want to transfer ownership of a trip to another member:
 - If you wish to leave the trip without deleting it.
 - Or tired of having the responsibility of organizing the trip.
 - By pressing the shield icon next to a specific member.
+- It will dispay a confirmation box, if click.
 - You will pass on the ownership to them.
 - Note: Doing this will remove all control of the trip from your account.
 - You will no longer be able to create or delete anything from the trip.
 
 ### 5.3 View Website
-![View Location](/user_manual/Images/View_Website.png)
+
+Given a place to go and you want to check the website:
+
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/View_Website.png" alt="View Website" width="450" style="margin-right: 20px;"/>
+</div>
+
+
+- If a recommened activity has a website.
+- You can find the button "Website" below the activites name.
+- Clicking this will transport you to the businesses personal page
+- Note: If you can't see the button then the activity doesn't have an associated website
 
 ### 5.4 View Location
-![Logout](/user_manual/Images/View_Location.png)
+
+Don't know where your next activity is:
+
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/View_Location.png" alt="View Location" width="450" style="margin-right: 20px;"/>
+</div>
+
+- Below the name of your activity you will find a "Location" button
+- Clicking this will bring you to google maps
+- The locations detail will be filled out for you.
+- From there you can navigate to your next location.
 
 ### 5.5 Logging Out
 
 Finished up for the day:
 
-![Logout](/user_manual/Images/logout.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/logout.png" alt="Logout" width="450" style="margin-right: 20px;"/>
+</div>
+
 
 - When you've finished up for the day, you can securely log out.
 - By interacting with the sidebar, you'll find the option to log out.
