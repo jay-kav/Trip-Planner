@@ -66,10 +66,14 @@ function GetItineraries(props) {
     /* ---------- Itinerary Functions ---------- */
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = (event, reason) => {
+      if (reason == 'clickaway') {
+        return
+      }
+      setOpen(false);
+    }
 
     const submitForm = (e) => {
-      handleOpen();
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
@@ -88,17 +92,14 @@ function GetItineraries(props) {
       console.log(checkdate);
       if (checkdate > new Date(trip.endDate) || checkdate < new Date(trip.startDate)) {
         alert('You must create an itinerary for a valid date in you trip!');
-        handleClose();
       } else if (startTime < "08:00") {
         alert('You must select a start time of earliest 08:00');
-        handleClose();
       } else if (endTime < startTime) {
         alert('You must select an end time later than start time');
-        handleClose();
       } else if (endTime < "08:00") {
         alert('You must select a end time of latest 23:59');
-        handleClose();
       } else {
+        handleOpen();
         axios.post(`create-itinerary/`, {
           'tripID': trip.id,
           'country': trip.country,
@@ -119,7 +120,6 @@ function GetItineraries(props) {
           console.error("Error:", err);
         })
       }
-      handleClose();
     };
 
     const clearActivities = (e) => {
@@ -412,17 +412,19 @@ function GetItineraries(props) {
     // Functions to handle cycling through itineraries
     const goToPreviousItinerary = () => {
       setCurrentItineraryIndex(prevIndex => (prevIndex === 0 ? itineraries.length - 1 : prevIndex - 1));
+      onAction(itineraries[currentItineraryIndex].activities);
     };
 
     const goToNextItinerary = () => {
       setCurrentItineraryIndex(prevIndex => (prevIndex === itineraries.length - 1 ? 0 : prevIndex + 1));
+      onAction(itineraries[currentItineraryIndex].activities);
     };
 
     const getItineraries = () => {
       return itineraries.map((itinerary, index) => (
           <Card key={itinerary.id} style={{display: index === currentItineraryIndex ? 'block' : 'none' }}>
             <Box>
-              <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '10px' }}>
+              <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '10px', textWrap: 'wrap'}}>
                 <h5>{getDate(itinerary.date)} - {itinerary.title}</h5>
                 {localStorage.getItem('sessionID') == tripOwner.id && <DeleteOutlineIcon titleAccess="Delete Itinerary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)} />}  
               </Box>
