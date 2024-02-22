@@ -5,6 +5,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon, point } from "leaflet";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Polyline } from 'react-leaflet';
 
 export default function Map(props) {
     let trip = props.trip;
@@ -14,7 +15,7 @@ export default function Map(props) {
     const [activities, setActivities] = useState([]);
 
     useEffect(() => {
-        if (itinerary && activities.length == 0) {
+        if (itinerary) {
             axios.post(`get-activities/`, {
                 'country': trip.country,
                 'city': trip.city,
@@ -45,7 +46,7 @@ export default function Map(props) {
 
     const customIcon = new Icon({
         iconUrl: require("./icons/placeholder.png"),
-        iconSize: [38, 38] // size of the icon
+        iconSize: [48, 48] // size of the icon
     });
 
     const createClusterCustomIcon = function (cluster) {
@@ -56,12 +57,15 @@ export default function Map(props) {
         });
     };
 
-    const getMarkers = () => {
-        console.log('activities', activities);
+    const getMarkers = (a) => {
         return (
-            activities.map((marker) => (
-                <Marker position={[marker.latitude, marker.longitude]} icon={customIcon}>
-                    <Popup>{marker.name}</Popup>
+            a.map((marker) => (
+                <Marker key={marker.place_id} position={[marker.latitude, marker.longitude]} icon={customIcon}>
+                    <Popup>{marker.name}    <img
+                        style={{height: '30px', width: '30px', borderRadius: '15px', objectFit: 'cover'}}
+                        src={`data:image/jpeg;base64,${marker.image_data}`}
+                        alt={marker.name}
+                    /></Popup>
                 </Marker>
             ))
         )
@@ -83,10 +87,29 @@ export default function Map(props) {
         return total / (hotel.long + activities.length);
     }
     
-    if (hotel && activities) {
-        console.log('activities', activities);
+    if (hotel) {
+        if (activities.length > 0) {
+            return (
+                <MapContainer center={[getLat(), getLong()]} zoom={13}>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <MarkerClusterGroup
+                            chunkedLoading
+                            iconCreateFunction={createClusterCustomIcon}
+                        >
+                            <Marker position={[hotel.lat, hotel.long]} icon={customIcon}>
+                                <Popup>{hotel.name}</Popup>
+                            </Marker>
+                            {getMarkers(activities)}
+                        </MarkerClusterGroup>
+                    </div>
+                </MapContainer>
+            );
+        }
         return (
-            <MapContainer center={[hotel.lat/*getLat()*/, hotel.long/*getLong()*/]} zoom={15}>
+            <MapContainer center={[hotel.lat, hotel.long]} zoom={13}>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -98,7 +121,6 @@ export default function Map(props) {
                         <Marker position={[hotel.lat, hotel.long]} icon={customIcon}>
                             <Popup>{hotel.name}</Popup>
                         </Marker>
-                        {getMarkers()}
                     </MarkerClusterGroup>
                 </div>
             </MapContainer>
