@@ -423,7 +423,7 @@ function GetItineraries(props) {
           <Card key={itinerary.id} style={{display: index === currentItineraryIndex ? 'block' : 'none' }}>
             <Box>
               <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: '10px' }}>
-                <h5>{getDate(itinerary.date)}</h5>
+                <h5>{getDate(itinerary.date)} - {itinerary.title}</h5>
                 {localStorage.getItem('sessionID') == tripOwner.id && <DeleteOutlineIcon titleAccess="Delete Itinerary" onClick={(e) => deleteItinerary(e, itinerary, trip.id)} />}  
               </Box>
             </Box>
