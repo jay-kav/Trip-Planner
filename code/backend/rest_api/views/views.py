@@ -108,8 +108,10 @@ def getHotel(request):
             collection = db[city]
             hotel = collection.find_one({"place_id": hotel})
             name = hotel.get("name")
+            long = hotel.get("geometry").get("location").get("lng")
+            lat = hotel.get("geometry").get("location").get("lat")
 
-            return JsonResponse({'detail': 'Successfully retrieved hotel', 'hotel': name}, status=200)
+            return JsonResponse({'detail': 'Successfully retrieved hotel', 'name': name, 'long': long, 'lat': lat}, status=200)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -365,37 +367,3 @@ def getActivities(request):
             return JsonResponse({'detail': 'Successfully retrieved activities', 'activities': activityList, }, status=200)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
-        
-
-@csrf_exempt
-def getImage(request):
-    try:
-        data = json.loads(request.body)
-        print(data)
-        country = data.get('country')
-        city = data.get('city')
-
-        if not country or not city:
-            return JsonResponse({'error': 'Invalid request'}, status=400)
-        
-        client = MongoClient("mongodb://localhost:27017/")
-        db = client[country]
-        collection = db["images"]
-
-        document = collection.find_one({"name": city})
-        if document:
-            print("document found")
-            # Get the image data from the document
-            image_data = document.get("image")
-            if image_data:
-                encoded_image = base64.b64encode(image_data).decode('utf-8')
-                print("Image found")
-
-            return JsonResponse({'detail': 'successfully retrieved image', 'image': encoded_image}, status=200)
-        else:
-            return JsonResponse({'error': 'Image not found'}, status=404)
-
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
