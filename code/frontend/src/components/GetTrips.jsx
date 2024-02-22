@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -42,10 +41,11 @@ function GetTrips() {
       return trips.map((t) => (
         <Grid item key={t.id} xs={12} sm={6} md={4}>
           <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-          <CardMedia
-            sx={{ height: 140 }}
-            src='images/Brussels.jpg'
+          <img
+            style={{ height: 140 }}
+            src={require(`./images/${t.city}.jpg`)}
             title={t.city}
+            alt={t.city}
           />
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography gutterBottom variant="h5" component="h2">
