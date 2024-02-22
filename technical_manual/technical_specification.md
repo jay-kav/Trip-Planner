@@ -272,6 +272,9 @@ This diagram displays the system context, components, relationships, and depende
 | Alternative Scenario          | - There are no other members in the trip                       |
 |                               | - Member(s) cannot be removed                                  |
 
+### 3.4 React Component Diagram
+![React Component Diagram](technical_manual/images/component_diagram.png)
+This diagram shows off the various components of the frontend application and how the interact with each other.
 ## 4. Implementation
 ### 4.1 React Frontend
 The frontend of the application was implemented using React.js. We decided to use this because it is easy to use and can be put together efficiently due to the design and reuse of components.
