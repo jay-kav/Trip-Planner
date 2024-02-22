@@ -18,17 +18,17 @@
 3. [Design](#3-design)
     1. [System Architecture](#31-system-architecture)
     2. [Class Diagram](#32-class-diagram)
-    3. [Use Cases](#33-use-cases)
-        1. [User Authentication](#331-user-authentication)
-        2. [User Creates Trip](#332-user-creates-trip)
-        3. [User Views Trips](#333-user-views-trips)
-        4. [User Deletes Trip](#334-user-deletes-trip)
-        5. [User Changes Ownership Of Trip](#335-user-changes-ownership-of-trip)
-        6. [User Adds Itinerary To Trip](#336-user-adds-itinerary-to-trip)
-        7. [User Deletes Itinerary](#337-user-deletes-itinerary)
-        8. [User Add Member To Trip](#338-user-add-member-to-trip)
-        9. [User Removes Member](#339-user-removes-member)
-    4. [React Component Diagram](#34-react-component-diagram)
+    3. [React Component Diagram](#33-react-component-diagram)
+    4. [Use Cases](#34-use-cases)
+        1. [User Authentication](#341-user-authentication)
+        2. [User Creates Trip](#342-user-creates-trip)
+        3. [User Views Trips](#343-user-views-trips)
+        4. [User Deletes Trip](#344-user-deletes-trip)
+        5. [User Changes Ownership Of Trip](#345-user-changes-ownership-of-trip)
+        6. [User Adds Itinerary To Trip](#346-user-adds-itinerary-to-trip)
+        7. [User Deletes Itinerary](#347-user-deletes-itinerary)
+        8. [User Add Member To Trip](#348-user-add-member-to-trip)
+        9. [User Removes Member](#349-user-removes-member)
 4. [Implementation](#4-implementation)
     1. [React Frontend](#41-react-frontend)
     2. [Django Backend](#42-django-backend)
@@ -99,8 +99,13 @@ This diagram displays the system context, components, relationships, and depende
 ### 3.2 Class Diagram
 ![Class Diagram](technical_manual/images/class_diagram.png)
 
-### 3.3 Use Cases
-#### 3.3.1 User Authentication
+### 3.3 React Component Diagram
+![React Component Diagram](technical_manual/images/component_diagram.png)\
+
+This diagram shows off the various components of the frontend application and how the interact with each other.
+
+### 3.4 Use Cases
+#### 3.4.1 User Authentication
 | Name                          | User Registers An Account                                |
 |-------------------------------|----------------------------------------------------------|
 | Goal                          | User successfully creates a new account                  |
@@ -143,7 +148,7 @@ This diagram displays the system context, components, relationships, and depende
 | Alternative Scenario   | - Error occurs in the system                     |
 |                        | - User cannot be logged out                      |
 
-#### 3.3.2 User Creates Trip
+#### 3.4.2 User Creates Trip
 
 | Name                   | User Creates Trip                                        |
 |------------------------|----------------------------------------------------------|
@@ -160,7 +165,7 @@ This diagram displays the system context, components, relationships, and depende
 |                        | - New trip is not created                                |
 
 
-#### 3.3.3 User Views Trips
+#### 3.4.3 User Views Trips
 
 | Name                   | User Views Trips                                                     |
 |------------------------|----------------------------------------------------------------------|
@@ -176,7 +181,7 @@ This diagram displays the system context, components, relationships, and depende
 |                        | - No trips are listed                                                |
 
 
-#### 3.3.4 User Deletes Trip
+#### 3.4.4 User Deletes Trip
 
 | Name                   | User Deletes Trip                                |
 |------------------------|--------------------------------------------------|
@@ -192,7 +197,7 @@ This diagram displays the system context, components, relationships, and depende
 |                        | - Trip cannot be deleted                         |
 
 
-#### 3.3.5 User Changes Ownership Of Trip
+#### 3.4.5 User Changes Ownership Of Trip
 
 | Name                          | User Changes Ownership Of Trip                                          |
 |-------------------------------|-------------------------------------------------------------------------|
@@ -208,7 +213,7 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - Trip owner cannot be changed                                          |
 
 
-#### 3.3.6 User Adds Itinerary To Trip
+#### 3.4.6 User Adds Itinerary To Trip
 
 | Name                          | User Adds Itinerary To Trip                                       |
 |-------------------------------|-------------------------------------------------------------------|
@@ -225,7 +230,7 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - New itinerary cannot be generated                               |
 
 
-#### 3.3.7 User Deletes Itinerary
+#### 3.4.7 User Deletes Itinerary
 
 | Name                          | User Deletes Itinerary                                         |
 |-------------------------------|----------------------------------------------------------------|
@@ -240,7 +245,7 @@ This diagram displays the system context, components, relationships, and depende
 | Alternative Scenario          | - User is unable to delete the itinerary due to some error     |
 
 
-#### 3.3.8 User Add Member To Trip
+#### 3.4.8 User Add Member To Trip
 
 | Name                          | User Add Member To Trip                                        |
 |-------------------------------|----------------------------------------------------------------|
@@ -258,7 +263,7 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - User cannot add members to the trip                          |
 
 
-#### 3.3.9 User Removes Member
+#### 3.4.9 User Removes Member
 
 | Name                          | User Removes Member                                            |
 |-------------------------------|----------------------------------------------------------------|
@@ -273,10 +278,6 @@ This diagram displays the system context, components, relationships, and depende
 | Alternative Scenario          | - There are no other members in the trip                       |
 |                               | - Member(s) cannot be removed                                  |
 
-### 3.4 React Component Diagram
-![React Component Diagram](technical_manual/images/component_diagram.png)\
-
-This diagram shows off the various components of the frontend application and how the interact with each other.
 ## 4. Implementation
 ### 4.1 React Frontend
 The frontend of the application was implemented using React.js. We decided to use this because it is easy to use and can be put together efficiently due to the design and reuse of components.
