@@ -23,10 +23,12 @@ class UserTestCase(TestCase):
 
 class TripTestCase(TestCase):
     def setUp(self):
-        Trip.objects.create(name="test", start_date="2020-01-01", end_date="2020-01-02", country='Belgium', city='Brussels', hotel='ChIJqbYws4DDw0cRm9YDlU553IE', owner=1, members=[])
-        Trip.objects.create(name="test2", start_date="2020-01-01", end_date="2020-01-02", country='Belgium', city='Brussels', hotel='ChIJaeKKqIDDw0cRPHsrdUp26hc', owner=1, members=[1, 2])
-        Trip.objects.create(name="test3", start_date="2020-01-01", end_date="2020-01-02", country='Belgium', city='Antwerp', hotel='ChIJ64INZPz2w0cRz3p-pO-wC-8', owner=1, members=[])
+        User.objects.create(username="test", password="Abc123!?", email="test@test.com")
+        user1 = User.objects.get(username="test")
 
+        Trip.objects.create(tripname="test", start_date="2025-01-01", end_date="2025-01-02", country='Belgium', city='Brussels', hotel='ChIJqbYws4DDw0cRm9YDlU553IE', owner=user1, members=[])
+        Trip.objects.create(tripname="test2", start_date="2025-01-01", end_date="2025-01-02", country='Belgium', city='Brussels', hotel='ChIJaeKKqIDDw0cRPHsrdUp26hc', owner=user1, members=[1, 2])
+        Trip.objects.create(tripname="test3", start_date="2025-01-01", end_date="2025-01-02", country='Belgium', city='Antwerp', hotel='ChIJ64INZPz2w0cRz3p-pO-wC-8', owner=user1, members=[])
     def test_trips_created_correctly(self):
         trip1 = Trip.objects.get(name="test")
         trip2 = Trip.objects.get(name="test2")
@@ -60,4 +62,24 @@ class TripTestCase(TestCase):
         self.assertEqual(trip3.members, [])
 
 class ItineraryTestCase(TestCase):
-    pass
+    def setUp(self):
+        User.objects.create(username="test", password="Abc123!?", email="test@test.com")
+        user1 = User.objects.get(username="test")
+        trip1 = Trip.objects.create(tripname="test", start_date="2025-01-01", end_date="2025-01-02", country='Belgium', city='Brussels', hotel='ChIJqbYws4DDw0cRm9YDlU553IE', owner=user1, members=[])
+        Itinerary.objects.create(trip_id=trip1, date="2025-01-01", start="09:00", end="17:00", activities=['ChIJi_Vw6YfDw0cRTfk6uxe6WNw;555;645;breakfast;50.8491801;4.3472788', 'ChIJE4yZ0JrDw0cR-krI0qdwTLg;660;870;zoo;50.858863;4.350427499999999'])
+
+    def test_itinerary_created_correctly(self):
+        itinerary1 = Itinerary.objects.get(date="2025-01-01")
+
+        self.assertEqual(itinerary1.date, "2025-01-01")
+        self.assertEqual(itinerary1.start, "09:00")
+        self.assertEqual(itinerary1.end, "17:00")
+        self.assertEqual(itinerary1.activities, ['ChIJi_Vw6YfDw0cRTfk6uxe6WNw;555;645;breakfast;50.8491801;4.3472788', 'ChIJE4yZ0JrDw0cR-krI0qdwTLg;660;870;zoo;50.858863;4.350427499999999'])
+
+    def test_itinerary_belongs_to_trip(self):
+        itinerary1 = Itinerary.objects.get()
+        trip1 = itinerary1.trip_id
+
+        self.assertEqual(trip1.tripname, "test")
+        self.assertEqual(trip1.city, "Brussels")
+
