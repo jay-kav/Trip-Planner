@@ -32,7 +32,9 @@ for the system.
 5. [Other Function](#step-5-other-functions)
     1. [Clearing Activities](#51-clearing-activities)
     2. [Changing Owner of a Trip](#52-changing-owner-of-a-trip)
-    3. [Logging Out](#53-logging-out)
+    3. [View Website](#53-view-website)
+    4. [View Location](#54-view-location)
+    5. [Logging Out](#55-logging-out)
 
 ---
 
@@ -146,7 +148,10 @@ When looking at the trip details page, you have the option to add members:
 
 When looking at the trip details page, you have the option to remove members:
 
-![Remove Member](/user_manual/Images/Remove_Member.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Remove_Member.png" alt="Remove Member" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Remove_Member_Clicked.png" alt="Remove Member select" width="450"/>
+</div>
 
 - If you are the owner, an "X" icon will appear next to members' names.
 - Once clicked, you will be shown a text box.
@@ -162,7 +167,10 @@ When looking at the trip details page, you have the option to remove members:
 
 If your plans change, you can delete a trip:
 
-![Delete Trip](/user_manual/Images/Delete_Trip.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Delete_Trip.png" alt="Delete Trip" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Delete_Trip_Clicked.png" alt="Remove Trip select" width="450"/>
+</div>
 
 - If you are the owner, a "Delete Trip" button will be present on the screen.
 - Click the button if you wish to delete the trip.
@@ -178,7 +186,10 @@ If your plans change, you can delete a trip:
 
 If you no longer want to be part of a trip:
 
-![Leave Trip](/user_manual/Images/Leave_Trip.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Leave_Trip.png" alt="Leave Trip" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Leave_Trip_Clicked.png" alt="Leave Trip select" width="450"/>
+</div>
 
 - If you no longer want to see a trip, you can leave the trip.
 - By clicking the "Leave Trip" button, you will be removed from the trip.
@@ -224,6 +235,11 @@ Generated an unsatisfactory itinerary? That's fine; let's delete it:
 
 ![Delete Itinerary](/user_manual/Images/Delete_Itinerary.png)
 
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Delete_Itinerary.png" alt="Delete Itinerary" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Delete_Itinerary_Clicked.png" alt="Delete Itinerary Component" width="450"/>
+</div>
+
 - If you don't like your itinerary, you have the option to delete it.
 - If you are an owner, a bin icon will appear in the top right-hand corner.
 - Pressing it will remove the itinerary for everyone.
@@ -236,7 +252,6 @@ Want to see all the itineraries you've created for a trip:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Cycle_Itinerary.png" alt="Page 1 Itinerary" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Cycle_Itinerary2.png" alt="Page 2 Itinerary" width="450"/>
 </div>
 
 - Your trip has multiple itineraries, but you can only see one.
@@ -273,7 +288,10 @@ Want to repeat activities:
 
 Want to transfer ownership of a trip to another member:
 
-![Change Owner](/user_manual/Images/Change_Owner.png)
+<div style="display: flex; align-items: center;">
+  <img src="/user_manual/Images/Change_Owner.png" alt="Change Owner" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Change_Owner_Clicked.png" alt="Change Owner Component" width="450"/>
+</div>
 
 - If you wish to leave the trip without deleting it.
 - Or tired of having the responsibility of organizing the trip.
@@ -282,7 +300,11 @@ Want to transfer ownership of a trip to another member:
 - Note: Doing this will remove all control of the trip from your account.
 - You will no longer be able to create or delete anything from the trip.
 
-### 5.3 Logging Out
+### 5.3 View Website
+
+### 5.4 View Location
+
+### 5.5 Logging Out
 
 Finished up for the day:
 
