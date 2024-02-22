@@ -17,16 +17,17 @@
     4. [Google Places API](#24-google-places-api)
 3. [Design](#3-design)
     1. [System Architecture](#31-system-architecture)
-    2. [Use Cases](#32-use-cases)
-        1. [User Authentication](#321-user-authentication)
-        2. [User Creates Trip](#322-user-creates-trip)
-        3. [User Views Trips](#323-user-views-trips)
-        4. [User Deletes Trip](#324-user-deletes-trip)
-        5. [User Changes Ownership Of Trip](#325-user-changes-ownership-of-trip)
-        6. [User Adds Itinerary To Trip](#326-user-adds-itinerary-to-trip)
-        7. [User Deletes Itinerary](#327-user-deletes-itinerary)
-        8. [User Add Member To Trip](#328-user-add-member-to-trip)
-        9. [User Removes Member](#329-user-removes-member)
+    2. [Class Diagram](#32-class-diagram)
+    3. [Use Cases](#33-use-cases)
+        1. [User Authentication](#331-user-authentication)
+        2. [User Creates Trip](#332-user-creates-trip)
+        3. [User Views Trips](#333-user-views-trips)
+        4. [User Deletes Trip](#334-user-deletes-trip)
+        5. [User Changes Ownership Of Trip](#335-user-changes-ownership-of-trip)
+        6. [User Adds Itinerary To Trip](#336-user-adds-itinerary-to-trip)
+        7. [User Deletes Itinerary](#337-user-deletes-itinerary)
+        8. [User Add Member To Trip](#338-user-add-member-to-trip)
+        9. [User Removes Member](#339-user-removes-member)
 4. [Implementation](#4-implementation)
     1. [React Frontend](#41-react-frontend)
     2. [Django Backend](#42-django-backend)
@@ -94,8 +95,11 @@ This shows off the various stages of the design process. This will include a num
 #### System Architecture Diagram
 ![System Architecture Diagram](technical_manual/images/Architecture_Overview_Diagram.png)
 This diagram displays the system context, components, relationships, and dependencies. The user interacts with our system through the available input in the frontend React application. The frontend then has two-way communication with the Django backend, sending and requesting information. The backend saves all data to the PostgreSQL database. It also requests information from this. The backend sends requests to the MongoDB, and the requested information gets sent back to the backend. We use a python script to make requests to the Google Maps API and filter the information to send it to our MongoDB.
-### 3.2 Use Cases
-#### 3.2.1 User Authentication
+### 3.2 Class Diagram
+![Class Diagram](technical_manual/images/class_diagram.png)
+
+### 3.3 Use Cases
+#### 3.3.1 User Authentication
 | Name                          | User Registers An Account                                |
 |-------------------------------|----------------------------------------------------------|
 | Goal                          | User successfully creates a new account                  |
@@ -138,7 +142,7 @@ This diagram displays the system context, components, relationships, and depende
 | Alternative Scenario   | - Error occurs in the system                     |
 |                        | - User cannot be logged out                      |
 
-#### 3.2.2 User Creates Trip
+#### 3.3.2 User Creates Trip
 
 | Name                   | User Creates Trip                                        |
 |------------------------|----------------------------------------------------------|
@@ -155,7 +159,7 @@ This diagram displays the system context, components, relationships, and depende
 |                        | - New trip is not created                                |
 
 
-#### 3.2.3 User Views Trips
+#### 3.3.3 User Views Trips
 
 | Name                   | User Views Trips                                                     |
 |------------------------|----------------------------------------------------------------------|
@@ -171,7 +175,7 @@ This diagram displays the system context, components, relationships, and depende
 |                        | - No trips are listed                                                |
 
 
-#### 3.2.4 User Deletes Trip
+#### 3.3.4 User Deletes Trip
 
 | Name                   | User Deletes Trip                                |
 |------------------------|--------------------------------------------------|
@@ -187,7 +191,7 @@ This diagram displays the system context, components, relationships, and depende
 |                        | - Trip cannot be deleted                         |
 
 
-#### 3.2.5 User Changes Ownership Of Trip
+#### 3.3.5 User Changes Ownership Of Trip
 
 | Name                          | User Changes Ownership Of Trip                                          |
 |-------------------------------|-------------------------------------------------------------------------|
@@ -203,7 +207,7 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - Trip owner cannot be changed                                          |
 
 
-#### 3.2.6 User Adds Itinerary To Trip
+#### 3.3.6 User Adds Itinerary To Trip
 
 | Name                          | User Adds Itinerary To Trip                                       |
 |-------------------------------|-------------------------------------------------------------------|
@@ -220,7 +224,7 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - New itinerary cannot be generated                               |
 
 
-#### 3.2.7 User Deletes Itinerary
+#### 3.3.7 User Deletes Itinerary
 
 | Name                          | User Deletes Itinerary                                         |
 |-------------------------------|----------------------------------------------------------------|
@@ -235,7 +239,7 @@ This diagram displays the system context, components, relationships, and depende
 | Alternative Scenario          | - User is unable to delete the itinerary due to some error     |
 
 
-#### 3.2.8 User Add Member To Trip
+#### 3.3.8 User Add Member To Trip
 
 | Name                          | User Add Member To Trip                                        |
 |-------------------------------|----------------------------------------------------------------|
@@ -253,7 +257,7 @@ This diagram displays the system context, components, relationships, and depende
 |                               | - User cannot add members to the trip                          |
 
 
-#### 3.2.9 User Removes Member
+#### 3.3.9 User Removes Member
 
 | Name                          | User Removes Member                                            |
 |-------------------------------|----------------------------------------------------------------|
@@ -355,6 +359,13 @@ hotels = collection.find({"types": "hotel"})
 `
 
 ### 4.3 Algorithm
+#### Algarithm Flowchart
+
+![Algorithm Flowchart](technical_manual/images/Blank_diagram.png)
+----
+
+
+
 Our algorithm processes user inputs to create optimal itineraries, considering various specifications. Given that achieving a perfect itinerary is an NP-complete problem, our solution focuses on generating high-quality itineraries for users.
 
 We chose to implement the algorithm in the backend of our web app using Python for increased efficiency compared to JavaScript. Initially split across seven files, we streamlined the algorithm to four modular files, each serving distinct purposes.
@@ -453,3 +464,6 @@ For any functions that required a form to be filled out every form input was vig
 We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
 
 ## 7. Installation Guide
+
+
+
