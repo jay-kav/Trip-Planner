@@ -33,6 +33,7 @@
     1. [React Frontend](#41-react-frontend)
     2. [Django Backend](#42-django-backend)
     3. [Algorithm](#43-algorithm)
+        1. [Heuristics](#431-heuristics)
 5. [Problem and Solutions](#5-problem-and-solutions)
     1. [Frontend Not Communicating With Backend](#51-frontend-not-communicating-with-backend)
     2. [PostgreSQL Database Connection To Backend](#52=postgresql-database-connection-to-backend)
