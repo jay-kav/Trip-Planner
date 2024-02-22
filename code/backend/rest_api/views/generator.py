@@ -134,6 +134,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             if current_type and current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
                 filters.append(current_type)
             else:
+                print(f"food added back in {food}")
                 food.append(current_type)
 
 

@@ -102,7 +102,7 @@ def createItinerary(request):
 
             form_data = {
                 'trip_id': trip_id,
-                'Title': title,
+                'title': title,
                 'date': date,
                 'start': start,
                 'end': end,
@@ -199,10 +199,12 @@ def mixLists(origional):
 def getTitle(actvities):
     titles = []
     for item in actvities:
-        titles.append(item[-1].capitalize())
+        type = item.split(';')
+        titles.append(type[-1].title())
 
     filtered_words = [word for word in titles if word not in ["Lunch", "Dinner", "Breakfast"]]
 
     title = filtered_words[:-1]
+    print(f"function title {title}")
 
-    return ', '.join(title) + '&' + filtered_words[-1]
+    return ', '.join(title) + ' & ' + filtered_words[-1]
