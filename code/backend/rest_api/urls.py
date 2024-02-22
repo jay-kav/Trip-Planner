@@ -19,6 +19,7 @@ urlpatterns = [
     path('get-hotel/', views.getHotel, name='get_hotel'),
     path('get-hotels/', views.getHotels, name='get_hotels'),
     path('remove-member/', views.removeMember, name='remove_member'),
+    path('get-image/', views.getImage, name='get_image'),
 
     # Itinerary routes
     path('create-itinerary/', itinerary.createItinerary, name='create_itinerary'),

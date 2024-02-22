@@ -38,22 +38,50 @@ function GetTrips() {
     }
   });
 
+  // const getImage = (country, city) => {
+  //   axios.post(`get-image/`, { 
+  //     'country': country, 
+  //     'city': city
+  //   })
+  //   .then((response) => {
+  //     return response.data.image;
+  //   })
+  //   .catch(err => console.log(err));
+  // }
+
   const getImage = (country, city) => {
-    axios.post(`get-image/`, { 
-      'country': country, 
-      'city': city
-    })
-    .then((response) => {
-      return response.data.image;
-    })
-    .catch(err => console.log(err));
-  }
+    return axios
+      .post(`get-image/`, {
+        country: country,
+        city: city,
+      })
+      .then((response) => {
+        // Extract image data from the JSON document
+        
+        let imageData = response.data.image;
+        console.log(response.data.image)
+  
+        // Check if image data is available
+        if (imageData) {
+          // Return the complete base64-encoded image source
+          return `data:image/jpeg;base64,${imageData}`;
+        } else {
+          // Return a default image or handle the case where image data is not available
+          return ''; // or some default image
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        // Return a default image or handle the error case
+        return ''; // or some default image
+      });
+  };
 
     const getTrips = () => {
       return trips.map((t) => (
         <Grid item key={t.id} xs={12} sm={6} md={4}>
           <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-            <CardMedia component="img" height="140" image={getImage(t.country, t.city)} alt="trip image" />
+            <CardMedia component="img" height="140" src={getImage(t.country, t.city)} alt="trip image" />
             <CardContent sx={{ flexGrow: 1 }}>
               <Typography gutterBottom variant="h5" component="h2">
                 {t.tripname}
