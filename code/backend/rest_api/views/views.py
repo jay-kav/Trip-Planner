@@ -366,34 +366,36 @@ def getActivities(request):
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)
         
+
 @csrf_exempt
 def getImage(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            country = data.get('country')
-            city = data.get("city")
-            if not country or not city:
-                return JsonResponse({'error': 'Country or City missing'}, status=404)
-            
-            client = MongoClient(get_env_value('MONGO_URL'))
-            db = client[country]
-            collection = db["images"]
-            document = collection.find_one({"name": city})
-            if document:
+    try:
+        data = json.loads(request.body)
+        print(data)
+        country = data.get('country')
+        city = data.get('city')
 
-                image_data = document.get("image")
+        if not country or not city:
+            return JsonResponse({'error': 'Invalid request'}, status=400)
+        
+        client = MongoClient("mongodb://localhost:27017/")
+        db = client[country]
+        collection = db["images"]
 
-                # Open the image using Pillow
-                image = Image.open(BytesIO(image_data))
+        document = collection.find_one({"name": city})
+        if document:
+            print("document found")
+            # Get the image data from the document
+            image_data = document.get("image")
+            if image_data:
+                encoded_image = base64.b64encode(image_data).decode('utf-8')
+                print("Image found")
 
-                # Convert the image to a base64-encoded string
-                buffered = BytesIO()
-                image.save(buffered, format="JPEG")  # You can adjust the format as needed
-                image_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
-
-                return JsonResponse({'detail': 'successfully retrieved image', 'image_base64': image_base64}, status=200)
-            
+            return JsonResponse({'detail': 'successfully retrieved image', 'image': encoded_image}, status=200)
+        else:
             return JsonResponse({'error': 'Image not found'}, status=404)
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
