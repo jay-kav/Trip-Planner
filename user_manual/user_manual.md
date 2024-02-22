@@ -233,8 +233,6 @@ Craft your daily schedule by adding activities to your trip:
 
 Generated an unsatisfactory itinerary? That's fine; let's delete it:
 
-![Delete Itinerary](/user_manual/Images/Delete_Itinerary.png)
-
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Delete_Itinerary.png" alt="Delete Itinerary" width="450" style="margin-right: 20px;"/>
   <img src="/user_manual/Images/Delete_Itinerary_Clicked.png" alt="Delete Itinerary Component" width="450"/>
@@ -301,8 +299,10 @@ Want to transfer ownership of a trip to another member:
 - You will no longer be able to create or delete anything from the trip.
 
 ### 5.3 View Website
+![View Location](/user_manual/Images/View_Website.png)
 
 ### 5.4 View Location
+![Logout](/user_manual/Images/View_Location.png)
 
 ### 5.5 Logging Out
 
