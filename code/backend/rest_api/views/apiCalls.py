@@ -1,13 +1,10 @@
 from django.views.decorators.csrf import csrf_exempt
 import random
-from pymongo import MongoClient
-from load_env_var import get_env_value
 from .distanceCalculator import haversine, distanceCal
-#from .dist import distanceCal
-#from distanceCalculator import haversine
 from ..models import *
 from django.shortcuts import get_object_or_404
 
+# Heuristic times to spend in each activity
 time_to_spend = {
     "shopping_mall": 240,
     "park": 120,
@@ -24,6 +21,7 @@ time_to_spend = {
 
 }
 
+# Function to query the database to find documents for a given filter
 @csrf_exempt
 def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id, day, activities=None, previous='', failed=None):
 
@@ -32,23 +30,29 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
     if not failed:
         failed = []
 
+    # Get the associated trip
     trip = get_object_or_404(Trip, id=trip_id)
     distance = 0
 
+    # Get the current loactions coordinates
     if previous:
         coordinates = get_coordinates(collection, previous)
     else: 
         coordinates = hotel
-        print(f"this is importnat {coordinates}")
 
+    # If failed to get the coordinates end the function
     if not coordinates:
         return None
     
     lat, lon = coordinates
     startLat, startLon = hotel
+
+    # If round Trip send the locations to see the max distance they can be
     if toggle:
+        # function calculates the max distance allowed for the next location 
         distance = distanceCal(time, endTime, startTime, time_to_spend[types])
 
+    # Query fetches all documents within a 2km radius of the current location
     query = {
         "types": types,
         f"cleaned_times.{day}": {
@@ -66,15 +70,16 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
     }
 
 
-
+    # Convert to a list
     documents = list(collection.find(query))
 
+    # If no documents available backtrack
     if not documents:
         return None
 
     random.shuffle(documents)
 
-
+    # Create a list of activities already done
     if trip.activities:
         usedLocations = trip.activities.copy()
     else:
@@ -82,28 +87,38 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
     usedLocations.extend(activities)
     usedLocations.extend(failed)
 
+    # Iterate through the documents
     for doc in documents:
         id = doc.get("place_id")
-        #if name not in trip.activities() and name not in activities:
+
+        # Check if location is unique
         if usedLocations is None or id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
         
             docLatitude = doc_location.get("lat")
             docLongitude = doc_location.get("lng")
+            
+            # Ensure the location is not to far from the set distance
             if toggle and haversine([startLat, startLon], [docLatitude, docLongitude ]) > distance:
                 continue
-
+            
+            # Get the exact distance the next location is away
             distance = haversine([lat,lon], [docLatitude, docLongitude])
             print(f"distance {distance}")
+        
+            # Calculate the walk distance
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
 
+            # Calculate when the activity starts
             start_time = int(time + walkTime)
-            print(start_time)
-            
+            # print(start_time)
+             
+            # Calculate when the activity ends
             end_time = start_time + time_to_spend[types]
-            print(end_time)
-            print(f"test {doc.get('name')}, {start_time}, {end_time}")
+
+            # print(f"test {doc.get('name')}, {start_time}, {end_time}")
+            # Check if the location is open during the times
             time_range = doc.get("minute_times")[day]
             if time_range == 'Open24hours':
                 open_time, closed_time = 0, 1440
@@ -116,6 +131,7 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
                 return id, start_time, end_time
     return None
 
+# Function to query the database to find documents for a given meal time
 @csrf_exempt
 def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type, trip_id, day, activities=None, previous=None, vegetarian=False, failed=None):
     if not activities:
@@ -123,25 +139,27 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
 
     print(f"food api {food_type}")
 
+    # Get the associated trip
     trip = get_object_or_404(Trip, id=trip_id)
 
+    # Get the current loactions coordinates
     if previous:
-        print("This one")
         coordinates = get_coordinates(collection, previous)
     else : 
-        # lon, lat = get_coordinates(collection, location[2])
-        print("here")
         coordinates = hotel
 
+     # If failed to get the coordinates end the function
     if not coordinates:
         return None
     
     lat, lon = coordinates
     startLat, startLon = hotel
 
+    # If round Trip send the locations to see the max distance they can be
     if toggle:
         distance = distanceCal(time, endTime, startTime, 90)
     
+    # Query fetches all documents within a 2km radius of the current location based on if they serve the set meal type
     query = {
         food_type: True,
         f"cleaned_times.{day}": {
@@ -158,19 +176,21 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
         }
     }
 
-
+    # If user wants to eat vegetarian food
     if vegetarian:
         query["serves_vegetarian_food"] = True
 
 
-    
+    # Convert to a list
     documents = list(collection.find(query))
 
+    # If no documents available backtrack
     if not documents:
         return None
 
     random.shuffle(documents)
 
+    # Create a list of activities already done
     if trip.activities:
         usedLocations = trip.activities.copy()
     else:
@@ -178,26 +198,35 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
     usedLocations.extend(activities)
     usedLocations.extend(failed)
 
+    # Iterate through the documents
     for doc in documents:
         id = doc.get("place_id")
         if usedLocations is None or id not in usedLocations:
             doc_location = doc.get("geometry", {}).get("location", {})
-            print(doc_location)
+        
             docLatitude = doc_location.get("lat")
             docLongitude = doc_location.get("lng")
+
+            # Ensure the location is not to far from the set distance
             if toggle and haversine([startLat, startLon], [docLatitude, docLongitude ]) > distance:
                 continue
+
+            # Get the exact distance the next location is away
             distance = haversine([lat,lon], [docLatitude, docLongitude ])
             print(f"distance {distance}")
+
+            # Calculate the walk distance
             walkTime = (distance * 12) 
             walkTime = walkTime - (walkTime % 5) + 5
 
+            # Calculate when the activity starts
             start_time = int(time + walkTime)
-            print(start_time)
-            
+        
+            # Calculate when the activity ends
             end_time = start_time + 90
-            print(end_time)
-            print(f"test {doc.get('name')}, {start_time}, {end_time}")
+            
+            # print(f"test {doc.get('name')}, {start_time}, {end_time}")
+            # Check if the location is open during the times
             time_range = doc.get("minute_times")[day]
             if time_range == 'Open24hours':
                 open_time, closed_time = 0, 1440
@@ -210,6 +239,7 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
                 return id, start_time, end_time
     return None
 
+# Function to retrieve the current locations coordinates
 @csrf_exempt
 def get_coordinates(collection, place_id):    
 
