@@ -13,7 +13,6 @@ const defaultTheme = createTheme();
 
 function ViewTrip(props) {
     let tripID = props.trip;
-    console.log('id', tripID);
     const [tripOwner, setTripOwner] = useState(null);
     const [trip, setTrip] = useState(null);
     const [hotel, setHotel] = useState("");
@@ -52,7 +51,7 @@ function ViewTrip(props) {
             })
             .then((response) => {
                 console.log('hotel', response);
-                setHotel(response.data.hotel);
+                setHotel(response.data);
             })
             .catch(err => console.log(err));
         }
@@ -120,7 +119,7 @@ function ViewTrip(props) {
                       {trip.tripname}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {hotel}, {trip.city}, {trip.country}
+                    {hotel.name}, {trip.city}, {trip.country}
                     </Typography>
                     <Typography variant="body2">
                       {getDate(trip.startDate)} - {getDate(trip.endDate)}
@@ -162,7 +161,7 @@ function ViewTrip(props) {
                     }}>
                         <Card sx={{ width: '44vw', height: '58vh'}}>
                           <CardContent>
-                            
+                            <Map trip={trip} />
                           </CardContent>
                         </Card>
                     </Box>

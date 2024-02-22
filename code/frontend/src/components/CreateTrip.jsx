@@ -212,6 +212,7 @@ function CreateTrip() {
                           setCountry(e.target.value)
                           setCities([]);
                         }}
+                        sx={{width: '15vw', ml: '-1vw'}}
                       >
                         <MenuItem value={''}></MenuItem>
                         {getCountries()}
@@ -236,6 +237,7 @@ function CreateTrip() {
                             setHotels([]);
                           }
                         }
+                        sx={{width: '15vw', ml: '-1vw'}}
                         disabled={country === ""}
                       >
                         <MenuItem value={''}></MenuItem>
@@ -258,6 +260,7 @@ function CreateTrip() {
                         label="hotel"
                         name="hotel"
                         disabled={city === ""}
+                        sx={{width: '15vw', ml: '-1vw'}}
                       >
                         <MenuItem value={''}></MenuItem>
                         {getHotels()}
@@ -268,7 +271,7 @@ function CreateTrip() {
                   />
                 </Grid>
               <Grid item xs={12} sm={6}>
-              <FormControlLabel 
+              <FormControlLabel
                     control={
                       <Select
                         fullWidth
@@ -279,6 +282,7 @@ function CreateTrip() {
                         defaultValue={''} // Provide the default value
                         value={members} // Provide the array of selected members
                         onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
+                        sx={{width: '15vw', ml: '-1vw'}}
                       >
                         <MenuItem value={''}></MenuItem>
                         {getUsers()}

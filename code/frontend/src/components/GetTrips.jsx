@@ -74,7 +74,6 @@ function GetTrips() {
     };
     
     if (selected) {
-      console.log('selected', selected);
         return (
             <ViewTrip trip={selected} />
         )

@@ -106,8 +106,10 @@ def getHotel(request):
             collection = db[city]
             hotel = collection.find_one({"place_id": hotel})
             name = hotel.get("name")
+            long = hotel.get("geometry").get("location").get("lng")
+            lat = hotel.get("geometry").get("location").get("lat")
 
-            return JsonResponse({'detail': 'Successfully retrieved hotel', 'hotel': name}, status=200)
+            return JsonResponse({'detail': 'Successfully retrieved hotel', 'name': name, 'long': long, 'lat': lat}, status=200)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid request method'}, status=405)

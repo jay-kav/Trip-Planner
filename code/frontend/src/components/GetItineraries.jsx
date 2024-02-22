@@ -314,15 +314,15 @@ function GetItineraries(props) {
               }
               label="Nightlife"
             />
-          </Grid>
-        </Grid>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <Button variant='contained' type='submit'>Create Itinerary</Button>
-          <Button variant='contained' onClick={() => setCreate(false)}>Cancel</Button>
-        </div>
-                  </Box>
-                </Box>
-              </Container>
+            </Grid>
+            </Grid>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Button variant='contained' type='submit'>Create Itinerary</Button>
+                <Button variant='contained' onClick={() => setCreate(false)}>Cancel</Button>
+              </div>
+            </Box>
+          </Box>
+        </Container>
       );
     }
 
@@ -359,10 +359,14 @@ function GetItineraries(props) {
     // Functions to handle cycling through itineraries
     const goToPreviousItinerary = () => {
       setCurrentItineraryIndex(prevIndex => (prevIndex === 0 ? itineraries.length - 1 : prevIndex - 1));
+      sessionStorage.setItem('currentItineraryIndex', currentItineraryIndex);
+      console.log('index', sessionStorage.getItem('currentItineraryIndex'));
     };
 
     const goToNextItinerary = () => {
       setCurrentItineraryIndex(prevIndex => (prevIndex === itineraries.length - 1 ? 0 : prevIndex + 1));
+      sessionStorage.setItem('currentItineraryIndex', currentItineraryIndex);
+      console.log('index', sessionStorage.getItem('currentItineraryIndex'));
     };
 
     const getItineraries = () => {
