@@ -348,3 +348,230 @@ This concludes the user manual for Journo. We hope this guide helps you navigate
 Happy Journo-ing!
 
 
+
+# USER MANUAL FOR JOURNO
+
+*by Ethan & Jamie*  
+*17/02/2024*
+
+Welcome to the Journo User Manual! This guide is designed to help you navigate the Journo web app efficiently.
+
+---
+
+**Table of Contents**
+1. [Getting Started](#getting-started)
+    1. [Registering an Account](#registering-an-account)    
+    2. [Logging In](#logging-in)   
+2. [Homepage Navigation](#homepage-navigation)
+    1. [Side Bar](#side-bar)
+3. [Creating and Managing Trips](#creating-and-managing-trips)
+    1. [Creating a Trip](#creating-a-trip)
+    2. [Viewing a Trip](#viewing-a-trip)
+    3. [Adding Members to a Trip](#adding-members-to-a-trip)
+    4. [Deleting Members from a Trip](#deleting-members-from-a-trip)
+    5. [Deleting a Trip](#deleting-a-trip)
+    6. [Leaving a Trip](#leaving-a-trip)  
+4. [Creating and Managing Itineraries](#creating-and-managing-itineraries)
+    1. [Creating an Itinerary](#creating-an-itinerary)
+    2. [Deleting an Itinerary](#deleting-an-itinerary)
+    3. [Viewing Itineraries](#view-all-itineraries)
+5. [Other Functions](#other-functions)
+    1. [Clearing Activities](#clearing-activities)
+    2. [Changing Owner of a Trip](#changing-owner-of-a-trip)
+    3. [View Website](#view-website)
+    4. [View Location](#view-location)
+    5. [Logging Out](#logging-out)
+
+---
+
+## Getting Started
+
+### Registering an Account
+
+To begin your Journo journey, follow these steps:
+
+![Register Steps](/user_manual/Images/Register_Steps.png)
+
+1. Click "Don't have an account? Register" if you don't have one.
+2. Fill in a memorable Username.
+3. Add your preferred email address.
+4. Create a strong, memorable Password.
+5. Click "Register."
+
+### Logging In
+
+Once registered, follow these steps to log in:
+
+![Login](/user_manual/Images/Login.png)
+
+1. Enter your chosen Username.
+2. Input your Password.
+3. Click "Login."
+
+## Homepage Navigation
+
+### Side Bar
+
+After logging in, you'll be on the landing page:
+
+![Sidebar](/user_manual/Images/Sidebar.png)
+
+- Click the three horizontal lines for the sidebar.
+- Access the Homepage, "My Trips," or create a new trip.
+- Find the logout button [here](#logging-out).
+
+---
+
+## Creating and Managing Trips
+
+### Creating a Trip
+
+On the "My Trips" page, create a new trip:
+
+![Create Trip](/user_manual/Images/Create_Trip.png)
+
+1. Click "New Trip."
+2. Fill in trip details.
+3. Click "Create" to confirm.
+4. Click "Cancel" to exit.
+
+### Viewing a Trip
+
+On the "My Trips" page, view one of your trips:
+
+![View Trip](/user_manual/Images/View_Trip.png)
+
+1. Click "View" on the chosen trip.
+2. Explore trip details.
+3. Exit using the Sidebar.
+
+### Adding Members to a Trip
+
+When viewing trip details, add members:
+
+![Add Member](/user_manual/Images/Add_Member.png)
+
+1. Click the person icon.
+2. Enter the member's username.
+3. Click "Add Member" to confirm.
+4. Click "Cancel" to exit.
+
+### Deleting Members from a Trip
+
+In trip details, remove members:
+
+![Remove Member](/user_manual/Images/Remove_Member.png)
+
+1. Click the "X" icon.
+2. Confirm the removal.
+3. Click "Cancel" to exit.
+
+### Deleting a Trip
+
+Delete a trip:
+
+![Delete Trip](/user_manual/Images/Delete_Trip.png)
+
+1. Click "Delete Trip."
+2. Confirm the deletion.
+3. Click "Cancel" to exit.
+
+### Leaving a Trip
+
+Leave a trip:
+
+![Leave Trip](/user_manual/Images/Leave_Trip.png)
+
+1. Click "Leave Trip."
+2. Confirm the departure.
+3. Click "Cancel" to exit.
+
+---
+
+## Creating and Managing Itineraries
+
+### Creating an Itinerary
+
+Generate a daily schedule:
+
+![Create Itinerary](/user_manual/Images/Create_Itinerary.png)
+
+1. Click "Add Itinerary."
+2. Fill in details.
+3. Click "Create Itinerary" to proceed.
+4. Click "Cancel" to abort.
+
+### Deleting an Itinerary
+
+Remove an unsatisfactory itinerary:
+
+![Delete Itinerary](/user_manual/Images/Delete_Itinerary.png)
+
+1. Click the bin icon.
+2. Confirm the deletion.
+3. Itinerary and associated activities are removed.
+
+### View all Itineraries
+
+View all trip itineraries:
+
+![Cycle Itinerary](/user_manual/Images/Cycle_Itinerary.png)
+
+- Use arrows to navigate through stored itineraries.
+
+---
+
+## Other Functions
+
+### Clearing Activities
+
+Reset completed activities:
+
+![Clear Activities](/user_manual/Images/Clear_Activities.png)
+
+- For trip owners.
+- Click "Clear Activities" to reset completed activities.
+
+### Changing Owner of a Trip
+
+Transfer ownership:
+
+![Change Owner](/user_manual/Images/Change_Owner.png)
+
+1. Click the shield icon.
+2. Confirm the transfer.
+3. Lose control of the trip.
+
+### View Website
+
+Explore a recommended activity's website:
+
+![View Website](/user_manual/Images/View_Website.png)
+
+- Click "Website" below the activity's name.
+
+### View Location
+
+Navigate to your next activity:
+
+![View Location](/user_manual/Images/View_Location.png)
+
+- Click "Location" below the activity's name.
+- Google Maps will guide you.
+
+### Logging Out
+
+Complete your session securely:
+
+![Logout](/user_manual/Images/Logout.png)
+
+- Use the Sidebar to find the logout button.
+
+---
+
+This concludes the Journo User Manual. If you have further questions or encounter issues, refer to the [FAQ section](#) on our website or contact our support team.
+
+Happy Journo-ing!
+
+
+
