@@ -5,45 +5,43 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon, point } from "leaflet";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
-import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 export default function Map(props) {
     let trip = props.trip;
+    let itinerary = props.sharedState;
 
-    const [itineraries, setItineraries] = useState([]);
+    const [hotel, setHotel] = useState("");
     const [activities, setActivities] = useState([]);
 
     useEffect(() => {
-        if (itineraries.length == 0) {
-            axios.get(`api/itineraries/?trip_id=${trip.id}`)
-           .then((response) => {
-                console.log(response);
-                setItineraries(response.data);
-            })
-           .catch(err => console.log(err))
-        }
-        if (activities.length == 0 && itineraries.length > 0) {
+        if (itinerary && activities.length == 0) {
             axios.post(`get-activities/`, {
-                'activities': itineraries[localStorage.getItem('index')].activities,
                 'country': trip.country,
                 'city': trip.city,
+                'activities': itinerary
             })
-           .then((response) => {
-                console.log(response);
-                setActivities(response.data);
+            .then((response) => {
+                console.log(response.data);
+                setActivities(response.data.activities);
             })
-           .catch(err => console.log(err))
+            .catch(err => console.log(err));
+        }
+    }, itinerary);
+
+    useEffect(() => {
+        if (trip && hotel.length == "") {
+            axios.post(`get-hotel/`, {
+                'country': trip.country,
+                'city': trip.city,
+                'hotel': trip.hotel
+            })
+            .then((response) => {
+                console.log(response.data);
+                setHotel(response.data);
+            })
+            .catch(err => console.log(err));
         }
     });
-
-    const getMarkers = () => {
-        {activities.map((marker) => (
-            <Marker position={[marker.longitude, marker.latitude]} icon={customIcon}>
-                <Popup>{marker.name}</Popup>
-            </Marker>
-        ))}
-    }
 
     const customIcon = new Icon({
         iconUrl: require("./icons/placeholder.png"),
@@ -58,33 +56,52 @@ export default function Map(props) {
         });
     };
 
-    // Functions to handle cycling through itineraries
-    const goToPreviousItinerary = () => {
-        localStorage.setItem('index', prevIndex => (prevIndex === 0 ? itineraries.length - 1 : prevIndex - 1));
-    };
+    const getMarkers = () => {
+        console.log('activities', activities);
+        return (
+            activities.map((marker) => (
+                <Marker position={[marker.latitude, marker.longitude]} icon={customIcon}>
+                    <Popup>{marker.name}</Popup>
+                </Marker>
+            ))
+        )
+    }
+
+    const getLat = () => {
+        let total = hotel.lat;
+        for (let a in activities) {
+            total += activities[a].latitude;
+        }
+        return total / (hotel.lat + activities.length);
+    }
+
+    const getLong = () => {
+        let total = hotel.long;
+        for (let a in activities) {
+            total += activities[a].longitude;
+        }
+        return total / (hotel.long + activities.length);
+    }
     
-    const goToNextItinerary = () => {
-        localStorage.setItem('index', prevIndex => (prevIndex === itineraries.length - 1 ? 0 : prevIndex + 1));
-    };
-    
-    return (
-    <MapContainer center={[48.8566, 2.3522]} zoom={13}>
-        {itineraries.length > 0 && <div style={{display: 'flex', justifyContent: 'space-between'}}>
-            <ArrowBackIosRoundedIcon disa sx={{marginRight: '8px'}} onClick={goToPreviousItinerary}/>
-            <div>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <MarkerClusterGroup
-                    chunkedLoading
-                    iconCreateFunction={createClusterCustomIcon}
-                >
-                    {getMarkers()}
-                </MarkerClusterGroup>
-            </div>
-            <ArrowForwardIosRoundedIcon sx={{marginLeft: '8px'}} onClick={goToNextItinerary}/>
-        </div>}
-    </MapContainer>
-  );
+    if (hotel && activities) {
+        console.log('activities', activities);
+        return (
+            <MapContainer center={[hotel.lat/*getLat()*/, hotel.long/*getLong()*/]} zoom={15}>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <TileLayer
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <MarkerClusterGroup
+                        chunkedLoading
+                        iconCreateFunction={createClusterCustomIcon}
+                    >
+                        <Marker position={[hotel.lat, hotel.long]} icon={customIcon}>
+                            <Popup>{hotel.name}</Popup>
+                        </Marker>
+                        {getMarkers()}
+                    </MarkerClusterGroup>
+                </div>
+            </MapContainer>
+        );
+    }
 }

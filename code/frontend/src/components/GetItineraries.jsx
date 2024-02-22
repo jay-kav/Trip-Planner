@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useRef} from 'react';
 import GetActivities from './GetActivities';
 import axios from 'axios';
 import Button from '@mui/material/Button';
@@ -16,6 +16,8 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 
 const filterList = {
   'Breakfast': 'serves_breakfast',
@@ -39,14 +41,14 @@ function GetItineraries(props) {
     console.log(props);
     let tripOwner = props.tripOwner;
     let trip = props.trip;
-
+    let onAction =  props.onAction;
+    const [callback, setCallback] = useState(false);
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [itineraryID, setItineraryID] = useState("");
     const [activities, setActivities] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    //const [showAddConfirmation, setShowAddConfirmation] = useState(false);
     
     // Fetch requests
     useEffect(() => {
@@ -62,7 +64,16 @@ function GetItineraries(props) {
     });
 
     /* ---------- Itinerary Functions ---------- */
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = (event, reason) => {
+      if (reason && reason === "backdropClick")
+          setOpen(false);
+          return;
+    }
+
     const submitForm = (e) => {
+      handleOpen();
       e.preventDefault();
       const data = new FormData(e.currentTarget);
       console.log(data.get('date'));
@@ -108,6 +119,7 @@ function GetItineraries(props) {
           console.error("Error:", err);
         })
       }
+      handleClose();
     };
 
     const clearActivities = (e) => {
@@ -121,6 +133,20 @@ function GetItineraries(props) {
       })
       .catch((err) => console.error("Error:", err));
     }
+
+    const style = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 600,
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+      display: 'flex',
+      alignItems: 'center',
+    };
   
     const createItinerary = () => {
       return (
@@ -314,15 +340,36 @@ function GetItineraries(props) {
               }
               label="Nightlife"
             />
-          </Grid>
-        </Grid>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-          <Button variant='contained' type='submit'>Create Itinerary</Button>
-          <Button variant='contained' onClick={() => setCreate(false)}>Cancel</Button>
-        </div>
-                  </Box>
-                </Box>
-              </Container>
+            </Grid>
+            </Grid>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Button variant='contained' type='submit'>Create Itinerary</Button>
+                <Button variant='contained' onClick={() => setCreate(false)}>Cancel</Button>
+              </div>
+            </Box>
+          </Box>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            disableBackdropClick 
+          >
+            <Box sx={style}>
+              <Box>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Creating Itinerary
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Your itinerary is being created. This may take a moment.
+              </Typography>
+              </Box>
+              <Box>
+                <img src='https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif?cid=6c09b95265apt1copf20slwdtlb1obqsuu3a8oj926j7dfcg&ep=v1_gifs_search&rid=200w.gif&ct=g' />
+              </Box>
+            </Box>
+          </Modal>
+        </Container>
       );
     }
 
@@ -355,6 +402,12 @@ function GetItineraries(props) {
       let ymd = date.split('-');
       return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
     }
+
+    useEffect(() => {
+      if (itineraries.length > 0) {
+        onAction(itineraries[currentItineraryIndex].activities);
+      }
+    })
 
     // Functions to handle cycling through itineraries
     const goToPreviousItinerary = () => {
@@ -436,92 +489,4 @@ function GetItineraries(props) {
     )
 }
 
-export default GetItineraries
-
-/* 
-            <Dialog
-              open={showAddConfirmation}
-              onClose={handleAddCloseConfirmation}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">{"New Itinerary"}</DialogTitle>
-              <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Box id='form' component="form" onSubmit={(e) => confirmSubmitForm(e)} noValidate>
-                    {createItinerary()}
-                  </Box>
-                </Box>
-              </Container>
-              <DialogActions>
-                  <Button onClick={handleAddCloseConfirmation} color="primary">
-                      Cancel
-                  </Button>
-                  <Button for='form' type='submit' color="primary" autoFocus>
-                      Create Itinerary
-                  </Button>
-              </DialogActions>
-          </Dialog>
-
-          const submitForm = (e) => {
-            e.preventDefault();
-            setShowAddConfirmation(true); // Show confirmation dialog
-          }
-      
-          const confirmSubmitForm = (e) => {
-            const data = new FormData(e.currentTarget);
-            console.log(data.get('date'));
-            let filters = [];
-            for (let filter in filterList) {
-              if (data.get(filterList[filter]) == 'on') {
-                filters.push(filterList[filter]);
-              }
-            }
-            let date = data.get('date')
-            let startTime = data.get('starttime')
-            let endTime = data.get('endtime')
-            let roundTrip = data.get('roundtrip')
-            let a = date.split('/');
-            let checkdate = new Date(`${a[2]}-${a[1]}-${a[0]}T00:00:00Z`);
-            console.log(checkdate);
-            if (checkdate > new Date(trip.endDate) || checkdate < new Date(trip.startDate)) {
-              alert('You must create an itinerary for a valid date in you trip!');
-            } else if (startTime < "08:00") {
-              alert('You must select a start time of earliest 08:00');
-            } else if (endTime < startTime) {
-              alert('You must select an end time later than start time');
-            } else if (endTime < "08:00") {
-              alert('You must select a end time of latest 23:59');
-            } else {
-              axios.post(`create-itinerary/`, {
-                'tripID': trip.id,
-                'country': trip.country,
-                'city': trip.city,
-                'hotel': trip.hotel,
-                'date': date,
-                'startTime': startTime,
-                'endTime': endTime,
-                'roundTrip': roundTrip == "on",
-                'filters': filters
-              })
-              .then((response) => {
-                console.log(response);
-                window.location.reload();
-              })
-              .catch((err) => {
-                alert(err.response.data.reason);
-                console.error("Error:", err);
-              })
-            }
-          };
-      
-          const handleAddCloseConfirmation = () => {
-            setShowAddConfirmation(false); // Close confirmation dialog
-          };*/
+export default GetItineraries;

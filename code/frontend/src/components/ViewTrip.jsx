@@ -13,7 +13,6 @@ const defaultTheme = createTheme();
 
 function ViewTrip(props) {
     let tripID = props.trip;
-    console.log('id', tripID);
     const [tripOwner, setTripOwner] = useState(null);
     const [trip, setTrip] = useState(null);
     const [hotel, setHotel] = useState("");
@@ -52,7 +51,7 @@ function ViewTrip(props) {
             })
             .then((response) => {
                 console.log('hotel', response);
-                setHotel(response.data.hotel);
+                setHotel(response.data);
             })
             .catch(err => console.log(err));
         }
@@ -106,7 +105,6 @@ function ViewTrip(props) {
     };
 
     const getDate = (date) => {
-        console.log(date);
         let ymd = date.split('-');
         return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
     }
@@ -119,10 +117,10 @@ function ViewTrip(props) {
                     <Typography variant="h5" component="div">
                       {trip.tripname}
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {hotel}, {trip.city}, {trip.country}
+                    <Typography sx={{ mb: 1, fontSize: '1.1vw' }} color="text.secondary">
+                    {hotel.name}, {trip.city}, {trip.country}
                     </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="body2" sx={{fontSize: '.9vw' }} >
                       {getDate(trip.startDate)} - {getDate(trip.endDate)}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1.5}}>
@@ -136,9 +134,12 @@ function ViewTrip(props) {
         }
     };
 
+    const [sharedState, setSharedState] = useState([]);
+    const handleFunctionCallFromSiblingOne = (value) => setSharedState(value); 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid sx={{display: 'flex'}}>
+            {trip && tripOwner && (<Grid>
+                <Grid sx={{display: 'flex'}}>
                 <CssBaseline />
                 <Grid>
                     <Box sx={{
@@ -162,14 +163,14 @@ function ViewTrip(props) {
                     }}>
                         <Card sx={{ width: '44vw', height: '58vh'}}>
                           <CardContent>
-                            
+                            <Map trip={trip} sharedState={sharedState} />
                           </CardContent>
                         </Card>
                     </Box>
                 </Grid>
                 <Grid>
                     <Box>
-                        {trip && tripOwner && <GetItineraries trip={trip} tripOwner={tripOwner} />}
+                        {trip && tripOwner && <GetItineraries trip={trip} tripOwner={tripOwner} onAction={handleFunctionCallFromSiblingOne} />}
                     </Box>
                 </Grid>
             </Grid>
@@ -215,6 +216,8 @@ function ViewTrip(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
+            </Grid>
+            )}
         </ThemeProvider>
     )
 }
