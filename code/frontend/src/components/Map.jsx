@@ -5,7 +5,6 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import { Icon, divIcon, point } from "leaflet";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Polyline } from 'react-leaflet';
 
 export default function Map(props) {
     let trip = props.trip;
