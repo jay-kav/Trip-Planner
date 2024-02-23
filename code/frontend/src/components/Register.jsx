@@ -22,6 +22,8 @@ function Register() {
     const email = data.get('email');
     if (username == "") {
       alert("Please enter a username");
+    } else if (email == "") {
+      alert("Please enter an email");
     } else if (password == "") {
       alert("Please enter a password");
     } else {
