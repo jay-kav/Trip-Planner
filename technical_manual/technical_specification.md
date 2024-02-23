@@ -80,7 +80,7 @@ By default Django uses SQLite3 for storing data. We discovered SQLite3 does not 
 
 We had not used it before so we needed to research what was involved with the installation of the packages and set up a database. Then connect that database to our Django backend.
 #### 2.2.2 MongoDB Atlas
-For our project we couldn’t afford to continuously query Google Places API so we needed to choose a database to store the information. MongoDB is a non-relational database that was chosen for its suitability in storing JSON documents and its support for geospatial querying, a feature we anticipated would greatly enhance our itinerary generator later on. Our exploration of MongoDB included mastering the setup of the database, creating collections, and designing the document structure within. Additionally, we delved into the process of connecting the database to our application using MongoDB drivers and PyMongo.
+For our project we couldn’t afford to continuously query Google Places API so we decided to choose a database to cache the results of our previous queries. MongoDB is a non-relational database that was chosen for its suitability in storing JSON documents and its support for geospatial querying, a feature we anticipated would greatly enhance our itinerary generator later on. Our exploration of MongoDB included mastering the setup of the database, creating collections, and designing the document structure within. Additionally, we delved into the process of connecting the database to our application using MongoDB drivers and PyMongo.
 ### 2.3 Algorithms
 #### 2.3.1 Heuristics
 Creating a perfect itinerary generator for our project posed challenges due to the inherent complexity which would have made it an NP-complete problem. To address this, we strategically employed heuristics to enhance manageability. The initial step involved categorizing activities into distinct groups, providing a foundation for heuristic application.
@@ -90,6 +90,27 @@ These heuristics played a pivotal role in determining the activity group based o
 There were limitations with the MongoDB geospatial query, as it struggled to precisely convert latitude and longitude coordinates into a reliable distance calculation. Initially, we considered incorporating third party solutions such as the Google Routes API or OpenStreetMap API for distance calculations. However, instead of outsourcing this functionality to a third party, we decided to challenge ourselves by exploring alternative methods.
 
 To overcome this challenge, we researched the Manhattan distance formula and the Haversine formula. After conscientious consideration, we opted for the Haversine formula due to its suitability for calculating distances in unknown layouts. In contrast, the Manhattan formula is more appropriate for flat surfaces and city blocks, making it less applicable in European terrains where the landscape tends to be more varied compared to the organised grid-like structure commonly found in American cities. 
+
+    def haversine(location1, location2):
+    try:
+        lon1 , lat1 = location1
+        lon2 , lat2 = location2
+
+        # convert decimal degrees to radians 
+        lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+        # haversine formula 
+        dlon = lon2 - lon1 
+        dlat = lat2 - lat1 
+        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a)) 
+
+        # Radius of earth in kilometers
+        r = 6371 
+        # Return distance in kilometers
+        return c * r
+
+
 ### 2.4 Google Places API
 To gather the essential information required for our web app we needed to use an API. We conducted extensive research into both the Google Maps API and OpenStreetMaps API. While our obvious preference being Google Maps API due to its superior capabilities, we encountered a challenge related to its associated costs.
 
