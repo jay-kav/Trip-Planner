@@ -358,6 +358,7 @@ We used Axios for our fetch requests. This was installed using: `npm i axios` Th
 
 We chose Axios over the default node fetch method as it was much simpler to use and more effective in what we needed it for. Nearly all information displayed on the page is retrieved through a post request made to an endpoint on the backend server (these endpoints are linked to functions that supply the data).
 We made good use of react components, which allow for great reusability in sections of code and provide additional organisation to the project.
+
 ![React Components](technical_manual/images/React_Components.png)
 
 On the 'View Trips' page a map with markers of activites can be seen.
