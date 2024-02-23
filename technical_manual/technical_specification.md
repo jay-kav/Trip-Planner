@@ -50,6 +50,8 @@
     3. [Functionality Testing](#63-functionality-testing)
     4. [User Testing](#64-user-testing)
 7. [Installation Guide](#7-installation-guide)
+8. [Appendix](#8-appendix)
+    1. [Activity sheet](#81-activity-sheet)
 
 
 ## 1. Introduction
@@ -595,11 +597,31 @@ We tested all functionality of the application, by entering sample data in to cr
 
 For any functions that required a form to be filled out every form input was vigorously tested with various combinations of information to ensure proper functionality. This allowed us to find out if all functions were working correctly and repair any issues before beginning user testing.
 ### 6.4 User Testing
-We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
+We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet [(See here.)](#81-activity-sheet) designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
+
+Through this feed back we were able to enhance the UI, fix bugs we wouldn't have identified , added in features to help users understanding and improve the itinerary generators performance.
+
+
+Below is the demographic split of our testing, we aimed to test journo on multiple ages groups with varying technological proficencies.
+![Demographic](technical_manual/images/demographic.png)
+
+Below is feedback from users on what we needed to incorporate for our final submission.
+
+![Experience](technical_manual/images/experience.png)
+![Delays](technical_manual/images/delay.png)
+![Challenges](technical_manual/images/challenges.png)
+![Feedback](technical_manual/images/feedback.png)
+![Improvements](technical_manual/images/improvements.png)
+
 
 
 
 ## 7. Installation Guide
 
+## 8. Appendix
+## 8.1 Activity Sheet
+
+![Activity sheet](technical_manual/images/activity.png)
+![Activity sheet 2](technical_manual/images/activity2.png)
 
 
