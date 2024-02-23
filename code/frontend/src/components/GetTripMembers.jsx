@@ -5,20 +5,17 @@ import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import { Button, List, ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Box, CssBaseline, Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import Select from '@mui/material/Select';
 import { Card, CardContent } from '@mui/material';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
-const defaultTheme = createTheme();
 
 function GetTripMembers(props) {
     let tripOwner = props.tripOwner;
     let trip = props.trip;
     let nonMembers;
-    
-    const [addMember, setAddMember] = useState(false);
+
     const [addedMembers, setAddedMembers] = useState([]);
     const [tripMembers, setTripMembers] = useState([]);
     const [users, setUsers] = useState([]);
@@ -27,10 +24,11 @@ function GetTripMembers(props) {
     const [showChangeConfirmation, setShowChangeConfirmation] = useState(false);
     const [showAddConfirmation, setShowAddConfirmation] = useState(false);
 
+    // Fetch requests
     useEffect(() => {
         if (!tripMembers.length) {
-            Promise.all(trip.members.map(member =>
-                axios.get(`api/users/${member.split("/").slice(-2).slice(0, -1)}`)
+            Promise.all(trip.members.map(member =>  // maps each member in the array to a get request
+                axios.get(`api/users/${member.split("/").slice(-2).slice(0, -1)}`) // Get user data from member URL
             ))
             .then(response => {
                 console.log(response);
@@ -39,7 +37,7 @@ function GetTripMembers(props) {
             .catch(err => console.log(err));
         }
         if (!users.length) {
-            axios.get("api/users/?is_staff=false")
+            axios.get("api/users/?is_staff=false") // Get all non-staff users
             .then((response) => {
                 if (response.data.length) {
                     setUsers(response.data);
@@ -49,9 +47,87 @@ function GetTripMembers(props) {
         }
     });
 
+    // shows select menu to add members to the trip
+    const addMembers = (e) => {
+        e.preventDefault();
+        setShowAddConfirmation(true);
+    };
+
+    // adds selected members to the trip
+    const confirmAddMembers = () => {
+        if (addedMembers.length === 0) {
+            alert("Please select members to add.");
+        } else {
+            axios.post(`add-members/`, {    // Post request to add members to the trip
+                'tripID': trip.id,
+                'memberIDs': addedMembers
+            })
+            .then((response) => {
+              console.log(response);
+              window.location.reload();
+            })
+            .catch((err) => console.error("Error:", err));
+        }
+    }
+
+    // handles closing of add members dialog box
+    const handleAddCloseConfirmation = () => {
+        setShowAddConfirmation(false); // Close confirmation dialog
+    };
+
+    // confirmation box to prevent accidental member deletion
+    const removeMember = (e, member) => {
+        e.preventDefault();
+        setMember(member);
+        setShowRemoveConfirmation(true);
+    }
+
+    // removes selected member from the trip
+    const confirmRemoveMember = () => {
+        axios.post(`remove-member/`, {
+            'memberID': member.data.id,
+            'tripID': trip.id
+        })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
+    const handleRemoveCloseConfirmation = () => {
+        setShowRemoveConfirmation(false); // Close confirmation dialog
+    };
+
+    // confirmation box to prevent accidental change of trip owner
+    const changeOwner = (e, member) => {
+        e.preventDefault();
+        setMember(member);
+        setShowChangeConfirmation(true);
+    }
+
+    // changes the owner of the trip to the selected member
+    const confirmChangeOwner = () => {
+        axios.post(`change-owner/`, {
+            'memberID': member.id,
+            'tripID': trip.id
+        })
+        .then((response) => {
+            console.log(response);
+            window.location.reload();
+        })
+        .catch((err) => console.error("Error:", err));
+    }
+
+    const handleChangeCloseConfirmation = () => {
+        setShowChangeConfirmation(false); // Close confirmation dialog
+    };
+
+    // get all users that aren't currently a member of the trip and return them in a list of MenuItem components
     const getNonMembers = () => {
-        nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url)));
+        nonMembers = users.filter(user => (user.id != localStorage.getItem('sessionID') && !trip.members.includes(user.url))); // filters out current trip members
         console.log("nonMembers", nonMembers);
+        // default behavior if no new members are available
         if (nonMembers.length === 0) {
             return <Typography key="" value="">No users to add</Typography>
         }
@@ -74,75 +150,7 @@ function GetTripMembers(props) {
         </Select>
     };
 
-    const addMembers = (e) => {
-        e.preventDefault();
-        setShowAddConfirmation(true);
-    };
-
-    const confirmAddMembers = () => {
-        if (addedMembers.length === 0) {
-            alert("Please select members to add.");
-        } else {
-            axios.post(`add-members/`, {
-                'tripID': trip.id,
-                'memberIDs': addedMembers
-            })
-            .then((response) => {
-              console.log(response);
-              window.location.reload();
-            })
-            .catch((err) => console.error("Error:", err));
-        }
-    }
-
-    const handleAddCloseConfirmation = () => {
-        setShowAddConfirmation(false); // Close confirmation dialog
-    };
-
-    const removeMember = (e, member) => {
-        e.preventDefault();
-        setMember(member);
-        setShowRemoveConfirmation(true);
-    }
-
-    const confirmRemoveMember = () => {
-        axios.post(`remove-member/`, {
-            'memberID': member.data.id,
-            'tripID': trip.id
-        })
-        .then((response) => {
-            console.log(response);
-            window.location.reload();
-        })
-        .catch((err) => console.error("Error:", err));
-    }
-
-    const handleRemoveCloseConfirmation = () => {
-        setShowRemoveConfirmation(false); // Close confirmation dialog
-    };
-
-    const changeOwner = (e, member) => {
-        e.preventDefault();
-        setMember(member);
-        setShowChangeConfirmation(true);
-    }
-
-    const confirmChangeOwner = () => {
-        axios.post(`change-owner/`, {
-            'memberID': member.id,
-            'tripID': trip.id
-        })
-        .then((response) => {
-            console.log(response);
-            window.location.reload();
-        })
-        .catch((err) => console.error("Error:", err));
-    }
-
-    const handleChangeCloseConfirmation = () => {
-        setShowChangeConfirmation(false); // Close confirmation dialog
-    };
-
+    // maps current trip members to list items
     const getTripMembers = () => {
         return tripMembers.map(member => (
             tripOwner.id != member.data.id && <ListItem key={member.data.id} disablePadding>
@@ -165,12 +173,13 @@ function GetTripMembers(props) {
                 <ListItem disablePadding>
                     <ListItemText primary={tripOwner.username + " (Owner)"} />
                     <ListItemIcon sx={{marginLeft: '5rem'}}>
-                        {localStorage.getItem('sessionID') == tripOwner.id && <GroupAddIcon titleAccess="Add Member" onClick={addMembers}/>}
+                        {localStorage.getItem('sessionID') == tripOwner.id && <GroupAddIcon titleAccess="Add Member" onClick={addMembers}/>} {/* Hides trip owner function from non trip owners */}
                     </ListItemIcon>
                 </ListItem>
                 {getTripMembers()}
             </List>
         </CardContent>
+        {/* Dialog Boxes */}
         <Dialog
             open={showRemoveConfirmation}
             onClose={handleRemoveCloseConfirmation}
