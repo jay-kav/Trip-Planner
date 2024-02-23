@@ -34,8 +34,8 @@
         2. [User Creates Trip](#52-user-creates-trip)
         3. [User Deletes Trip](#53-user-deletes-trip)
 4. [Implementation](#4-implementation)
-    1. [React Frontend](#41-react-frontend)
-    2. [Django Backend](#42-django-backend)
+    1. [Frontend](#41-frontend)
+    2. [Backend](#42-backend)
     3. [Algorithm](#43-algorithm)
 5. [Problem and Solutions](#5-problem-and-solutions)
     1. [Frontend Not Communicating With Backend](#51-frontend-not-communicating-with-backend)
@@ -293,7 +293,7 @@ This diagram shows off the various components of the frontend application and ho
 ![Delete Trip](technical_manual/images/Delete_Trip.png)
 
 ## 4. Implementation
-### 4.1 React Frontend
+### 4.1 Frontend
 The frontend of the application was implemented using React.js. We decided to use this because it is easy to use and can be put together efficiently due to the design and reuse of components.
 We used Axios for our fetch requests. This was installed using: `npm i axios` This was used for GET and POST requests. 
 
@@ -309,21 +309,47 @@ We used Axios for our fetch requests. This was installed using: `npm i axios` Th
         'activites': itinerary.activities
     })
 
-We chose Axios over the default node fetch method as it was much simpler to use and more effective in what we needed it for. We used the map function
+We chose Axios over the default node fetch method as it was much simpler to use and more effective in what we needed it for. Nearly all information displayed on the page is retrieved through a post request made to an endpoint on the backend server (these endpoints are linked to functions that supply the data).
+We made good use of react components, which allow for great reusability in sections of code and provide additional organisation to the project.
+![React Components](technical_manual/images/React_Components.png)
 
-    return itineraries.map((itinerary, index) => (
-          <Card key={itinerary.id}>
-            <Box>
-              <Box
-                <h5>{getDate(itinerary.date)}</h5>
-              </Box>
-            </Box>
-          </Card>
-        ));
+On the 'View Trips' page a map with markers of activites can be seen.
 
-to map all elements of a list into JavaScript objects. 
-### 4.2 Django Backend
-We need a robust and secure framework for the backend of our web application. This is where Django comes in. Django can be installed using
+![Leaflet Map](technical_manual/images/Map.png)
+
+This was done using the React Leaflet library. Leaflet provides a number of React components to generate maps.
+
+    <MapContainer center={[getLat(), getLong()]} zoom={13}>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <MarkerClusterGroup
+                chunkedLoading
+                iconCreateFunction={createClusterCustomIcon}
+            >
+                <Marker position={[hotel.lat, hotel.long]} icon={customIcon}>
+                    <Popup>{hotel.name}</Popup>
+                </Marker>
+                {getMarkers(activities)}
+            </MarkerClusterGroup>
+        </div>
+    </MapContainer>
+
+We were able to generate an array of markers by taking an array of activities and mapping each one into a marker using the Leaflet Marker component.
+
+    <Marker key={marker.place_id} position={[marker.latitude, marker.longitude]} icon={customIcon}>
+        <Popup>{marker.name}    <img
+            style={{height: '30pxwidth: '30pxborderRadius: '15pxobjectFit: 'cover'}}
+            src={`data:image/jpbase64,${marker.image_da`}
+            alt={marker.name}
+        /></Popup>
+    </Marker>
+
+![Marker](technical_manual/images/Marker.png)
+
+### 4.2 Backend
+We needed a robust and secure framework for the backend of our web application. This is where Django comes in. Django can be installed using
 `pip install Django`
 This provided us with a number of tools such as views to add functionality
 
@@ -411,11 +437,11 @@ It turned out to be a csrf authentication error, which was fixed easily by addin
 `
 before each view that required communication from the frontend.
 ### 5.2 PostgreSQL Database Connection To Backend
-After switching from SQLite3 to PostgreSQL, there were some teething issues trying to get the database set up. It took some time to set up initially and then there was some connectivity issues between the database and backend application
+After switching from SQLite3 to PostgreSQL, there were some teething issues trying to get the database set up. It took some time to set up initially and then there was some connectivity issues between the database and the backend application
 
-The problem was that the database information declared in Django settings.py didn’t align with the correct information set up for the Postgres database. To fix this we remade the Postgres database, this time making note of the information to ensure the correct information was then entered into the settings.
+The problem was that the database information declared in Django settings.py didn’t align with the correct information set up for the PostgreSQL database. To fix this we remade the PostgreSQL database, this time making note of the information to ensure the correct information was then entered into the settings.
 ### 5.3 MongoDB Server Down 
-Using mongodb we encountered to two problems. One each time we changed location we couldnt gain access to the database as our IP address wasnt registered to it. Two every so often mongodb would be down without a reason and we were unable to access the database during them time frames.
+Using MongoDB we encountered to two problems. One each time we changed location we couldn't gain access to the database as our IP address wasn't registered to it. Two every so often MongoDB would be down without a reason and we were unable to access the database during them time frames.
 
 ### 5.4 Google Places Information
 While Google's API exhibited significant superiority over OpenStreetMap's API, we encountered an unexpected challenge. We realised that Google does not comprehensively regulate the information that it stores	. Numerous documents were either incomplete or lacked the implementation of certain fields. Compounding this issue, Google used various formats for presenting opening times of places this introduced complexities during information fetching. This posed a considerable challenge as our data showed inconsistencies. To address this, our strategy involved prioritizing essential information and identifying documents with the most consistent patterns.
