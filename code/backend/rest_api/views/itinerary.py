@@ -22,7 +22,7 @@ def createItinerary(request):
      if request.method == 'POST':
         try:
             data = json.loads(request.body)
-            #print(data)
+            print(data)
             # Extract all the data
             trip_id = data.get('tripID')
             date = data.get('date')

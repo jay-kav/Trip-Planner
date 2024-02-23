@@ -44,10 +44,8 @@ for the system.
 
 To begin your Journo journey, follow these steps:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Register 1.png" alt="Register 1" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Register 2.png" alt="Register 2" width="450"/>
-</div>
+![Register 1](user_manual/Images/Register_1.png)
+![Register 2](user_manual/Images/Register_2.png)
 
 - Click "Don't have an account? Register" if you do not have an account.
 - Fill in a Username you'll remember.
@@ -59,7 +57,7 @@ To begin your Journo journey, follow these steps:
 
 Once registered, follow these steps to log in:
 
-![Register 1](/user_manual/Images/login.png)
+![Login](user_manual/Images/login.png)
 
 - From here, enter your chosen Username.
 - Enter your Password.
@@ -72,10 +70,8 @@ Once registered, follow these steps to log in:
 
 After logging in, you'll be on the landing page:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Sidebar 1.png" alt="Sidebar 1" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Sidebar 2.png" alt="Sidebar 2" width="450"/>
-</div>
+![Sidebar 1](user_manual/Images/Sidebar_1.png)
+![Sidebar 2](user_manual/Images/Sidebar_2.png)
 
 - By clicking the three horizontal lines in the top left-hand corner, the sidebar with four options will be displayed.
 - View the Homepage.
@@ -91,10 +87,9 @@ After logging in, you'll be on the landing page:
 
 On the "My Trips" page, create a new trip:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Create Trip.png" alt="Create Trip" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Create Trip Components.png" alt="Trip Components" width="450"/>
-</div>
+
+![Create Trip](user_manual/Images/Create_Trip.png)
+![Create Trip Components](user_manual/Images/Create_Trip_Components.png)
 
 - First, click the blue button reading "New Trip."
 - You will be redirected to a new page to fill in the details.
@@ -109,15 +104,8 @@ On the "My Trips" page, create a new trip:
 
 On the "My Trips" page, view one of your trips:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/View Trip.png" alt="View Trip" width="450" style="margin-right: 20px;"/>
-</div>
-
-![Trip Page](/user_manual/Images/Trip Page.png)
-
-- **Feature A:** This is the first feature. It helps with...
-- **Feature B:** Here's the second feature, which is useful for...
-
+![View Trip](user_manual/Images/View_Trip.png)
+![Trip Page](user_manual/Images/Trip_Page.png)
 
 - Click the "View" button on the chosen trip you want to see.
 - Once clicked, you will be directed to a page with the trip details.
@@ -132,10 +120,8 @@ On the "My Trips" page, view one of your trips:
 
 When viewing trip details, add members:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Add Member.png" alt="Add Member" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Add Member Clicked.png" alt="Select Member" width="450"/>
-</div>
+![Add Member](user_manual/Images/Add_Member.png)
+![Add Member Clicked](user_manual/Images/Add_Member_Clicked.png)
 
 
 - If you are the owner, a person icon will appear by your name.
@@ -152,10 +138,8 @@ When viewing trip details, add members:
 
 In trip details, remove members:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Remove Member.png" alt="Remove Member" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Remove Member Clicked.png" alt="Remove Member select" width="450"/>
-</div>
+![Remove Member](user_manual/Images/Remove_Member.png)
+![Remove Member Clicked](user_manual/Images/Remove_Member_Clicked.png)
 
 - If you are the owner, an "X" icon will appear next to members' names.
 - Once clicked, you will be shown a confirmation text box.
@@ -170,10 +154,8 @@ In trip details, remove members:
 
 Delete Trip:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Delete Trip.png" alt="Delete Trip" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Delete Trip Clicked.png" alt="Remove Trip select" width="450"/>
-</div>
+![Delete Trip](user_manual/Images/Delete_Trip.png)
+![Delete Trip Clicked](user_manual/Images/Delete_Trip_Clicked.png)
 
 - If you are the owner, a "Delete Trip" button will be present on the screen.
 - Click the button if you wish to delete the trip.
@@ -190,10 +172,8 @@ Delete Trip:
 
 Leave Trip:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Leave Trip.png" alt="Leave Trip" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Leave Trip Clicked.png" alt="Leave Trip select" width="450"/>
-</div>
+![Leave Trip](user_manual/Images/Leave_Trip.png)
+![Leave Trip Clicked](user_manual/Images/Leave_Trip_Clicked.png)
 
 - If you no longer want to see a trip, you can leave the trip.
 - By clicking the "Leave Trip" button, You will be display with a confirm text box 
@@ -213,10 +193,8 @@ Leave Trip:
 
 Generate a daily schedule:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Create Itinerary.png" alt="Create Itinerary" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Create Itinerary Component.png" alt="Itinerary Component" width="450"/>
-</div>
+![Create Itinerary](user_manual/Images/Create_Itinerary.png)
+![Create Itinerary Component](user_manual/Images/Create_Itinerary_Component.png)
 
 - When viewing a trip, you'll need to add daily activities.
 - Clicking the "Add Itinerary" will display a form to fill in the details.
@@ -238,10 +216,8 @@ Generate a daily schedule:
 
 Remove an unsatisfactory itinerary:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Delete Itinerary.png" alt="Delete Itinerary" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Delete Itinerary Clicked.png" alt="Delete Itinerary Component" width="450"/>
-</div>
+![Delete Itinerary](user_manual/Images/Delete_Itinerary.png)
+![Delete Itinerary Clicked](user_manual/Images/Delete_Itinerary_Clicked.png)
 
 - If you don't like your itinerary, you have the option to delete it.
 - If you are an owner, a bin icon will appear in the top right-hand corner.
@@ -254,9 +230,7 @@ Remove an unsatisfactory itinerary:
 
 View all trip itineraries:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Cycle Itinerary.png" alt="Page 1 Itinerary" width="450" style="margin-right: 20px;"/>
-</div>
+![Cycle Itinerary](user_manual/Images/Cycle_Itinerary.png)
 
 - Your trip has multiple itineraries, but you can only see one.
 - Above the itinerary, to its sides, there are arrows.
@@ -276,9 +250,7 @@ View all trip itineraries:
 
 Reset completed activities:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Clear Activities.png" alt="Clear Activities" width="450" style="margin-right: 20px;"/>
-</div>
+![Clear Activities](user_manual/Images/Clear_Activities.png)
 
 - Each trip is designed to create itineraries without repeating activities.
 - If you are unsatisfied with the available unique activities, you can clear your slate.
@@ -294,10 +266,8 @@ Reset completed activities:
 
 Transfer ownership:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Change Owner.png" alt="Change Owner" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Change Owner Clicked.png" alt="Change Owner Component" width="450"/>
-</div>
+![Change Owner](user_manual/Images/Change_Owner.png)
+![Change Owner Clicked](user_manual/Images/Change_Owner_Clicked.png)
 
 - If you wish to leave the trip without deleting it.
 - Or tired of having the responsibility of organizing the trip.
@@ -311,10 +281,7 @@ Transfer ownership:
 
 Explore a recommended activity's website:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/View Website.png" alt="View Website" width="450" style="margin-right: 20px;"/>
-</div>
-
+![View Website](user_manual/Images/View_Website.png)
 
 - You can find the button "Website" below the activites name.
 - Clicking this will transport you to the businesses personal page
@@ -324,9 +291,7 @@ Explore a recommended activity's website:
 
 Navigate to your next activity:
 
-<div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/View Location.png" alt="View Location" width="450" style="margin-right: 20px;"/>
-</div>
+![View Location](user_manual/Images/View_Location.png)
 
 - Click "Location" below the activity's name.
 - Google Maps will guide you.
@@ -335,7 +300,7 @@ Navigate to your next activity:
 
 Complete your session securely:
 
-![Logout](/user_manual/Images/logout.png)
+![Logout](user_manual/Images/logout.png)
 
 
 - When you've finished up for the day, you can securely log out.

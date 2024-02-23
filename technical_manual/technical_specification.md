@@ -50,6 +50,8 @@
     3. [Functionality Testing](#63-functionality-testing)
     4. [User Testing](#64-user-testing)
 7. [Installation Guide](#7-installation-guide)
+8. [Appendix](#8-appendix)
+    1. [Activity sheet](#81-activity-sheet)
 
 
 ## 1. Introduction
@@ -80,7 +82,7 @@ By default Django uses SQLite3 for storing data. We discovered SQLite3 does not 
 
 We had not used it before so we needed to research what was involved with the installation of the packages and set up a database. Then connect that database to our Django backend.
 #### 2.2.2 MongoDB Atlas
-For our project we couldn’t afford to continuously query Google Places API so we needed to choose a database to store the information. MongoDB is a non-relational database that was chosen for its suitability in storing JSON documents and its support for geospatial querying, a feature we anticipated would greatly enhance our itinerary generator later on. Our exploration of MongoDB included mastering the setup of the database, creating collections, and designing the document structure within. Additionally, we delved into the process of connecting the database to our application using MongoDB drivers and PyMongo.
+For our project we couldn’t afford to continuously query Google Places API so we decided to choose a database to cache the results of our previous queries. MongoDB is a non-relational database that was chosen for its suitability in storing JSON documents and its support for geospatial querying, a feature we anticipated would greatly enhance our itinerary generator later on. Our exploration of MongoDB included mastering the setup of the database, creating collections, and designing the document structure within. Additionally, we delved into the process of connecting the database to our application using MongoDB drivers and PyMongo.
 ### 2.3 Algorithms
 #### 2.3.1 Heuristics
 Creating a perfect itinerary generator for our project posed challenges due to the inherent complexity which would have made it an NP-complete problem. To address this, we strategically employed heuristics to enhance manageability. The initial step involved categorizing activities into distinct groups, providing a foundation for heuristic application.
@@ -90,6 +92,27 @@ These heuristics played a pivotal role in determining the activity group based o
 There were limitations with the MongoDB geospatial query, as it struggled to precisely convert latitude and longitude coordinates into a reliable distance calculation. Initially, we considered incorporating third party solutions such as the Google Routes API or OpenStreetMap API for distance calculations. However, instead of outsourcing this functionality to a third party, we decided to challenge ourselves by exploring alternative methods.
 
 To overcome this challenge, we researched the Manhattan distance formula and the Haversine formula. After conscientious consideration, we opted for the Haversine formula due to its suitability for calculating distances in unknown layouts. In contrast, the Manhattan formula is more appropriate for flat surfaces and city blocks, making it less applicable in European terrains where the landscape tends to be more varied compared to the organised grid-like structure commonly found in American cities. 
+
+    def haversine(location1, location2):
+    try:
+        lon1 , lat1 = location1
+        lon2 , lat2 = location2
+
+        # convert decimal degrees to radians 
+        lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+        # haversine formula 
+        dlon = lon2 - lon1 
+        dlat = lat2 - lat1 
+        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a)) 
+
+        # Radius of earth in kilometers
+        r = 6371 
+        # Return distance in kilometers
+        return c * r
+
+
 ### 2.4 Google Places API
 To gather the essential information required for our web app we needed to use an API. We conducted extensive research into both the Google Maps API and OpenStreetMaps API. While our obvious preference being Google Maps API due to its superior capabilities, we encountered a challenge related to its associated costs.
 
@@ -102,6 +125,8 @@ This shows off the various stages of the design process. This will include a num
 This diagram displays the system context, components, relationships, and dependencies. The user interacts with our system through the available input in the frontend React application. The frontend then has two-way communication with the Django backend, sending and requesting information. The backend saves all data to the PostgreSQL database. It also requests information from this. The backend sends requests to the MongoDB, and the requested information gets sent back to the backend. We use a python script to make requests to the Google Maps API and filter the information to send it to our MongoDB.
 ### 3.2 Class Diagram
 ![Class Diagram](technical_manual/images/class_diagram.png)
+
+In this class diagram, the relationships between classes are represented by associations. For example, a User can create multiple Trips, and a Trip can have multiple Itineraries. Each Itinerary references the Trip it belongs to and contains a list of planned Activities. The Activity class represents the activities stored in MongoDB that are stored with specific details such as name, location, and time.
 
 ### 3.3 React Components
 ![React Component Diagram](technical_manual/images/component_diagram.png)
@@ -489,7 +514,7 @@ After switching from SQLite3 to PostgreSQL, there were some teething issues tryi
 
 The problem was that the database information declared in Django settings.py didn’t align with the correct information set up for the PostgreSQL database. To fix this we remade the PostgreSQL database, this time making note of the information to ensure the correct information was then entered into the settings.
 ### 5.3 MongoDB Server Down 
-Using MongoDB we encountered to two problems. One each time we changed location we couldn't gain access to the database as our IP address wasn't registered to it. Two every so often MongoDB would be down without a reason and we were unable to access the database during them time frames.
+Using MongoDB we encountered two problems. One, each time we changed location we couldn't gain access to the database as our IP addresses weren't registered to it. Two every so often MongoDB would be down without a reason and we were unable to access the database during them time frames. To prevent this from happening during essential times we decided to set up a local Mongo database. This ensured that we would have access to our data at all times. 
 
 ### 5.4 Google Places Information
 While Google's API exhibited significant superiority over OpenStreetMap's API, we encountered an unexpected challenge. We realised that Google does not comprehensively regulate the information that it stores	. Numerous documents were either incomplete or lacked the implementation of certain fields. Compounding this issue, Google used various formats for presenting opening times of places this introduced complexities during information fetching. This posed a considerable challenge as our data showed inconsistencies. To address this, our strategy involved prioritizing essential information and identifying documents with the most consistent patterns.
@@ -573,9 +598,31 @@ We tested all functionality of the application, by entering sample data in to cr
 
 For any functions that required a form to be filled out every form input was vigorously tested with various combinations of information to ensure proper functionality. This allowed us to find out if all functions were working correctly and repair any issues before beginning user testing.
 ### 6.4 User Testing
-We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
+We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet [(See here.)](#81-activity-sheet) designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
+
+Through this feed back we were able to enhance the UI, fix bugs we wouldn't have identified , added in features to help users understanding and improve the itinerary generators performance.
+
+
+Below is the demographic split of our testing, we aimed to test journo on multiple ages groups with varying technological proficencies.
+![Demographic](technical_manual/images/demographic.png)
+
+Below is feedback from users on what we needed to incorporate for our final submission.
+
+![Experience](technical_manual/images/experience.png)
+![Delays](technical_manual/images/delay.png)
+![Challenges](technical_manual/images/challenges.png)
+![Feedback](technical_manual/images/feedback.png)
+![Improvements](technical_manual/images/improvements.png)
+
+
+
 
 ## 7. Installation Guide
 
+## 8. Appendix
+## 8.1 Activity Sheet
+
+![Activity sheet](technical_manual/images/activity.png)
+![Activity sheet 2](technical_manual/images/activity2.png)
 
 

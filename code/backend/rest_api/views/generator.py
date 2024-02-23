@@ -12,6 +12,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
         # Base case check if there is any time left to make an itinerary
         if start > (end - 40):
            # print("ended here")
+            print(f"start time {start}, endtime {end} ---------------------------------------------------------------------")
             # If round trip ensure the last activity is less than 2km away
             if toggle:
                 result = isValid(collection, hotel, previous)
@@ -33,11 +34,11 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
 
         # Heuriistic times to do certain activities
         timeDict = {
-            480 : "serves_breakfast",
+            480 : ["serves_breakfast", filters],
             540 : ["serves_breakfast", filters],
             600 :["serves_breakfast", filters],
             660 : filters, 
-            720 : filters,
+            720 : ["serves_lunch", filters],
             780 : ["serves_lunch", filters],
             840 : ["serves_lunch", filters], 
             900 :  filters,
@@ -77,7 +78,7 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             # True each filter until one is valid
             while i < (len(filters) - 1) and search:
                 # If its past 7pm and the user chose night life
-                if start >= 1140 and night:
+                if roundedTime >= 1140 and night:
                     i += 1
                     if len(night) > 1:
                         # Choose a night life activity
@@ -163,12 +164,13 @@ def linearItinerary(toggle, collection, hotel, trip, day, start, end, food=False
             failed.append(itineraryResult[1])
 
             # If failed to make an itinerary and is behinning to backtrack , return all the unused loactions
+            print(f"is this food ------------------------------------- {current_type}")
             if current_type and current_type != "serves_breakfast" and current_type != "serves_lunch" and current_type != "serves_dinner":
                 filters.insert(i, current_type)
                 activities.pop()
                 print(f"test if the list grows {filters}")
-            else:
-                print(f"food added back in {food}")
+            elif current_type:
+                print(f"food added back in {current_type}")
                 food.insert(0, current_type)
                 activities.pop()
 
@@ -224,7 +226,6 @@ def chooseNightActivity(night, time):
 # Function to get the activities type name 
 @csrf_exempt
 def processString(string):
-    print(f"Error in the function process {string}")
     # Relace underscores
     string = string.replace("_", " ")
     word = string.split()
