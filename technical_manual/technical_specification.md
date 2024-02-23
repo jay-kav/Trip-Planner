@@ -395,7 +395,7 @@ On the 'View Trips' page a map with markers of activites can be seen.
 
 ![Leaflet Map](technical_manual/images/Map.png)
 
-This was done using the React Leaflet library. Leaflet provides a number of React components to generate maps.
+This was done using the React Leaflet library. This was installed using: `npm install react-leaflet`.Leaflet provides a number of React components to generate maps.
 
     <MapContainer center={[getLat(), getLong()]} zoom={13}>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
