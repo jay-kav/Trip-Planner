@@ -93,7 +93,7 @@ On the "My Trips" page, create a new trip:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Create Trip.png" alt="Create Trip" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Create Trip_Components.png" alt="Trip Components" width="450"/>
+  <img src="/user_manual/Images/Create Trip Components.png" alt="Trip Components" width="450"/>
 </div>
 
 - First, click the blue button reading "New Trip."
