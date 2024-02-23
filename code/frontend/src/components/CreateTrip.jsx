@@ -13,7 +13,6 @@ import { Grid } from '@mui/material';
 
 const defaultTheme = createTheme();
 
-// Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
 function CreateTrip() {
     const [users, setUsers] = useState([]);
     const [members, setMembers] = useState([]);
@@ -22,18 +21,11 @@ function CreateTrip() {
     const [cities, setCities] = useState([]);
     const [city, setCity] = useState('');
     const [hotels, setHotels] = useState([]);
-    const [submit, setSubmit] = useState(false);
 
-    const getUsers = () => {
-      let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID'));
-      return notOwner.map(user => (
-        <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
-      ));
-    };  
-
+    /* Fetch requests */
     useEffect(() => {
       if (users.length == 0) {
-          axios.get("api/users/?is_staff=false")
+          axios.get("api/users/?is_staff=false") // rest framework
           .then((response) => {
               if (response.data.length) {
                   setUsers(response.data);
@@ -42,15 +34,15 @@ function CreateTrip() {
           .catch(err => console.log(err))
       }
       if (countries.length == 0) {
-        axios.post(`get-countries/`)
+        axios.post(`get-countries/`) // endpoint to get countries
         .then((response) => {
           console.log(response);
           setCountries(response.data.countries);
         })
         .catch((err) => console.error("Error:", err));
       }
-      if (cities.length == 0 && country != '') {
-        axios.post(`get-cities/`, {
+      if (cities.length == 0 && country != '') { // fire when country is selected
+        axios.post(`get-cities/`, { // endpoint to get cities
           'country': country
         })
         .then((response) => {
@@ -59,8 +51,8 @@ function CreateTrip() {
         })
         .catch((err) => console.error("Error:", err));
       };
-      if (hotels.length == 0 && country != '' && city != '') {
-        axios.post(`get-hotels/`, {
+      if (hotels.length == 0 && country != '' && city != '') { // fire when city is selected
+        axios.post(`get-hotels/`, { // endpoint to get hotels
           'country': country,
           'city': city
         })
@@ -72,27 +64,45 @@ function CreateTrip() {
       }
     });
 
+    // Generates list of users to add to trip
+    const getUsers = () => {
+      let notOwner = users.filter(user => user.id != localStorage.getItem('sessionID')); // excludes trip owner from list
+      return notOwner.map(user => (
+        <MenuItem key={user.id} value={user.id}>{user.username}</MenuItem>
+      ));
+    };  
+
+    // Generates list of countries to assign to trip
     const getCountries = () => {
       return countries.map(country => (
         <MenuItem key={country} value={country}>{country}</MenuItem>
       ));
     }
 
+    // Generates list of cities to assign to trip
     const getCities = () => {
       return cities.map(city => (
           <MenuItem key={city} value={city}>{city}</MenuItem>
       ));
     }
 
+    // Generates list of hotels to assign to trip
     const getHotels = () => {
       return hotels.map(hotel => (
           <MenuItem key={hotel} value={hotel.id}>{hotel.name}</MenuItem>
       ));
     }
+
+    // convert date to a value
+    const getDate = (date) => {
+      let dmy = date.split('/');
+      let datevalue = dmy[0] + (dmy[1] * 1000) + (dmy[2] * 1000000);
+      return datevalue;
+    }
   
+    /* Form submission to create trip */
     const submitForm = (e) => {
       e.preventDefault();
-      setSubmit(true);
       const data = new FormData(e.currentTarget);
       const tripname = data.get('tripname');
       const country = data.get('country');
@@ -100,18 +110,16 @@ function CreateTrip() {
       const hotel = data.get('hotel');
       const startDate = data.get('startdate');
       const endDate = data.get('enddate');
-      const members = Array.isArray(data.getAll('members')) ? Array.from(data.getAll('members')) : [];
-      const today = new Date();
-      let date = String(today.getDate()).padStart(2, '0') + '/' + String(today.getMonth() + 1).padStart(2, '0') + '/' + today.getFullYear();
+      const members = Array.isArray(data.getAll('members')) ? Array.from(data.getAll('members')) : []; // converts selected members to array
       if (tripname === "") {
         alert("Please enter a trip name");
       } else if (startDate === "") {
         alert("Please enter a start date");
       } else if (endDate === "") {
         alert("Please enter an end date");
-      } else if (startDate > endDate) {
+      } else if (new Date(startDate) > new Date(endDate)) {
         alert("End date must be after start date");
-      } else if (startDate < date) {
+      } else if (new Date(startDate) < new Date()) {
         alert("Trip start date must be atleast today");
       } else if (country === "") {
         alert("Please select a country");
@@ -120,7 +128,6 @@ function CreateTrip() {
       } else if (hotel === "") {
         alert("Please select a hotel");
       } else {
-        setSubmit(true);
         axios.post(`create-trip/`, {
           'ownerID': localStorage.getItem('sessionID'),
           'tripname': tripname,
@@ -136,14 +143,13 @@ function CreateTrip() {
           window.location.href = "/";
         })
         .catch((err) => {
-          setSubmit(false);
           alert('Failed to create trip');
           console.error("Error:", err);
         });
       }
-      setSubmit(false);
     };
 
+  // Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -279,9 +285,9 @@ function CreateTrip() {
                         name="members"
                         autoComplete="members"
                         multiple
-                        defaultValue={''} // Provide the default value
-                        value={members} // Provide the array of selected members
-                        onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
+                        defaultValue={''}
+                        value={members}
+                        onChange={(e) => setMembers(e.target.value)}
                         sx={{width: '190px'}}
                       >
                         <MenuItem value={''}></MenuItem>

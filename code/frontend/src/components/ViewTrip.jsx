@@ -18,11 +18,14 @@ function ViewTrip(props) {
     const [hotel, setHotel] = useState("");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [showLeaveConfirmation, setShowLeaveConfirmation] = useState(false);
+    // handles reference passed from GetItineraries
+    const [sharedState, setSharedState] = useState([]);
+    const handleFunctionCallFromSiblingOne = (value) => setSharedState(value); 
 
     // Fetch requests
     useEffect(() => {
         if (trip == null) {
-            axios.get(`api/trips/${tripID}/`)
+            axios.get(`api/trips/${tripID}/`) // gets selected trip from rest framework
             .then((response) => {
                 console.log(response);
                 setTrip(response.data);
@@ -33,7 +36,7 @@ function ViewTrip(props) {
 
     useEffect(() => {
         if (trip && tripOwner == null) {
-            axios.get(`api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`)
+            axios.get(`api/users/${trip.owner.split("/").slice(-2).slice(0, -1)}/`) // gets trip owner from rest framework
             .then((response) => {
                 console.log(response);
                 setTripOwner(response.data);
@@ -44,7 +47,7 @@ function ViewTrip(props) {
 
     useEffect(() => {
         if (trip && hotel.length == "") {
-            axios.post(`get-hotel/`, {
+            axios.post(`get-hotel/`, {  // gets hotel info  associated with selected trip
                 'country': trip.country,
                 'city': trip.city,
                 'hotel': trip.hotel
@@ -57,15 +60,17 @@ function ViewTrip(props) {
         }
     }, trip);
 
-    // Trip functions
+    /* ----- Trip functions ----- */
+    // prevents accidental deletion of trip
     const deleteTrip = (e) => {
         e.preventDefault();
         setShowDeleteConfirmation(true); // Show confirmation dialog
     };
 
+    // deletes trip
     const confirmDeleteTrip = () => {
         // Perform delete operation
-        axios.post(`delete-trip/`, {
+        axios.post(`delete-trip/`, { // endpoint to delete selected trip
             'tripID': trip.id
         })
         .then((response) => {
@@ -75,20 +80,23 @@ function ViewTrip(props) {
         .catch((err) => console.error("Error:", err));
     };
 
+    // handles closing of delete trip dialog box
     const handleDeleteCloseConfirmation = () => {
         setShowDeleteConfirmation(false); // Close confirmation dialog
     };
 
+    // prevents accidental leaving of trip
     const leaveTrip = (e) => {
         e.preventDefault();
         setShowLeaveConfirmation(true); // Show confirmation dialog
     }
 
+    // leaves trip
     const confirmLeaveTrip = (e) => {
-        if (tripOwner.id == localStorage.getItem('sessionID')) {
+        if (tripOwner.id == localStorage.getItem('sessionID')) { // checks if user is trip owner or not
             alert("You are the owner of this trip. Please assign someone else as trip owner.");
         } else {
-            axios.post(`remove-member/`, {
+            axios.post(`remove-member/`, { // endpoint to remove user from selected trip
                 'memberID': localStorage.getItem('sessionID'),
                 'tripID': trip.id
             })
@@ -100,15 +108,18 @@ function ViewTrip(props) {
         }
     }
 
+    // handles closing of leave trip dialog box
     const handleLeaveCloseConfirmation = () => {
         setShowLeaveConfirmation(false); // Close confirmation dialog
     };
 
+    // formats the provided date
     const getDate = (date) => {
         let ymd = date.split('-');
         return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
     }
 
+    // returns all the info of a trip on a Card component
     const tripInfo = () => {
         if (trip && tripOwner) {
             return (
@@ -134,8 +145,7 @@ function ViewTrip(props) {
         }
     };
 
-    const [sharedState, setSharedState] = useState([]);
-    const handleFunctionCallFromSiblingOne = (value) => setSharedState(value); 
+    // displays the trip, its members, it's itineraries and the map
     return (
         <ThemeProvider theme={defaultTheme}>
             {trip && tripOwner && (<Grid>
@@ -170,10 +180,11 @@ function ViewTrip(props) {
                 </Grid>
                 <Grid>
                     <Box>
-                        {trip && tripOwner && <GetItineraries trip={trip} tripOwner={tripOwner} onAction={handleFunctionCallFromSiblingOne} />}
+                        {trip && tripOwner && <GetItineraries trip={trip} tripOwner={tripOwner} onAction={handleFunctionCallFromSiblingOne} />} {/* handles syncing of itinerary and map */}
                     </Box>
                 </Grid>
             </Grid>
+            {/* Dialog Boxes */}
             <Dialog
                 open={showDeleteConfirmation}
                 onClose={handleDeleteCloseConfirmation}

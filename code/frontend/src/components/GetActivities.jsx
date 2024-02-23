@@ -5,7 +5,8 @@ import { Box, Typography } from '@mui/material';
 
 function GetActivities (props) {
     const [activities, setActivities] = useState([]);
-
+    
+    // Fetch request to get activities
     useEffect(() => {
         if (!activities.length) {
             axios.post(`get-activities/`, {
@@ -23,6 +24,7 @@ function GetActivities (props) {
         }
     });
 
+    // Function to map activities to components
     const getItems = () => {
         return activities.map(activity => (
             <ListItem key={activity.id} sx={{border: 'solid 1px lightgrey', borderRadius: '5px', m: '5px 10px', width: '37vw', justifyContent: 'space-between'}}>
@@ -50,11 +52,13 @@ function GetActivities (props) {
         ));
     }
 
+    // default behaviour if no activities were retrieved
     if (activities.length == 0) {
         return (
             <Typography>No activities found.</Typography>
         );
     }
+    // return list of activities
     return (
         <List>
             {getItems()}
