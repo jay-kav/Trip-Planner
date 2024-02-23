@@ -6,10 +6,10 @@ from django.shortcuts import get_object_or_404
 
 # Heuristic times to spend in each activity
 time_to_spend = {
-    "shopping_mall": 240,
+    "shopping_mall": 180,
     "park": 120,
     "museum": 120,
-    "food": 90,
+    "food": 80,
     "tourist_attraction": 90,
     "amusement_park": 180,
     "zoo": 240,
@@ -104,7 +104,6 @@ def apiCall(toggle, collection, hotel, time, startTime, endTime, types, trip_id,
             
             # Get the exact distance the next location is away
             distance = haversine([lat,lon], [docLatitude, docLongitude])
-            print(f"distance {distance}")
         
             # Calculate the walk distance
             walkTime = (distance * 12) 
@@ -213,7 +212,6 @@ def foodApiCall(toggle, collection, hotel, time, startTime, endTime,  food_type,
 
             # Get the exact distance the next location is away
             distance = haversine([lat,lon], [docLatitude, docLongitude ])
-            print(f"distance {distance}")
 
             # Calculate the walk distance
             walkTime = (distance * 12) 

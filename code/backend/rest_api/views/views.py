@@ -302,7 +302,7 @@ def getActivities(request):
             collection = db[city]
 
             list_of_places = [s.split(";") for s in activities]
-            print(f"places list {list_of_places}")
+           #  print(f"places list {list_of_places}")
 
             def getID(activity):
                 return activity.split(";")[0]
@@ -322,7 +322,7 @@ def getActivities(request):
             for details in list_of_places:
                 found = False
                 for place in places:
-                    print(f"details {details}")
+                    # print(f"details {details}")
                     id = place.get("place_id", "")
                     if details[0] != id or found:
                         continue
