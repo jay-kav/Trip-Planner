@@ -594,6 +594,14 @@ This comes with a class type TestCase which is used to create classes to test pa
 
 `python3 manage.py test`
 
+![Improvements](technical_manual/images/test_case.png)
+---
+![Improvements](technical_manual/images/case1.png)
+---
+![Improvements](technical_manual/images/case2.png)
+---
+![Improvements](technical_manual/images/case3.png)
+
 ### 6.3 Functionality Testing
 We tested all functionality of the application, by entering sample data in to create sample users, trips and itineraries. With these example instances in place we were able to test all the functionalities.
 - User Functions: Registration, Login, Logout
@@ -609,7 +617,7 @@ Through this feed back we were able to enhance the UI, fix bugs we wouldn't have
 
 
 Below is the demographic split of our testing, we aimed to test Journo on multiple ages groups with varying technological proficiencies.
-![Demographic](technical_manual/images/demographic.png)
+![Demographic](technical_manual/images/Demographic.png)
 
 Below is feedback from users on what we needed to incorporate for our final submission.
 
