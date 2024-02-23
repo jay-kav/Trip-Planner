@@ -383,6 +383,7 @@ We used Axios for our fetch requests. This was installed using: `npm i axios` Th
 
 We chose Axios over the default node fetch method as it was much simpler to use and more effective in what we needed it for. Nearly all information displayed on the page is retrieved through a post request made to an endpoint on the backend server (these endpoints are linked to functions that supply the data).
 We made good use of react components, which allow for great reusability in sections of code and provide additional organisation to the project.
+
 ![React Components](technical_manual/images/React_Components.png)
 
 On the 'View Trips' page a map with markers of activites can be seen.
@@ -517,8 +518,8 @@ Using MongoDB we encountered two problems. One, each time we changed location we
 
 ### 5.4 Google Places Information
 While Google's API exhibited significant superiority over OpenStreetMap's API, we encountered an unexpected challenge. We realised that Google does not comprehensively regulate the information that it stores	. Numerous documents were either incomplete or lacked the implementation of certain fields. Compounding this issue, Google used various formats for presenting opening times of places this introduced complexities during information fetching. This posed a considerable challenge as our data showed inconsistencies. To address this, our strategy involved prioritizing essential information and identifying documents with the most consistent patterns.
-### 5.5 Geospatial Query
-A significant amount of the code was tailored during the algorithm's development to address a critical database query. Using geospatial queries in MongoDB was essential for proximity-based information filtering. However an unexpected problem emerged: MongoDB can only handle single-location geospatial queries, which means we are unable to compare multiple location distances at once. Testing revealed this constraint, which resulted in a major delay in our timeframe.
+### 5.5 Geo-spatial Query
+A significant amount of the code was tailored during the algorithm's development to address a critical database query. Using geo-spatial queries in MongoDB was essential for proximity-based information filtering. However an unexpected problem emerged: MongoDB can only handle single-location geo-spatial queries, which means we are unable to compare multiple location distances at once. Testing revealed this constraint, which resulted in a major delay in our time-frame.
 
     query = {
         "types": {
@@ -602,7 +603,7 @@ We carried out user testing to fully evaluate the robustness of our application.
 Through this feed back we were able to enhance the UI, fix bugs we wouldn't have identified , added in features to help users understanding and improve the itinerary generators performance.
 
 
-Below is the demographic split of our testing, we aimed to test journo on multiple ages groups with varying technological proficencies.
+Below is the demographic split of our testing, we aimed to test Journo on multiple ages groups with varying technological proficiencies.
 ![Demographic](technical_manual/images/demographic.png)
 
 Below is feedback from users on what we needed to incorporate for our final submission.
