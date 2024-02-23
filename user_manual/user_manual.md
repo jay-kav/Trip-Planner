@@ -121,9 +121,9 @@ On the "My Trips" page, view one of your trips:
 
 ### 3.3 Adding Members to a Trip
 
-**Conditions**
-1. Must be in a specific trip.
-2. Must be the owner of the trip.
+**To add a member to a Trip:**
+1. You must select into the trip you want to add the member into.
+2. You must be the owner of the trip.
 
 When viewing trip details, add members:
 
@@ -141,9 +141,9 @@ When viewing trip details, add members:
 
 ### 3.4 Deleting Members from a Trip
 
-**Conditions**
-1. Must be in a specific trip.
-2. Must be the owner of the trip.
+**To delete a member from a Trip:**
+1. You must select into the trip you want to delete the member from.
+2. You must be the owner of the trip.
 
 In trip details, remove members:
 
@@ -159,9 +159,9 @@ In trip details, remove members:
 
 ### 3.5 Deleting a Trip
 
-**Conditions**
-1. Must be in a specific trip.
-2. Must be the owner of the trip.
+**To delete a Trip:**
+1. You must select into the trip you want to delete.
+2. You must be the owner of the trip.
 
 Delete Trip:
 
@@ -179,9 +179,9 @@ Delete Trip:
 
 ### 3.6 Leaving a Trip
 
-**Conditions**
-1. Must be in a specific trip.
-2. Cannot be the owner of the trip.
+**To leave a Trip:**
+1. You must select into the trip you want to leave.
+2. You cannot be the owner of the trip.
 
 Leave Trip:
 
@@ -202,9 +202,9 @@ Leave Trip:
 
 ### 4.1 Creating an Itinerary
 
-**Conditions:**
-1. Must be in a specific trip
-2. Must be the owner of the trip
+**To create an itinerary:**
+1. You must select into the trip you want to add the itinerary into.
+2. You must be the owner of the trip.
 
 Generate a daily schedule:
 
@@ -227,9 +227,9 @@ Generate a daily schedule:
 
 ### 4.2 Deleting an Itinerary
 
-**Conditions:**
-1. Must be in a specific trip
-2. Cannot be the owner of the trip
+**To delete an itinerary:**
+1. You must select into the trip you want to delete the itinerary from.
+2. You must be the owner of the trip.
 
 Remove an unsatisfactory itinerary:
 
@@ -265,9 +265,9 @@ View all trip itineraries:
 
 ### 5.1 Clearing Activities
 
-**Conditions:**
-1. Must be in a specific trip
-2. Cannot be the owner of the trip
+**To clear activities:**
+1. You must select into the trip you want to clear the activities from.
+2. You must be the owner of the trip.
 
 Reset completed activities:
 
@@ -283,9 +283,9 @@ Reset completed activities:
 
 ### 5.2 Changing Owner of a Trip
 
-**Conditions:**
-1. Must be in a specific trip
-2. Cannot be the owner of the trip
+**To change ownership:**
+1. You must select into the trip you want to change.
+2. You must be the owner of the trip.
 
 Transfer ownership:
 
