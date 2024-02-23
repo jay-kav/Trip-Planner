@@ -141,11 +141,12 @@ This component retrieves all the members associated with the trip. It does this 
 ![Get Trip Members Component](technical_manual/images/GetTripMembers.png)
 
 #### 3.3.7 GetItineraries
-The itineraries that have the currently selected trip as their associated trip are displayed.
+The itineraries that have the currently selected trip as their associated trip are displayed. This also contains a function for new itineraries to be created. A reference to the currently selected itinerary is then passed to the Map component
 
 ![Get Itineraries Component](technical_manual/images/GetItineraries.png)
 
 #### 3.3.9 GetActivities
+For the currently selected itinerary all the activities are retrieved. This is done by hitting an endpoint in the backend 'get-activities/' which interfaces with MongoDB to get the activities.
 
 ![Get Activities Component](technical_manual/images/GetActivities.png)
 
@@ -534,23 +535,41 @@ To overcome this , we took a step back and sought an alternative solution. We fo
 ### 5.6 Increase Document Capacity
 
 During the project's early stages, we tested the system's performance and connection reliability by retrieving a small number of documents from the Google API. We encountered a problem as our demand for additional data increased. The API didn’t consistently return new documents. We were then forced to accept duplicate documents to solve this, which resulted in extra expenses since we had to get the same data repeatedly before finally obtaining new data. We were able to proceed with obtaining the data required for the development of our application from this workaround.
+### 5.7 Syncing Map Component With Current Itinerary
+We were having the issue where we couldn't get the map to display the same content as the itinerary component. To fix this we used React referencing. We took the current itinerary and passed its list of activities back up to the ViewTrip component 
+
+    useEffect(() => {
+      if (itineraries.length > 0) {
+        onAction(itineraries[currentItineraryIndex].activities);
+      }
+    })
+
+and then the ViewTrip 
+
+    const [sharedState, setSharedState] = useState([]);
+    const handleFunctionCallFromSiblingOne = (value) => setSharedState(value); 
+    
+component passed the list of activities back down to the Map component via a prop:
+
+    <Map trip={trip} sharedState={sharedState} />
 
 ## 6. Testing
 ### 6.1 APIs Testing
 Two additional folders named ‘python_scripts’ and ‘test_scripts’ can be found in the code directory of the project. These are a collection of scripts that were used to test and establish connection with the Google Maps API and the MongoDB API. These scripts were also used to validate that incoming information was structured in the desired format.
 ### 6.2 Unit Testing
 We used the standard unit testing library that comes with Python, unittest. Imported using Django
-from django.text import TestCase
+`from django.text import TestCase`
 This comes with a class type TestCase which is used to create classes to test parts of the application. We used this to create unit tests for creation of our models (User, Trip, Itinerary). Unit tests were automatically executed using:
 
 `python3 manage.py test`
 
 ### 6.3 Functionality Testing
 We tested all functionality of the application, by entering sample data in to create sample users, trips and itineraries. With these example instances in place we were able to test all the functionalities.
-User Functions: Registration, Login, Logout
-Trip Functions: Create Trip, View Trip, Delete Trip, Clear Activities
-Itinerary Functions: Create Itinerary, Delete Itinerary
-Trip Member Functions: Add Members, Leave Trip, Remove Members, Change Trip Owner
+- User Functions: Registration, Login, Logout
+- Trip Functions: Create Trip, View Trip, Delete Trip, Clear Activities
+- Itinerary Functions: Create Itinerary, Delete Itinerary
+- Trip Member Functions: Add Members, Leave Trip, Remove Members, Change Trip Owner
+
 For any functions that required a form to be filled out every form input was vigorously tested with various combinations of information to ensure proper functionality. This allowed us to find out if all functions were working correctly and repair any issues before beginning user testing.
 ### 6.4 User Testing
 We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
