@@ -45,8 +45,8 @@ for the system.
 To begin your Journo journey, follow these steps:
 
 <div style="display: flex; align-items: center;">
-  <img src="/user_manual/Images/Register_1.png" alt="Register 1" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Register_2.png" alt="Register 2" width="450"/>
+  <img src="/user_manual/Images/Register 1.png" alt="Register 1" width="450" style="margin-right: 20px;"/>
+  <img src="/user_manual/Images/Register 2.png" alt="Register 2" width="450"/>
 </div>
 
 - Click "Don't have an account? Register" if you do not have an account.
