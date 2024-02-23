@@ -113,7 +113,7 @@ On the "My Trips" page, view one of your trips:
   <img src="/user_manual/Images/View Trip.png" alt="View Trip" width="450" style="margin-right: 20px;"/>
 </div>
 
-![Trip Page](path/to/your/Trip Page.png)
+![Trip Page](/user_manual/Images/Trip Page.png)
 
 - **Feature A:** This is the first feature. It helps with...
 - **Feature B:** Here's the second feature, which is useful for...
