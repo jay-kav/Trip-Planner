@@ -56,7 +56,7 @@
 
 ## 1. Introduction
 ### 1.1 Overview
-This project is a web application that users can use to make plans for a trip. The users can share their created trips with others. The user registers or logs in to their account on the web application. This user's information is then saved to a cloud database. The user can then use the web application to view their saved trips and create new ones. The app will generate an itinerary (list of things to do) and associate it with your created trip. You can then view all itineraries, trip members and other information to do with the trip.
+This project is a web application that centers around trip planning. You can share your created trips with others. You simply register an account or log in to your existing account on the web application. You can then use the web application to view their saved trips and create new ones. You can generate itineraries (things to do) based on your preferences (assortment of filters). You can create multiple itineraries across multi day trips. You can then view all itineraries, trip members and other information to do with the trip. The app makes organising and planning trips much easier, whether travelling alone or with others.
 ### 1.2 Glossary
 **Python** - a beginner-friendly programming language known for its simplicity and readability, with a large community and extensive libraries for various tasks.\
 **Javascript** - JavaScript is a programming language primarily used for creating interactive and dynamic web content, enabling functionality like animations, forms validation, and interactive user interfaces on websites.\
@@ -127,6 +127,11 @@ This diagram displays the system context, components, relationships, and depende
 ![Class Diagram](technical_manual/images/class_diagram.png)
 
 In this class diagram, the relationships between classes are represented by associations. For example, a User can create multiple Trips, and a Trip can have multiple Itineraries. Each Itinerary references the Trip it belongs to and contains a list of planned Activities. The Activity class represents the activities stored in MongoDB that are stored with specific details such as name, location, and time.
+
+- **User**: This is a class to represent the user(s) interacting with a trip. Each user contains a name, email address and password. All of these are private and password in encrypted.
+- **Trip**: A user creates an instance of a trip. A trip stores all the relevant information to do with a trip (ID, OwnerID, Trip Name, Country, City, Hotel, Start Date, End Date, Members, Created, Activities).
+- **Itinerary**: Itineraries are also created by users. Each one contains a reference to a trip they are associated with. They store a list of activity place_ids with start and end times and type.
+- **Activity**: Activities contain all the relevant information about each place. They are referenced in a list in each itinerary.
 
 ### 3.3 React Components
 ![React Component Diagram](technical_manual/images/component_diagram.png)
@@ -609,27 +614,33 @@ Below is the demographic split of our testing, we aimed to test Journo on multip
 Below is feedback from users on what we needed to incorporate for our final submission.
 
 ![Experience](technical_manual/images/experience.png)
----
-
 ![Delays](technical_manual/images/delay.png)
----
-
 ![Challenges](technical_manual/images/challenges.png)
----
-
 ![Feedback](technical_manual/images/feedback.png)
----
-
 ![Improvements](technical_manual/images/improvements.png)
----
 
 
 
 
 ## 7. Installation Guide
+1. User must clone the repo: `git clone https://gitlab.computing.dcu.ie/kavane39/2024-ca326-kavane39-tripplanner.git`
+2. Download PostgreSQL and create a database with the following information:
+
+    NAME='postgres'
+    USER='admin'
+    PASSWORD='D1c2u3!?'
+
+3. Initialise environment variable by copying and executing the contents of env.txt
+4. Navigate to the backend folder and execute `pip install -r requirements.txt`
+5. Then execute: `python3 manage.py makemigrations`
+6. Then execute: `python3 manage.py migrate`
+7. Then execute: `python3 manage.py runserver`
+8. Navigate to frontend folder and execute `npm install`
+9. Then execute `npm start`
+10. Open a browser to `localhost:3000`
 
 ## 8. Appendix
-### 8.1 Activity Sheet
+## 8.1 Activity Sheet
 
 ![Activity sheet](technical_manual/images/activity.png)
 ![Activity sheet 2](technical_manual/images/activity2.png)
