@@ -167,7 +167,7 @@ Delete Trip:
 
 <div style="display: flex; align-items: center;">
   <img src="/user_manual/Images/Delete Trip.png" alt="Delete Trip" width="450" style="margin-right: 20px;"/>
-  <img src="/user_manual/Images/Delete Trip_Clicked.png" alt="Remove Trip select" width="450"/>
+  <img src="/user_manual/Images/Delete Trip Clicked.png" alt="Remove Trip select" width="450"/>
 </div>
 
 - If you are the owner, a "Delete Trip" button will be present on the screen.
