@@ -597,6 +597,8 @@ For any functions that required a form to be filled out every form input was vig
 ### 6.4 User Testing
 We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
 
+
+
 ## 7. Installation Guide
 
 
