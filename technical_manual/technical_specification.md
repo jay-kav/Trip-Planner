@@ -124,6 +124,8 @@ This diagram displays the system context, components, relationships, and depende
 ### 3.2 Class Diagram
 ![Class Diagram](technical_manual/images/class_diagram.png)
 
+In this class diagram, the relationships between classes are represented by associations. For example, a User can create multiple Trips, and a Trip can have multiple Itineraries. Each Itinerary references the Trip it belongs to and contains a list of planned Activities. The Activity class represents the activities stored in MongoDB that are stored with specific details such as name, location, and time.
+
 ### 3.3 React Components
 ![React Component Diagram](technical_manual/images/component_diagram.png)
 
@@ -509,7 +511,7 @@ After switching from SQLite3 to PostgreSQL, there were some teething issues tryi
 
 The problem was that the database information declared in Django settings.py didn’t align with the correct information set up for the PostgreSQL database. To fix this we remade the PostgreSQL database, this time making note of the information to ensure the correct information was then entered into the settings.
 ### 5.3 MongoDB Server Down 
-Using MongoDB we encountered to two problems. One each time we changed location we couldn't gain access to the database as our IP address wasn't registered to it. Two every so often MongoDB would be down without a reason and we were unable to access the database during them time frames.
+Using MongoDB we encountered two problems. One, each time we changed location we couldn't gain access to the database as our IP addresses weren't registered to it. Two every so often MongoDB would be down without a reason and we were unable to access the database during them time frames. To prevent this from happening during essential times we decided to set up a local Mongo database. This ensured that we would have access to our data at all times. 
 
 ### 5.4 Google Places Information
 While Google's API exhibited significant superiority over OpenStreetMap's API, we encountered an unexpected challenge. We realised that Google does not comprehensively regulate the information that it stores	. Numerous documents were either incomplete or lacked the implementation of certain fields. Compounding this issue, Google used various formats for presenting opening times of places this introduced complexities during information fetching. This posed a considerable challenge as our data showed inconsistencies. To address this, our strategy involved prioritizing essential information and identifying documents with the most consistent patterns.
