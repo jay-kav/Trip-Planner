@@ -44,8 +44,8 @@ for the system.
 
 To begin your Journo journey, follow these steps:
 
-![Resgister 1](user_manual/Images/Register 1.png)
-![Resgister 2](user_manual/Images/Register 2.png)
+![Register 1](user_manual/Images/Register 1.png)
+![Register 2](user_manual/Images/Register 2.png)
 
 - Click "Don't have an account? Register" if you do not have an account.
 - Fill in a Username you'll remember.
