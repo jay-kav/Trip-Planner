@@ -103,10 +103,56 @@ This diagram displays the system context, components, relationships, and depende
 ### 3.2 Class Diagram
 ![Class Diagram](technical_manual/images/class_diagram.png)
 
-### 3.3 React Component Diagram
-![React Component Diagram](technical_manual/images/component_diagram.png)\
+### 3.3 React Components
+![React Component Diagram](technical_manual/images/component_diagram.png)
 
-This diagram shows off the various components of the frontend application and how the interact with each other.
+This diagram shows off the various components of the frontend application and how the interact with each other. The functionality of the components are as follows:
+
+#### 3.3.1 Register
+This component generates a registration form, so that the user can register an account if they don't already have one. It contains a function that hit the 'register/' endpoint in the backend.
+
+![Register Component](technical_manual/images/Register.png)
+
+#### 3.3.2 Login
+This component generates a form to log the user into there account. User enters their account information and then the submit function hits the 'login/' endpoint to log the user in. The returned user ID is stored in the local storage to be used later.
+
+![Login Component](technical_manual/images/Login.png)
+
+#### 3.3.3 Navbar
+The Navbar is used to navigate between pages from anywhere in the app. It does this by changing the current url of the app: `window.location.href = "/login";`
+
+![Navbar Component](technical_manual/images/Navbar.png)
+
+#### 3.3.4 GetTrips
+This component gets all the users trips and displays them. It does this by hitting a rest framework endpoint. The users ID (which is stored in the local storage) is passed to this function: 
+    
+    axios.get(`api/trips/?members=${localStorage.getItem('sessionID')}`)
+
+![Get Trips Component](technical_manual/images/GetTrips.png)
+
+#### 3.3.5 ViewTrip
+The user's selected trip is passed to the ViewTrip component. The component displays all the relevant information about the trip.
+
+![View Trip Component](technical_manual/images/ViewTrip.png)
+
+#### 3.3.6 GetTripMembers
+This component retrieves all the members associated with the trip. It does this by making a post request to the backend with a list of user IDs. It displays the return list of Users
+
+![Get Trip Members Component](technical_manual/images/GetTripMembers.png)
+
+#### 3.3.7 GetItineraries
+The itineraries that have the currently selected trip as their associated trip are displayed.
+
+![Get Itineraries Component](technical_manual/images/GetItineraries.png)
+
+#### 3.3.9 GetActivities
+
+![Get Activities Component](technical_manual/images/GetActivities.png)
+
+#### 3.3.9 Map
+The Map component generates a map to reflect the itinerary currently displayed by the GetActivities component. It generates this map using Leaflet.
+
+![Map Component](technical_manual/images/Map.png)
 
 ### 3.4 Use Cases
 #### 3.4.1 User Authentication
