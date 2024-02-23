@@ -610,6 +610,10 @@ We tested all functionality of the application, by entering sample data in to cr
 - Trip Member Functions: Add Members, Leave Trip, Remove Members, Change Trip Owner
 
 For any functions that required a form to be filled out every form input was vigorously tested with various combinations of information to ensure proper functionality. This allowed us to find out if all functions were working correctly and repair any issues before beginning user testing.
+
+Example of what a test case looks like:
+![Example Test Case](technical_manual/images/Testcase.png)
+
 ### 6.4 User Testing
 We carried out user testing to fully evaluate the robustness of our application. Actively engaging with potential users, we provided an activity sheet [(See here.)](#81-activity-sheet) designed to guide them through all available functions, ensuring they explored each feature. After finishing the activities, users were urged to deliberately test the application's limitations by looking to identify possible problems or difficulties. After testers were satisfied they were provided with a survey form to share their feedback, allowing us to gather valuable insights for further enhancements to our application.
 
