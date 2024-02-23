@@ -199,8 +199,8 @@ function CreateTrip() {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} mt={1}>
-                <Grid item xs={12} sm={6}>
+              <Grid container spacing={2} mt={1} ml={-4}>
+                <Grid item xs={12} sm={6} sx={{display: 'flex', gap: '10px'}}>
                   <FormControlLabel 
                     control={
                       <Select
@@ -212,7 +212,7 @@ function CreateTrip() {
                           setCountry(e.target.value)
                           setCities([]);
                         }}
-                        sx={{width: '15vw', ml: '-1vw'}}
+                        sx={{width: '15vw'}}
                       >
                         <MenuItem value={''}></MenuItem>
                         {getCountries()}
@@ -222,7 +222,7 @@ function CreateTrip() {
                     labelPlacement='top'
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={6} >
                 <FormControlLabel 
                     control={
                       <Select                   
@@ -237,7 +237,7 @@ function CreateTrip() {
                             setHotels([]);
                           }
                         }
-                        sx={{width: '15vw', ml: '-1vw'}}
+                        sx={{width: '15vw'}}
                         disabled={country === ""}
                       >
                         <MenuItem value={''}></MenuItem>
@@ -249,7 +249,7 @@ function CreateTrip() {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={2} mt={2}>
+              <Grid container spacing={2} mt={2} ml={-4}>
               <Grid item xs={12} sm={6}>
                   <FormControlLabel 
                     control={
@@ -260,7 +260,7 @@ function CreateTrip() {
                         label="hotel"
                         name="hotel"
                         disabled={city === ""}
-                        sx={{width: '15vw', ml: '-1vw'}}
+                        sx={{width: '15vw'}}
                       >
                         <MenuItem value={''}></MenuItem>
                         {getHotels()}
@@ -282,7 +282,7 @@ function CreateTrip() {
                         defaultValue={''} // Provide the default value
                         value={members} // Provide the array of selected members
                         onChange={(e) => setMembers(e.target.value)} // Update the state with selected members
-                        sx={{width: '15vw', ml: '-1vw'}}
+                        sx={{width: '15vw'}}
                       >
                         <MenuItem value={''}></MenuItem>
                         {getUsers()}

@@ -35,7 +35,10 @@ function Login() {
         localStorage.setItem('selectTrip', 0);
         window.location.href = '/';
       })
-      .catch((err) => console.error("Error:", err));
+      .catch((err) => {
+        alert("Invalid username or password");
+        console.error("Error:", err)
+      });
     }
   };
 
