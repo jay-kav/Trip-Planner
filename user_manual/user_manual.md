@@ -44,8 +44,8 @@ for the system.
 
 To begin your Journo journey, follow these steps:
 
-![Register 1](user_manual/Images/Register 1.png)
-![Register 2](user_manual/Images/Register 2.png)
+![Register 1](user_manual/Images/Register_1.png)
+![Register 2](user_manual/Images/Register_2.png)
 
 - Click "Don't have an account? Register" if you do not have an account.
 - Fill in a Username you'll remember.
@@ -70,8 +70,8 @@ Once registered, follow these steps to log in:
 
 After logging in, you'll be on the landing page:
 
-![Sidebar 1](user_manual/Images/Sidebar 1.png)
-![Sidebar 2](user_manual/Images/Sidebar 2.png)
+![Sidebar 1](user_manual/Images/Sidebar_1.png)
+![Sidebar 2](user_manual/Images/Sidebar_2.png)
 
 - By clicking the three horizontal lines in the top left-hand corner, the sidebar with four options will be displayed.
 - View the Homepage.
@@ -88,8 +88,8 @@ After logging in, you'll be on the landing page:
 On the "My Trips" page, create a new trip:
 
 
-![Create Trip](user_manual/Images/Create Trip.png)
-![Create Trip Components](user_manual/Images/Create Trip Components.png)
+![Create Trip](user_manual/Images/Create_Trip.png)
+![Create Trip Components](user_manual/Images/Create_Trip_Components.png)
 
 - First, click the blue button reading "New Trip."
 - You will be redirected to a new page to fill in the details.
@@ -104,8 +104,8 @@ On the "My Trips" page, create a new trip:
 
 On the "My Trips" page, view one of your trips:
 
-![View Trip](user_manual/Images/View Trip.png)
-![Trip Page](user_manual/Images/Trip Page.png)
+![View Trip](user_manual/Images/View_Trip.png)
+![Trip Page](user_manual/Images/Trip_Page.png)
 
 - Click the "View" button on the chosen trip you want to see.
 - Once clicked, you will be directed to a page with the trip details.
@@ -120,8 +120,8 @@ On the "My Trips" page, view one of your trips:
 
 When viewing trip details, add members:
 
-![Add Member](user_manual/Images/Add Member.png)
-![Add Member Clicked](user_manual/Images/Add Member Clicked.png)
+![Add Member](user_manual/Images/Add_Member.png)
+![Add Member Clicked](user_manual/Images/Add_Member_Clicked.png)
 
 
 - If you are the owner, a person icon will appear by your name.
@@ -138,8 +138,8 @@ When viewing trip details, add members:
 
 In trip details, remove members:
 
-![Remove Member](user_manual/Images/Remove Member.png)
-![Remove Member Clicked](user_manual/Images/Remove Member Clicked.png)
+![Remove Member](user_manual/Images/Remove_Member.png)
+![Remove Member Clicked](user_manual/Images/Remove_Member_Clicked.png)
 
 - If you are the owner, an "X" icon will appear next to members' names.
 - Once clicked, you will be shown a confirmation text box.
@@ -154,8 +154,8 @@ In trip details, remove members:
 
 Delete Trip:
 
-![Delete Trip](user_manual/Images/Delete Trip.png)
-![Delete Trip Clicked](user_manual/Images/Delete Trip Clicked.png)
+![Delete Trip](user_manual/Images/Delete_Trip.png)
+![Delete Trip Clicked](user_manual/Images/Delete_Trip_Clicked.png)
 
 - If you are the owner, a "Delete Trip" button will be present on the screen.
 - Click the button if you wish to delete the trip.
@@ -172,8 +172,8 @@ Delete Trip:
 
 Leave Trip:
 
-![Leave Trip](user_manual/Images/Leave Trip.png)
-![Leave Trip Clicked](user_manual/Images/Leave Trip Clicked.png)
+![Leave Trip](user_manual/Images/Leave_Trip.png)
+![Leave Trip Clicked](user_manual/Images/Leave_Trip_Clicked.png)
 
 - If you no longer want to see a trip, you can leave the trip.
 - By clicking the "Leave Trip" button, You will be display with a confirm text box 
@@ -193,8 +193,8 @@ Leave Trip:
 
 Generate a daily schedule:
 
-![Create Itinerary](user_manual/Images/Create Itinerary.png)
-![Create Itinerary Component](user_manual/Images/Create Itinerary Component.png)
+![Create Itinerary](user_manual/Images/Create_Itinerary.png)
+![Create Itinerary Component](user_manual/Images/Create_Itinerary_Component.png)
 
 - When viewing a trip, you'll need to add daily activities.
 - Clicking the "Add Itinerary" will display a form to fill in the details.
@@ -216,8 +216,8 @@ Generate a daily schedule:
 
 Remove an unsatisfactory itinerary:
 
-![Delete Itinerary](user_manual/Images/Delete Itinerary.png)
-![Delete Itinerary Clicked](user_manual/Images/Delete Itinerary Clicked.png)
+![Delete Itinerary](user_manual/Images/Delete_Itinerary.png)
+![Delete Itinerary Clicked](user_manual/Images/Delete_Itinerary_Clicked.png)
 
 - If you don't like your itinerary, you have the option to delete it.
 - If you are an owner, a bin icon will appear in the top right-hand corner.
@@ -230,7 +230,7 @@ Remove an unsatisfactory itinerary:
 
 View all trip itineraries:
 
-![Cycle Itinerary](user_manual/Images/Cycle Itinerary.png)
+![Cycle Itinerary](user_manual/Images/Cycle_Itinerary.png)
 
 - Your trip has multiple itineraries, but you can only see one.
 - Above the itinerary, to its sides, there are arrows.
@@ -250,7 +250,7 @@ View all trip itineraries:
 
 Reset completed activities:
 
-![Clear Activities](user_manual/Images/Clear Activities.png)
+![Clear Activities](user_manual/Images/Clear_Activities.png)
 
 - Each trip is designed to create itineraries without repeating activities.
 - If you are unsatisfied with the available unique activities, you can clear your slate.
@@ -266,8 +266,8 @@ Reset completed activities:
 
 Transfer ownership:
 
-![Change Owner](user_manual/Images/Change Owner.png)
-![Change Owner Clicked](user_manual/Images/Change Owner Clicked.png)
+![Change Owner](user_manual/Images/Change_Owner.png)
+![Change Owner Clicked](user_manual/Images/Change_Owner_Clicked.png)
 
 - If you wish to leave the trip without deleting it.
 - Or tired of having the responsibility of organizing the trip.
@@ -281,7 +281,7 @@ Transfer ownership:
 
 Explore a recommended activity's website:
 
-![View Website](user_manual/Images/View Website.png)
+![View Website](user_manual/Images/View_Website.png)
 
 - You can find the button "Website" below the activites name.
 - Clicking this will transport you to the businesses personal page
@@ -291,7 +291,7 @@ Explore a recommended activity's website:
 
 Navigate to your next activity:
 
-![View Location](user_manual/Images/View Location.png)
+![View Location](user_manual/Images/View_Location.png)
 
 - Click "Location" below the activity's name.
 - Google Maps will guide you.
