@@ -609,10 +609,19 @@ Below is the demographic split of our testing, we aimed to test Journo on multip
 Below is feedback from users on what we needed to incorporate for our final submission.
 
 ![Experience](technical_manual/images/experience.png)
+---
+
 ![Delays](technical_manual/images/delay.png)
+---
+
 ![Challenges](technical_manual/images/challenges.png)
+---
+
 ![Feedback](technical_manual/images/feedback.png)
+---
+
 ![Improvements](technical_manual/images/improvements.png)
+---
 
 
 
@@ -620,7 +629,7 @@ Below is feedback from users on what we needed to incorporate for our final subm
 ## 7. Installation Guide
 
 ## 8. Appendix
-## 8.1 Activity Sheet
+### 8.1 Activity Sheet
 
 ![Activity sheet](technical_manual/images/activity.png)
 ![Activity sheet 2](technical_manual/images/activity2.png)
