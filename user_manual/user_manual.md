@@ -113,9 +113,11 @@ On the "My Trips" page, view one of your trips:
   <img src="/user_manual/Images/View Trip.png" alt="View Trip" width="450" style="margin-right: 20px;"/>
 </div>
 
-<img src="/user_manual/Images/Trip Page.png" alt="Trip Page" width="450"/>
-**1. Feature A:** This is the first feature. It helps with...
-**2. Feature B:** Here's the second feature, which is useful for...
+![Trip Page](path/to/your/Trip Page.png)
+
+- **Feature A:** This is the first feature. It helps with...
+- **Feature B:** Here's the second feature, which is useful for...
+
 
 - Click the "View" button on the chosen trip you want to see.
 - Once clicked, you will be directed to a page with the trip details.
