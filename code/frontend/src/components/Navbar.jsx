@@ -11,6 +11,7 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 function Navbar() {
     const [state, setState] = useState(false);
 
+    // handles user logging out, redirects to login page
     const logout = () => {
         axios.post('logout/')
         .then((response) => {
@@ -21,6 +22,7 @@ function Navbar() {
         .catch((err) => console.error("Error:", err));
     }
 
+    // handles opening/closing of navbar
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
           return;
@@ -29,6 +31,8 @@ function Navbar() {
         setState({ ...state, [anchor]: open });
     };
 
+    // creates list of navbar items
+    // https://mui.com/material-ui/react-app-bar/#responsive-app-bar-with-drawer
     const list = (anchor) => (
         <Box
             sx={{ width: 250 }}
@@ -79,6 +83,7 @@ function Navbar() {
         </Box>
       );
 
+    // displays the navbar icon
     return (
         <React.Fragment key={'left'}>
           <MenuRoundedIcon sx={{ mx: 1, mt: 2, position: 'fixed' }} fontSize='large' onClick={toggleDrawer('left', true)} />

@@ -18,6 +18,7 @@ function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       {location.pathname != '/register' && location.pathname != '/login' && <Navbar />}
+      {/* Routes for the app */}
       <Routes>
         <Route path="/register" element={isAuthenticated() ? <Navigate to="/" /> : <Register />}></Route>
         <Route path="/login" element={isAuthenticated() ? <Navigate to="/" /> : <Login />}></Route>

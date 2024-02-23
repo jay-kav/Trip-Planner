@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useRef} from 'react';
+import React, { useState, useEffect } from 'react';
 import GetActivities from './GetActivities';
 import axios from 'axios';
 import Button from '@mui/material/Button';
@@ -19,6 +19,7 @@ import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+// list of filters (key and value pairs)
 const filterList = {
   'Breakfast': 'serves_breakfast',
   'Lunch': 'serves_lunch',
@@ -35,6 +36,22 @@ const filterList = {
   'Nightlife': 'night_club', 
 };
 
+// styling for modal
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 600,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  display: 'flex',
+  alignItems: 'center',
+};
+
+// track number of itinerary requests
 let itineraryCount = 0;
 
 function GetItineraries(props) {
@@ -42,18 +59,27 @@ function GetItineraries(props) {
     let tripOwner = props.tripOwner;
     let trip = props.trip;
     let onAction =  props.onAction;
-    const [callback, setCallback] = useState(false);
     const [create, setCreate] = useState(false);
     const [itineraries, setItineraries] = useState([]);
     const [itineraryID, setItineraryID] = useState("");
     const [activities, setActivities] = useState([]);
     const [currentItineraryIndex, setCurrentItineraryIndex] = useState(0);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+    // handle modal open/close logic
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = (event, reason) => {
+      if (reason == 'clickaway') {
+        return
+      }
+      setOpen(false);
+    }
     
     // Fetch requests
     useEffect(() => {
-        if (itineraryCount < 5) {
-          axios.get(`api/itineraries/?trip_id=${trip.id}`)
+        if (itineraryCount < 5) { // hard stop to prevent infinite loop, if no itineraries
+          axios.get(`api/itineraries/?trip_id=${trip.id}`) // endpoint to get itineraries
           .then((response) => {
             console.log(response);
             setItineraries(response.data);
@@ -63,16 +89,14 @@ function GetItineraries(props) {
         }
     });
 
-    /* ---------- Itinerary Functions ---------- */
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = (event, reason) => {
-      if (reason == 'clickaway') {
-        return
+    // Passes reference of current itinerary to parent component
+    useEffect(() => {
+      if (itineraries.length > 0) {
+        onAction(itineraries[currentItineraryIndex].activities);
       }
-      setOpen(false);
-    }
+    })
 
+    /* ---------- Create Itinerary ---------- */
     const submitForm = (e) => {
       e.preventDefault();
       const data = new FormData(e.currentTarget);
@@ -122,32 +146,6 @@ function GetItineraries(props) {
       }
     };
 
-    const clearActivities = (e) => {
-      e.preventDefault();
-      axios.post(`clear-activities/`, {
-          'tripID': trip.id
-      })
-      .then((response) => {
-        console.log(response);
-        window.location.reload();
-      })
-      .catch((err) => console.error("Error:", err));
-    }
-
-    const style = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: 600,
-      bgcolor: 'background.paper',
-      border: '2px solid #000',
-      boxShadow: 24,
-      p: 4,
-      display: 'flex',
-      alignItems: 'center',
-    };
-  
     const createItinerary = () => {
       return (
         <Container component="main" maxWidth="xs">
@@ -373,7 +371,20 @@ function GetItineraries(props) {
       );
     }
 
-    // Delete Itinerary
+    // Clear activities from current trip
+    const clearActivities = (e) => {
+      e.preventDefault();
+      axios.post(`clear-activities/`, {
+          'tripID': trip.id
+      })
+      .then((response) => {
+        console.log(response);
+        window.location.reload();
+      })
+      .catch((err) => console.error("Error:", err));
+    }
+
+    // Delete selected itinerary from trip
     const deleteItinerary = (e, itinerary) => { 
         e.preventDefault();
         setItineraryID(itinerary.id);
@@ -381,6 +392,7 @@ function GetItineraries(props) {
         setShowDeleteConfirmation(true);
     }
 
+    // Confirmation to prevent accidental deletion of itinerary
     const confirmDeleteItinerary = () => {
       axios.post(`delete-itinerary/`, {
         'itineraryID': itineraryID,
@@ -394,6 +406,7 @@ function GetItineraries(props) {
       .catch((err) => console.error("Error:", err));
     }
 
+    // Handles closing of delete confirmation dialog
     const handleDeleteCloseConfirmation = () => {
       setShowDeleteConfirmation(false); // Close confirmation dialog
     };
@@ -402,12 +415,6 @@ function GetItineraries(props) {
       let ymd = date.split('-');
       return `${ymd[2]}/${ymd[1]}/${ymd[0]}`;
     }
-
-    useEffect(() => {
-      if (itineraries.length > 0) {
-        onAction(itineraries[currentItineraryIndex].activities);
-      }
-    })
 
     // Functions to handle cycling through itineraries
     const goToPreviousItinerary = () => {
@@ -420,6 +427,7 @@ function GetItineraries(props) {
       onAction(itineraries[currentItineraryIndex].activities);
     };
 
+    // maps itineraries to cards
     const getItineraries = () => {
       return itineraries.map((itinerary, index) => (
           <Card key={itinerary.id} style={{display: index === currentItineraryIndex ? 'block' : 'none' }}>

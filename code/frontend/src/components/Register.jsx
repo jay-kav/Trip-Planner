@@ -12,8 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
-// Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
 function Register() {
+  // creates user account and redirects to login page
   const submitForm = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -40,6 +40,7 @@ function Register() {
     }
   };
 
+  // Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>

@@ -13,6 +13,7 @@ export default function Map(props) {
     const [hotel, setHotel] = useState("");
     const [activities, setActivities] = useState([]);
 
+    // Fetchs the activities from currently selected itinerary
     useEffect(() => {
         if (itinerary) {
             axios.post(`get-activities/`, {
@@ -28,6 +29,7 @@ export default function Map(props) {
         }
     }, itinerary);
 
+    // Fetches the hotel from the currently selected trip
     useEffect(() => {
         if (trip && hotel.length == "") {
             axios.post(`get-hotel/`, {
@@ -43,11 +45,13 @@ export default function Map(props) {
         }
     });
 
+    // Creates custom icon for the markers
     const customIcon = new Icon({
         iconUrl: require("./icons/placeholder.png"),
         iconSize: [48, 48] // size of the icon
     });
 
+    // Handles number of markers in close proximity
     const createClusterCustomIcon = function (cluster) {
         return new divIcon({
         html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
@@ -56,6 +60,7 @@ export default function Map(props) {
         });
     };
 
+    // Maps the activities to markers
     const getMarkers = (a) => {
         return (
             a.map((marker) => (
@@ -70,6 +75,7 @@ export default function Map(props) {
         )
     }
 
+    // Gets the average latitude of the hotel and activities to pintpoint center of map
     const getLat = () => {
         let total = hotel.lat;
         for (let a in activities) {
@@ -78,6 +84,7 @@ export default function Map(props) {
         return total / (hotel.lat + activities.length);
     }
 
+    // Gets the average longitude of the hotel and activities to pintpoint center of map
     const getLong = () => {
         let total = hotel.long;
         for (let a in activities) {
@@ -88,12 +95,16 @@ export default function Map(props) {
     
     if (hotel) {
         if (activities.length > 0) {
+            // Generates map with markers
             return (
+                // Creates map
                 <MapContainer center={[getLat(), getLong()]} zoom={13}>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        {/* Inserts map backdrop */}
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
+                        {/* Creates markers */}
                         <MarkerClusterGroup
                             chunkedLoading
                             iconCreateFunction={createClusterCustomIcon}
@@ -107,6 +118,7 @@ export default function Map(props) {
                 </MapContainer>
             );
         }
+        // Generates default map if no activities were found
         return (
             <MapContainer center={[hotel.lat, hotel.long]} zoom={13}>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>

@@ -12,9 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
 
-// Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
 function Login() {
-
+  // Logs user in and redirects to homepage
   const submitForm = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -31,8 +30,8 @@ function Login() {
       })
       .then((response) => {
         console.log(response);
-        localStorage.setItem("sessionID", response.data.uid);
-        localStorage.setItem('selectTrip', 0);
+        localStorage.setItem("sessionID", response.data.uid); // stores user ID in local storage
+        localStorage.setItem('selectTrip', 0);  // resets the tripid in local storage
         window.location.href = '/';
       })
       .catch((err) => {
@@ -42,6 +41,8 @@ function Login() {
     }
   };
 
+  
+  // Material UI Login Form from GitHub: https://github.com/mui/material-ui/blob/v5.15.6/docs/data/material/getting-started/templates/sign-in/SignIn.js
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
